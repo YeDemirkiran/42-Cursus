@@ -6,19 +6,20 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-main: $(NAME)
-	$(CC) $(FLAGS) main.c $(NAME) -o main
+main: re
+	$(CC) $(FLAGS) main.c $(NAME) -o main.out
+	make clean
 
 $(NAME): 
 	$(CC) $(FLAGS) $(SRCS) -c
 	ar rcs $(NAME) ${OBJS}
 
 clean:
-	rm -f $(OBJS)
+	rm -f ./$(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
-	rm -f main
+	rm -f ./$(NAME)
+	rm -f ./main.out
 
 re: fclean all
 

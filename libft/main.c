@@ -6,43 +6,93 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:47:35 by yademirk          #+#    #+#             */
-/*   Updated: 2025/05/27 14:01:24 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:58:08 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 void	test_ft_isalpha(void)
 {
-	printf("Testing 'ft_isalpha'...\n\n");
-	printf("'A', isalpha: %i, ft_isalpha:%i\n", isalpha('A'), ft_isalpha('A'));
-	printf("'a', isalpha: %i, ft_isalpha:%i\n", isalpha('a'), ft_isalpha('a'));
-	printf("'Z', isalpha: %i, ft_isalpha:%i\n", isalpha('Z'), ft_isalpha('Z'));
-	printf("'z', isalpha: %i, ft_isalpha:%i\n", isalpha('z'), ft_isalpha('z'));
-	printf("'.', isalpha: %i, ft_isalpha:%i\n", isalpha('.'), ft_isalpha('.'));
-	printf("',', isalpha: %i, ft_isalpha:%i\n", isalpha(','), ft_isalpha(','));
-	printf("'4', isalpha: %i, ft_isalpha:%i\n", isalpha('4'), ft_isalpha('4'));
-	printf("NULL, isalpha: %i, ft_isalpha:%i\n", isalpha(0), ft_isalpha(0));
+	char *ft_func = "ft_isalpha"; 
+	char *func = "isalpha";
+	int tests[] = {'A', 'a', 'Z', 'z', '.', ',', '4', 0};
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	int i = 0;
+
+	while (tests[i] != 0)
+	{
+		printf("'%c', %s: %i, %s: %i\n", tests[i], func, isalpha(tests[i]), ft_func, ft_isalpha(tests[i]));
+		i++;
+	}
+
+	printf("NULL, %s: %i, %s: %i\n\n", func, isalpha(0), ft_func, ft_isalpha(0));
+	
+	printf("\n");
 }
 
 void	test_ft_isdigit(void)
 {
-	printf("Testing 'ft_isdigit'...\n\n");
-	printf("'0', isalpha: %i, ft_isalpha:%i\n", isdigit('0'), ft_isdigit('0'));
-	printf("'9', isalpha: %i, ft_isalpha:%i\n", isdigit('9'), ft_isdigit('9'));
-	printf("'Z', isalpha: %i, ft_isalpha:%i\n", isdigit('Z'), ft_isdigit('Z'));
-	printf("'z', isalpha: %i, ft_isalpha:%i\n", isdigit('z'), ft_isdigit('z'));
-	printf("'.', isalpha: %i, ft_isalpha:%i\n", isdigit('.'), ft_isdigit('.'));
-	printf("',', isalpha: %i, ft_isalpha:%i\n", isdigit(','), ft_isdigit(','));
-	printf("'4', isalpha: %i, ft_isalpha:%i\n", isdigit('4'), ft_isdigit('4'));
-	printf("NULL, isalpha: %i, ft_isalpha:%i\n", isalpha(0), ft_isdigit(0));
+	char *ft_func = "ft_isdigit"; 
+	char *func = "isdigit";
+	int tests[] = {'0', '9', 'Z', 'z', '.', ',', '4', 0};
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	int i = 0;
+
+	while (tests[i] != 0)
+	{
+		printf("'%c', %s: %i, %s: %i\n", tests[i], func, isdigit(tests[i]), ft_func, ft_isdigit(tests[i]));
+		i++;
+	}
+
+	printf("NULL, %s: %i, %s: %i\n\n", func, isdigit(0), ft_func, ft_isdigit(0));
+	
 	printf("\n");
 }
 
-int	main(void)
+void	test_ft_isalnum(void)
 {
-	test_ft_isdigit();
+	char *ft_func = "ft_isalnum"; 
+	char *func = "isalnum";
+	int tests[] = {'0', '9', 'A', 'a', 'Z', 'z', '.', ',', '4', 0};
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	int i = 0;
+
+	while (tests[i] != 0)
+	{
+		printf("'%c', %s: %i, %s: %i\n", tests[i], func, isalnum(tests[i]), ft_func, ft_isalnum(tests[i]));
+		i++;
+	}
+
+	printf("NULL, %s: %i, %s: %i\n\n", func, isalnum(0), ft_func, ft_isalnum(0));
+	
+	printf("\n");
+}
+
+int	main(int count, char **args)
+{
+	if (count == 2)
+	{
+		if (strcmp(args[1], "isalpha") == 0)
+			test_ft_isalpha();
+		else if (strcmp(args[1], "isdigit") == 0)
+			test_ft_isdigit();
+		else if (strcmp(args[1], "isalnum") == 0)
+			test_ft_isalnum();
+	}
+	else
+	{
+		printf("Please provide only one argument!");
+	}
+	
 	return (0);
 }
