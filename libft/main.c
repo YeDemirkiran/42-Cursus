@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:47:35 by yademirk          #+#    #+#             */
-/*   Updated: 2025/05/27 14:58:08 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:09:49 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,27 @@ void	test_ft_isalnum(void)
 	printf("\n");
 }
 
+void	test_ft_isascii(void)
+{
+	char *ft_func = "ft_isascii"; 
+	char *func = "isascii";
+	int tests[] = {'0', '9', 'A', 'a', 'Z', 'z', '.', ',', '4', 128, 255, 0};
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	int i = 0;
+
+	while (tests[i] != 0)
+	{
+		printf("'%c', %s: %i, %s: %i\n", tests[i], func, __isascii(tests[i]), ft_func, ft_isascii(tests[i]));
+		i++;
+	}
+
+	printf("NULL, %s: %i, %s: %i\n\n", func, __isascii(0), ft_func, ft_isascii(0));
+	
+	printf("\n");
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -88,6 +109,8 @@ int	main(int count, char **args)
 			test_ft_isdigit();
 		else if (strcmp(args[1], "isalnum") == 0)
 			test_ft_isalnum();
+		else if (strcmp(args[1], "isascii") == 0)
+			test_ft_isascii();
 	}
 	else
 	{
