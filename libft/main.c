@@ -114,7 +114,7 @@ int	main(int count, char **args)
 	}
 	else
 	{
-		printf("Please provide only one argument!");
+		printf("\nPlease provide only one argument!\n\n");
 	}
 	
 	return (0);
