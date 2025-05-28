@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <stdio.h>
 #include <ctype.h>
-#include <string.h>
+#include <strings.h>
 
 void	test_ft_isalpha(void)
 {
@@ -145,13 +145,8 @@ void	test_ft_memset(void)
 {
 	char *ft_func = "ft_memset"; 
 	char *func = "memset";
-	// char *tests[] = {"test", "test 2", "LOOOOOONG", "short", " ", "", 
-	// 	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-	// 	0};
 
 	printf("\nTesting '%s'...\n\n", ft_func);
-
-	// int i = 0;
 
 	int sizes[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20};
 	char chars[] = {'a', 'b', 'c', 'd', '&', '(', '7', 'Z', 'A', 'g', 'y', 'e'};
@@ -176,19 +171,66 @@ void	test_ft_memset(void)
 		i++;
 	}
 
-	
+	printf("\n");
+}
 
-	// while (*tests[i] != 0)
-	// {
-	// 	printf("wjlfjowdf");
-	// 	printf("'%s', %s: ", tests[i], func);
-	// 	memset(tests[i], 'a', ft_strlen(tests[i]));
-	// 	printf("%s, %s: ", tests[i], ft_func);
-	// 	ft_memset(tests[i], 'b', ft_strlen(tests[i]));
-	// 	printf("%s\n", tests[i]);
-	// 	i++;
-	// }
-	
+void	test_ft_bzero(void)
+{
+	char *ft_func = "ft_bzero"; 
+	char *func = "bzero";
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	size_t sizes[] = {0, sizeof(int), 2 * sizeof(int), 3 * sizeof(int), 4 * sizeof(int), 5 * sizeof(int), 6 * sizeof(int), 7 * sizeof(int), 8 * sizeof(int), 9 * sizeof(int), 10 * sizeof(int)};
+	int size = 11;
+	int i = 0;
+
+	while (i < size)
+	{
+		int a[] = {31, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+		int b[] = {31, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+		int test_size = 10;
+
+		printf("(");
+
+		int j = 0;
+
+		while (j < test_size)
+		{
+			printf("%i ", a[j++]);
+		}
+
+		printf("), %s(%zu): ", func, sizes[i]);
+
+		bzero(a, sizes[i]);
+
+		printf("(");
+
+		j = 0;
+
+		while (j < test_size)
+		{
+			printf("%i ", a[j++]);
+		}
+
+		printf("), %s(%zu): ", ft_func, sizes[i]);
+
+		ft_bzero(b, sizes[i]);
+
+		printf("(");
+
+		j = 0;
+
+		while (j < test_size)
+		{
+			printf("%i ", a[j++]);
+		}
+
+		printf(")\n");
+
+		i++;
+	}
+
 	printf("\n");
 }
 
@@ -210,6 +252,8 @@ int	main(int count, char **args)
 			test_ft_strlen();
 		else if (strcmp(args[1], "memset") == 0)
 			test_ft_memset();
+		else if (strcmp(args[1], "bzero") == 0)
+			test_ft_bzero();
 	}
 	else
 	{
