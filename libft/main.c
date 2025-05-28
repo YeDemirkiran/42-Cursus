@@ -153,18 +153,30 @@ void	test_ft_memset(void)
 
 	// int i = 0;
 
-	char a[] = "AAAAaaaaBBBBbbbb";
-	char b[] = "AAAAaaaaBBBBbbbb";
+	int sizes[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20};
+	char chars[] = {'a', 'b', 'c', 'd', '&', '(', '7', 'Z', 'A', 'g', 'y', 'e'};
+	int size = 12;
+	int i = 0;
 
-	printf("'%s', %s(%c, %zu): ", a, func, 'c', ft_strlen(a) / 2);
+	while (i < size)
+	{
+		char a[] = "01234567891";
+		char b[] = "01234567891";
 
-	memset(a, 'c', ft_strlen(a) / 2);
+		printf("'%s', %s(%c, %i): ", a, func, chars[i], sizes[i]);
 
-	printf("%s, %s(%c, %zu): ", a, ft_func, 'a', ft_strlen(a) / 2);
+		memset(a, chars[i], sizes[i]);
 
-	ft_memset(b, 'a', ft_strlen(a) / 2);
+		printf("%s, %s(%c, %i): ", a, ft_func, chars[i], sizes[i]);
 
-	printf("%s\n", b);
+		ft_memset(b, chars[i], sizes[i]);
+
+		printf("%s\n", b);
+
+		i++;
+	}
+
+	
 
 	// while (*tests[i] != 0)
 	// {
