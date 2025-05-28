@@ -234,6 +234,26 @@ void	test_ft_bzero(void)
 	printf("\n");
 }
 
+void	test_ft_memcpy(void)
+{
+	char *ft_func = "ft_memcpy"; 
+	char *func = "memcpy";
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	char a[] = "bebe";
+	char b[] = "haha";
+
+	printf("Before %s: a: %s, b: %s\n", func, a, b);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a, b, sizeof(char) * 3), b);
+
+	memcpy(a, "bebe", sizeof(char) * 4);
+	memcpy(b, "haha", sizeof(char) * 4);
+
+	printf("Before %s: a: %s, b: %s\n", ft_func, a, b);
+	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memcpy(a, b, sizeof(char) * 3), b);
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -254,6 +274,8 @@ int	main(int count, char **args)
 			test_ft_memset();
 		else if (strcmp(args[1], "bzero") == 0)
 			test_ft_bzero();
+		else if (strcmp(args[1], "memcpy") == 0)
+			test_ft_memcpy();
 	}
 	else
 	{
