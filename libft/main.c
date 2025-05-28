@@ -99,6 +99,27 @@ void	test_ft_isascii(void)
 	printf("\n");
 }
 
+void	test_ft_isprint(void)
+{
+	char *ft_func = "ft_isprint"; 
+	char *func = "isprint";
+	int tests[] = {'0', '9', 'A', 'a', 'Z', 'z', '.', ',', '4', 126, 127, 31, 255, 0};
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	int i = 0;
+
+	while (tests[i] != 0)
+	{
+		printf("'%c', %s: %i, %s: %i\n", tests[i], func, isprint(tests[i]), ft_func, ft_isprint(tests[i]));
+		i++;
+	}
+
+	printf("NULL, %s: %i, %s: %i\n\n", func, isprint(0), ft_func, ft_isprint(0));
+	
+	printf("\n");
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -111,6 +132,8 @@ int	main(int count, char **args)
 			test_ft_isalnum();
 		else if (strcmp(args[1], "isascii") == 0)
 			test_ft_isascii();
+		else if (strcmp(args[1], "isprint") == 0)
+			test_ft_isprint();
 	}
 	else
 	{
