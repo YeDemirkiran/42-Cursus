@@ -132,11 +132,50 @@ void	test_ft_strlen(void)
 
 	int i = 0;
 
-	while (tests[i] != 0)
+	while (*tests[i] != 0)
 	{
 		printf("'%s', %s: %zu, %s: %zu\n", tests[i], func, strlen(tests[i]), ft_func, ft_strlen(tests[i]));
 		i++;
 	}
+	
+	printf("\n");
+}
+
+void	test_ft_memset(void)
+{
+	char *ft_func = "ft_memset"; 
+	char *func = "memset";
+	// char *tests[] = {"test", "test 2", "LOOOOOONG", "short", " ", "", 
+	// 	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+	// 	0};
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	// int i = 0;
+
+	char a[] = "AAAAaaaaBBBBbbbb";
+	char b[] = "AAAAaaaaBBBBbbbb";
+
+	printf("'%s', %s(%c, %zu): ", a, func, 'c', ft_strlen(a) / 2);
+
+	memset(a, 'c', ft_strlen(a) / 2);
+
+	printf("%s, %s(%c, %zu): ", a, ft_func, 'a', ft_strlen(a) / 2);
+
+	ft_memset(b, 'a', ft_strlen(a) / 2);
+
+	printf("%s\n", b);
+
+	// while (*tests[i] != 0)
+	// {
+	// 	printf("wjlfjowdf");
+	// 	printf("'%s', %s: ", tests[i], func);
+	// 	memset(tests[i], 'a', ft_strlen(tests[i]));
+	// 	printf("%s, %s: ", tests[i], ft_func);
+	// 	ft_memset(tests[i], 'b', ft_strlen(tests[i]));
+	// 	printf("%s\n", tests[i]);
+	// 	i++;
+	// }
 	
 	printf("\n");
 }
@@ -157,6 +196,8 @@ int	main(int count, char **args)
 			test_ft_isprint();
 		else if (strcmp(args[1], "strlen") == 0)
 			test_ft_strlen();
+		else if (strcmp(args[1], "memset") == 0)
+			test_ft_memset();
 	}
 	else
 	{
