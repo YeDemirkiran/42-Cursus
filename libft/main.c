@@ -120,6 +120,25 @@ void	test_ft_isprint(void)
 	printf("\n");
 }
 
+void	test_ft_strlen(void)
+{
+	char *ft_func = "ft_strlen"; 
+	char *func = "strlen";
+	char *tests[] = {"test", "test 2", "LOOOOOONG", "short", " ", "", 0};
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	int i = 0;
+
+	while (tests[i] != 0)
+	{
+		printf("'%s', %s: %zu, %s: %zu\n", tests[i], func, strlen(tests[i]), ft_func, ft_strlen(tests[i]));
+		i++;
+	}
+	
+	printf("\n");
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -134,6 +153,8 @@ int	main(int count, char **args)
 			test_ft_isascii();
 		else if (strcmp(args[1], "isprint") == 0)
 			test_ft_isprint();
+		else if (strcmp(args[1], "strlen") == 0)
+			test_ft_strlen();
 	}
 	else
 	{
