@@ -34,4 +34,10 @@ int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 
+typedef struct	s_list
+{
+	void		*content;
+	struct		s_list *next;
+} 				t_list;
+
 #endif
