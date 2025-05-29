@@ -254,17 +254,17 @@ void	test_ft_memcpy(void)
 	printf("Before %s: a: %s, b: %s\n", ft_func, a, b);
 	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memcpy(a, b, sizeof(char) * 4), b);
 
-	printf("Overlapping test...\n\n");
+	// printf("Overlapping test...\n\n");
 
-	memcpy(a, "ABCDEFGH", 9);
+	// memcpy(a, "ABCDEFGH", 9);
 
-	printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
-	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a + 2, a, sizeof(char) * 4), a);
+	// printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
+	// printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a + 2, a, sizeof(char) * 4), a);
 
-	memcpy(a, "ABCDEFGH", 9);
+	// memcpy(a, "ABCDEFGH", 9);
 
-	printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
-	printf("After %s: a: %s, b: %s\n\n", func, (char *)ft_memcpy(a + 2, a, sizeof(char) * 4), a);
+	// printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
+	// printf("After %s: a: %s, b: %s\n\n", func, (char *)ft_memcpy(a + 2, a, sizeof(char) * 4), a);
 }
 
 void	test_ft_memmove(void)
@@ -280,24 +280,44 @@ void	test_ft_memmove(void)
 	char b[] = "abcdefgh";
 
 	printf("Before %s: a: %s, b: %s\n", func, a, b);
-	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a, b, sizeof(char) * 4), b);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)memmove(a, b, sizeof(char) * 4), b);
 
 	memcpy(a, "ABCDEFGH", 9);
 
 	printf("Before %s: a: %s, b: %s\n", ft_func, a, b);
-	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memcpy(a, b, sizeof(char) * 4), b);
+	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memmove(a, b, sizeof(char) * 4), b);
 
 	printf("Overlapping test...\n\n");
 
 	memcpy(a, "ABCDEFGH", 9);
 
 	printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
-	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a + 2, a, sizeof(char) * 4), a);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)memmove(a + 2, a, sizeof(char) * 4), a);
 
 	memcpy(a, "ABCDEFGH", 9);
 
 	printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
-	printf("After %s: a: %s, b: %s\n\n", func, (char *)ft_memcpy(a + 2, a, sizeof(char) * 4), a);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)ft_memmove(a + 2, a, sizeof(char) * 4), a);
+}
+
+void	test_ft_toupper()
+{
+	char low = 'a';
+	char tmp;
+	char tmp2;
+
+	printf("\nTesting toupper()...\n");
+
+	while (low <= 'z')
+	{
+		tmp = toupper(low);
+		tmp2 = ft_toupper(low);
+
+		printf("\ntoupper() before: %c, char: %c, int: %i\n", low, tmp, (int)tmp);
+		printf("ft_toupper() before: %c, char: %c, int: %i\n\n", tmp, tmp2, (int)tmp2);
+
+		low++;
+	}
 }
 
 int	main(int count, char **args)
@@ -324,6 +344,8 @@ int	main(int count, char **args)
 			test_ft_memcpy();
 		else if (strcmp(args[1], "memmove") == 0)
 			test_ft_memmove();
+		else if (strcmp(args[1], "toupper") == 0)
+			test_ft_toupper();
 	}
 	else
 	{
