@@ -351,6 +351,23 @@ void	test_ft_strchr()
 	printf("\nft_strchr() string: %s, target: %c, col: %lu, pointer: %p\n\n", s, c, ft_strchr(s, c) - s + 1, ft_strchr(s, c));
 }
 
+void	test_ft_strrchr()
+{
+	char s[1024];
+	char c;
+
+	printf("\nTesting strrchr()...\n");
+
+	printf(">>> Target string: ");
+	scanf("%s", s);
+	scanf("%c", &c);
+	printf("\n>>> Target char: ");
+	scanf("%c", &c);
+
+	printf("\n\nstrrchr() string: %s, target: %c, col: %lu, pointer: %p", s, c, strrchr(s, c) - s + 1, strrchr(s, c));
+	printf("\nft_strrchr() string: %s, target: %c, col: %lu, pointer: %p\n\n", s, c, ft_strrchr(s, c) - s + 1, ft_strrchr(s, c));
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -381,6 +398,8 @@ int	main(int count, char **args)
 			test_ft_tolower();
 		else if (strcmp(args[1], "strchr") == 0)
 			test_ft_strchr();
+		else if (strcmp(args[1], "strrchr") == 0)
+			test_ft_strrchr();
 	}
 	else
 	{
