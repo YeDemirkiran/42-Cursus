@@ -340,6 +340,17 @@ void	test_ft_tolower()
 	}
 }
 
+void	test_ft_strchr()
+{
+	char *s = "ABCDEFGH";
+	char c = 0;
+
+	printf("\nTesting strchr()...\n");
+
+	printf("\nstrchr() string: %s, target: %c, col: %lu, pointer: %p", s, c, strchr(s, c) - s + 1, strchr(s, c));
+	printf("\nft_strchr() string: %s, target: %c, col: %lu, pointer: %p\n\n", s, c, ft_strchr(s, c) - s + 1, ft_strchr(s, c));
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -368,6 +379,8 @@ int	main(int count, char **args)
 			test_ft_toupper();
 		else if (strcmp(args[1], "tolower") == 0)
 			test_ft_tolower();
+		else if (strcmp(args[1], "strchr") == 0)
+			test_ft_strchr();
 	}
 	else
 	{

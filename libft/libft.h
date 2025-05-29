@@ -13,6 +13,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <string.h>
+# include <stdio.h>
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -29,5 +30,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 
 int		ft_toupper(int c);
 int		ft_tolower(int c);
+
+char	*ft_strchr(const char *s, int c);
 
 #endif
