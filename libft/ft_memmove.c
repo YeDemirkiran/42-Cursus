@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 12:23:46 by yademirk          #+#    #+#             */
-/*   Updated: 2025/05/29 12:25:29 by yademirk         ###   ########.fr       */
+/*   Created: 2025/05/29 12:07:51 by yademirk          #+#    #+#             */
+/*   Updated: 2025/05/29 14:41:09 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# include <string.h>
+#include "libft.h"
 
-int		ft_isalpha(int c);
-int		ft_isdigit(int c);
-int		ft_isalnum(int c);
-int		ft_isascii(int c);
-int		ft_isprint(int c);
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	unsigned char	tmp_src[10000];
 
-size_t	ft_strlen(const char *c);
-
-void	*ft_memset(void *s, int c, size_t n);
-void	ft_bzero(void *s, size_t n);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-
-#endif
+	ft_memcpy(tmp_src, (unsigned char *)src, n);
+	ft_memcpy((unsigned char *)dest, tmp_src, n);
+	return (dest);
+}

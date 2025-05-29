@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:47:35 by yademirk          #+#    #+#             */
-/*   Updated: 2025/05/27 15:09:49 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:52:42 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,17 +241,63 @@ void	test_ft_memcpy(void)
 
 	printf("\nTesting '%s'...\n\n", ft_func);
 
-	char a[] = "bebe";
-	char b[] = "haha";
+	printf("Normal test...\n\n");
+
+	char a[] = "ABCDEFGH";
+	char b[] = "abcdefgh";
 
 	printf("Before %s: a: %s, b: %s\n", func, a, b);
-	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a, b, sizeof(char) * 3), b);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a, b, sizeof(char) * 4), b);
 
-	memcpy(a, "bebe", sizeof(char) * 4);
-	memcpy(b, "haha", sizeof(char) * 4);
+	memcpy(a, "ABCDEFGH", 9);
 
 	printf("Before %s: a: %s, b: %s\n", ft_func, a, b);
-	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memcpy(a, b, sizeof(char) * 3), b);
+	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memcpy(a, b, sizeof(char) * 4), b);
+
+	printf("Overlapping test...\n\n");
+
+	memcpy(a, "ABCDEFGH", 9);
+
+	printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a + 2, a, sizeof(char) * 4), a);
+
+	memcpy(a, "ABCDEFGH", 9);
+
+	printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)ft_memcpy(a + 2, a, sizeof(char) * 4), a);
+}
+
+void	test_ft_memmove(void)
+{
+	char *ft_func = "ft_memcpy"; 
+	char *func = "memcpy";
+
+	printf("\nTesting '%s'...\n\n", ft_func);
+
+	printf("Normal test...\n\n");
+
+	char a[] = "ABCDEFGH";
+	char b[] = "abcdefgh";
+
+	printf("Before %s: a: %s, b: %s\n", func, a, b);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a, b, sizeof(char) * 4), b);
+
+	memcpy(a, "ABCDEFGH", 9);
+
+	printf("Before %s: a: %s, b: %s\n", ft_func, a, b);
+	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memcpy(a, b, sizeof(char) * 4), b);
+
+	printf("Overlapping test...\n\n");
+
+	memcpy(a, "ABCDEFGH", 9);
+
+	printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a + 2, a, sizeof(char) * 4), a);
+
+	memcpy(a, "ABCDEFGH", 9);
+
+	printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)ft_memcpy(a + 2, a, sizeof(char) * 4), a);
 }
 
 int	main(int count, char **args)
@@ -276,6 +322,8 @@ int	main(int count, char **args)
 			test_ft_bzero();
 		else if (strcmp(args[1], "memcpy") == 0)
 			test_ft_memcpy();
+		else if (strcmp(args[1], "memmove") == 0)
+			test_ft_memmove();
 	}
 	else
 	{
