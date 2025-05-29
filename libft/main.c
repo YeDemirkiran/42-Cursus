@@ -314,9 +314,29 @@ void	test_ft_toupper()
 		tmp2 = ft_toupper(low);
 
 		printf("\ntoupper() before: %c, char: %c, int: %i\n", low, tmp, (int)tmp);
-		printf("ft_toupper() before: %c, char: %c, int: %i\n\n", tmp, tmp2, (int)tmp2);
+		printf("ft_toupper() before: %c, char: %c, int: %i\n\n", low, tmp2, (int)tmp2);
 
 		low++;
+	}
+}
+
+void	test_ft_tolower()
+{
+	char up = 'A';
+	char tmp;
+	char tmp2;
+
+	printf("\nTesting tolower()...\n");
+
+	while (up <= 'Z')
+	{
+		tmp = tolower(up);
+		tmp2 = ft_tolower(up);
+
+		printf("\ntolower() before: %c, char: %c, int: %i\n", up, tmp, (int)tmp);
+		printf("ft_tolower() before: %c, char: %c, int: %i\n\n", up, tmp2, (int)tmp2);
+
+		up++;
 	}
 }
 
@@ -346,6 +366,8 @@ int	main(int count, char **args)
 			test_ft_memmove();
 		else if (strcmp(args[1], "toupper") == 0)
 			test_ft_toupper();
+		else if (strcmp(args[1], "tolower") == 0)
+			test_ft_tolower();
 	}
 	else
 	{
