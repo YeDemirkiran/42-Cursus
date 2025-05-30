@@ -368,6 +368,25 @@ void	test_ft_strrchr()
 	printf("\nft_strrchr() string: %s, target: %c, col: %lu, pointer: %p\n\n", s, c, ft_strrchr(s, c) - s + 1, ft_strrchr(s, c));
 }
 
+void	test_ft_strncmp()
+{
+	char s1[1024];
+	char s2[1024];
+	int		comp_byte;
+
+	printf("\nTesting strnchr()...\n");
+
+	printf(">>> Target string 1: ");
+	scanf("%s", s1);
+	printf("\n>>> Target string 2: ");
+	scanf("%s", s2);
+	printf("\n>>> Compare number: ");
+	scanf("%i", &comp_byte);
+
+	printf("\n\nstrncmp() string 1: %s, string 2: %s, compare bytes: %i, result: %i", s1, s2, comp_byte, strncmp(s1, s2, comp_byte));
+	printf("\n\nft_strncmp() string 1: %s, string 2: %s, compare bytes: %i, result: %i\n\n", s1, s2, comp_byte, ft_strncmp(s1, s2, comp_byte));
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -400,6 +419,8 @@ int	main(int count, char **args)
 			test_ft_strchr();
 		else if (strcmp(args[1], "strrchr") == 0)
 			test_ft_strrchr();
+		else if (strcmp(args[1], "strncmp") == 0)
+			test_ft_strncmp();
 	}
 	else
 	{

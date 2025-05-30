@@ -34,10 +34,12 @@ int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 
-typedef struct	s_list
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+
+typedef struct s_list
 {
-	void		*content;
-	struct		s_list *next;
-} 				t_list;
+	void			*content;
+	struct s_list	*next;
+}					t_list;
 
 #endif
