@@ -387,6 +387,32 @@ void	test_ft_strncmp()
 	printf("\n\nft_strncmp() string 1: %s, string 2: %s, compare bytes: %i, result: %i\n\n", s1, s2, comp_byte, ft_strncmp(s1, s2, comp_byte));
 }
 
+void	test_ft_memchr()
+{
+	// int test[] = {0, 1, 2, 3, 4, 5};
+	// int c = 2;
+
+	// printf("\n\nmemchr() target: %i, col: %lu, pointer: %p", c, (int *)memchr(test, c, 5) - test + 1, memchr(test, c, 5));
+	// printf("\nft_memchr() target: %i, col: %lu, pointer: %p\n\n", c, (int *)ft_memchr(test, c, 5) - test + 1, ft_memchr(test, c, 5));
+	char s[1024];
+	char c;
+	int bytes;
+
+	printf("\nTesting memchr()...\n");
+
+	printf(">>> Target string: ");
+	scanf("%s", s);
+	
+	scanf("%c", &c);
+	printf("\n>>> Target char: ");
+	scanf("%c", &c);
+	printf("\n>>> Target compare bytes: ");
+	scanf("%i", &bytes);
+
+	printf("\n\nmemchr() target: %c, bytes: %i, col: %lu, pointer: %p", c, bytes, memchr(s, c, bytes) - (void *)s + 1, memchr(s, c, bytes));
+	printf("\nft_memchr() target: %c, bytes: %i, col: %lu, pointer: %p\n\n", c, bytes, ft_memchr(s, c, bytes) - (void *)s + 1, ft_memchr(s, c, bytes));
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -421,6 +447,8 @@ int	main(int count, char **args)
 			test_ft_strrchr();
 		else if (strcmp(args[1], "strncmp") == 0)
 			test_ft_strncmp();
+		else if (strcmp(args[1], "memchr") == 0)
+			test_ft_memchr();
 	}
 	else
 	{
