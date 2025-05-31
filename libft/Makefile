@@ -7,7 +7,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 main: re
-	$(CC) $(FLAGS) main.c $(NAME) -o main.out
+	$(CC) $(FLAGS) main.c $(NAME) -o main.out -lbsd
 	make clean
 
 $(NAME): 

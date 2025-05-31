@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <strings.h>
+#include <bsd/string.h>
 
 void	test_ft_isalpha(void)
 {
@@ -432,6 +433,25 @@ void	test_ft_memchr()
 	printf("\nft_memchr() target: %c, bytes: %i, col: %lu, pointer: %p\n\n", c, bytes, ft_memchr(s, c, bytes) - (void *)s + 1, ft_memchr(s, c, bytes));
 }
 
+void	test_ft_strnstr()
+{
+	char s1[1024];
+	char s2[1024];
+	int		comp_byte;
+
+	printf("\nTesting strnstr()...\n");
+
+	printf(">>> Target string 1: ");
+	scanf("%s", s1);
+	printf("\n>>> Target string 2: ");
+	scanf("%s", s2);
+	printf("\n>>> Compare number: ");
+	scanf("%i", &comp_byte);
+
+	printf("\n\nstrnstr() string 1: %s, string 2: %s, compare bytes: %i, result: %s, pointer: %p", s1, s2, comp_byte, strnstr(s1, s2, comp_byte), strnstr(s1, s2, comp_byte));
+	printf("\n\nft_strnstr() string 1: %s, string 2: %s, compare bytes: %i, result: %s, pointer: %p\n\n", s1, s2, comp_byte, ft_strnstr(s1, s2, comp_byte), ft_strnstr(s1, s2, comp_byte));
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -470,6 +490,8 @@ int	main(int count, char **args)
 			test_ft_memchr();
 		else if (strcmp(args[1], "memcmp") == 0)
 			test_ft_memcmp();
+		else if (strcmp(args[1], "strnstr") == 0)
+			test_ft_strnstr();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
