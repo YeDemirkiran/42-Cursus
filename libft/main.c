@@ -387,6 +387,25 @@ void	test_ft_strncmp()
 	printf("\n\nft_strncmp() string 1: %s, string 2: %s, compare bytes: %i, result: %i\n\n", s1, s2, comp_byte, ft_strncmp(s1, s2, comp_byte));
 }
 
+void	test_ft_memcmp()
+{
+	char s1[1024];
+	char s2[1024];
+	int		comp_byte;
+
+	printf("\nTesting memcmp()...\n");
+
+	printf(">>> Target string 1: ");
+	scanf("%s", s1);
+	printf("\n>>> Target string 2: ");
+	scanf("%s", s2);
+	printf("\n>>> Compare number: ");
+	scanf("%i", &comp_byte);
+
+	printf("\n\nmemcmp() string 1: %s, string 2: %s, compare bytes: %i, result: %i", s1, s2, comp_byte, memcmp(s1, s2, comp_byte));
+	printf("\n\nft_memcmp() string 1: %s, string 2: %s, compare bytes: %i, result: %i\n\n", s1, s2, comp_byte, ft_memcmp(s1, s2, comp_byte));
+}
+
 void	test_ft_memchr()
 {
 	// int test[] = {0, 1, 2, 3, 4, 5};
@@ -449,6 +468,12 @@ int	main(int count, char **args)
 			test_ft_strncmp();
 		else if (strcmp(args[1], "memchr") == 0)
 			test_ft_memchr();
+		else if (strcmp(args[1], "memcmp") == 0)
+			test_ft_memcmp();
+		else
+		{
+			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
+		}
 	}
 	else
 	{
