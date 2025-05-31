@@ -466,6 +466,20 @@ void	test_ft_atoi()
 	printf("\n\natoi() string: %s, result: %i\n\n", s1, ft_atoi(s1));
 }
 
+void	test_ft_strlcpy()
+{
+	char s1[21];
+	char s2[21];
+
+	printf("\nTesting strlcpy()...\n");
+
+	printf(">>> Target string (max 20 chars): ");
+	scanf("%s", s1);
+
+	printf("\nstrlcpy() string: %s, result string: %s, result int: %lu\n\n", s1, s2, strlcpy(s2, s1, 21));
+	//printf("\n\natoi() string: %s, result: %i\n\n", s1, ft_atoi(s1));
+}
+
 
 int	main(int count, char **args)
 {
@@ -509,6 +523,8 @@ int	main(int count, char **args)
 			test_ft_strnstr();
 		else if (strcmp(args[1], "atoi") == 0)
 			test_ft_atoi();
+		else if (strcmp(args[1], "strlcpy") == 0)
+			test_ft_strlcpy();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
