@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <strings.h>
 #include <bsd/string.h>
@@ -452,6 +453,20 @@ void	test_ft_strnstr()
 	printf("\n\nft_strnstr() string 1: %s, string 2: %s, compare bytes: %i, result: %s, pointer: %p\n\n", s1, s2, comp_byte, ft_strnstr(s1, s2, comp_byte), ft_strnstr(s1, s2, comp_byte));
 }
 
+void	test_ft_atoi()
+{
+	char s1[1024];
+
+	printf("\nTesting ft_atoi()...\n");
+
+	printf(">>> Target string: ");
+	scanf("%s", s1);
+
+	printf("\n\natoi() string: %s, result: %i", s1, atoi(s1));
+	printf("\n\natoi() string: %s, result: %i\n\n", s1, ft_atoi(s1));
+}
+
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -492,6 +507,8 @@ int	main(int count, char **args)
 			test_ft_memcmp();
 		else if (strcmp(args[1], "strnstr") == 0)
 			test_ft_strnstr();
+		else if (strcmp(args[1], "atoi") == 0)
+			test_ft_atoi();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
