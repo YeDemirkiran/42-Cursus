@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 #include <strings.h>
 #include <bsd/string.h>
 
@@ -524,8 +525,24 @@ void	test_ft_strlcat()
 	res = ft_strlcat(s3, s2, cat_size);
 
 	printf("\nft_strlcat() String 1: %s, String 2: %s, strlcat size: %lu, result string: %s, result string length: %lu, returned size: %lu, result nul terminated: %i\n", s1, s2, cat_size, s3, ft_strlen(s3), res, ft_isnulterm(s3, cat_size));
+}
 
-	//printf("\nft_strlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n\n", s1, bytes, s2, ft_strlen(s2), ft_strlcpy(s2, s1, bytes));
+void	test_ft_strdup()
+{
+	char s1[1024];
+	char *s2;
+
+	printf("\nTesting strdup()...\n");
+
+	printf(">>> Target string (max 1024 chars): ");
+	scanf("%s", s1);
+
+	s2 = strdup(s1);
+
+	printf("\nstrdup() target string: %s, target string length: %lu, result string: %s, result string length: %lu\n", s1, ft_strlen(s1), s2, ft_strlen(s2));
+	printf("Attempting free() for strdup()...\n");
+	free(s2);
+	printf("No errors, which means free() was successful.\n");
 }
 
 int	main(int count, char **args)
@@ -574,6 +591,8 @@ int	main(int count, char **args)
 			test_ft_strlcpy();
 		else if (strcmp(args[1], "strlcat") == 0)
 			test_ft_strlcat();
+		else if (strcmp(args[1], "strdup") == 0)
+			test_ft_strdup();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);

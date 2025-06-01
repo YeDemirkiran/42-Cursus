@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <string.h>
 # include <stdio.h>
+# include <errno.h>
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
