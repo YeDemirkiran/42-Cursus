@@ -487,6 +487,37 @@ void	test_ft_strlcpy()
 	printf("\nft_strlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n\n", s1, bytes, s2, ft_strlen(s2), ft_strlcpy(s2, s1, bytes));
 }
 
+void	test_ft_strlcat()
+{
+	char s1[1024];
+	char s2[1024];
+	char s3[2048];
+	size_t cat_size;
+
+	printf("\nTesting strlcat()...\n");
+
+	printf(">>> String 1: ");
+	fgets(s1, 1024, stdin);
+	s1[ft_strlen(s1) - 2] = 0;
+
+	printf(">>> String 2: ");
+	fgets(s2, 20, stdin);
+	s2[ft_strlen(s2) - 2] = 0;
+
+	printf(">>> strlcat size: ");
+	scanf("%lu", &cat_size);
+
+	ft_strlcpy(s3, s1, ft_strlen(s1) + 1);
+
+	size_t res = strlcat(s3, s2, cat_size);
+
+	printf("\nstrlcat() String 1: %s, String 2: %s, strlcat size: %lu, result string: %s, result string length: %lu, returned size: %lu\n", s1, s2, cat_size, s3, ft_strlen(s3), res);
+
+	ft_bzero(s3, 2048);
+
+	//printf("\nft_strlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n\n", s1, bytes, s2, ft_strlen(s2), ft_strlcpy(s2, s1, bytes));
+}
+
 
 int	main(int count, char **args)
 {
@@ -532,6 +563,8 @@ int	main(int count, char **args)
 			test_ft_atoi();
 		else if (strcmp(args[1], "strlcpy") == 0)
 			test_ft_strlcpy();
+		else if (strcmp(args[1], "strlcat") == 0)
+			test_ft_strlcat();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
