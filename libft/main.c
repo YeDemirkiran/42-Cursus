@@ -17,6 +17,11 @@
 #include <strings.h>
 #include <bsd/string.h>
 
+int	ft_isnulterm(const char *s, size_t len)
+{
+	return (s[len - 1] == 0);
+}
+
 void	test_ft_isalpha(void)
 {
 	char *ft_func = "ft_isalpha"; 
@@ -498,11 +503,11 @@ void	test_ft_strlcat()
 
 	printf(">>> String 1: ");
 	fgets(s1, 1024, stdin);
-	s1[ft_strlen(s1) - 2] = 0;
+	*(ft_strrchr(s1, '\n')) = 0;
 
 	printf(">>> String 2: ");
-	fgets(s2, 20, stdin);
-	s2[ft_strlen(s2) - 2] = 0;
+	fgets(s2, 1024, stdin);
+	*(ft_strrchr(s2, '\n')) = 0;
 
 	printf(">>> strlcat size: ");
 	scanf("%lu", &cat_size);
@@ -511,13 +516,17 @@ void	test_ft_strlcat()
 
 	size_t res = strlcat(s3, s2, cat_size);
 
-	printf("\nstrlcat() String 1: %s, String 2: %s, strlcat size: %lu, result string: %s, result string length: %lu, returned size: %lu\n", s1, s2, cat_size, s3, ft_strlen(s3), res);
+	printf("\nstrlcat() String 1: %s, String 2: %s, strlcat size: %lu, result string: %s, result string length: %lu, returned size: %lu, result nul terminated: %i\n", s1, s2, cat_size, s3, ft_strlen(s3), res, ft_isnulterm(s3, cat_size));
 
 	ft_bzero(s3, 2048);
 
+	ft_strlcpy(s3, s1, ft_strlen(s1) + 1);
+	res = ft_strlcat(s3, s2, cat_size);
+
+	printf("\nft_strlcat() String 1: %s, String 2: %s, strlcat size: %lu, result string: %s, result string length: %lu, returned size: %lu, result nul terminated: %i\n", s1, s2, cat_size, s3, ft_strlen(s3), res, ft_isnulterm(s3, cat_size));
+
 	//printf("\nft_strlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n\n", s1, bytes, s2, ft_strlen(s2), ft_strlcpy(s2, s1, bytes));
 }
-
 
 int	main(int count, char **args)
 {
