@@ -470,14 +470,21 @@ void	test_ft_strlcpy()
 {
 	char s1[21];
 	char s2[21];
+	int bytes;
 
 	printf("\nTesting strlcpy()...\n");
 
 	printf(">>> Target string (max 20 chars): ");
 	scanf("%s", s1);
 
-	printf("\nstrlcpy() string: %s, result string: %s, result int: %lu\n\n", s1, s2, strlcpy(s2, s1, 21));
-	//printf("\n\natoi() string: %s, result: %i\n\n", s1, ft_atoi(s1));
+	printf("\n\n>>> Target string size (null terminator included): ");
+	scanf("%i", &bytes);
+
+	printf("\nstrlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n", s1, bytes, s2, ft_strlen(s2), strlcpy(s2, s1, bytes));
+
+	ft_bzero(s2, 21);
+
+	printf("\nft_strlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n\n", s1, bytes, s2, ft_strlen(s2), ft_strlcpy(s2, s1, bytes));
 }
 
 

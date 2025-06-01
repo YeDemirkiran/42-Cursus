@@ -42,6 +42,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 
 int		ft_atoi(const char *nptr);
 
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+
 typedef struct s_list
 {
 	void			*content;
