@@ -535,7 +535,8 @@ void	test_ft_strdup()
 	printf("\nTesting strdup()...\n");
 
 	printf(">>> Target string (max 1024 chars): ");
-	scanf("%s", s1);
+	fgets(s1, 1024, stdin);
+	*ft_strrchr(s1, '\n') = 0;
 
 	s2 = strdup(s1);
 
@@ -543,6 +544,13 @@ void	test_ft_strdup()
 	printf("Attempting free() for strdup()...\n");
 	free(s2);
 	printf("No errors, which means free() was successful.\n");
+
+	s2 = ft_strdup(s1);
+	printf("\nft_strdup() target string: %s, target string length: %lu, result string: %s, result string length: %lu\n", s1, ft_strlen(s1), s2, ft_strlen(s2));
+	printf("Attempting free() for ft_strdup()...\n");
+	free(s2);
+	printf("No errors, which means free() was successful.\n");
+
 }
 
 int	main(int count, char **args)

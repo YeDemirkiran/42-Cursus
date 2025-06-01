@@ -14,7 +14,7 @@
 # define LIBFT_H
 # include <string.h>
 # include <stdio.h>
-# include <errno.h>
+# include <stdlib.h>
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -45,6 +45,8 @@ int		ft_atoi(const char *nptr);
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
+
+char	*ft_strdup(const char *s);
 
 typedef struct s_list
 {
