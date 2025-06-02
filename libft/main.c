@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:47:35 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/02 12:05:17 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/02 13:00:55 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <string.h>
 #include <strings.h>
 #include <bsd/string.h>
+#include <errno.h>
 
 int	ft_isnulterm(const char *s, size_t len)
 {
@@ -568,45 +569,83 @@ void	test_ft_calloc()
 {
 	int	*array;
 	size_t array_size;
+	size_t s;
 
 	printf("\nTesting ft_calloc()...");
 
 	printf("\n\nTest 1: Integer Array");
-	printf("\nTESTING calloc()...");
 	printf("\nSet a fixed array size. The array will be populated with random integers.");
 	printf("\n\n>>> Array size: ");
 	scanf("%lu", &array_size);
 
-	printf("\nAllocating an array with %lu members...", array_size);
-	array = calloc(array_size, sizeof(int));
+	printf("\nTESTING calloc()...");
+	printf("\nAllocating an array using calloc() with %lu members...", array_size);
+	array = (int *)calloc(array_size, sizeof(int));
 	
-	if (array == NULL)
+	if (!array || array_size <= 0 || errno != 0)
 	{
-		printf("\ncalloc() returned an arror, allocation was unsuccessful. Aborting test.\n\n");
+		printf("\ncalloc() returned an arror, allocation was unsuccessful.");
+		printf("\nReason: %s, errno: %i", strerror(errno), errno);
+		printf("\nNote that errno might be wrong if the array_size is 0.");
 		free(array);
-		exit(-1);
 	}
-	
-	printf("\nAllocation successful. Current array: \n");
-	ft_printf_array(array, ", ", array_size);
-
-	printf("\n\nGenerating random int data...");
-
-	size_t s = array_size - 1;
-
-	while (s-- > 0)
+	else
 	{
-		array[s] = rand();
-	}
-	
-	printf("\nGenerated random data. Current array: \n");
-	ft_printf_array(array, ", ", array_size);
+		printf("\nAllocation successful. Current array: \n");
+		ft_printf_array(array, ", ", array_size);
 
-	printf("\n\nAttempting to free() the calloc() array...");
-	free(array);
-	printf("\nNo error, which means free() was successful.");
+		printf("\nGenerating random int data...");
+
+		s = array_size - 1;
+
+		while (s-- > 0)
+		{
+			array[s] = rand();
+		}
+
+		printf("\nGenerated random data. Current array: \n");
+		ft_printf_array(array, ", ", array_size);
+
+		printf("\nAttempting to free() the calloc() array...");
+		free(array);
+		printf("\nNo error, which means free() was successful.");
+	}
+
+	errno = 0;
 
 	printf("\n\nTESTING ft_calloc()...");
+	printf("\nAllocating an array using ft_calloc() with %lu members...", array_size);
+
+	array = (int *)ft_calloc(array_size, sizeof(int));
+	
+	if (!array || array_size <= 0)
+	{
+		printf("\nft_calloc() returned an arror, allocation was unsuccessful.");
+		printf("\nReason: %s, errno: %i", strerror(errno), errno);
+		printf("\nNote that errno might be wrong if the array_size is 0. Aborting test.\n\n");
+		free(array);
+	}
+	else
+	{
+		printf("\nAllocation successful. Current array: \n");
+		ft_printf_array(array, ", ", array_size);
+
+		printf("\nGenerating random int data...");
+
+		s = array_size - 1;
+
+		while (s-- > 0)
+		{
+			array[s] = rand();
+		}
+		
+		printf("\nGenerated random data. Current array: \n");
+		ft_printf_array(array, ", ", array_size);
+
+		printf("\nAttempting to free() the ft_calloc() array...");
+		free(array);
+		printf("\nNo error, which means free() was successful.\n\n");
+	}
 }
 
 int	main(int count, char **args)
