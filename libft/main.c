@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:47:35 by yademirk          #+#    #+#             */
-/*   Updated: 2025/05/29 14:52:42 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:05:17 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,11 +459,12 @@ void	test_ft_strnstr()
 	printf("\n\nft_strnstr() string 1: %s, string 2: %s, compare bytes: %i, result: %s, pointer: %p\n\n", s1, s2, comp_byte, ft_strnstr(s1, s2, comp_byte), ft_strnstr(s1, s2, comp_byte));
 }
 
+
 void	test_ft_atoi()
 {
 	char s1[1024];
 
-	printf("\nTesting ft_atoi()...\n");
+	printf("\n\nTesting ft_atoi()...\n\n");
 
 	printf(">>> Target string: ");
 	scanf("%s", s1);
@@ -550,7 +551,62 @@ void	test_ft_strdup()
 	printf("Attempting free() for ft_strdup()...\n");
 	free(s2);
 	printf("No errors, which means free() was successful.\n");
+}
 
+void	ft_printf_array(void *arr, char *seperator, size_t size)
+{
+	while (size-- > 0)
+	{
+		printf("%i", *(int *)(arr++));
+
+		if (size != 0)
+			printf("%s", seperator);
+	}
+}
+
+void	test_ft_calloc()
+{
+	int	*array;
+	size_t array_size;
+
+	printf("\nTesting ft_calloc()...");
+
+	printf("\n\nTest 1: Integer Array");
+	printf("\nTESTING calloc()...");
+	printf("\nSet a fixed array size. The array will be populated with random integers.");
+	printf("\n\n>>> Array size: ");
+	scanf("%lu", &array_size);
+
+	printf("\nAllocating an array with %lu members...", array_size);
+	array = calloc(array_size, sizeof(int));
+	
+	if (array == NULL)
+	{
+		printf("\ncalloc() returned an arror, allocation was unsuccessful. Aborting test.\n\n");
+		free(array);
+		exit(-1);
+	}
+	
+	printf("\nAllocation successful. Current array: \n");
+	ft_printf_array(array, ", ", array_size);
+
+	printf("\n\nGenerating random int data...");
+
+	size_t s = array_size - 1;
+
+	while (s-- > 0)
+	{
+		array[s] = rand();
+	}
+	
+	printf("\nGenerated random data. Current array: \n");
+	ft_printf_array(array, ", ", array_size);
+
+	printf("\n\nAttempting to free() the calloc() array...");
+	free(array);
+	printf("\nNo error, which means free() was successful.");
+
+	printf("\n\nTESTING ft_calloc()...");
 }
 
 int	main(int count, char **args)
@@ -601,6 +657,8 @@ int	main(int count, char **args)
 			test_ft_strlcat();
 		else if (strcmp(args[1], "strdup") == 0)
 			test_ft_strdup();
+		else if (strcmp(args[1], "calloc") == 0)
+			test_ft_calloc();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
