@@ -46,13 +46,16 @@ void	test_ft_atoi()
 
 	printf("\n\nTesting ft_atoi()...\n\n");
 
-	printf(">>> Target string: ");
-	fgets(s1, 1024, stdin);
-	strip_newline(s1, 0);
+	while (1)
+	{
+		printf(">>> Target string: ");
+		fgets(s1, 1024, stdin);
+		strip_newline(s1, 0);
 
-	printf("\nString: %s%%", s1);
-	printf("\natoi() result: %i",atoi(s1));
-	printf("\nft_atoi() result: %i\n\n", ft_atoi(s1));
+		printf("\nString: %s%%", s1);
+		printf("\natoi() result: %i",atoi(s1));
+		printf("\nft_atoi() result: %i\n\n", ft_atoi(s1));
+	}	
 }
 
 void	test_ft_bzero(void)

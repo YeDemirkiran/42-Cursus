@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 int	ft_isspace(int c)
 {
 	return ((c >= 9 && c <= 13) || c == ' ');
@@ -19,46 +21,18 @@ int	ft_atoi(const char *nptr)
 {
 	int	num;
 	int	sign;
-	int	skip;
 
 	num = 0;
 	sign = 1;
-	skip = 1;
-	while (*nptr)
+	while (ft_isspace(*nptr))
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
 	{
-		// if (skip)
-		// {
-		// 	if (*nptr == '-')
-		// 		sign = -1;
-		// 	if (!ft_isspace(*nptr))
-		// 	{
-		// 		skip = 0;
-		// 		if (*nptr == '-' || *nptr == '+')
-		// 			nptr++;
-		// 	}
-		// }
-		// if (!skip)
-		// {
-		// 	if (*nptr >= '0' && *nptr <= '9')
-		// 	{
-		// 		num *= 10;
-		// 		num += *nptr - 48;
-		// 	}
-		// 	else
-		// 		break ;
-		// }
-		if (*nptr == '-' && skip)
+		if (*nptr == '-')
 			sign = -1;
-		else if (*nptr >= '0' && *nptr <= '9')
-		{
-			num *= 10;
-			num += *nptr - 48;
-		}
-		else if (!(skip && (*nptr == '+' || ft_isspace(*nptr))))
-			break ;
-		if (skip && !ft_isspace(*nptr))
-			skip = 0;
 		nptr++;
 	}
+	while (ft_isdigit(*nptr))
+		num = (num * 10) + (*(nptr++) - 48);
 	return (num * sign);
 }
