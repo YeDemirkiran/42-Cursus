@@ -411,35 +411,60 @@ void	test_ft_memmove(void)
 
 void	test_ft_memset(void)
 {
-	char *ft_func = "ft_memset"; 
-	char *func = "memset";
+	char	s1[1024];
+	char	s2[1024];
+	int		start;
+	int		end;
+	char	c;
+	char	answer;
 
-	printf("\nTesting '%s'...\n\n", ft_func);
+	printf("\n\n");
+	printf("Testing ft_memset()...");
 
-	int sizes[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20};
-	char chars[] = {'a', 'b', 'c', 'd', '&', '(', '7', 'Z', 'A', 'g', 'y', 'e'};
-	int size = 12;
-	int i = 0;
-
-	while (i < size)
+	answer = 'n';
+	while (1)
 	{
-		char a[] = "01234567891";
-		char b[] = "01234567891";
+		printf("\n\n");
+		if (answer != 'y')
+		{
+			ft_bzero(s1, 1024);
+			ft_bzero(s2, 1024);
+			printf(">>> Target string: ");
+			fgets(s1, 1024, stdin);
+			if (ft_strncmp(s1, "exit", 4) == 0)
+				break;
+			strip_newline(s1, 0);
+			printf("\n");
+		}
 
-		printf("'%s', %s(%c, %i): ", a, func, chars[i], sizes[i]);
+		printf(">>> Start: ");
+		scanf("%i", &start);
+		printf("\n");
 
-		memset(a, chars[i], sizes[i]);
+		printf(">>> Length: ");
+		scanf("%i", &end);
+		printf("\n");
 
-		printf("%s, %s(%c, %i): ", a, ft_func, chars[i], sizes[i]);
+		scanf("%c", &c); // Repeat
+		printf(">>> Char: ");
+		scanf("%c", &c);
+		printf("\n\n");
 
-		ft_memset(b, chars[i], sizes[i]);
+		ft_strlcpy(s2, s1, ft_strlen(s1) + 1);
+		ft_memset(s1 + start, c, end);
+		ft_memset(s2 + start, c, end);
 
-		printf("%s\n", b);
+		scanf("%c", &c);
 
-		i++;
+		printf("memset() result: %s", s1);
+		printf("\n");
+		printf("ft_memset() result: %s", s1);
+
+		printf("\n\n");
+		printf("Keep the current string? (y/n): ");
+		scanf("%c", &answer);
+		getchar();
 	}
-
-	printf("\n");
 }
 
 void	test_ft_strchr()
