@@ -26,9 +26,12 @@ int	ft_isnulterm(const char *s, size_t len)
 
 void	ft_printf_array(void *arr, char *seperator, size_t size)
 {
+	int	*tmp_arr;
+
+	tmp_arr = (int *)arr;
 	while (size-- > 0)
 	{
-		printf("%i", *(int *)(arr++));
+		printf("%d", *(tmp_arr++));
 
 		if (size != 0)
 			printf("%s", seperator);
@@ -64,62 +67,32 @@ void	test_ft_atoi()
 
 void	test_ft_bzero(void)
 {
-	char *ft_func = "ft_bzero"; 
-	char *func = "bzero";
+	int	arr1[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+	int	arr2[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-	printf("\nTesting '%s'...\n\n", ft_func);
+	//ft_memset(arr1, 1, 10 * sizeof(int));
+	//ft_memset(arr2, 2, 10 * sizeof(int));
 
-	size_t sizes[] = {0, sizeof(int), 2 * sizeof(int), 3 * sizeof(int), 4 * sizeof(int), 5 * sizeof(int), 6 * sizeof(int), 7 * sizeof(int), 8 * sizeof(int), 9 * sizeof(int), 10 * sizeof(int)};
-	int size = 11;
-	int i = 0;
-
-	while (i < size)
-	{
-		int a[] = {31, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-		int b[] = {31, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-		int test_size = 10;
-
-		printf("(");
-
-		int j = 0;
-
-		while (j < test_size)
-		{
-			printf("%i ", a[j++]);
-		}
-
-		printf("), %s(%zu): ", func, sizes[i]);
-
-		bzero(a, sizes[i]);
-
-		printf("(");
-
-		j = 0;
-
-		while (j < test_size)
-		{
-			printf("%i ", a[j++]);
-		}
-
-		printf("), %s(%zu): ", ft_func, sizes[i]);
-
-		ft_bzero(b, sizes[i]);
-
-		printf("(");
-
-		j = 0;
-
-		while (j < test_size)
-		{
-			printf("%i ", a[j++]);
-		}
-
-		printf(")\n");
-
-		i++;
-	}
-
+	printf("\n\n");
+	printf("Testing ft_bzero()...");
+	printf("\n\n");
+	printf("Array 1 before bzero(): ");
+	ft_printf_array(arr1, ", ", 10);
 	printf("\n");
+	printf("Array 2 before ft_bzero(): ");
+	ft_printf_array(arr2, ", ", 10);
+
+	bzero(arr1, 5 * sizeof(int));
+	ft_bzero(arr2, 5 * sizeof(int));
+
+	printf("\n\n");
+	printf("Array 1 after bzero(): ");
+	ft_printf_array(arr1, ", ", 10);
+	printf("\n");
+	printf("Array 2 after ft_bzero(): ");
+	ft_printf_array(arr2, ", ", 10);
+
+	printf("\n\n");
 }
 
 void	test_ft_calloc()
@@ -153,11 +126,11 @@ void	test_ft_calloc()
 
 		printf("\nGenerating random int data...");
 
-		s = array_size - 1;
+		s = array_size;
 
-		while (s-- > 0)
+		while (s > 0)
 		{
-			array[s] = rand();
+			array[s-- - 1] = rand();
 		}
 
 		printf("\nGenerated random data. Current array: \n");
@@ -189,11 +162,11 @@ void	test_ft_calloc()
 
 		printf("\nGenerating random int data...");
 
-		s = array_size - 1;
+		s = array_size;
 
-		while (s-- > 0)
+		while (s > 0)
 		{
-			array[s] = rand();
+			array[s-- - 1] = rand();
 		}
 		
 		printf("\nGenerated random data. Current array: \n");
@@ -427,8 +400,8 @@ void	test_ft_memset(void)
 		printf("\n\n");
 		if (answer != 'y')
 		{
-			ft_bzero(s1, 1024);
-			ft_bzero(s2, 1024);
+			ft_bzero(s1, 1024 * sizeof(char));
+			ft_bzero(s2, 1024 * sizeof(char));
 			printf(">>> Target string: ");
 			fgets(s1, 1024, stdin);
 			if (ft_strncmp(s1, "exit", 4) == 0)
@@ -451,8 +424,8 @@ void	test_ft_memset(void)
 		printf("\n\n");
 
 		ft_strlcpy(s2, s1, ft_strlen(s1) + 1);
-		ft_memset(s1 + start, c, end);
-		ft_memset(s2 + start, c, end);
+		ft_memset(s1 + start, c, end * sizeof(char));
+		ft_memset(s2 + start, c, end * sizeof(char));
 
 		scanf("%c", &c);
 
