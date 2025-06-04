@@ -24,14 +24,14 @@ int	ft_isnulterm(const char *s, size_t len)
 	return (s[len - 1] == 0);
 }
 
-void	ft_printf_array(void *arr, char *seperator, size_t size)
+void	ft_printf_array(void *arr, char *seperator, size_t size, char *print_mode)
 {
 	int	*tmp_arr;
 
 	tmp_arr = (int *)arr;
 	while (size-- > 0)
 	{
-		printf("%d", *(tmp_arr++));
+		printf(print_mode, *(tmp_arr++));
 
 		if (size != 0)
 			printf("%s", seperator);
@@ -77,20 +77,20 @@ void	test_ft_bzero(void)
 	printf("Testing ft_bzero()...");
 	printf("\n\n");
 	printf("Array 1 before bzero(): ");
-	ft_printf_array(arr1, ", ", 10);
+	ft_printf_array(arr1, ", ", 10, "%i");
 	printf("\n");
 	printf("Array 2 before ft_bzero(): ");
-	ft_printf_array(arr2, ", ", 10);
+	ft_printf_array(arr2, ", ", 10, "%i");
 
 	bzero(arr1, 5 * sizeof(int));
 	ft_bzero(arr2, 5 * sizeof(int));
 
 	printf("\n\n");
 	printf("Array 1 after bzero(): ");
-	ft_printf_array(arr1, ", ", 10);
+	ft_printf_array(arr1, ", ", 10, "%i");
 	printf("\n");
 	printf("Array 2 after ft_bzero(): ");
-	ft_printf_array(arr2, ", ", 10);
+	ft_printf_array(arr2, ", ", 10, "%i");
 
 	printf("\n\n");
 }
@@ -99,6 +99,7 @@ void	test_ft_calloc()
 {
 	int	*array;
 	size_t array_size;
+	size_t member_size;
 	size_t s;
 
 	printf("\nTesting ft_calloc()...");
@@ -107,12 +108,14 @@ void	test_ft_calloc()
 	printf("\nSet a fixed array size. The array will be populated with random integers.");
 	printf("\n\n>>> Array size: ");
 	scanf("%lu", &array_size);
+	printf("\n>>> Member size: ");
+	scanf("%lu", &member_size);
 
 	printf("\nTESTING calloc()...");
-	printf("\nAllocating an array using calloc() with %lu members...", array_size);
-	array = (int *)calloc(array_size, sizeof(int));
+	printf("\nAllocating an array using calloc() with %lu members of %lu size...", array_size, member_size);
+	array = calloc(array_size, member_size);
 	
-	if (!array || array_size <= 0 || errno != 0)
+	if (!array || errno != 0)
 	{
 		printf("\ncalloc() returned an arror, allocation was unsuccessful.");
 		printf("\nReason: %s, errno: %i", strerror(errno), errno);
@@ -122,19 +125,19 @@ void	test_ft_calloc()
 	else
 	{
 		printf("\nAllocation successful. Current array: \n");
-		ft_printf_array(array, ", ", array_size);
+		ft_printf_array(array, ", ", array_size, "%i");
 
 		printf("\nGenerating random int data...");
 
 		s = array_size;
 
-		while (s > 0)
+		while (s-- > 0)
 		{
-			array[s-- - 1] = rand();
+			array[s] = rand() % 128;
 		}
 
 		printf("\nGenerated random data. Current array: \n");
-		ft_printf_array(array, ", ", array_size);
+		ft_printf_array(array, ", ", array_size, "%c");
 
 		printf("\nAttempting to free() the calloc() array...");
 		free(array);
@@ -144,11 +147,11 @@ void	test_ft_calloc()
 	errno = 0;
 
 	printf("\n\nTESTING ft_calloc()...");
-	printf("\nAllocating an array using ft_calloc() with %lu members...", array_size);
+	printf("\nAllocating an array using ft_calloc() with %lu members of %lu size...", array_size, member_size);
 
-	array = (int *)ft_calloc(array_size, sizeof(int));
+	array = ft_calloc(array_size, member_size);
 	
-	if (!array || array_size <= 0)
+	if (!array || errno != 0)
 	{
 		printf("\nft_calloc() returned an arror, allocation was unsuccessful.");
 		printf("\nReason: %s, errno: %i", strerror(errno), errno);
@@ -158,19 +161,19 @@ void	test_ft_calloc()
 	else
 	{
 		printf("\nAllocation successful. Current array: \n");
-		ft_printf_array(array, ", ", array_size);
+		ft_printf_array(array, ", ", array_size, "%i");
 
 		printf("\nGenerating random int data...");
 
 		s = array_size;
 
-		while (s > 0)
+		while (s-- > 0)
 		{
-			array[s-- - 1] = rand();
+			array[s] = rand() % 128;
 		}
 		
 		printf("\nGenerated random data. Current array: \n");
-		ft_printf_array(array, ", ", array_size);
+		ft_printf_array(array, ", ", array_size, "%c");
 
 		printf("\nAttempting to free() the ft_calloc() array...");
 		free(array);
