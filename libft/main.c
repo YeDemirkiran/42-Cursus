@@ -183,7 +183,7 @@ void	test_ft_calloc()
 
 void	test_ft_isalnum(void)
 {
-	int *tests;
+	char *tests;
 	int i = 0;
 
 	printf("\nTesting ft_isalnum()...\n\n");
@@ -204,90 +204,111 @@ void	test_ft_isalnum(void)
 	}
 	
 	printf("\n");
+	free(tests);
 }
 
 void	test_ft_isalpha(void)
 {
-	char *ft_func = "ft_isalpha"; 
-	char *func = "isalpha";
-	int tests[] = {'A', 'a', 'Z', 'z', '.', ',', '4', 0};
-
-	printf("\nTesting '%s'...\n\n", ft_func);
-
+	char *tests;
 	int i = 0;
 
-	while (tests[i] != 0)
+	printf("\nTesting ft_isalpha()...\n\n");
+
+	tests = ft_calloc(128, sizeof(char));
+	while (i < 128)
 	{
-		printf("'%c', %s: %i, %s: %i\n", tests[i], func, isalpha(tests[i]), ft_func, ft_isalpha(tests[i]));
+		tests[i] = i;
+		i++;
+	}	
+	
+	i = 0;
+
+	while (i < 128)
+	{
+		printf("Char: '%c' (int: %i), isalpha(): %i, ft_isalpha(): %i\n", tests[i], tests[i], isalpha(tests[i]), ft_isalpha(tests[i]));
 		i++;
 	}
-
-	printf("NULL, %s: %i, %s: %i\n\n", func, isalpha(0), ft_func, ft_isalpha(0));
 	
 	printf("\n");
+	free(tests);
 }
 
 void	test_ft_isascii(void)
 {
-	char *ft_func = "ft_isascii"; 
-	char *func = "isascii";
-	int tests[] = {'0', '9', 'A', 'a', 'Z', 'z', '.', ',', '4', 128, 255, 0};
-
-	printf("\nTesting '%s'...\n\n", ft_func);
-
+	unsigned char *tests;
 	int i = 0;
 
-	while (tests[i] != 0)
+	printf("\nTesting ft_isascii()...\n\n");
+
+	tests = ft_calloc(256, sizeof(char));
+	while (i < 256)
 	{
-		printf("'%c', %s: %i, %s: %i\n", tests[i], func, __isascii(tests[i]), ft_func, ft_isascii(tests[i]));
+		tests[i] = i;
+		i++;
+	}	
+	
+	i = 0;
+
+	while (i < 256)
+	{
+		printf("Char: '%c' (int: %i), isascii(): %i, ft_isascii(): %i\n", tests[i], tests[i], __isascii(tests[i]), ft_isascii(tests[i]));
 		i++;
 	}
-
-	printf("NULL, %s: %i, %s: %i\n\n", func, __isascii(0), ft_func, ft_isascii(0));
 	
 	printf("\n");
+	free(tests);
 }
 
 void	test_ft_isdigit(void)
 {
-	char *ft_func = "ft_isdigit"; 
-	char *func = "isdigit";
-	int tests[] = {'0', '9', 'Z', 'z', '.', ',', '4', 0};
-
-	printf("\nTesting '%s'...\n\n", ft_func);
-
+	char *tests;
 	int i = 0;
 
-	while (tests[i] != 0)
+	printf("\nTesting ft_isdigit()...\n\n");
+
+	tests = ft_calloc(128, sizeof(char));
+	while (i < 128)
 	{
-		printf("'%c', %s: %i, %s: %i\n", tests[i], func, isdigit(tests[i]), ft_func, ft_isdigit(tests[i]));
+		tests[i] = i;
+		i++;
+	}	
+	
+	i = 0;
+
+	while (i < 128)
+	{
+		printf("Char: '%c' (int: %i), isdigit(): %i, ft_isdigit(): %i\n", tests[i], tests[i], isdigit(tests[i]), ft_isdigit(tests[i]));
 		i++;
 	}
-
-	printf("NULL, %s: %i, %s: %i\n\n", func, isdigit(0), ft_func, ft_isdigit(0));
 	
 	printf("\n");
+	free(tests);
 }
 
 void	test_ft_isprint(void)
 {
-	char *ft_func = "ft_isprint"; 
-	char *func = "isprint";
-	int tests[] = {'0', '9', 'A', 'a', 'Z', 'z', '.', ',', '4', 126, 127, 31, 255, 0};
-
-	printf("\nTesting '%s'...\n\n", ft_func);
-
+	char *tests;
 	int i = 0;
 
-	while (tests[i] != 0)
+	printf("\nTesting ft_isprint()...\n\n");
+
+	tests = ft_calloc(128, sizeof(char));
+	while (i < 128)
 	{
-		printf("'%c', %s: %i, %s: %i\n", tests[i], func, isprint(tests[i]), ft_func, ft_isprint(tests[i]));
+		tests[i] = i;
+		i++;
+	}	
+	
+	i = 0;
+
+	while (i < 128)
+	{
+		printf("Char: '%c' (int: %i), isprint(): %i, ft_isprint(): %i\n", tests[i], tests[i], isprint(tests[i]), ft_isprint(tests[i]));
 		i++;
 	}
-
-	printf("NULL, %s: %i, %s: %i\n\n", func, isprint(0), ft_func, ft_isprint(0));
 	
 	printf("\n");
+	free(tests);
 }
 
 void	test_ft_memchr()
