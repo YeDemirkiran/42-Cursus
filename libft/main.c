@@ -183,21 +183,25 @@ void	test_ft_calloc()
 
 void	test_ft_isalnum(void)
 {
-	char *ft_func = "ft_isalnum"; 
-	char *func = "isalnum";
-	int tests[] = {'0', '9', 'A', 'a', 'Z', 'z', '.', ',', '4', 0};
-
-	printf("\nTesting '%s'...\n\n", ft_func);
-
+	int *tests;
 	int i = 0;
 
-	while (tests[i] != 0)
+	printf("\nTesting ft_isalnum()...\n\n");
+
+	tests = ft_calloc(128, sizeof(char));
+	while (i < 128)
 	{
-		printf("'%c', %s: %i, %s: %i\n", tests[i], func, isalnum(tests[i]), ft_func, ft_isalnum(tests[i]));
+		tests[i] = i;
+		i++;
+	}	
+	
+	i = 0;
+
+	while (i < 128)
+	{
+		printf("Char: '%c' (int: %i), isalnum(): %i, ft_isalnum(): %i\n", tests[i], tests[i], isalnum(tests[i]), ft_isalnum(tests[i]));
 		i++;
 	}
-
-	printf("NULL, %s: %i, %s: %i\n\n", func, isalnum(0), ft_func, ft_isalnum(0));
 	
 	printf("\n");
 }
