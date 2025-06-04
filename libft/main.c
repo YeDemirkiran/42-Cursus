@@ -319,22 +319,32 @@ void	test_ft_memchr()
 	// printf("\n\nmemchr() target: %i, col: %lu, pointer: %p", c, (int *)memchr(test, c, 5) - test + 1, memchr(test, c, 5));
 	// printf("\nft_memchr() target: %i, col: %lu, pointer: %p\n\n", c, (int *)ft_memchr(test, c, 5) - test + 1, ft_memchr(test, c, 5));
 	char s[1024];
+	char s2[1024];
 	char c;
 	int bytes;
+	void	*result;
+	void	*ft_result;
 
 	printf("\nTesting memchr()...\n");
 
 	printf(">>> Target string: ");
-	scanf("%s", s);
+	fgets(s, 1024, stdin);
+	strip_newline(s, 0);
 	
-	scanf("%c", &c);
 	printf("\n>>> Target char: ");
-	scanf("%c", &c);
+	fgets(s2, 1024, stdin);
+	if (ft_strncmp(s2, "null", 4) == 0)
+		c = 0;
+	else
+		c = s2[0];
 	printf("\n>>> Target compare bytes: ");
 	scanf("%i", &bytes);
 
-	printf("\n\nmemchr() target: %c, bytes: %i, col: %lu, pointer: %p", c, bytes, memchr(s, c, bytes) - (void *)s + 1, memchr(s, c, bytes));
-	printf("\nft_memchr() target: %c, bytes: %i, col: %lu, pointer: %p\n\n", c, bytes, ft_memchr(s, c, bytes) - (void *)s + 1, ft_memchr(s, c, bytes));
+	result = memchr(s, c, bytes);
+	ft_result = ft_memchr(s, c, bytes);
+
+	printf("\n\nmemchr() string: %s, target: %c, bytes: %i, col: %lu, pointer: %p", s, c, bytes,  result - (void *)s + 1, result);
+	printf("\nft_memchr() string: %s, target: %c, bytes: %i, col: %lu, pointer: %p\n\n", s, c, bytes, ft_result - (void *)s + 1, ft_result);
 }
 
 void	test_ft_memcmp()
