@@ -313,11 +313,6 @@ void	test_ft_isprint(void)
 
 void	test_ft_memchr()
 {
-	// int test[] = {0, 1, 2, 3, 4, 5};
-	// int c = 2;
-
-	// printf("\n\nmemchr() target: %i, col: %lu, pointer: %p", c, (int *)memchr(test, c, 5) - test + 1, memchr(test, c, 5));
-	// printf("\nft_memchr() target: %i, col: %lu, pointer: %p\n\n", c, (int *)ft_memchr(test, c, 5) - test + 1, ft_memchr(test, c, 5));
 	char s[1024];
 	char s2[1024];
 	char c;
@@ -371,23 +366,74 @@ void	test_ft_memcmp()
 
 void	test_ft_memcpy(void)
 {
-	char *ft_func = "ft_memcpy"; 
-	char *func = "memcpy";
+	printf("\nTesting ft_memcpy()...\n\n");
 
-	printf("\nTesting '%s'...\n\n", ft_func);
+	printf("INTEGER TEST\n");
+	int int1_org = 0x7FFFFF;
+	int int2_org = 0x7000FF;
+	int	int1 = int1_org;
+	int	int2 = int2_org;
+	size_t	i_size = 4;
 
-	printf("Normal test...\n\n");
+	printf("\nBefore memcpy(): a: %i (hex: %#010X), b: %i (hex: %#010X)\n", int1, int1, int2, int2);
+	memcpy(&int1, &int2, i_size);
+	printf("After memcpy(): a: %i (hex: %#010X), b: %i (hex: %#010X)\n", int1, int1, int2, int2);
 
-	char a[] = "ABCDEFGH";
-	char b[] = "abcdefgh";
+	int1 = int1_org;
+	int2 = int2_org;
 
-	printf("Before %s: a: %s, b: %s\n", func, a, b);
-	printf("After %s: a: %s, b: %s\n\n", func, (char *)memcpy(a, b, sizeof(char) * 4), b);
+	printf("\nBefore ft_memcpy(): a: %i (hex: %#010X), b: %i (hex: %#010X)\n", int1, int1, int2, int2);
+	ft_memcpy(&int1, &int2, i_size);
+	printf("After ft_memcpy(): a: %i (hex: %#010X), b: %i (hex: %#010X)\n", int1, int1, int2, int2);
 
-	memcpy(a, "ABCDEFGH", 9);
+	int arr_org[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+	int arr1[10];
+	ft_memcpy(arr1, arr_org, 10 * sizeof(int));
+	size_t	a_size = 4 * (sizeof(int));
 
-	printf("Before %s: a: %s, b: %s\n", ft_func, a, b);
-	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memcpy(a, b, sizeof(char) * 4), b);
+	printf("\nOVERLAPPING TEST\n");
+
+	printf("\nBefore memcpy():\na: ");
+	ft_printf_array(arr1 + 3, ", ", 7, "%i");
+	printf("\nb: ");
+	ft_printf_array(arr1, ", ", 10, "%i");
+
+	memcpy(arr1 + 3, arr1, a_size);
+
+	printf("\nAfter memcpy():\na: ");
+	ft_printf_array(arr1 + 3, ", ", 7, "%i");
+	printf("\nb: ");
+	ft_printf_array(arr1, ", ", 10, "%i");
+
+	ft_memcpy(arr1, arr_org, 10 * sizeof(int));
+
+	printf("\n\nBefore ft_memcpy():\na: ");
+	ft_printf_array(arr1 + 3, ", ", 7, "%i");
+	printf("\nb: ");
+	ft_printf_array(arr1, ", ", 10, "%i");
+
+	ft_memcpy(arr1 + 3, arr1, a_size);
+
+	printf("\nAfter ft_memcpy():\na: ");
+	ft_printf_array(arr1 + 3, ", ", 7, "%i");
+	printf("\nb: ");
+	ft_printf_array(arr1, ", ", 10, "%i");
+
+	printf("\n\nSTRING TEST\n");
+
+	char str1[] = "ABCDEFGH";
+	char str2[] = "abcdefgh";
+	size_t s_size = 4;
+
+	printf("Before memcpy(): a: %s, b: %s\n", str1, str2);
+	memcpy(str1, str2, s_size);
+	printf("After memcpy(): a: %s, b: %s\n\n", str1, str2);
+
+	ft_strlcpy(str1, "ABCDEFGH", 9);
+
+	printf("Before ft_memcpy(): a: %s, b: %s\n", str1, str2);
+	ft_memcpy(str1, str2, s_size);
+	printf("After ft_memcpy(): a: %s, b: %s\n\n", str1, str2);
 }
 
 void	test_ft_memmove(void)
