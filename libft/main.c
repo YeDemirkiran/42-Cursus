@@ -349,21 +349,24 @@ void	test_ft_memchr()
 
 void	test_ft_memcmp()
 {
-	char s1[1024];
-	char s2[1024];
-	int		comp_byte;
+	int		a;
+	int		b;
+	size_t	comp_bytes;
 
 	printf("\nTesting memcmp()...\n");
 
-	printf(">>> Target string 1: ");
-	scanf("%s", s1);
-	printf("\n>>> Target string 2: ");
-	scanf("%s", s2);
-	printf("\n>>> Compare number: ");
-	scanf("%i", &comp_byte);
+	printf("\nEnter first integer: ");
+	scanf("%i", &a);
+	printf("Enter second integer: ");
+	scanf("%i", &b);
 
-	printf("\n\nmemcmp() string 1: %s, string 2: %s, compare bytes: %i, result: %i", s1, s2, comp_byte, memcmp(s1, s2, comp_byte));
-	printf("\n\nft_memcmp() string 1: %s, string 2: %s, compare bytes: %i, result: %i\n\n", s1, s2, comp_byte, ft_memcmp(s1, s2, comp_byte));
+	printf("\nFirst int: %i, Second int: %i\n", a, b);
+
+	printf("\n>>> Enter number of bytes to compare (max %lu): ", sizeof(int));
+	scanf("%lu", &comp_bytes);
+
+	printf("\n\nmemcmp() compare bytes: %lu, result: %i", comp_bytes, memcmp(&a, &b, comp_bytes));
+	printf("\n\nft_memcmp() compare bytes: %lu, result: %i\n\n", comp_bytes, ft_memcmp(&a, &b, comp_bytes));
 }
 
 void	test_ft_memcpy(void)
