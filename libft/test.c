@@ -461,12 +461,12 @@ void	test_ft_memmove(void)
 	ft_memcpy(a, "ABCDEFGH", 9);
 
 	printf("Before %s: a: %s, b: %s\n", func, a + 2, a);
-	printf("After %s: a: %s, b: %s\n\n", func, (char *)memmove(a + 2, NULL, sizeof(char) * 5), a);
+	printf("After %s: a: %s, b: %s\n\n", func, (char *)memmove(a + 2, a, sizeof(char) * 5), a);
 
 	ft_memcpy(a, "ABCDEFGH", 9);
 
 	printf("Before %s: a: %s, b: %s\n", ft_func, a + 2, a);
-	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memmove(a + 2, NULL, sizeof(char) * 5), a);
+	printf("After %s: a: %s, b: %s\n\n", ft_func, (char *)ft_memmove(a + 2, a, sizeof(char) * 5), a);
 }
 
 void	test_ft_memset(void)
@@ -530,7 +530,7 @@ void	test_ft_memset(void)
 void	test_ft_strchr()
 {
 	char *s = "ABCDEFGH";
-	char c = 0;
+	char c = 'A';
 
 	printf("\nTesting strchr()...\n");
 
