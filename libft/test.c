@@ -734,6 +734,49 @@ void	test_ft_toupper()
 	}
 }
 
+#include <fcntl.h>
+
+void	test_ft_putchar_fd()
+{
+	char	buffer[1024];
+	int		fd;
+	char	c;
+
+	ft_putstr_fd("\nTesting ft_putchar_fd()...\n\n", 1);
+
+	ft_putstr_fd(">>> Enter file path to write: ", 1);
+	scanf("%s", buffer);
+	fd = open(buffer, O_WRONLY | O_APPEND);
+
+	if (fd == -1)
+	{
+		ft_putstr_fd("\n\nNo file exists. Aborted.\n", 1);
+		return;
+	}
+	ft_putstr_fd("\nFile descriptor: ", 1);
+	ft_putchar_fd(fd + 48, 1);
+	ft_putstr_fd("\nEnter a char to write to the file, or type 'exit' to leave.", 1);
+	
+	while (getchar() != '\n');
+	while (1)
+	{
+		ft_putstr_fd("\n>>> Char: ", 1);
+		fgets(buffer, 1024, stdin);
+
+		if (ft_strncmp(buffer, "exit", 4) == 0)
+			break;
+		c = buffer[0];
+
+		ft_putstr_fd("Writing '", 1);
+		ft_putchar_fd(c, 1);
+		ft_putstr_fd("' to the file", 1);
+		ft_putchar_fd(c, fd);
+	}
+	
+
+	close(fd);
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -784,6 +827,8 @@ int	main(int count, char **args)
 			test_ft_strdup();
 		else if (strcmp(args[1], "calloc") == 0)
 			test_ft_calloc();
+		else if (strcmp(args[1], "putchr") == 0)
+			test_ft_putchar_fd();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
