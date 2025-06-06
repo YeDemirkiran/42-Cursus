@@ -974,6 +974,48 @@ void	test_ft_strtrim()
 	free(str);
 }
 
+void	test_ft_split()
+{
+	char	buffer1[1024];
+	char	c;
+	char	**str_arr;
+
+	ft_putstr_fd("\nTesting ft_split()...\n", 1);
+
+	ft_putstr_fd(">>> String: ", 1);
+	fgets(buffer1, 1024, stdin);
+	strip_newline(buffer1, 0);
+
+	ft_putstr_fd("\n>>> Delimiter: ", 1);
+	scanf("%c", &c);
+
+	str_arr = ft_split(buffer1, c);
+
+	if (str_arr == NULL)
+	{
+		ft_putstr_fd("\nMemory allocation failed.\n", 1);
+		return;
+	}
+
+	ft_putstr_fd("\nResult: \n", 1);
+	size_t i = 0;
+	while (str_arr[i])
+	{
+		ft_putstr_fd("Index: ", 1);
+		ft_putnbr_fd((int)i, 1);
+		ft_putstr_fd(", ", 1);
+		ft_putchar_fd('\'', 1);
+		ft_putstr_fd(str_arr[i], 1);
+		ft_putchar_fd('\'', 1);
+		if (str_arr[i + 1] != NULL)
+			ft_putstr_fd("\n", 1);
+		i++;
+	}
+	ft_putchar_fd('\n', 1);
+	
+	free(str_arr);
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -1038,6 +1080,8 @@ int	main(int count, char **args)
 			test_ft_strjoin();
 		else if (strcmp(args[1], "strtrim") == 0)
 			test_ft_strtrim();
+		else if (strcmp(args[1], "split") == 0)
+			test_ft_split();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
