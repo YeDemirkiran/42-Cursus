@@ -851,6 +851,30 @@ void	test_ft_putnbr_fd()
 	close(fd);
 }
 
+void	test_ft_itoa()
+{
+	int		num;
+	char	*str;
+	ft_putstr_fd("\nTesting ft_itoa()...\n", 1);
+
+	ft_putstr_fd(">>> Number: ", 1);
+	scanf("%i", &num);
+
+	str = ft_itoa(num);
+
+	if (str == NULL)
+	{
+		ft_putstr_fd("\nMemory allocation failed.\n", 1);
+		return;
+	}
+
+	ft_putstr_fd("\nNumber: ", 1);
+	ft_putstr_fd(str, 1);
+	ft_putchar_fd('\n', 1);
+	
+	free(str);
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -907,6 +931,8 @@ int	main(int count, char **args)
 			test_ft_putstr_fd();
 		else if (strcmp(args[1], "putnbr") == 0)
 			test_ft_putnbr_fd();
+		else if (strcmp(args[1], "itoa") == 0)
+			test_ft_itoa();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);

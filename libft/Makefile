@@ -19,7 +19,7 @@ clean:
 
 fclean: clean
 	rm -f ./$(NAME)
-	rm -f ./main.out
+	rm -f ./test.out
 
 re: fclean all
 
