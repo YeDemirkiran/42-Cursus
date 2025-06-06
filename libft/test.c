@@ -814,6 +814,43 @@ void	test_ft_putstr_fd()
 	close(fd);
 }
 
+void	test_ft_putnbr_fd()
+{
+	char	buffer[1024];
+	int		fd;
+	int		nbr;
+
+	ft_putstr_fd("\nTesting ft_putnbr_fd()...\n\n", 1);
+
+	ft_putstr_fd(">>> Enter file path to write: ", 1);
+	scanf("%s", buffer);
+	fd = open(buffer, O_WRONLY | O_APPEND);
+
+	if (fd == -1)
+	{
+		ft_putstr_fd("\n\nNo file exists. Aborted.\n", 1);
+		return;
+	}
+	ft_putstr_fd("\nFile descriptor: ", 1);
+	ft_putchar_fd(fd + 48, 1);
+	ft_putstr_fd("\nEnter a number to write to the file", 1);
+	
+	while (getchar() != '\n');
+	while (1)
+	{
+		ft_putstr_fd("\n>>> Number: ", 1);
+		scanf("%i", &nbr);
+
+		// ft_putstr_fd("Writing '", 1);
+		// ft_putchar_fd(c, 1);
+		// ft_putstr_fd("' to the file", 1);
+		ft_putnbr_fd(nbr, fd);
+		ft_putchar_fd('\n', fd);
+	}
+
+	close(fd);
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -868,6 +905,8 @@ int	main(int count, char **args)
 			test_ft_putchar_fd();
 		else if (strcmp(args[1], "putstr") == 0)
 			test_ft_putstr_fd();
+		else if (strcmp(args[1], "putnbr") == 0)
+			test_ft_putnbr_fd();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
