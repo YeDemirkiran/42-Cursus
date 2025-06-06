@@ -908,6 +908,39 @@ void	test_ft_substr()
 	free(str);
 }
 
+void	test_ft_strjoin()
+{
+	char			buffer1[1024];
+	char			buffer2[1024];
+	char			*str;
+
+	ft_putstr_fd("\nTesting ft_strjoin()...\n", 1);
+
+	ft_putstr_fd(">>> String 1: ", 1);
+	fgets(buffer1, 1024, stdin);
+	strip_newline(buffer1, 0);
+
+	ft_putstr_fd("\n>>> String 2: ", 1);
+	fgets(buffer2, 1024, stdin);
+	strip_newline(buffer2, 0);
+
+	str = ft_strjoin(buffer1, buffer2);
+
+	if (str == NULL)
+	{
+		ft_putstr_fd("\nMemory allocation failed.\n", 1);
+		return;
+	}
+
+	ft_putstr_fd("\nResult: ", 1);
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd("\nStrlen: ", 1);
+	ft_putnbr_fd(ft_strlen(str), 1);
+	ft_putchar_fd('\n', 1);
+	
+	free(str);
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -968,6 +1001,8 @@ int	main(int count, char **args)
 			test_ft_itoa();
 		else if (strcmp(args[1], "substr") == 0)
 			test_ft_substr();
+		else if (strcmp(args[1], "strjoin") == 0)
+			test_ft_strjoin();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
