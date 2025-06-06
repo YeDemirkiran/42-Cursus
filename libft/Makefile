@@ -7,7 +7,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 test: re
-	$(CC) $(FLAGS) test.c $(NAME) -o test.out -lbsd
+	$(CC) $(FLAGS) test.c $(NAME) -o test.out -lbsd -g
 	make clean
 
 $(NAME): 

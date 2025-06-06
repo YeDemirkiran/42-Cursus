@@ -11,10 +11,10 @@ char	*ft_strtrim(const char *s1, const char *set)
 
 	len = ft_strlen(s1);
 	start_index = 0;
-	while (ft_in_str(set, s1[start_index]))
+	while (ft_in_str(set, s1[start_index]) && start_index < len)
 		start_index++;
 	end_index = len - 1;
-	while (ft_in_str(set, s1[end_index]))
+	while (ft_in_str(set, s1[end_index]) && end_index > 0)
 		end_index--;
 	len = end_index - start_index + 1;
 	str = ft_substr(s1, start_index, len);
