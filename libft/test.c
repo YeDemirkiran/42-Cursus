@@ -814,6 +814,19 @@ void	test_ft_putstr_fd()
 	close(fd);
 }
 
+void	test_ft_putendl_fd()
+{
+	ft_putendl_fd("Testing ft_putendl_fd()...", 1);
+
+	ft_putendl_fd("lalaallala", 1);
+	ft_putendl_fd("lkololoplol", 1);
+	ft_putendl_fd("heheheheh", 1);
+	ft_putendl_fd("	", 1);
+	ft_putendl_fd("", 1);
+	ft_putendl_fd(NULL, 1);
+
+}
+
 void	test_ft_putnbr_fd()
 {
 	char	buffer[1024];
@@ -1084,16 +1097,6 @@ void	test_ft_striteri()
 	ft_putstr_fd(buffer, 1);
 	ft_putstr_fd("'\n", 1);
 
-	// ft_putstr_fd("\nTest 2: ft_tolower()", 1);
-	// ft_putstr_fd("\n>>> Enter a string: ", 1);
-	// fgets(buffer, 1024, stdin);
-	// strip_newline(buffer, 0);
-
-	// str = ft_strmapi(buffer, &ft_tolower_wrapper);
-	// ft_putstr_fd("\nResult: '", 1);
-	// ft_putstr_fd(str, 1);
-	// ft_putstr_fd("'\n", 1);
-
 	ft_putchar_fd('\n', 1);
 }
 
@@ -1167,6 +1170,8 @@ int	main(int count, char **args)
 			test_ft_strmapi();
 		else if (strcmp(args[1], "striteri") == 0)
 			test_ft_striteri();
+		else if (strcmp(args[1], "putendl") == 0)
+			test_ft_putendl_fd();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
