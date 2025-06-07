@@ -1020,6 +1020,49 @@ void	test_ft_split()
 	free(str_arr);
 }
 
+static	char	ft_toupper_wrapper(unsigned int i, char c)
+{
+	(void)i;
+	return (char)ft_toupper((char)c);
+}
+
+static	char	ft_tolower_wrapper(unsigned int i, char c)
+{
+	(void)i;
+	return (char)ft_tolower((char)c);
+}
+
+void	test_ft_strmapi()
+{
+	char	buffer[1024];
+	char	*str;
+	ft_putstr_fd("Testing ft_strmapi()...\n", 1);
+	
+	ft_putstr_fd("\nTest 1: ft_toupper()", 1);
+	ft_putstr_fd("\n>>> Enter a string: ", 1);
+	fgets(buffer, 1024, stdin);
+	strip_newline(buffer, 0);
+
+	str = ft_strmapi(buffer, *ft_toupper_wrapper);
+	ft_putstr_fd("\nResult: '", 1);
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd("'\n", 1);
+	free(str);
+
+	ft_putstr_fd("\nTest 2: ft_tolower()", 1);
+	ft_putstr_fd("\n>>> Enter a string: ", 1);
+	fgets(buffer, 1024, stdin);
+	strip_newline(buffer, 0);
+
+	str = ft_strmapi(buffer, *ft_tolower_wrapper);
+	ft_putstr_fd("\nResult: '", 1);
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd("'\n", 1);
+	free(str);
+
+	ft_putchar_fd('\n', 1);
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -1086,6 +1129,8 @@ int	main(int count, char **args)
 			test_ft_strtrim();
 		else if (strcmp(args[1], "split") == 0)
 			test_ft_split();
+		else if (strcmp(args[1], "strmapi") == 0)
+			test_ft_strmapi();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);

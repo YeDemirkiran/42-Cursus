@@ -53,6 +53,8 @@ char	**ft_split(const char *s, char c);
 
 char	*ft_itoa(int n);
 
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+
 typedef struct s_list
 {
 	void			*content;
