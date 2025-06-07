@@ -1100,6 +1100,22 @@ void	test_ft_striteri()
 	ft_putchar_fd('\n', 1);
 }
 
+void	test_ft_bonus()
+{
+	t_list single;
+	int	content;
+
+	ft_putendl_fd("Testing bonus functions...", 1);
+	ft_putendl_fd("1 - ft_lstnew()\n", 1);
+
+	ft_putendl_fd("Creating list item...", 1);
+	content = 5;
+	single = *ft_lstnew(&content);
+	ft_putstr_fd("Created new item with int content: ", 1);
+	ft_putnbr_fd(*(int *)single.content, 1);
+	ft_putendl_fd("", 1);
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -1172,6 +1188,8 @@ int	main(int count, char **args)
 			test_ft_striteri();
 		else if (strcmp(args[1], "putendl") == 0)
 			test_ft_putendl_fd();
+		else if (strcmp(args[1], "bonus") == 0)
+			test_ft_bonus();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
