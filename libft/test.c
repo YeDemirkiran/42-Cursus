@@ -1063,6 +1063,40 @@ void	test_ft_strmapi()
 	ft_putchar_fd('\n', 1);
 }
 
+static void	ft_rot(unsigned int i, char *c)
+{
+	(void)i;
+	*c += 1;
+}
+
+void	test_ft_striteri()
+{
+	char	buffer[1024];
+	ft_putstr_fd("Testing ft_striteri()...\n", 1);
+	
+	ft_putstr_fd("\nTest 1: ft_rot()", 1);
+	ft_putstr_fd("\n>>> Enter a string: ", 1);
+	fgets(buffer, 1024, stdin);
+	strip_newline(buffer, 0);
+
+	ft_striteri(buffer, &ft_rot);
+	ft_putstr_fd("\nResult: '", 1);
+	ft_putstr_fd(buffer, 1);
+	ft_putstr_fd("'\n", 1);
+
+	// ft_putstr_fd("\nTest 2: ft_tolower()", 1);
+	// ft_putstr_fd("\n>>> Enter a string: ", 1);
+	// fgets(buffer, 1024, stdin);
+	// strip_newline(buffer, 0);
+
+	// str = ft_strmapi(buffer, &ft_tolower_wrapper);
+	// ft_putstr_fd("\nResult: '", 1);
+	// ft_putstr_fd(str, 1);
+	// ft_putstr_fd("'\n", 1);
+
+	ft_putchar_fd('\n', 1);
+}
+
 int	main(int count, char **args)
 {
 	if (count == 2)
@@ -1131,6 +1165,8 @@ int	main(int count, char **args)
 			test_ft_split();
 		else if (strcmp(args[1], "strmapi") == 0)
 			test_ft_strmapi();
+		else if (strcmp(args[1], "striteri") == 0)
+			test_ft_striteri();
 		else
 		{
 			printf("\nFunction '%s' doesn't exist!\n\n", args[1]);
