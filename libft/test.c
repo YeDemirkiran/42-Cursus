@@ -1102,17 +1102,38 @@ void	test_ft_striteri()
 
 void	test_ft_bonus()
 {
-	t_list single;
+	t_list **lst;
+	t_list *single;
+	t_list *single2;
 	int	content;
+	int	content2;
 
 	ft_putendl_fd("Testing bonus functions...", 1);
-	ft_putendl_fd("1 - ft_lstnew()\n", 1);
+
+	ft_putendl_fd("\n1 - ft_lstnew()\n", 1);
 
 	ft_putendl_fd("Creating list item...", 1);
 	content = 5;
-	single = *ft_lstnew(&content);
+	single = ft_lstnew(&content);
 	ft_putstr_fd("Created new item with int content: ", 1);
-	ft_putnbr_fd(*(int *)single.content, 1);
+	ft_putnbr_fd(*(int *)single->content, 1);
+	ft_putendl_fd("", 1);
+
+	ft_putendl_fd("\n2 - ft_lstadd_front()\n", 1);
+
+	ft_putendl_fd("Setting the previous list item as the start of the list...", 1);
+	lst = &single;
+	ft_putendl_fd("Done. Creating list item...", 1);
+	content2 = 10;
+	single2 = ft_lstnew(&content2);
+	ft_putstr_fd("Created new item with int content: ", 1);
+	ft_putnbr_fd(*(int *)single2->content, 1);
+	ft_putendl_fd("", 1);
+	ft_putendl_fd("Now, setting this new item as the first item... ", 1);
+	ft_lstadd_front(lst, single2);
+
+	ft_putstr_fd("Done. Content of the first item is now: ", 1);
+	ft_putnbr_fd(*(int *)(*lst)->content, 1);
 	ft_putendl_fd("", 1);
 }
 
