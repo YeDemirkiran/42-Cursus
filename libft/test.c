@@ -987,7 +987,7 @@ void	test_ft_split()
 	strip_newline(buffer1, 0);
 
 	ft_putstr_fd("\n>>> Delimiter: ", 1);
-	scanf("%c", &c);
+	c = fgetc(stdin);
 
 	str_arr = ft_split(buffer1, c);
 
@@ -997,6 +997,8 @@ void	test_ft_split()
 		return;
 	}
 
+	ft_putstr_fd("\nDelimiter int value: ", 1);
+	ft_putnbr_fd((int)c, 1);
 	ft_putstr_fd("\nResult: \n", 1);
 	size_t i = 0;
 	while (str_arr[i])
@@ -1009,10 +1011,12 @@ void	test_ft_split()
 		ft_putchar_fd('\'', 1);
 		if (str_arr[i + 1] != NULL)
 			ft_putstr_fd("\n", 1);
+		free(str_arr[i]);
 		i++;
 	}
 	ft_putchar_fd('\n', 1);
 	
+	free(str_arr[i]);
 	free(str_arr);
 }
 
