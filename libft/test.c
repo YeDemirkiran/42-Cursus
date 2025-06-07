@@ -1043,7 +1043,7 @@ void	test_ft_strmapi()
 	fgets(buffer, 1024, stdin);
 	strip_newline(buffer, 0);
 
-	str = ft_strmapi(buffer, *ft_toupper_wrapper);
+	str = ft_strmapi(buffer, &ft_toupper_wrapper);
 	ft_putstr_fd("\nResult: '", 1);
 	ft_putstr_fd(str, 1);
 	ft_putstr_fd("'\n", 1);
@@ -1054,7 +1054,7 @@ void	test_ft_strmapi()
 	fgets(buffer, 1024, stdin);
 	strip_newline(buffer, 0);
 
-	str = ft_strmapi(buffer, *ft_tolower_wrapper);
+	str = ft_strmapi(buffer, &ft_tolower_wrapper);
 	ft_putstr_fd("\nResult: '", 1);
 	ft_putstr_fd(str, 1);
 	ft_putstr_fd("'\n", 1);
