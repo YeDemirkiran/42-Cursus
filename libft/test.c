@@ -1135,6 +1135,17 @@ void	test_ft_bonus()
 	ft_putstr_fd("Done. Content of the first item is now: ", 1);
 	ft_putnbr_fd(*(int *)(*lst)->content, 1);
 	ft_putendl_fd("", 1);
+
+	ft_putendl_fd("\n3 - ft_lstsize()\n", 1);
+	ft_putendl_fd("Adding 3 new items to the list...", 1);
+	ft_lstadd_front(lst, ft_lstnew(&(int){42}));
+	ft_lstadd_front(lst, ft_lstnew(&(int){42}));
+	ft_lstadd_front(lst, ft_lstnew(&(int){42}));
+	ft_putstr_fd("Done. Now, the size of the list is: ", 1);
+	ft_putnbr_fd(ft_lstsize(*lst), 1);
+	ft_putstr_fd("\nTrying null list size: ", 1);
+	ft_putnbr_fd(ft_lstsize(NULL), 1);
+	ft_putendl_fd("", 1);
 }
 
 int	main(int count, char **args)
