@@ -1,0 +1,9 @@
+Each project in the 42 Common Core contains an encoded hint. For each
+circle, only one project provides the correct hint needed for the
+next circle. This challenge is individual, with a final prize for
+one student. Staff members may participate but are not eligible for a
+prize. Are you among the very first to solve a circle? Send the hints
+with explanations to ol@42.fr to be added to the leaderboard. The
+hint for this first project, which may contain anagrammed words, is:
+Wolf of agentive particles that disprove greeny to your homes dna
+that prowse your stool
