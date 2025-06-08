@@ -1146,6 +1146,11 @@ void	test_ft_bonus()
 	ft_putstr_fd("\nTrying null list size: ", 1);
 	ft_putnbr_fd(ft_lstsize(NULL), 1);
 	ft_putendl_fd("", 1);
+
+	ft_putendl_fd("\n4 - ft_lstlast()\n", 1);
+	ft_putstr_fd("Last item on the list's content: ", 1);
+	ft_putnbr_fd(*(int *)(ft_lstlast(*lst)->content), 1);
+	ft_putendl_fd("", 1);
 }
 
 int	main(int count, char **args)
