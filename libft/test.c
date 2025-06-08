@@ -1151,6 +1151,16 @@ void	test_ft_bonus()
 	ft_putstr_fd("Last item on the list's content: ", 1);
 	ft_putnbr_fd(*(int *)(ft_lstlast(*lst)->content), 1);
 	ft_putendl_fd("", 1);
+
+	ft_putendl_fd("\n5 - ft_lstadd_back()\n", 1);
+	ft_putstr_fd("Last item on the list's content: ", 1);
+	ft_putnbr_fd(*(int *)(ft_lstlast(*lst)->content), 1);
+	ft_putstr_fd("\nAdding a new item with content: ", 1);
+	ft_putnbr_fd(100, 1);
+	ft_lstadd_back(lst, ft_lstnew(&(int){100}));
+	ft_putstr_fd("\nDone. Last item is now: ", 1);
+	ft_putnbr_fd(*(int *)(ft_lstlast(*lst)->content), 1);
+	ft_putendl_fd("", 1);
 }
 
 int	main(int count, char **args)
