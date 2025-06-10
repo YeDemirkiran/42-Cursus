@@ -47,11 +47,21 @@ void	test_ft_atoi()
 {
 	char s1[1024];
 
-	printf("\n\nTesting ft_atoi()...\n\n");
+	ft_putendl_fd("\n\nTesting ft_atoi()...\n", 1);
+
+	// ft_putendl_fd("Test 1: NULL Test\n", 1);
+
+	// ft_putstr_fd("atoi(NULL): (segfault)", 1);
+	// ft_putnbr_fd(atoi(NULL), 1); // Doesn't compile with -Wall -Wextra -Werror, gives segfault without those flags
+	// ft_putstr_fd("\nft_atoi(NULL): ", 1);
+	// ft_putnbr_fd(ft_atoi(NULL), 1); // Gives segfault
+
+	//ft_putendl_fd("\nTest 2: Manual Test\n", 1);
+	ft_putendl_fd("\nManual Test\n", 1);
 
 	while (1)
 	{
-		printf(">>> Target string: ");
+		ft_putstr_fd(">>> Target string: ", 1);
 		fgets(s1, 1024, stdin);
 		
 		if (ft_strncmp(s1, "exit", 4) == 0)
@@ -60,7 +70,7 @@ void	test_ft_atoi()
 		strip_newline(s1, 0);
 
 		printf("\nString: %s%%", s1);
-		printf("\natoi() result: %i",atoi(s1));
+		printf("\natoi() result: %i", atoi(s1));
 		printf("\nft_atoi() result: %i\n\n", ft_atoi(s1));
 	}
 }
