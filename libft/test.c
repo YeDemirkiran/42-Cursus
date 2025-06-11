@@ -630,22 +630,21 @@ void	test_ft_strlcpy()
 
 void	test_ft_strlen(void)
 {
-	char *ft_func = "ft_strlen"; 
-	char *func = "strlen";
 	char *tests[] = {"test", "test 2", "LOOOOOONG", "short", " ", "", 
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		0};
 
-	printf("\nTesting '%s'...\n\n", ft_func);
+	printf("\nTesting ft_strlen()...\n\n");
 
 	int i = 0;
 
-	while (*tests[i] != 0)
+	while (tests[i])
 	{
-		printf("'%s', %s: %zu, %s: %zu\n", tests[i], func, strlen(tests[i]), ft_func, ft_strlen(tests[i]));
+		printf("'%s', strlen(): %zu, ft_strlen(): %zu\n", tests[i], strlen(tests[i]), ft_strlen(tests[i]));
 		i++;
 	}
 	
+	// printf("'NULL', strlen(): %zu, ft_strlen(): %zu\n", strlen(tests[i]), ft_strlen(tests[i]));
 	printf("\n");
 }
 
