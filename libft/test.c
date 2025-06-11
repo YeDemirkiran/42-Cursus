@@ -323,33 +323,15 @@ void	test_ft_isprint(void)
 
 void	test_ft_memchr()
 {
-	char s[1024];
-	char s2[1024];
-	char c;
-	int bytes;
-	void	*result;
-	void	*ft_result;
+	int	i = 0x00FF0000;
+	int target = 255;
 
-	printf("\nTesting memchr()...\n");
+	void	*res1 = memchr(&i, target, 3);
+	void	*res2 = ft_memchr(&i, target, 3);
 
-	printf(">>> Target string: ");
-	fgets(s, 1024, stdin);
-	strip_newline(s, 0);
-	
-	printf("\n>>> Target char: ");
-	fgets(s2, 1024, stdin);
-	if (ft_strncmp(s2, "null", 4) == 0)
-		c = 0;
-	else
-		c = s2[0];
-	printf("\n>>> Target compare bytes: ");
-	scanf("%i", &bytes);
-
-	result = memchr(s, c, bytes);
-	ft_result = ft_memchr(s, c, bytes);
-
-	printf("\n\nmemchr() string: %s, target: %c, bytes: %i, col: %lu, pointer: %p", s, c, bytes,  result - (void *)s + 1, result);
-	printf("\nft_memchr() string: %s, target: %c, bytes: %i, col: %lu, pointer: %p\n\n", s, c, bytes, ft_result - (void *)s + 1, ft_result);
+	printf("\nTesting ft_memchr()...\n");
+	printf("\n   memchr(): Searched int: %i (address %p), target int: %i, result: %p (col: %lu)\n", i, &i, target, res1, ((char *)res1 - (char *)&i));
+	printf("\nft_memchr(): Searched int: %i (address %p), target int: %i, result: %p (col: %lu)\n", i, &i, target, res2, ((char *)res2 - (char *)&i));
 }
 
 void	test_ft_memcmp()
