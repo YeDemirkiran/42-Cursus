@@ -664,9 +664,13 @@ void	test_ft_strncmp()
 	printf("\nTesting strnchr()...\n");
 
 	printf(">>> Target string 1: ");
-	scanf("%s", s1);
+	fgets(s1, 1024, stdin);
+	strip_newline(s1, 0);
+	
 	printf("\n>>> Target string 2: ");
-	scanf("%s", s2);
+	fgets(s2, 1024, stdin);
+	strip_newline(s2, 0);
+
 	printf("\n>>> Compare number: ");
 	scanf("%i", &comp_byte);
 
