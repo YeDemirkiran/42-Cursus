@@ -540,7 +540,7 @@ void	test_ft_memset(void)
 void	test_ft_strchr()
 {
 	char *s = "ABCDEFGH";
-	char c = 'A';
+	char c = 323;
 
 	printf("\nTesting strchr()...\n");
 
