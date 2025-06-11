@@ -17,19 +17,14 @@ static size_t	ft_smaller(size_t x, size_t y);
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	dst_len;
-	size_t	len;
+	size_t	total_len;
 
 	dst_len = ft_strlen(dst);
-	dst += dst_len * sizeof(char);
-	len = ft_smaller(size, dst_len) + ft_strlen(src);
-	if (size < dst_len)
-		size = 0;
-	else
-		size -= dst_len;
-	while (size-- > 1 && *src)
-		*(dst++) = *(src++);
-	*dst = 0;
-	return (len);
+	total_len = ft_smaller(size, dst_len) + ft_strlen(src);
+	if (size <= dst_len)
+		return (total_len);
+	ft_strlcpy(dst + dst_len, src, size - dst_len);
+	return (total_len);
 }
 
 static size_t	ft_smaller(size_t x, size_t y)

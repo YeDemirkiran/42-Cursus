@@ -584,11 +584,11 @@ void	test_ft_strlcat()
 
 	printf(">>> String 1: ");
 	fgets(s1, 1024, stdin);
-	*(ft_strrchr(s1, '\n')) = 0;
+	strip_newline(s1, 0);
 
 	printf(">>> String 2: ");
 	fgets(s2, 1024, stdin);
-	*(ft_strrchr(s2, '\n')) = 0;
+	strip_newline(s2, 0);
 
 	printf(">>> strlcat size: ");
 	scanf("%lu", &cat_size);
