@@ -612,20 +612,26 @@ void	test_ft_strlcpy()
 	char s1[21];
 	char s2[21];
 	int bytes;
+	size_t	res;
 
-	printf("\nTesting strlcpy()...\n");
+	ft_putstr_fd("\nTesting strlcpy()...\n", 1);
 
-	printf(">>> Target string (max 20 chars): ");
-	scanf("%s", s1);
+	ft_putstr_fd(">>> Target string (max 20 chars): ", 1);
+	fgets(s1, 21, stdin);
+	strip_newline(s1, 0);
 
-	printf("\n\n>>> Target string size (null terminator included): ");
+	ft_putstr_fd("\n\n>>> Target string size (null terminator included): ", 1);
 	scanf("%i", &bytes);
 
-	printf("\nstrlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n", s1, bytes, s2, ft_strlen(s2), strlcpy(s2, s1, bytes));
+	ft_putendl_fd("Running strlcpy()...", 1);
+	res = strlcpy(s2, s1, bytes);
+	printf("strlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n", s1, bytes, s2, ft_strlen(s2), res);
 
 	ft_bzero(s2, 21);
 
-	printf("\nft_strlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n\n", s1, bytes, s2, ft_strlen(s2), ft_strlcpy(s2, s1, bytes));
+	ft_putendl_fd("\nRunning ft_strlcpy()...", 1);
+	res = ft_strlcpy(s2, s1, bytes);
+	printf("ft_strlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n\n", s1, bytes, s2, ft_strlen(s2), res);
 }
 
 void	test_ft_strlen(void)
