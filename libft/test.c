@@ -712,19 +712,19 @@ void	test_ft_strrchr()
 
 void	test_ft_tolower()
 {
-	char up = 'A';
-	char tmp;
-	char tmp2;
+	unsigned char up = 0;
+	unsigned char tmp;
+	unsigned char tmp2;
 
 	printf("\nTesting tolower()...\n");
 
-	while (up <= 'Z')
+	while (up < 255)
 	{
 		tmp = tolower(up);
 		tmp2 = ft_tolower(up);
 
-		printf("\ntolower() before: %c, char: %c, int: %i\n", up, tmp, (int)tmp);
-		printf("ft_tolower() before: %c, char: %c, int: %i\n\n", up, tmp2, (int)tmp2);
+		printf("\ntolower() before: %c (int: %i), char: %c, int: %i\n", up, (int)up, tmp, (int)tmp);
+		printf("ft_tolower() before: %c (int: %i), char: %c, int: %i\n\n", up, (int)up, tmp2, (int)tmp2);
 
 		up++;
 	}
@@ -732,19 +732,19 @@ void	test_ft_tolower()
 
 void	test_ft_toupper()
 {
-	char low = 'a';
-	char tmp;
-	char tmp2;
+	unsigned char low = 0;
+	unsigned char tmp;
+	unsigned char tmp2;
 
 	printf("\nTesting toupper()...\n");
 
-	while (low <= 'z')
+	while (low < 255)
 	{
 		tmp = toupper(low);
 		tmp2 = ft_toupper(low);
 
-		printf("\ntoupper() before: %c, char: %c, int: %i\n", low, tmp, (int)tmp);
-		printf("ft_toupper() before: %c, char: %c, int: %i\n\n", low, tmp2, (int)tmp2);
+		printf("\ntolower() before: %c (int: %i), char: %c, int: %i\n", low, (int)low, tmp, (int)tmp);
+		printf("ft_tolower() before: %c (int: %i), char: %c, int: %i\n\n", low, (int)low, tmp2, (int)tmp2);
 
 		low++;
 	}
