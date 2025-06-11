@@ -610,7 +610,7 @@ void	test_ft_strlcat()
 void	test_ft_strlcpy()
 {
 	char s1[21];
-	char s2[21];
+	char s2[21] = "test";
 	int bytes;
 	size_t	res;
 
@@ -623,11 +623,12 @@ void	test_ft_strlcpy()
 	ft_putstr_fd("\n\n>>> Target string size (null terminator included): ", 1);
 	scanf("%i", &bytes);
 
-	ft_putendl_fd("Running strlcpy()...", 1);
+	ft_putstr_fd("Running strlcpy() on string: ", 1);
+	ft_putstr_fd(s2, 1);
 	res = strlcpy(s2, s1, bytes);
-	printf("strlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n", s1, bytes, s2, ft_strlen(s2), res);
+	printf("\nstrlcpy() target string: %s, bytes: %i, result string: %s, result string length: %lu, returned int: %lu\n", s1, bytes, s2, ft_strlen(s2), res);
 
-	ft_bzero(s2, 21);
+	ft_strlcpy(s2, "test", 5);
 
 	ft_putendl_fd("\nRunning ft_strlcpy()...", 1);
 	res = ft_strlcpy(s2, s1, bytes);
