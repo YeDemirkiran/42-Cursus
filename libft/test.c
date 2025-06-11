@@ -521,14 +521,14 @@ void	test_ft_memset(void)
 		printf("\n\n");
 
 		ft_strlcpy(s2, s1, ft_strlen(s1) + 1);
-		ft_memset(s1 + start, c, end * sizeof(char));
-		ft_memset(s2 + start, c, end * sizeof(char));
+
+		memset(s1 + start, c, end);
+		printf("   memset() result: %s\n", s1);
+
+		ft_memset(s2 + start, c, end);
+		printf("ft_memset() result: %s", s2);
 
 		scanf("%c", &c);
-
-		printf("memset() result: %s", s1);
-		printf("\n");
-		printf("ft_memset() result: %s", s1);
 
 		printf("\n\n");
 		printf("Keep the current string? (y/n): ");
