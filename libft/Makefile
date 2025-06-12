@@ -14,7 +14,7 @@ test: re
 	$(CC) test.c $(NAME) -o test.out -lbsd -g
 	make clean
 
-$(NAME): 
+$(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(SRCS) -c
 	ar rcs $(NAME) ${OBJS}
 
