@@ -352,8 +352,8 @@ void	test_ft_memcmp()
 	printf("\n>>> Enter number of bytes to compare (max %lu): ", sizeof(int));
 	scanf("%lu", &comp_bytes);
 
-	printf("\n\nmemcmp() compare bytes: %lu, result: %i", comp_bytes, memcmp(&a, &b, comp_bytes));
-	printf("\n\nft_memcmp() compare bytes: %lu, result: %i\n\n", comp_bytes, ft_memcmp(&a, &b, comp_bytes));
+	printf("\n\n   memcmp(%i, %i) compare bytes: %lu, result: %i", a, b, comp_bytes, memcmp(&a, &b, comp_bytes));
+	printf("\n\nft_memcmp(%i, %i) compare bytes: %lu, result: %i\n\n", a, b, comp_bytes, ft_memcmp(&a, &b, comp_bytes));
 }
 
 void	test_ft_memcpy(void)
