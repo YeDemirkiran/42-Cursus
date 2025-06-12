@@ -539,17 +539,17 @@ void	test_ft_strdup()
 
 	printf(">>> Target string (max 1024 chars): ");
 	fgets(s1, 1024, stdin);
-	*ft_strrchr(s1, '\n') = 0;
+	strip_newline(s1, 0);
 
 	s2 = strdup(s1);
 
-	printf("\nstrdup() target string: %s, target string length: %lu, result string: %s, result string length: %lu\n", s1, ft_strlen(s1), s2, ft_strlen(s2));
+	printf("\nstrdup() target string: %s, target string length: %lu, result string: %s (address: %p), result string length: %lu\n", s1, ft_strlen(s1), s2, s2, ft_strlen(s2));
 	printf("Attempting free() for strdup()...\n");
 	free(s2);
 	printf("No errors, which means free() was successful.\n");
 
 	s2 = ft_strdup(s1);
-	printf("\nft_strdup() target string: %s, target string length: %lu, result string: %s, result string length: %lu\n", s1, ft_strlen(s1), s2, ft_strlen(s2));
+	printf("\nft_strdup() target string: %s, target string length: %lu, result string: %s (address: %p), result string length: %lu\n", s1, ft_strlen(s1), s2, s2, ft_strlen(s2));
 	printf("Attempting free() for ft_strdup()...\n");
 	free(s2);
 	printf("No errors, which means free() was successful.\n");
