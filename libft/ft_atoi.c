@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 13:04:18 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/02 13:08:20 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:27:06 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_isspace(int c)
 {
-	return ((c >= 9 && c <= 13) || c == ' ');
+	return ((c >= 9 && c <= 13) || c == 32);
 }
 
 int	ft_atoi(const char *nptr)

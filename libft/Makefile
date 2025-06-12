@@ -8,13 +8,13 @@ all: $(NAME)
 
 testf: re
 	$(CC) $(FLAGS) test.c $(NAME) -o test.out -lbsd -g
-	make clean
+	make clean	
 
 test: re
 	$(CC) test.c $(NAME) -o test.out -lbsd -g
 	make clean
 
-$(NAME): $(OBJS)
+$(NAME): $(SRCS)
 	$(CC) $(FLAGS) $(SRCS) -c
 	ar rcs $(NAME) ${OBJS}
 
