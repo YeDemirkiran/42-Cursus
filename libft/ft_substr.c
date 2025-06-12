@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:50:25 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/12 17:50:39 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:08:53 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*ft_substr(const char *str, unsigned int start, size_t len)
 
 	str_rmng = ft_strlen(str + start);
 	size = ft_smaller(str_rmng, len) + 1;
-	substr = malloc(size * sizeof(char));
-	if (substr == NULL)
+	substr = malloc(size * sizeof(*substr));
+	if (!substr)
 		return (NULL);
 	ft_strlcpy(substr, str + start, size);
 	return (substr);

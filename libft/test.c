@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:47:35 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/12 17:46:19 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:07:00 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -923,6 +923,8 @@ void	test_ft_substr()
 
 	ft_putstr_fd(">>> String: ", 1);
 	fgets(buffer, 1024, stdin);
+	strip_newline(buffer, 0);
+
 	ft_putstr_fd("\n>>> Start: ", 1);
 	scanf("%u", &start);
 	ft_putstr_fd("\n>>> Length: ", 1);
