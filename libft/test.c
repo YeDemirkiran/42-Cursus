@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:47:35 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/12 14:53:22 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:46:19 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,20 @@ void	ft_printf_array(void *arr, char *seperator, size_t size, char *print_mode)
 	while (size-- > 0)
 	{
 		printf(print_mode, *(tmp_arr++));
+
+		if (size != 0)
+			printf("%s", seperator);
+	}
+}
+
+void	print_array_char(void *arr, char *seperator, size_t size)
+{
+	unsigned char	*tmp_arr;
+
+	tmp_arr = (unsigned char *)arr;
+	while (size-- > 0)
+	{
+		printf("%u", *(tmp_arr++));
 
 		if (size != 0)
 			printf("%s", seperator);
@@ -107,7 +121,7 @@ void	test_ft_bzero(void)
 
 void	test_ft_calloc()
 {
-	int	*array;
+	unsigned char	*array;
 	size_t array_size;
 	size_t member_size;
 	size_t s;
@@ -135,7 +149,7 @@ void	test_ft_calloc()
 	else
 	{
 		printf("\nAllocation successful. Current array: \n");
-		ft_printf_array(array, ", ", array_size, "%i");
+		print_array_char(array, ", ", array_size);
 
 		printf("\nGenerating random int data...");
 
@@ -143,11 +157,11 @@ void	test_ft_calloc()
 
 		while (s-- > 0)
 		{
-			array[s] = rand() % 128;
+			array[s] = (unsigned char)(rand() % 128);
 		}
 
 		printf("\nGenerated random data. Current array: \n");
-		ft_printf_array(array, ", ", array_size, "%c");
+		print_array_char(array, ", ", array_size);
 
 		printf("\nAttempting to free() the calloc() array...");
 		free(array);
@@ -161,7 +175,7 @@ void	test_ft_calloc()
 
 	array = ft_calloc(array_size, member_size);
 	
-	if (!array || errno != 0)
+	if (!array)
 	{
 		printf("\nft_calloc() returned an arror, allocation was unsuccessful.");
 		printf("\nReason: %s, errno: %i", strerror(errno), errno);
@@ -171,7 +185,7 @@ void	test_ft_calloc()
 	else
 	{
 		printf("\nAllocation successful. Current array: \n");
-		ft_printf_array(array, ", ", array_size, "%i");
+		print_array_char(array, ", ", array_size);
 
 		printf("\nGenerating random int data...");
 
@@ -179,11 +193,11 @@ void	test_ft_calloc()
 
 		while (s-- > 0)
 		{
-			array[s] = rand() % 128;
+			array[s] = (unsigned char)(rand() % 128);
 		}
 		
 		printf("\nGenerated random data. Current array: \n");
-		ft_printf_array(array, ", ", array_size, "%c");
+		print_array_char(array, ", ", array_size);
 
 		printf("\nAttempting to free() the ft_calloc() array...");
 		free(array);
