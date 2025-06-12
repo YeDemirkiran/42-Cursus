@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:50:06 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/12 17:50:06 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:10:04 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	char	*str;
 
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	str = malloc(len * sizeof(char));
+	str = malloc(len * sizeof(*str));
 	if (str == NULL)
 		return (NULL);
 	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
