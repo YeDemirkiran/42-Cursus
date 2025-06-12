@@ -666,17 +666,25 @@ void	test_ft_strnstr()
 	char s2[1024];
 	int		comp_byte;
 
-	printf("\nTesting strnstr()...\n");
+	printf("\nTesting ft_strnstr()...\n");
 
-	printf(">>> Target string 1: ");
-	scanf("%s", s1);
-	printf("\n>>> Target string 2: ");
-	scanf("%s", s2);
-	printf("\n>>> Compare number: ");
+	printf(">>> Big string: ");
+	fgets(s1, 1024, stdin);
+	strip_newline(s1, 0);
+
+	printf("\n>>> Little string: ");
+	fgets(s2, 1024, stdin);
+	strip_newline(s2, 0);
+
+	printf("\n>>> Compare bytes: ");
 	scanf("%i", &comp_byte);
 
-	printf("\n\nstrnstr() string 1: %s, string 2: %s, compare bytes: %i, result: %s, pointer: %p", s1, s2, comp_byte, strnstr(s1, s2, comp_byte), strnstr(s1, s2, comp_byte));
-	printf("\n\nft_strnstr() string 1: %s, string 2: %s, compare bytes: %i, result: %s, pointer: %p\n\n", s1, s2, comp_byte, ft_strnstr(s1, s2, comp_byte), ft_strnstr(s1, s2, comp_byte));
+	char	*res1 = strnstr(s1, s2, comp_byte);
+	char	*res2 = ft_strnstr(s1, s2, comp_byte);
+
+	printf("\n\n   strnstr() big string: %s, little string: %s, compare bytes: %i, result: %s, pointer: %p", s1, s2, comp_byte, res1, res1);
+
+	printf("\n\nft_strnstr() big string: %s, little string: %s, compare bytes: %i, result: %s, pointer: %p\n\n", s1, s2, comp_byte, res2, res2);
 }
 
 void	test_ft_strrchr()
