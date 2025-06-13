@@ -897,6 +897,9 @@ void	test_ft_itoa()
 	ft_putstr_fd(">>> Number: ", 1);
 	scanf("%i", &num);
 
+	ft_putstr_fd("\nTrying number: ", 1);
+	ft_putnbr_fd(num, 1);
+
 	str = ft_itoa(num);
 
 	if (str == NULL)
