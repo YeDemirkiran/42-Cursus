@@ -12,8 +12,6 @@
 
 #include "libft.h"
 
-// static int	ft_in_str(const char *str, char c);
-
 char	*ft_strtrim(const char *s1, const char *set)
 {
 	size_t	len;
@@ -28,7 +26,7 @@ char	*ft_strtrim(const char *s1, const char *set)
 	end_index = len - 1;
 	while (ft_strchr(set, s1[end_index]) && end_index > 0)
 		end_index--;
-	if (end_index > start_index)
+	if (end_index >= start_index)
 		len = end_index - start_index + 1;
 	else
 		len = 0;
@@ -37,10 +35,3 @@ char	*ft_strtrim(const char *s1, const char *set)
 		return (NULL);
 	return (str);
 }
-
-// static int	ft_in_str(const char *str, char c)
-// {
-// 	if (ft_strchr(str, c) != NULL)
-// 		return (1);
-// 	return (0);
-// }
