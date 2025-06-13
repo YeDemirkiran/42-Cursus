@@ -1131,9 +1131,8 @@ void	test_ft_striteri()
 
 void	test_ft_bonus()
 {
-	t_list **lst;
-	t_list *single;
-	t_list *single2;
+	t_list *lst;
+	t_list *tmp;
 	int	content;
 	int	content2;
 
@@ -1143,53 +1142,61 @@ void	test_ft_bonus()
 
 	ft_putendl_fd("Creating list item...", 1);
 	content = 5;
-	single = ft_lstnew(&content);
+	lst = ft_lstnew(&content);
 	ft_putstr_fd("Created new item with int content: ", 1);
-	ft_putnbr_fd(*(int *)single->content, 1);
+	ft_putnbr_fd(*(int *)lst->content, 1);
 	ft_putendl_fd("", 1);
 
 	ft_putendl_fd("\n2 - ft_lstadd_front()\n", 1);
 
-	ft_putendl_fd("Setting the previous list item as the start of the list...", 1);
-	lst = &single;
-	ft_putendl_fd("Done. Creating list item...", 1);
+	ft_putendl_fd("Creating another list item...", 1);
 	content2 = 10;
-	single2 = ft_lstnew(&content2);
+	tmp = ft_lstnew(&content2);
 	ft_putstr_fd("Created new item with int content: ", 1);
-	ft_putnbr_fd(*(int *)single2->content, 1);
+	ft_putnbr_fd(*(int *)tmp->content, 1);
 	ft_putendl_fd("", 1);
 	ft_putendl_fd("Now, setting this new item as the first item... ", 1);
-	ft_lstadd_front(lst, single2);
+	ft_lstadd_front(&lst, tmp);
 
 	ft_putstr_fd("Done. Content of the first item is now: ", 1);
-	ft_putnbr_fd(*(int *)(*lst)->content, 1);
+	ft_putnbr_fd(*(int *)lst->content, 1);
 	ft_putendl_fd("", 1);
 
 	ft_putendl_fd("\n3 - ft_lstsize()\n", 1);
 	ft_putendl_fd("Adding 3 new items to the list...", 1);
-	ft_lstadd_front(lst, ft_lstnew(&(int){42}));
-	ft_lstadd_front(lst, ft_lstnew(&(int){42}));
-	ft_lstadd_front(lst, ft_lstnew(&(int){42}));
+	ft_lstadd_front(&lst, ft_lstnew(&(int){42}));
+	ft_lstadd_front(&lst, ft_lstnew(&(int){42}));
+	ft_lstadd_front(&lst, ft_lstnew(&(int){42}));
 	ft_putstr_fd("Done. Now, the size of the list is: ", 1);
-	ft_putnbr_fd(ft_lstsize(*lst), 1);
+	ft_putnbr_fd(ft_lstsize(lst), 1);
 	ft_putstr_fd("\nTrying null list size: ", 1);
 	ft_putnbr_fd(ft_lstsize(NULL), 1);
 	ft_putendl_fd("", 1);
 
 	ft_putendl_fd("\n4 - ft_lstlast()\n", 1);
 	ft_putstr_fd("Last item on the list's content: ", 1);
-	ft_putnbr_fd(*(int *)(ft_lstlast(*lst)->content), 1);
+	ft_putnbr_fd(*(int *)(ft_lstlast(lst)->content), 1);
 	ft_putendl_fd("", 1);
 
 	ft_putendl_fd("\n5 - ft_lstadd_back()\n", 1);
 	ft_putstr_fd("Last item on the list's content: ", 1);
-	ft_putnbr_fd(*(int *)(ft_lstlast(*lst)->content), 1);
+	ft_putnbr_fd(*(int *)(ft_lstlast(lst)->content), 1);
 	ft_putstr_fd("\nAdding a new item with content: ", 1);
 	ft_putnbr_fd(100, 1);
-	ft_lstadd_back(lst, ft_lstnew(&(int){100}));
+	ft_lstadd_back(&lst, ft_lstnew(&(int){100}));
 	ft_putstr_fd("\nDone. Last item is now: ", 1);
-	ft_putnbr_fd(*(int *)(ft_lstlast(*lst)->content), 1);
+	ft_putnbr_fd(*(int *)(ft_lstlast(lst)->content), 1);
 	ft_putendl_fd("", 1);
+
+	ft_putendl_fd("\n6 - ft_lstdelone() and ft_lstclear()\n", 1);
+	ft_putstr_fd("Attemtping ft_lstclear...\n", 1);
+	ft_lstclear(&lst, NULL);
+	ft_putstr_fd("List size: ", 1);
+	ft_putnbr_fd(ft_lstsize(lst), 1);
+	ft_putstr_fd("\nIs the list now NULL: ", 1);
+	ft_putnbr_fd(lst == NULL, 1);
+
+	ft_putstr_fd("\n\nTesting is done. Use valgrind to check for memory leaks.", 1);
 }
 
 int	main(int count, char **args)
