@@ -10,14 +10,6 @@ BOBJS = $(BSRCS:.c=.o)
 
 all: $(NAME)
 
-test: bonus
-	$(CC) test.c $(NAME) -o test.out -lbsd -g
-	make clean
-
-testf: bonus
-	$(CC) $(FLAGS) test.c $(NAME) -o test.out -lbsd -g
-	make clean
-
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@
 
@@ -36,4 +28,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all main bonus clean fclean re bonus
+.PHONY: all bonus clean fclean re
