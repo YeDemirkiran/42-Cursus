@@ -14,16 +14,16 @@
 
 static size_t	ft_smaller(size_t x, size_t y);
 
-char	*ft_substr(const char *str, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;
 	size_t	str_rmng;
 	size_t	size;
 
-	if (ft_strlen(str) < start)
+	if (ft_strlen(s) < start)
 		str_rmng = 0;
 	else
-		str_rmng = ft_strlen(str + start);
+		str_rmng = ft_strlen(s + start);
 	size = ft_smaller(str_rmng, len) + 1;
 	substr = malloc(size * sizeof(*substr));
 	if (!substr)
@@ -31,7 +31,7 @@ char	*ft_substr(const char *str, unsigned int start, size_t len)
 	if (size == 1)
 		*substr = 0;
 	else
-		ft_strlcpy(substr, str + start, size);
+		ft_strlcpy(substr, s + start, size);
 	return (substr);
 }
 
