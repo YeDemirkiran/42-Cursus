@@ -16,15 +16,14 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $(NAME) ${OBJS}
 
-bonus: $(OBJS) $(BOBJS)
-	ar rcs $(NAME) ${OBJS} ${BOBJS} 
+bonus:  $(NAME) ${BOBJS}
+	ar rcs $(NAME) ${BOBJS} 
 
 clean:
 	rm -f $(OBJS) $(BOBJS)
 
 fclean: clean
 	rm -f ./$(NAME)
-	rm -f ./test.out
 
 re: fclean all
 
