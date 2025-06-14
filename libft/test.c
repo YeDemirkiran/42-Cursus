@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:47:35 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/12 18:07:00 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/14 11:47:54 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1129,10 +1129,31 @@ void	test_ft_striteri()
 	ft_putchar_fd('\n', 1);
 }
 
+static void num_square(void *num)
+{
+	int *n;
+
+	n = (int *)num;
+	*n *= *n;
+}
+
+static void *num_cube(void *num)
+{
+	int n;
+	int	*res;
+
+	n = *(int *)num;
+	n = n * n * n;
+	res = malloc(sizeof(int));
+	*res = n;
+	return (res);
+}
+
 void	test_ft_bonus()
 {
 	t_list *lst;
 	t_list *tmp;
+	t_list *tmp2;
 	int	content;
 	int	content2;
 
@@ -1142,22 +1163,21 @@ void	test_ft_bonus()
 
 	ft_putendl_fd("Creating list item...", 1);
 	content = 5;
-	lst = ft_lstnew(&content);
+	tmp = ft_lstnew(&content);
 	ft_putstr_fd("Created new item with int content: ", 1);
-	ft_putnbr_fd(*(int *)lst->content, 1);
+	ft_putnbr_fd(*(int *)tmp->content, 1);
 	ft_putendl_fd("", 1);
 
 	ft_putendl_fd("\n2 - ft_lstadd_front()\n", 1);
 
-	ft_putendl_fd("Creating another list item...", 1);
+	ft_putendl_fd("Creating another list item. The new is null so this should create a new list with one item.", 1);
 	content2 = 10;
-	tmp = ft_lstnew(&content2);
+	lst = ft_lstnew(&content2);
 	ft_putstr_fd("Created new item with int content: ", 1);
-	ft_putnbr_fd(*(int *)tmp->content, 1);
+	ft_putnbr_fd(*(int *)lst->content, 1);
 	ft_putendl_fd("", 1);
-	ft_putendl_fd("Now, setting this new item as the first item... ", 1);
+	ft_putendl_fd("Now, setting the previous item as the first item... ", 1);
 	ft_lstadd_front(&lst, tmp);
-
 	ft_putstr_fd("Done. Content of the first item is now: ", 1);
 	ft_putnbr_fd(*(int *)lst->content, 1);
 	ft_putendl_fd("", 1);
@@ -1188,15 +1208,89 @@ void	test_ft_bonus()
 	ft_putnbr_fd(*(int *)(ft_lstlast(lst)->content), 1);
 	ft_putendl_fd("", 1);
 
-	ft_putendl_fd("\n6 - ft_lstdelone() and ft_lstclear()\n", 1);
-	ft_putstr_fd("Attemtping ft_lstclear...\n", 1);
-	ft_lstclear(&lst, NULL);
-	ft_putstr_fd("List size: ", 1);
+	ft_putendl_fd("\n6 - ft_lstdelone()\n", 1);
+	ft_putstr_fd("Attemtping ft_lstdelone on the first item with the content: ", 1);
+	*(int *)lst->content = 999;
+	ft_putnbr_fd(*(int *)lst->content, 1);
+	tmp = lst->next;
+	ft_lstdelone(lst, NULL);
+	lst = tmp;
+	ft_putstr_fd("\nDone. First item's content now: ", 1);
+	ft_putnbr_fd(*(int *)lst->content, 1);
+	ft_putstr_fd("\nList size now: ", 1);
 	ft_putnbr_fd(ft_lstsize(lst), 1);
-	ft_putstr_fd("\nIs the list now NULL: ", 1);
-	ft_putnbr_fd(lst == NULL, 1);
+	ft_putendl_fd("", 1);
 
-	ft_putstr_fd("\n\nTesting is done. Use valgrind to check for memory leaks.", 1);
+	ft_putendl_fd("\n7 - ft_lstiter()\n", 1);
+	ft_putstr_fd("The list content is: \n", 1);
+	tmp = lst;
+	while (tmp)
+	{
+		ft_putnbr_fd(*(int *)tmp->content, 1);
+		if (tmp->next)
+			ft_putstr_fd(", ", 1);
+		tmp = tmp->next;
+	}
+	ft_putstr_fd("\nNow, running ft_lstiter()...\n", 1);
+	ft_lstiter(lst, &num_square);
+	ft_putstr_fd("Done. The list content is now: \n", 1);
+	tmp = lst;
+	while (tmp)
+	{
+		ft_putnbr_fd(*(int *)tmp->content, 1);
+		if (tmp->next)
+			ft_putstr_fd(", ", 1);
+		tmp = tmp->next;
+	}
+	ft_putendl_fd("", 1);
+
+	ft_putendl_fd("\n8 - ft_lstmap()\n", 1);
+	ft_putstr_fd("Our aim is to create a new list without modifying the original one. The original list content is: \n", 1);
+	tmp = lst;
+	while (tmp)
+	{
+		ft_putnbr_fd(*(int *)tmp->content, 1);
+		if (tmp->next)
+			ft_putstr_fd(", ", 1);
+		tmp = tmp->next;
+	}
+	ft_putstr_fd("\nNow, running ft_lstmap() with num_cube()...\n", 1);
+	tmp = ft_lstmap(lst, &num_cube, NULL);
+	ft_putstr_fd("Done. The new list content is now: \n", 1);
+	tmp2 = tmp;
+	while (tmp2)
+	{
+		ft_putnbr_fd(*(int *)tmp2->content, 1);
+		if (tmp2->next)
+			ft_putstr_fd(", ", 1);
+		tmp2 = tmp2->next;
+	}
+	ft_putstr_fd("\nAnd the original list content is now: \n", 1);
+	tmp2 = lst;
+	while (tmp2)
+	{
+		ft_putnbr_fd(*(int *)tmp2->content, 1);
+		if (tmp2->next)
+			ft_putstr_fd(", ", 1);
+		tmp2 = tmp2->next;
+	}
+	ft_putendl_fd("", 1);
+	
+	ft_putendl_fd("\n9 - ft_lstclear()\n", 1);
+	ft_putstr_fd("We have two lists now. Attemtping ft_lstclear() on both of them...\n", 1);
+	 ft_lstclear(&lst, NULL);
+	
+	ft_lstclear(&tmp, &free);
+	ft_putstr_fd("Original list size now: ", 1);
+	ft_putnbr_fd(ft_lstsize(lst), 1);
+	ft_putstr_fd("\nIs the original list now NULL: ", 1);
+	ft_putnbr_fd(lst == NULL, 1);
+	ft_putstr_fd("Second list size now: ", 1);
+	ft_putnbr_fd(ft_lstsize(tmp), 1);
+	ft_putstr_fd("\nIs the second list now NULL: ", 1);
+	ft_putnbr_fd(tmp == NULL, 1);
+
+	ft_putstr_fd("\n\nBonus testing is done. Use valgrind to check for memory leaks.", 1);
 }
 
 int	main(int count, char **args)

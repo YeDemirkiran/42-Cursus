@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:49:13 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/12 17:49:14 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/14 11:47:15 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,20 @@
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*new_lst;
-	t_list	*new_node;
-	t_list	*last;
+	t_list	*new_item;
 
 	if (lst == NULL || f == NULL)
 		return (NULL);
 	new_lst = NULL;
-	last = NULL;
 	while (lst)
 	{
-		new_node = ft_lstnew(f(lst->content));
-		if (!new_node)
+		new_item = ft_lstnew(f(lst->content));
+		if (!new_item)
 		{
 			ft_lstclear(&new_lst, del);
 			return (NULL);
 		}
-		if (!new_lst)
-			new_lst = new_node;
-		else
-			last->next = new_node;
-		last = new_node;
+		ft_lstadd_back(&new_lst, new_item);
 		lst = lst->next;
 	}
 	return (new_lst);
