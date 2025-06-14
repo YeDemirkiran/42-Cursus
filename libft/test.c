@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:47:35 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/14 11:47:54 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/14 12:19:53 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1255,8 +1255,13 @@ void	test_ft_bonus()
 		tmp = tmp->next;
 	}
 	ft_putstr_fd("\nNow, running ft_lstmap() with num_cube()...\n", 1);
-	tmp = ft_lstmap(lst, &num_cube, NULL);
-	ft_putstr_fd("Done. The new list content is now: \n", 1);
+	tmp = ft_lstmap(lst, &num_cube, &free);
+	if (tmp)
+		ft_putstr_fd("Done. The new list content is now: \n", 1);
+	else
+	{
+		ft_putstr_fd("TMP is null.\n", 1);
+	}
 	tmp2 = tmp;
 	while (tmp2)
 	{
@@ -1278,8 +1283,7 @@ void	test_ft_bonus()
 	
 	ft_putendl_fd("\n9 - ft_lstclear()\n", 1);
 	ft_putstr_fd("We have two lists now. Attemtping ft_lstclear() on both of them...\n", 1);
-	 ft_lstclear(&lst, NULL);
-	
+	ft_lstclear(&lst, NULL);
 	ft_lstclear(&tmp, &free);
 	ft_putstr_fd("Original list size now: ", 1);
 	ft_putnbr_fd(ft_lstsize(lst), 1);
