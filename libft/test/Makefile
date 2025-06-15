@@ -1,15 +1,18 @@
 CC = cc
 NAME = test
 LIB = ../src/libft.a
-FLAGS = -Wall -Wextra -Werror -I../src/
+FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-test: bonus
-	$(CC) test.c $(LIB) -o $(NAME) -lbsd -g
+test: normal
+	$(CC) test.c $(LIB) -o $(NAME) -lbsd -g -I../src/
 
 testf: bonus
-	$(CC) $(FLAGS) test.c $(LIB) -o $(NAME) -lbsd -g
+	$(CC) $(FLAGS) test.c $(LIB) -o $(NAME) -lbsd -g -I../src/
+
+normal:
+	make -C ../src/
 
 bonus:
 	make bonus -C ../src/
