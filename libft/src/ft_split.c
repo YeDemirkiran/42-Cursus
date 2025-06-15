@@ -15,7 +15,7 @@
 static size_t	word_count(const char *s, char c);
 static void		*clear_alloc(char **s, size_t j);
 
-char	**ft_split(const char *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**str_arr;
 	size_t	len;
