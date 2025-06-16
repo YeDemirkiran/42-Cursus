@@ -2,7 +2,7 @@ NAME = libftprintf.a
 CC = cc
 SRCS = ./ft_printf.c
 OBJS = $(SRCS:.c=.o)
-INC = $(LIBFT_PATH)
+INC = -I$(LIBFT_PATH)
 FLAGS = -Wall -Wextra -Werror
 LIBFT = libft.a
 LIBFT_PATH = ./libft/
@@ -17,7 +17,7 @@ $(LIBFT):
 	make -C $(LIBFT_PATH) bonus
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@ $(INC)
 
 clean:
 	rm -f $(OBJS)

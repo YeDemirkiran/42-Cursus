@@ -12,8 +12,14 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# define TRUE 1
+# define FALSE 0
+
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef unsigned char	t_bool;
 
 void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
