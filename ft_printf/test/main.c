@@ -1,7 +1,10 @@
-#include "libftprintf.h"
+#include "main.h"
 
 int	main(void)
 {
-	ft_printf("anan\n", 1, 2, 3, 4);
+	printf("ft_printf() Test Programı (by yademirk)");
+
+	printf("\n\nADIM 1: printf() testi");
+	
 	return (0);
 }

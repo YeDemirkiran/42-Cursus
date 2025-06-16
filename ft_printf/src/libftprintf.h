@@ -1,11 +1,8 @@
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
 # include "libft.h"
+# include "stdarg.h"
 
-int	ft_printf(const char *format, ...)
-{
-	ft_putstr_fd((char *)format, 1);
-	return (0);
-}
+int	ft_printf(const char *format, ...);
 
 #endif

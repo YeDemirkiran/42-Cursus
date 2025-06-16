@@ -30,6 +30,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
-test: $(NAME) test.c
-	$(CC) $(FLAGS) test.c $(NAME) -o test.out -I$(INC)
