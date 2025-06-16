@@ -14,6 +14,9 @@ $(NAME): $(PRINTF)
 $(PRINTF):
 	make -s -C $(PRINTF_PATH)
 
+noflag: $(PRINTF)
+	$(CC) $(SRCS) $(PRINTF_PATH)$(PRINTF) -o $(NAME) $(INC)
+
 clean:
 	rm -f $(OBJS)
 	make -s -C $(PRINTF_PATH) clean
