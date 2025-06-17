@@ -48,12 +48,31 @@ int	main(void)
 	printf(" %%#-X: %.10s\n", "aabbccddffeegghh");
 
 	printf("\n\nADIM 2: ft_printf() testi\n\n");
-	
-	printf("%0#11x\n", 0xabcdef);
-	ft_printf("%0#11x\n", 0xabcdef);
 
-	printf("%%%%\n");
-	ft_printf("%%%%\n");
+	printf("Adım 2.1: Gerekli ft_printf() işlevleri\n\n");
+
+	printf("printf(%%%%): %%%%\n");
+	ft_printf("ft_printf(%%%%): %%%%\n\n");
+
+	printf("printf(%%c): %c\n", 'c');
+	ft_printf("ft_printf(%%c): %c\n\n", 'c');
+
+	printf("printf(%%s): %s\n", "hello");
+	ft_printf("ft_printf(%%s): %s\n\n", "hello");
+
+	printf("printf(%%d): %d\n", 1234567890);
+	ft_printf("ft_printf(%%d): %d\n\n", 1234567890);
+
+	printf("printf(%%i): %i\n", 1234567890);
+	ft_printf("ft_printf(%%i): %i\n", 1234567890);
+	printf("printf(%%i): %i\n", -1234567890);
+	ft_printf("ft_printf(%%i): %i\n\n", -1234567890);
+	
+	printf("printf(%%x): %x\n", 0xabcdef);
+	ft_printf("ft_printf(%%x): %x\n\n", 0xabcdef);
+
+	printf("printf(%%X): %X\n", 0xabcdef);
+	ft_printf("ft_printf(%%X): %X\n\n", 0xabcdef);
 	
 	return (0);
 }

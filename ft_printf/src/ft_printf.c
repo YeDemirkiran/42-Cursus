@@ -81,7 +81,30 @@ static size_t	print_format(const char **format, va_list args)
 	size_t		len;
 
 	rule = detect_format(format);
-	if (rule.format & C_HEX_LOW)
+	if (rule.format & C_PERCENT)
+	{
+		len = 1;
+		ft_putchar_fd('%', 1);
+	}
+	if (rule.format & C_CHAR)
+	{
+		len = 1;
+		ft_putchar_fd((char)va_arg(args, int), 1);
+	}
+	else if (rule.format & C_STR)
+	{
+		tmp = va_arg(args, char *);
+		len = ft_strlen(tmp);
+		ft_putstr_fd(tmp, 1);
+	}
+	else if (rule.format & C_INT)
+	{
+		tmp = ft_itoa(va_arg(args, int));
+		len = ft_strlen(tmp);
+		ft_putstr_fd(tmp, 1);
+		free(tmp);
+	}
+	else if (rule.format & (C_HEX_LOW | C_HEX_UP))
 	{
 		tmp = uint_to_hex(va_arg(args, unsigned int));
 		len = ft_strlen(tmp);
@@ -94,8 +117,10 @@ static size_t	print_format(const char **format, va_list args)
 			ft_putnchr(' ', rule.min_width - len);
 			len += rule.min_width - len;
 		}
-		if (rule.format & F_HASH)
+		if ((rule.format & F_HASH) && (rule.format & C_HEX_LOW))
 			ft_putstr_fd("0x", 1);
+		if ((rule.format & F_HASH) && (rule.format & C_HEX_UP))
+			ft_putstr_fd("0X", 1);
 		if (!(rule.format & F_MINUS) && (int)len < rule.min_width)
 		{
 			if (rule.format & F_ZERO)
@@ -106,11 +131,6 @@ static size_t	print_format(const char **format, va_list args)
 		if ((int)len < rule.min_width && (rule.format & F_MINUS))
 			ft_putnchr(' ', rule.min_width - len);
 		free(tmp);
-	}
-	else if (rule.format & C_PERCENT)
-	{
-		len = 1;
-		ft_putchar_fd('%', 1);
 	}
 	return (len);
 }
@@ -150,5 +170,6 @@ int	ft_printf(const char *format, ...)
 		// ft_putchar_fd(')', 1);
 		len += print_format(&format, args);
 	}
+	va_end(args);
 	return (len);
 }
