@@ -24,6 +24,7 @@ enum e_formats
 typedef struct s_conv_rule
 {
 	enum e_formats	format;
+	int				format_len;
 	int				min_width;
 	int				max_width;
 }				t_conv_rule;

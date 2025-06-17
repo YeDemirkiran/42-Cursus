@@ -26,11 +26,13 @@ int	main(void)
 	//printf("%%#o: %#o %#o %#o\n", 0, 100, -100);
 	printf(" %%#x: %#x\n", 0xa1b2c3d4);
 	printf(" %%#X: %#X\n", 0xa1b2c3d4);
+	printf(" %%#x: %#12x\n", 0xa1b2c3d4);
+	printf(" %%#X: %#12X\n", 0xa1b2c3d4);
 
 	printf("\n1.2.1.2) '0' flag'i:\n");
 	printf(" %%0x: %010x\n", 0xa1b2c3d4);
 	printf(" %%0X: %010X\n", 0xa1b2c3d4);
-	printf(" %%0#x: %0#13x\n", 0xffffffff);
+	printf(" %%0#x: %0#10x\n", 0xffffffff);
 	printf(" %%0#X: %0#12X\n", 0xa1b2c3d4);
 	printf(" %%#0x: %#012x\n", 0xa1b2c3d4);
 	printf(" %%#0X: %#012X\n", 0xa1b2c3d4);
@@ -47,7 +49,7 @@ int	main(void)
 
 	printf("\n\nADIM 2: ft_printf() testi\n\n");
 	
-	ft_printf("Hello!\n");
+	ft_printf("%#x %#x %#x %#x %#x %#x %#x\n", 0xffffffff, 1600, 0xffffffff, 13, 12, 11, 10, 9);
 	
 	return (0);
 }

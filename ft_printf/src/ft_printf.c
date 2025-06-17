@@ -44,41 +44,44 @@ static int	is_formspec(const char c)
 	return (flag);
 }
 
-// %-#50.50x
-static t_conv_rule	detect_format(const char *str)
+// %#x
+static t_conv_rule	detect_format(const char **str)
 {
 	t_conv_rule	rule;
 
 	rule.format = 0;
 	rule.min_width = 0;
 	rule.max_width = -1;
-	while (is_flag(*str))
-		rule.format |= is_flag(*str++);
-	while (ft_isdigit(*str))
+	rule.format_len = 0;
+	while (is_flag(**str))
+		rule.format |= is_flag(*(*str)++);
+	while (ft_isdigit(**str))
 	{
 		rule.min_width *= 10;
-		rule.min_width += *str++ - '0';
+		rule.min_width += *(*str)++ - '0';
 	}
-	if (*str == '.')
+	if (**str == '.')
 	{
-		str++;
+		(*str)++;
 		rule.max_width = 0;
-		while (ft_isdigit(*str))
+		while (ft_isdigit(**str))
 		{
 			rule.max_width *= 10;
-			rule.max_width += *str++ - '0';
+			rule.max_width += *(*str)++ - '0';
 		}
 	}
-	rule.format |= is_formspec(*str);
+	rule.format |= is_formspec(*(*str)++);
 	return (rule);
 }
 
-static size_t	print_format(const char *format, va_list args)
+static size_t	print_format(const char **format, va_list args)
 {
 	t_conv_rule	rule;
 	char		*tmp;
+	size_t		len;
 
 	rule = detect_format(format);
+	len = 0;
 	if (rule.format & C_HEX_LOW)
 	{
 		tmp = uint_to_hex(va_arg(args, unsigned int));
@@ -101,9 +104,12 @@ static size_t	print_format(const char *format, va_list args)
 			ft_putnchr(' ', rule.min_width - ft_strlen(tmp));
 		free(tmp);
 	}
-	return (0);
+	return (len);
 }
 
+#include "stdio.h"
+
+//a%0#xhello
 int	ft_printf(const char *format, ...)
 {
 	//char	*str;
@@ -117,14 +123,24 @@ int	ft_printf(const char *format, ...)
 	while (*format)
 	{
 		i = 0;
+		// ft_putstr_fd("(LOOP START: ", 1);
+		// ft_putchar_fd(*format, 1);
+		// ft_putchar_fd(')', 1);
 		while (format[i] && format[i] != '%')
 			i++;
-		ft_putnstr((char *)format, i);
+		if (i)
+			ft_putnstr((char *)format, i);
 		len += i;
 		if (!format[i])
 			break ;
-		format += len;
-		len += print_format(format + 1, args);
+		// ft_putstr_fd("(FOUND A PERCENT SIGN: ", 1);
+		// ft_putchar_fd(*(format + i), 1);
+		// ft_putchar_fd(')', 1);
+		format += i + 1;
+		// ft_putstr_fd("(STARTING POINT: ", 1);
+		// ft_putchar_fd(*format, 1);
+		// ft_putchar_fd(')', 1);
+		len += print_format(&format, args);
 	}
 	return (len);
 }
