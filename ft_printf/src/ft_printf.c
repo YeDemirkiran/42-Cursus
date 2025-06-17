@@ -88,20 +88,24 @@ static size_t	print_format(const char **format, va_list args)
 		if (!tmp)
 			return (0);
 		if (rule.format & F_HASH)
+		{
 			ft_putstr_fd("0x", 1);
+			len += 2;
+		}
 		if ((int)ft_strlen(tmp) < rule.min_width && !(rule.format & F_MINUS))
 		{
 			if (rule.format & F_ZERO)
 				ft_putnchr('0', rule.min_width - ft_strlen(tmp));
 			else
 				ft_putnchr(' ', rule.min_width - ft_strlen(tmp));
+			len += rule.min_width - ft_strlen(tmp);
 		}
 		// if (rule.max_width >= 0)
 		// 	ft_putnstr(tmp, rule.max_width);
 		// else
 		ft_putstr_fd(tmp, 1);
-		if ((int)ft_strlen(tmp) < rule.min_width && (rule.format & F_MINUS))
-			ft_putnchr(' ', rule.min_width - ft_strlen(tmp));
+		if ((int)ft_strlen(tmp) + (int)len < rule.min_width && (rule.format & F_MINUS))
+			ft_putnchr(' ', rule.min_width - (ft_strlen(tmp) + len));
 		free(tmp);
 	}
 	return (len);
