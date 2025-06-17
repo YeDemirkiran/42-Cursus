@@ -49,8 +49,8 @@ int	main(void)
 
 	printf("\n\nADIM 2: ft_printf() testi\n\n");
 	
-	printf("%#x %#x %#x %#x %#x %#x %#-11x%#x\n", 0xffffffff, 1600, 0xffffffff, 13, 12, 11, 0xabcdef, 9);
-	ft_printf("%#x %#x %#x %#x %#x %#x %#-11x%#x\n", 0xffffffff, 1600, 0xffffffff, 13, 12, 11, 0xabcdef, 9);
+	printf("%0#11x\n", 0xabcdef);
+	ft_printf("%0#11x\n", 0xabcdef);
 	
 	return (0);
 }
