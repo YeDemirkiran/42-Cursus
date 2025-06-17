@@ -16,7 +16,7 @@ int	main(void)
 	printf("%%x: %x\n", 0xAAbbCCdd);
 	printf("%%X: %X\n", 0xa1b2c3d4);
 	printf("%%%%: %%\n");
-	printf("heheehe%d%c%s %+010\n", 10, 'c', "a", 10);
+	//printf("heheehe%d%c%s %+010\n", 10, 'c', "a", 10);
 
 	printf("\nAdım 1.2: Bonus işlevler\n");
 
@@ -30,7 +30,7 @@ int	main(void)
 	printf("\n1.2.1.2) '0' flag'i:\n");
 	printf(" %%0x: %010x\n", 0xa1b2c3d4);
 	printf(" %%0X: %010X\n", 0xa1b2c3d4);
-	printf(" %%0#x: %0#12x\n", 0xa1b2c3d4);
+	printf(" %%0#x: %0#13x\n", 0xffffffff);
 	printf(" %%0#X: %0#12X\n", 0xa1b2c3d4);
 	printf(" %%#0x: %#012x\n", 0xa1b2c3d4);
 	printf(" %%#0X: %#012X\n", 0xa1b2c3d4);
@@ -43,7 +43,11 @@ int	main(void)
 	printf(" %%#-x: %#-12xtest\n", 0xa1b2c3d4);
 	printf(" %%#-X: %#-12Xtest\n", 0xa1b2c3d4);
 
+	printf(" %%#-X: %.10s\n", "aabbccddffeegghh");
+
 	printf("\n\nADIM 2: ft_printf() testi\n\n");
+	
+	ft_printf("Hello!\n");
 	
 	return (0);
 }
