@@ -8,18 +8,42 @@ int	ft_printf(const char *format, ...)
 
 	i = 0;
 	len = 0;
-	while (format[i])
+	while (*format)
 	{
-		while (format[len] && format[len] != '%')
-			len++;	
-		ft_putstr_fd(format, 1);
+		i = 0;
+		while (format[i] && format[i] != '%')
+			i++;	
+		ft_putnstr(format, i);
+		len += i;
 		if (!format[i])
 			break ;
+		format += len + 1;
+		len += print_format(&format);
 	}
 	return (len);
 }
 
 //asdsdasda%d%s%c%p
+
+static size_t	print_format(const char **format)
+{
+	char	*rule;
+
+	rule = detect_format(*format);
+}
+
+static char*	detect_format(const char *str)
+{
+	char	format[1024];
+	size_t	i;
+
+	i = 0;
+	if (is_formspec(*str))
+	{
+		format[i] = *str;
+	}
+	return (format);
+}
 
 static size_t	format_count(const char *s)
 {
