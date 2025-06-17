@@ -78,6 +78,7 @@ static size_t	print_format(const char **format, va_list args)
 {
 	t_conv_rule	rule;
 	char		*tmp;
+	int			tmp_int;
 	size_t		len;
 
 	rule = detect_format(format);
@@ -99,8 +100,14 @@ static size_t	print_format(const char **format, va_list args)
 	}
 	else if (rule.format & C_INT)
 	{
-		tmp = ft_itoa(va_arg(args, int));
+		tmp_int = va_arg(args, int);
+		tmp = ft_itoa(tmp_int);
 		len = ft_strlen(tmp);
+		if ((rule.format & F_PLUS) && tmp_int > 0)
+		{
+			ft_putchar_fd('+', 1);
+			len += 1;
+		}
 		ft_putstr_fd(tmp, 1);
 		free(tmp);
 	}
