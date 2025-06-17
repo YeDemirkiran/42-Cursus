@@ -51,6 +51,9 @@ int	main(void)
 	
 	printf("%0#11x\n", 0xabcdef);
 	ft_printf("%0#11x\n", 0xabcdef);
+
+	printf("%%%%\n");
+	ft_printf("%%%%\n");
 	
 	return (0);
 }

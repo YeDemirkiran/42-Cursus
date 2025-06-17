@@ -107,6 +107,11 @@ static size_t	print_format(const char **format, va_list args)
 			ft_putnchr(' ', rule.min_width - len);
 		free(tmp);
 	}
+	else if (rule.format & C_PERCENT)
+	{
+		len = 1;
+		ft_putchar_fd('%', 1);
+	}
 	return (len);
 }
 
