@@ -103,9 +103,12 @@ static size_t	print_format(const char **format, va_list args)
 		tmp_int = va_arg(args, int);
 		tmp = ft_itoa(tmp_int);
 		len = ft_strlen(tmp);
-		if ((rule.format & F_PLUS) && tmp_int > 0)
+		if (tmp_int > 0 && (rule.format & (F_PLUS | F_SPACE)))
 		{
-			ft_putchar_fd('+', 1);
+			if (rule.format & F_PLUS)
+				ft_putchar_fd('+', 1);
+			else if (rule.format & F_SPACE)
+				ft_putchar_fd(' ', 1);
 			len += 1;
 		}
 		ft_putstr_fd(tmp, 1);
