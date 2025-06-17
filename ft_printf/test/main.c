@@ -16,6 +16,7 @@ int	main(void)
 	printf("%%x: %x\n", 0xAAbbCCdd);
 	printf("%%X: %X\n", 0xa1b2c3d4);
 	printf("%%%%: %%\n");
+	printf("heheehe%d%c%s %+010\n", 10, 'c', "a", 10);
 
 	printf("\nAdım 1.2: Bonus işlevler\n");
 

@@ -1,35 +1,14 @@
 #include "libftprintf.h"
 
-int	ft_printf(const char *format, ...)
-{
-	char	*str;
-	size_t	i;
-	size_t	len;
-
-	i = 0;
-	len = 0;
-	while (*format)
-	{
-		i = 0;
-		while (format[i] && format[i] != '%')
-			i++;	
-		ft_putnstr(format, i);
-		len += i;
-		if (!format[i])
-			break ;
-		format += len + 1;
-		len += print_format(&format);
-	}
-	return (len);
-}
-
 //asdsdasda%d%s%c%p
 
-static size_t	print_format(const char **format)
+static t_bool	is_formspec(const char c) 
 {
-	char	*rule;
+	const char *format_specifiers = "cspdiuxX%";
 
-	rule = detect_format(*format);
+	if (ft_strchr(format_specifiers, c))
+		return (TRUE);
+	return (FALSE);
 }
 
 static char*	detect_format(const char *str)
@@ -43,6 +22,13 @@ static char*	detect_format(const char *str)
 		format[i] = *str;
 	}
 	return (format);
+}
+
+static size_t	print_format(const char **format)
+{
+	char	*rule;
+
+	rule = detect_format(*format);
 }
 
 static size_t	format_count(const char *s)
@@ -71,11 +57,25 @@ static void		str_insert(char str, ...)
 	va_arg(args, int);
 }
 
-static t_bool	is_formspec(const char c) 
+int	ft_printf(const char *format, ...)
 {
-	const char *format_specifiers = "cspdiuxX%";
+	char	*str;
+	size_t	i;
+	size_t	len;
 
-	if (ft_strchr(format_specifiers, c))
-		return (TRUE);
-	return (FALSE);
+	i = 0;
+	len = 0;
+	while (*format)
+	{
+		i = 0;
+		while (format[i] && format[i] != '%')
+			i++;	
+		ft_putnstr((char *)format, i);
+		len += i;
+		if (!format[i])
+			break ;
+		format += len + 1;
+		len += print_format(&format);
+	}
+	return (len);
 }
