@@ -60,10 +60,10 @@ int	main(void)
 	printf("printf(%%s): %s\n", "hello");
 	ft_printf("ft_printf(%%s): %s\n\n", "hello");
 
-	printf("printf(%%d): %+d\n", 1234567890);
-	ft_printf("ft_printf(%%d): %+d\n", 1234567890);
-	printf("printf(%%d): %d\n", -1234567890);
-	ft_printf("ft_printf(%%d): %d\n\n", -1234567890);
+	printf("printf(%%d): %  d\n", 1234567890);
+	ft_printf("ft_printf(%%d): %  d\n", 1234567890);
+	printf("printf(%%d): % d\n", -1234567890);
+	ft_printf("ft_printf(%%d): % d\n\n", -1234567890);
 
 	printf("printf(%%i): %+i\n", 1234567890);
 	ft_printf("ft_printf(%%i): %+i\n", 1234567890);
