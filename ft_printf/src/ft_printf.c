@@ -134,10 +134,13 @@ static size_t	print_format(const char **format, va_list args)
 		if (rule.format & C_HEX_UP)
 			ft_str_toupper(tmp);
 		ft_putstr_fd(tmp, 1);
-		if ((int)len < rule.min_width && (rule.format & F_MINUS))
-			ft_putnchr(' ', rule.min_width - len);
 		free(tmp);
 	}
+	if ((int)len < rule.min_width && (rule.format & F_MINUS))
+	{
+		ft_putnchr(' ', rule.min_width - len);
+		len = rule.min_width;
+	}		
 	return (len);
 }
 
