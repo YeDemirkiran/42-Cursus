@@ -208,6 +208,39 @@ int	main(void)
 	res = ft_printf("ft_printf(%%#-12X): %#-12X", 0xa1b2c3d4);
 	printf("(returned: %i)\n\n", res);
 
+	printf("\n2.2.2) Flag Kombinasyonları\n");
+	
+	res = printf("   printf(%%-10x): %-10x", 0xa1b2c3d4);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%-10x): %-10x", 0xa1b2c3d4);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%-10X): %-10X", 0xa1b2c3d4);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%-10X): %-10X", 0xa1b2c3d4);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%-12x): %-12s", "\"Test\"");
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%-12s): %-12s", "\"Test\"");
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%-20i): %-20i", 987654321);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%-20i): %-20i", 987654321);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%#-12x): %#-12x", 0xa1b2c3d4);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%#-12x): %#-12x", 0xa1b2c3d4);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%#-12X): %#-12X", 0xa1b2c3d4);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%#-12X): %#-12X", 0xa1b2c3d4);
+	printf("(returned: %i)\n\n", res);
+
+
 	printf("Adım 2.3: Hata Testleri ve Sakat Durumlar\n\n");
 	printf("Adım 2.3.1: NULL testi\n\n");
 
