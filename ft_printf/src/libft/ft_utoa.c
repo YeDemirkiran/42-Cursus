@@ -9,7 +9,7 @@ char	*ft_utoa(unsigned int n)
 	str = malloc((digits + 1) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
-	str[digits--] = 0;
+	str[digits] = 0;
 	while (digits-- > 0)
 	{
 		str[digits] = (n % 10) + 48;

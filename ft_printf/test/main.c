@@ -69,6 +69,9 @@ int	main(void)
 	ft_printf("ft_printf(%%i): %i\n", 1234567890);
 	printf("printf(%%i): %i\n", -1234567890);
 	ft_printf("ft_printf(%%i): %i\n\n", -1234567890);
+
+	printf("printf(%%u): %u\n", -1);
+	ft_printf("ft_printf(%%u): %u\n\n", -1);
 	
 	printf("printf(%%x): %x\n", 0xabcdef);
 	ft_printf("ft_printf(%%x): %x\n\n", 0xabcdef);

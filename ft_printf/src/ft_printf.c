@@ -76,10 +76,11 @@ static t_conv_rule	detect_format(const char **str)
 
 static size_t	print_format(const char **format, va_list args)
 {
-	t_conv_rule	rule;
-	char		*tmp;
-	int			tmp_int;
-	size_t		len;
+	t_conv_rule		rule;
+	char			*tmp;
+	int				tmp_int;
+	unsigned int	tmp_uint;
+	size_t			len;
 
 	rule = detect_format(format);
 	if (rule.format & C_PERCENT)
@@ -98,10 +99,18 @@ static size_t	print_format(const char **format, va_list args)
 		len = ft_strlen(tmp);
 		ft_putstr_fd(tmp, 1);
 	}
-	else if (rule.format & C_INT)
+	else if (rule.format & (C_INT | C_UINT))
 	{
-		tmp_int = va_arg(args, int);
-		tmp = ft_itoa(tmp_int);
+		if (rule.format & C_INT)
+		{
+			tmp_int = va_arg(args, int);
+			tmp = ft_itoa(tmp_int);
+		}	
+		else if ((rule.format & C_UINT))
+		{
+			tmp_uint = va_arg(args, unsigned int);
+			tmp = ft_utoa(tmp_uint);
+		}		
 		len = ft_strlen(tmp);
 		if (tmp_int > 0 && (rule.format & (F_PLUS | F_SPACE)))
 		{
