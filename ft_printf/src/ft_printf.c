@@ -32,20 +32,19 @@ static t_conv_rule	detect_format(const char **str)
 static size_t	print_format(const char **format, va_list args)
 {
 	t_conv_rule		rule;
-	char			*tmp;
-	long			tmp_int;
+	char			*str;
 	size_t			len;
 
 	rule = detect_format(format);
 	len = 0;
 	if (rule.format & C_PERCENT)
-		len += print_char('%');
+		str = convert_char('%');
 	else if (rule.format & C_CHAR)
-		len += print_char((char)va_arg(args, int));
+		str = convert_char((char)va_arg(args, int));
 	else if (rule.format & C_STR)
-		len += print_string(va_arg(args, char *));
+		str = convert_string(va_arg(args, char *));
 	else if (rule.format & C_POINTER)
-		len += print_pointer(va_arg(args, void *), rule);
+		str = convert_pointer(va_arg(args, void *), rule);
 	// else if (rule.format & (C_POINTER))
 	// {
 	// 	tmp_p = va_arg(args, void *);
@@ -79,60 +78,57 @@ static size_t	print_format(const char **format, va_list args)
 	else if (rule.format & (C_INT | C_UINT))
 	{
 		if (rule.format & C_INT)
-		{
-			tmp_int = (long)va_arg(args, int);
-			tmp = ft_itoa((int)tmp_int);
-		}
+			str = ft_itoa(va_arg(args, int));
 		else
+			str = ft_utoa(va_arg(args, unsigned int));
+	}
+	// else if (rule.format & (C_HEX_LOW | C_HEX_UP))
+	// {
+	// 	tmp = uint_to_hex(va_arg(args, unsigned int));
+	// 	if (!tmp)
+	// 		return (0);
+	// 	len = ft_strlen(tmp);
+	// 	if (rule.format & F_HASH)
+	// 		len += 2;
+	// 	if (!(rule.format & (F_MINUS | F_ZERO)) && (int)len < rule.min_width)
+	// 	{
+	// 		ft_putnchr(' ', rule.min_width - len);
+	// 		len += rule.min_width - len;
+	// 	}
+	// 	if ((rule.format & F_HASH) && (rule.format & C_HEX_LOW))
+	// 		ft_putstr_fd("0x", 1);
+	// 	if ((rule.format & F_HASH) && (rule.format & C_HEX_UP))
+	// 		ft_putstr_fd("0X", 1);
+	// 	if (!(rule.format & F_MINUS) && (int)len < rule.min_width)
+	// 	{
+	// 		if (rule.format & F_ZERO)
+	// 			ft_putnchr('0', rule.min_width - len);
+	// 		len += rule.min_width - len;
+	// 	}
+	// 	if (rule.format & C_HEX_UP)
+	// 		ft_str_toupper(tmp);
+	// 	ft_putstr_fd(tmp, 1);
+	// 	free(tmp);
+	// }
+	len = ft_strlen(str);
+	if (rule.format & (F_PLUS | F_SPACE) && rule.format & (C_INT | C_UINT))
+	{
+		if (*str != '-')
 		{
-			tmp_int = (long)va_arg(args, unsigned int);
-			tmp = ft_utoa((int)tmp_int);
-		}
-		len = ft_strlen(tmp);
-		if (tmp_int > 0 && (rule.format & (F_PLUS | F_SPACE)))
-		{
-			if (rule.format & F_PLUS)
+			if (rule.format & F_PLUS && (*str != '-'))
 				ft_putchar_fd('+', 1);
 			else if (rule.format & F_SPACE)
 				ft_putchar_fd(' ', 1);
 			len += 1;
-		}
-		ft_putstr_fd(tmp, 1);
-		free(tmp);
+		}		
 	}
-	else if (rule.format & (C_HEX_LOW | C_HEX_UP))
-	{
-		tmp = uint_to_hex(va_arg(args, unsigned int));
-		if (!tmp)
-			return (0);
-		len = ft_strlen(tmp);
-		if (rule.format & F_HASH)
-			len += 2;
-		if (!(rule.format & (F_MINUS | F_ZERO)) && (int)len < rule.min_width)
-		{
-			ft_putnchr(' ', rule.min_width - len);
-			len += rule.min_width - len;
-		}
-		if ((rule.format & F_HASH) && (rule.format & C_HEX_LOW))
-			ft_putstr_fd("0x", 1);
-		if ((rule.format & F_HASH) && (rule.format & C_HEX_UP))
-			ft_putstr_fd("0X", 1);
-		if (!(rule.format & F_MINUS) && (int)len < rule.min_width)
-		{
-			if (rule.format & F_ZERO)
-				ft_putnchr('0', rule.min_width - len);
-			len += rule.min_width - len;
-		}
-		if (rule.format & C_HEX_UP)
-			ft_str_toupper(tmp);
-		ft_putstr_fd(tmp, 1);
-		free(tmp);
-	}
+	ft_putstr_fd(str, 1);
 	if ((int)len < rule.min_width && (rule.format & F_MINUS))
 	{
 		ft_putnchr(' ', rule.min_width - len);
 		len = rule.min_width;
-	}		
+	}
+	free(str);
 	return (len);
 }
 

@@ -1,50 +1,54 @@
 #include "libftprintf.h"
 
-size_t	print_char(char c)
-{
-	ft_putchar_fd(c, 1);
-	return (1);
-}
-
-size_t	print_string(char *str)
-{
-	size_t len;
-
-	len = 0;
-	if (str)
-	{
-		len = ft_strlen(str);
-		ft_putstr_fd(str, 1);
-	}
-	else
-	{
-		len = 6;
-		ft_putstr_fd("(null)", 1);
-	}
-	return (len);
-}
-
-size_t	print_pointer(void *p, t_conv_rule rule)
+char	*convert_char(char c)
 {
 	char	*str;
-	size_t	len;
 
+	str = ft_calloc(2, sizeof(char));
+	if (!str)
+		return (NULL);
+	*str = c;
+	return (str);
+}
+
+char	*convert_string(char *str)
+{
+	if (!str)
+		str = ft_strdup("(null)");
+	return (ft_strdup(str));
+}
+
+char	*convert_pointer(void *p, t_conv_rule rule)
+{
+	char	*str;
+
+	(void)rule;
 	if (!p)
 		str = ft_strdup("(nil)");
 	else
 		str = ulong_to_hex((unsigned long)p);
-	if (!str)
-		return (0);
-	len = ft_strlen(str);
-	if (p)
-		len += print_string("0x");
-	if (!(rule.format & F_MINUS) && (int)len < rule.min_width)
+	// if (p)
+	// 	len += print_string("0x");
+	// if (!(rule.format & F_MINUS) && (int)len < rule.min_width)
+	// {
+	// 	if (rule.format & F_ZERO)
+	// 		ft_putnchr('0', rule.min_width - len);
+	// 	len = rule.min_width;
+	// }
+	return (str);
+}
+
+char	*convert_int(int num, t_conv_rule rule)
+{
+	char	*str;
+
+	str = ft_itoa((int)num);
+	if (num > 0 && (rule.format & (F_PLUS | F_SPACE)))
 	{
-		if (rule.format & F_ZERO)
-			ft_putnchr('0', rule.min_width - len);
-		len = rule.min_width;
+		if (rule.format & F_PLUS)
+			ft_putchar_fd('+', 1);
+		else if (rule.format & F_SPACE)
+			ft_putchar_fd(' ', 1);
 	}
-	ft_putstr_fd(str, 1);
-	free(str);
-	return (len);
+	return (str);
 }
