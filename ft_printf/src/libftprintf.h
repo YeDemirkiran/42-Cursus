@@ -30,6 +30,7 @@ typedef struct s_conv_rule
 }				t_conv_rule;
 
 char	*uint_to_hex(unsigned int n);
+char	*ulong_to_hex(unsigned long n);
 int		ft_printf(const char *format, ...);
 
 #endif

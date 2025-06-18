@@ -60,6 +60,11 @@ int	main(void)
 	printf("printf(%%s): %s\n", "hello");
 	ft_printf("ft_printf(%%s): %s\n\n", "hello");
 
+	printf("printf(%%p): %20p\n", "hello");
+	ft_printf("ft_printf(%%p): %20p\n", "hello");
+	printf("printf(%%p): %20p\n", NULL);
+	ft_printf("ft_printf(%%p): %20p\n\n", NULL);
+
 	printf("printf(%%d): %d\n", 1234567890);
 	ft_printf("ft_printf(%%d): %d\n", 1234567890);
 	printf("printf(%%d): %d\n", -1234567890);

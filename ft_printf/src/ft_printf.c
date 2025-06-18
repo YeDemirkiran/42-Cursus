@@ -78,8 +78,8 @@ static size_t	print_format(const char **format, va_list args)
 {
 	t_conv_rule		rule;
 	char			*tmp;
-	int				tmp_int;
-	unsigned int	tmp_uint;
+	long			tmp_int;
+	void			*tmp_p;
 	size_t			len;
 
 	rule = detect_format(format);
@@ -99,17 +99,47 @@ static size_t	print_format(const char **format, va_list args)
 		len = ft_strlen(tmp);
 		ft_putstr_fd(tmp, 1);
 	}
+	else if (rule.format & C_POINTER)
+	{
+		tmp_p = va_arg(args,void *);
+		if (!tmp_p)
+			tmp = ft_strdup("(nil)");
+		else
+			tmp = ulong_to_hex((unsigned long)tmp_p);
+		if (!tmp)
+			return (0);
+		len = ft_strlen(tmp);
+		if (tmp_p)
+			len += 2;
+		if (!(rule.format & (F_MINUS | F_ZERO)) && (int)len < rule.min_width)
+		{
+			ft_putnchr(' ', rule.min_width - len);
+			len += rule.min_width - len;
+		}
+		if (tmp_p)
+			ft_putstr_fd("0x", 1);
+		if (!(rule.format & F_MINUS) && (int)len < rule.min_width)
+		{
+			if (rule.format & F_ZERO)
+				ft_putnchr('0', rule.min_width - len);
+			len += rule.min_width - len;
+		}
+		ft_putstr_fd(tmp, 1);
+		if ((int)len < rule.min_width && (rule.format & F_MINUS))
+			ft_putnchr(' ', rule.min_width - len);
+		free(tmp);
+	}
 	else if (rule.format & (C_INT | C_UINT))
 	{
 		if (rule.format & C_INT)
 		{
-			tmp_int = va_arg(args, int);
-			tmp = ft_itoa(tmp_int);
+			tmp_int = (long)va_arg(args, int);
+			tmp = ft_itoa((int)tmp_int);
 		}	
-		else if ((rule.format & C_UINT))
+		else
 		{
-			tmp_uint = va_arg(args, unsigned int);
-			tmp = ft_utoa(tmp_uint);
+			tmp_int = (long)va_arg(args, unsigned int);
+			tmp = ft_utoa((int)tmp_int);
 		}		
 		len = ft_strlen(tmp);
 		if (tmp_int > 0 && (rule.format & (F_PLUS | F_SPACE)))
