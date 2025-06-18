@@ -6,6 +6,6 @@ char	*ft_str_tolower(char *str)
 	{
 		*str = ft_tolower(*str);
 		str++;
-	}	
+	}
 	return (str);
 }

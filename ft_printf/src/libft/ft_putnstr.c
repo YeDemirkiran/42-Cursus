@@ -2,7 +2,7 @@
 
 void	ft_putnstr(char *s, size_t n)
 {
-	size_t len;
+	size_t	len;
 
 	len = ft_strlen(s);
 	if (n < len)

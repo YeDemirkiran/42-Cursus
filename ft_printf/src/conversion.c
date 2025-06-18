@@ -19,7 +19,7 @@ char	*uint_to_hex(unsigned int n)
 		n /= 16;
 	}
 	str[i] = 0;
-	return(ft_strinv(str));
+	return (ft_strinv(str));
 }
 
 char	*ulong_to_hex(unsigned long n)
@@ -41,5 +41,5 @@ char	*ulong_to_hex(unsigned long n)
 		n /= 16;
 	}
 	str[i] = 0;
-	return(ft_strinv(str));
+	return (ft_strinv(str));
 }

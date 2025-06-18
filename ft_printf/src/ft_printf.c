@@ -101,7 +101,7 @@ static size_t	print_format(const char **format, va_list args)
 	}
 	else if (rule.format & C_POINTER)
 	{
-		tmp_p = va_arg(args,void *);
+		tmp_p = va_arg(args, void *);
 		if (!tmp_p)
 			tmp = ft_strdup("(nil)");
 		else
@@ -135,12 +135,12 @@ static size_t	print_format(const char **format, va_list args)
 		{
 			tmp_int = (long)va_arg(args, int);
 			tmp = ft_itoa((int)tmp_int);
-		}	
+		}
 		else
 		{
 			tmp_int = (long)va_arg(args, unsigned int);
 			tmp = ft_utoa((int)tmp_int);
-		}		
+		}
 		len = ft_strlen(tmp);
 		if (tmp_int > 0 && (rule.format & (F_PLUS | F_SPACE)))
 		{
@@ -186,12 +186,8 @@ static size_t	print_format(const char **format, va_list args)
 	return (len);
 }
 
-#include "stdio.h"
-
-//a%0#xhello
 int	ft_printf(const char *format, ...)
 {
-	//char	*str;
 	size_t	i;
 	size_t	len;
 	va_list	args;
@@ -202,9 +198,6 @@ int	ft_printf(const char *format, ...)
 	while (*format)
 	{
 		i = 0;
-		// ft_putstr_fd("(LOOP START: ", 1);
-		// ft_putchar_fd(*format, 1);
-		// ft_putchar_fd(')', 1);
 		while (format[i] && format[i] != '%')
 			i++;
 		if (i)
@@ -212,13 +205,7 @@ int	ft_printf(const char *format, ...)
 		len += i;
 		if (!format[i])
 			break ;
-		// ft_putstr_fd("(FOUND A PERCENT SIGN: ", 1);
-		// ft_putchar_fd(*(format + i), 1);
-		// ft_putchar_fd(')', 1);
 		format += i + 1;
-		// ft_putstr_fd("(STARTING POINT: ", 1);
-		// ft_putchar_fd(*format, 1);
-		// ft_putchar_fd(')', 1);
 		len += print_format(&format, args);
 	}
 	va_end(args);

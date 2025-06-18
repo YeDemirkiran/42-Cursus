@@ -6,6 +6,6 @@ char	*ft_str_toupper(char *str)
 	{
 		*str = ft_toupper(*str);
 		str++;
-	}	
+	}
 	return (str);
 }
