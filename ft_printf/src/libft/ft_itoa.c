@@ -12,9 +12,6 @@
 
 #include "libft.h"
 
-static size_t		ft_intlen(int n);
-static unsigned int	ft_abs(int n);
-
 char	*ft_itoa(int n)
 {
 	unsigned int	un;
@@ -41,34 +38,4 @@ char	*ft_itoa(int n)
 	else
 		str[0] = (un % 10) + 48;
 	return (str);
-}
-
-static size_t	ft_intlen(int n)
-{
-	unsigned int	un;
-	size_t			len;
-
-	if (n == 0)
-		return (1);
-	len = 0;
-	if (n < 0)
-		len = 1;
-	un = ft_abs(n);
-	while (un > 0)
-	{
-		un /= 10;
-		len++;
-	}
-	return (len);
-}
-
-static unsigned int	ft_abs(int n)
-{
-	unsigned int	un;
-
-	if (n < 0)
-		un = (unsigned int)(-(long)(n));
-	else
-		un = (unsigned int)n;
-	return (un);
 }
