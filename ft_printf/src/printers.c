@@ -16,5 +16,10 @@ size_t	print_string(char *str)
 		len = ft_strlen(str);
 		ft_putstr_fd(str, 1);
 	}
+	else
+	{
+		len = 6;
+		ft_putstr_fd("(null)", 1);
+	}
 	return (len);
 }

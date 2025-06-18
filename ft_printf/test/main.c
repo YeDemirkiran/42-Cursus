@@ -210,6 +210,53 @@ int	main(void)
 
 	printf("Adım 2.3: Hata Testleri ve Sakat Durumlar\n\n");
 	printf("Adım 2.3.1: NULL testi\n\n");
+
+	printf("   printf(NULL): ");
+	res = printf(NULL);
+	printf("(returned: %i)\n", res);
+	printf("ft_printf(NULL): ");
+	res = ft_printf(NULL);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%c): %c", NULL);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%c): %c", NULL);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%s): %s", NULL);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%s): %s", NULL);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%p): %p", NULL);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%p): %p", NULL);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%d): %d", NULL);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%d): %d", NULL);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%i): %i", NULL);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%i): %i", NULL);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%u): %u", NULL);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%u): %u", NULL);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%x): %x", NULL);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%x): %x", NULL);
+	printf("(returned: %i)\n\n", res);
+
+	res = printf("   printf(%%X): %X", NULL);
+	printf("(returned: %i)\n", res);
+	res = ft_printf("ft_printf(%%X): %X", NULL);
+	printf("(returned: %i)\n\n", res);
 	
 	return (0);
 }

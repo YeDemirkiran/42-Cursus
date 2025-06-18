@@ -141,6 +141,8 @@ int	ft_printf(const char *format, ...)
 	size_t	len;
 	va_list	args;
 
+	if (!format)
+		return (-1);
 	i = 0;
 	len = 0;
 	va_start(args, format);
