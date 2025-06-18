@@ -29,6 +29,9 @@ typedef struct s_conv_rule
 	int				max_width;
 }				t_conv_rule;
 
+int		is_flag(const char c);
+int		is_formspec(const char c);
+
 char	*uint_to_hex(unsigned int n);
 char	*ulong_to_hex(unsigned long n);
 int		ft_printf(const char *format, ...);
