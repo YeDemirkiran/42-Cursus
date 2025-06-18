@@ -38,22 +38,13 @@ static size_t	print_format(const char **format, va_list args)
 	size_t			len;
 
 	rule = detect_format(format);
+	len = 0;
 	if (rule.format & C_PERCENT)
-	{
-		len = 1;
-		ft_putchar_fd('%', 1);
-	}
-	if (rule.format & C_CHAR)
-	{
-		len = 1;
-		ft_putchar_fd((char)va_arg(args, int), 1);
-	}
+		len += print_char('%');
+	else if (rule.format & C_CHAR)
+		len += print_char((char)va_arg(args, int));
 	else if (rule.format & C_STR)
-	{
-		tmp = va_arg(args, char *);
-		len = ft_strlen(tmp);
-		ft_putstr_fd(tmp, 1);
-	}
+		len += print_string(va_arg(args, char *));
 	else if (rule.format & C_POINTER)
 	{
 		tmp_p = va_arg(args, void *);

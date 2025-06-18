@@ -34,6 +34,9 @@ int		is_formspec(const char c);
 
 char	*uint_to_hex(unsigned int n);
 char	*ulong_to_hex(unsigned long n);
+
+size_t	print_char(char c);
+size_t	print_string(char *str);
 int		ft_printf(const char *format, ...);
 
 #endif
