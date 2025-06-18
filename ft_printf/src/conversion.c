@@ -1,23 +1,5 @@
 #include "libftprintf.h"
 
-static char	*invert_string(char *str)
-{
-	size_t	len;
-	size_t	i;
-	char	tmp;
-
-	i = 0;
-	len = ft_strlen(str);
-	while (i < len / 2)
-	{
-		tmp = str[i];
-		str[i] = str[len - i - 1];
-		str[len - i - 1] = tmp;
-		i++;
-	}		
-	return (str);
-}
-
 char	*uint_to_hex(unsigned int n)
 {
 	char		*str;
@@ -37,5 +19,5 @@ char	*uint_to_hex(unsigned int n)
 		n /= 16;
 	}
 	str[i] = 0;
-	return(invert_string(str));
+	return(ft_strinv(str));
 }
