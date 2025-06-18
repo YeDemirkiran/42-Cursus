@@ -137,6 +137,8 @@ static size_t	print_format(const char **format, va_list args)
 				ft_putnchr('0', rule.min_width - len);
 			len += rule.min_width - len;
 		}
+		if (rule.format & C_HEX_UP)
+			ft_str_toupper(tmp);
 		ft_putstr_fd(tmp, 1);
 		if ((int)len < rule.min_width && (rule.format & F_MINUS))
 			ft_putnchr(' ', rule.min_width - len);
