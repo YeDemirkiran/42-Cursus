@@ -74,13 +74,10 @@ char	*convert_pointer(void *p, t_conv_rule rule)
 		tmp = ft_strjoin("0x", str);
 		free(str);
 		str = tmp;
-		if (!(rule.format & F_MINUS))
-		{
-			if (rule.format & F_PLUS)
-				str_pad_char(&str, '+', 1);
-			else if (rule.format & F_SPACE)
-				str_pad_char(&str, ' ', 1);
-		}
+		if ((rule.format & F_PLUS) && !(rule.format & F_MINUS))
+			str_pad_char(&str, '+', 1);
+		else if (rule.format & F_SPACE && !(rule.format & F_MINUS))
+			str_pad_char(&str, ' ', 1);
 	}
 	return (str);
 }
