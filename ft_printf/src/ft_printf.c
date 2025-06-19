@@ -17,13 +17,18 @@ static t_conv_rule	detect_format(const char **str)
 	}
 	if (**str == '.')
 	{
+		// ft_printf("**str then: %c", **str);
 		(*str)++;
+		// ft_printf("**str now: %c", **str);
 		rule.max_width = 0;
 		while (ft_isdigit(**str))
 		{
 			rule.max_width *= 10;
 			rule.max_width += *(*str)++ - '0';
 		}
+		// ft_printf("min width now: %i", rule.min_width);
+		// ft_printf("max width now: %i", rule.max_width);
+		// ft_printf("char now %c", **str);
 	}
 	rule.format |= is_formspec(*(*str)++);
 	return (rule);
@@ -52,16 +57,9 @@ static char	*get_format_string(t_conv_rule rule, va_list args)
 
 static void	print_order(char *str, t_conv_rule rule, size_t *len)
 {
-	size_t	limit;
-
 	if (!(rule.format & F_MINUS) && (int)(*len) < rule.min_width)
 		ft_putnchr(' ', rule.min_width - (int)(*len));
-	if (rule.max_width > 0)
-	{
-		(void)limit;
-	}
-	else
-		ft_putstr_fd(str, 1);
+	ft_putstr_fd(str, 1);
 	if ((rule.format & F_MINUS) && (int)(*len) < rule.min_width)
 		ft_putnchr(' ', rule.min_width - (int)(*len));
 	if ((int)(*len) < rule.min_width)
@@ -76,6 +74,8 @@ static size_t	print_format(const char **format, va_list args)
 
 	rule = detect_format(format);
 	str = get_format_string(rule, args);
+	if (!str)
+		return (0);
 	len = ft_strlen(str);
 	print_order(str, rule, &len);
 	free(str);

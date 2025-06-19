@@ -14,7 +14,7 @@ char	*convert_char(char c)
 char	*convert_string(char *str)
 {
 	if (!str)
-		str = ft_strdup("(null)");
+		return (ft_strdup("(null)"));
 	return (ft_strdup(str));
 }
 
