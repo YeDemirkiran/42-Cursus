@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 CC = cc
-SRCS = ./ft_printf.c ./conversion.c ./predicate.c ./printers.c
+SRCS = ./ft_printf.c ./converters.c ./converters_2.c ./predicate.c ./utils.c
 OBJS = $(SRCS:.c=.o)
 INC = -I$(LIBFT_PATH)
 FLAGS = -Wall -Wextra -Werror

@@ -32,17 +32,16 @@ typedef struct s_conv_rule
 int		is_flag(const char c);
 int		is_formspec(const char c);
 
-char	*uint_to_hex(unsigned int n);
-char	*ulong_to_hex(unsigned long n);
+void	str_pad_char(char **str, char c, size_t amount);
 
 char	*convert_char(char c);
 char	*convert_string(char *str);
-char	*convert_pointer(void *p, t_conv_rule rule);
 char	*convert_int(int num, t_conv_rule rule);
 char	*convert_uint(unsigned int num, t_conv_rule rule);
 char	*convert_hex(unsigned int num, t_conv_rule rule);
+char	*convert_pointer(void *p, t_conv_rule rule);
 
-size_t	print_len(const char *str);
+void	str_pad_char(char **str, char c, size_t amount);
 int		ft_printf(const char *format, ...);
 
 #endif
