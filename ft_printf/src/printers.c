@@ -145,23 +145,21 @@ char	*convert_hex(unsigned int num, t_conv_rule rule)
 	if (!num)
 		str = ft_strdup("0");
 	else
-	{
 		str = uint_to_hex(num);
-		if (!str)
-			return (NULL);
-		len = ft_strlen(str);
-		if (rule.format & F_HASH)
-			len += 2;
-		if (rule.format & F_ZERO && (int)len < rule.min_width)
-			str_pad_char(&str, '0', rule.min_width - len);
-		if (rule.format & F_HASH)
-		{
-			tmp = ft_strjoin("0x", str);
-			free(str);
-			str = tmp;
-		}
-		if (rule.format & C_HEX_UP)
-			ft_str_toupper(str);
+	if (!str)
+		return (NULL);
+	len = ft_strlen(str);
+	if (num && (rule.format & F_HASH))
+		len += 2;
+	if (rule.format & F_ZERO && (int)len < rule.min_width)
+		str_pad_char(&str, '0', rule.min_width - len);
+	if (num && rule.format & F_HASH)
+	{
+		tmp = ft_strjoin("0x", str);
+		free(str);
+		str = tmp;
 	}
+	if (num && rule.format & C_HEX_UP)
+		ft_str_toupper(str);
 	return (str);
 }
