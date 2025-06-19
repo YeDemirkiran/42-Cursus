@@ -29,14 +29,10 @@ static t_conv_rule	detect_format(const char **str)
 	return (rule);
 }
 
-static size_t	print_format(const char **format, va_list args)
+static char	*get_format_string(t_conv_rule rule, va_list args)
 {
-	t_conv_rule		rule;
-	char			*str;
-	size_t			len;
+	char	*str;
 
-	rule = detect_format(format);
-	len = 0;
 	if (rule.format & C_PERCENT)
 		str = convert_char('%');
 	else if (rule.format & C_CHAR)
@@ -45,6 +41,53 @@ static size_t	print_format(const char **format, va_list args)
 		str = convert_string(va_arg(args, char *));
 	else if (rule.format & C_POINTER)
 		str = convert_pointer(va_arg(args, void *), rule);
+	else if (rule.format & C_INT)
+		str = ft_itoa(va_arg(args, int));
+	else if (rule.format & C_UINT)
+		str = ft_utoa(va_arg(args, unsigned int));
+}
+
+static void	print_order(char *str, t_conv_rule rule, size_t *len)
+{
+	if (!(rule.format & (F_MINUS | F_ZERO)))
+	{
+		
+	}
+	if (rule.format & (C_INT | C_UINT) && (*str != '-'))
+	{
+		if (rule.format & F_PLUS)
+			*len += print_len("+");
+		else if (rule.format & F_SPACE)
+			*len += print_len(" ");
+	}
+	else if (rule.format & F_HASH && *str != '0')
+	{
+		if (rule.format & C_HEX_LOW)
+			*len += print_len("0x");
+		else if (rule.format & C_HEX_UP)
+			*len += print_len("0X");
+	}
+	if ((int)len < rule.min_width && (rule.format & F_ZERO))
+	{
+		ft_putnchr(' ', rule.min_width - *len);
+		len = rule.min_width;
+	}
+	ft_putstr_fd(str, 1);
+	if ((int)len < rule.min_width && (rule.format & F_MINUS))
+	{
+		ft_putnchr(' ', rule.min_width - *len);
+		len = rule.min_width;
+	}
+}
+
+static size_t	print_format(const char **format, va_list args)
+{
+	t_conv_rule		rule;
+	char			*str;
+	size_t			len;
+
+	rule = detect_format(format);
+	str = get_format_string(rule, args);
 	// else if (rule.format & (C_POINTER))
 	// {
 	// 	tmp_p = va_arg(args, void *);
@@ -75,13 +118,6 @@ static size_t	print_format(const char **format, va_list args)
 	// 		ft_putnchr(' ', rule.min_width - len);
 	// 	free(tmp);
 	// }
-	else if (rule.format & (C_INT | C_UINT))
-	{
-		if (rule.format & C_INT)
-			str = ft_itoa(va_arg(args, int));
-		else
-			str = ft_utoa(va_arg(args, unsigned int));
-	}
 	// else if (rule.format & (C_HEX_LOW | C_HEX_UP))
 	// {
 	// 	tmp = uint_to_hex(va_arg(args, unsigned int));
@@ -111,23 +147,7 @@ static size_t	print_format(const char **format, va_list args)
 	// 	free(tmp);
 	// }
 	len = ft_strlen(str);
-	if (rule.format & (F_PLUS | F_SPACE) && rule.format & (C_INT | C_UINT))
-	{
-		if (*str != '-')
-		{
-			if (rule.format & F_PLUS && (*str != '-'))
-				ft_putchar_fd('+', 1);
-			else if (rule.format & F_SPACE)
-				ft_putchar_fd(' ', 1);
-			len += 1;
-		}		
-	}
-	ft_putstr_fd(str, 1);
-	if ((int)len < rule.min_width && (rule.format & F_MINUS))
-	{
-		ft_putnchr(' ', rule.min_width - len);
-		len = rule.min_width;
-	}
+	print_order(str, rule, &len);
 	free(str);
 	return (len);
 }

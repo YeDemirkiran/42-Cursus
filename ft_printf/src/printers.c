@@ -1,5 +1,16 @@
 #include "libftprintf.h"
 
+size_t	print_len(const char *str)
+{
+	size_t	len;
+
+	if (!str)
+		return (0);
+	len = ft_strlen(str);
+	ft_putnstr(str, len);
+	return (len);
+}
+
 char	*convert_char(char c)
 {
 	char	*str;
