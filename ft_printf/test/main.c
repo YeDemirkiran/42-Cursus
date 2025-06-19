@@ -3,8 +3,8 @@
 
 int	main(void)
 {
-	ft_printf("%u\n", -1000);
-	printf("%u\n", -1000);
+	ft_printf("%+#15xa\n", -1);
+	printf("%+#15xa\n", -1);
 
 	return (0);
 }

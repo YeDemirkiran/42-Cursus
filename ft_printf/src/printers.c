@@ -18,7 +18,7 @@ static char	*char_rep(char c, size_t len)
 	if (!len)
 		return (NULL);
 	str = ft_calloc(len + 1, sizeof(char));
-	if (!str)
+	if (str)
 	{
 		while (len-- > 0)
 			str[len] = c;
@@ -46,8 +46,9 @@ void	str_pad_char(char **str, char c, size_t amount)
 	char	*tmp;
 
 	tmp = char_rep(c, amount);
+	// ft_putnbr_fd((int)amount, 1);
+	// ft_printf("pad_char: tmp: %s, str: %s\n", tmp, *str);
 	*str = ft_strapp(tmp, *str);
-	//*str = tmp;
 }
 
 char	*convert_char(char c)
@@ -107,7 +108,7 @@ char	*convert_int(int num, t_conv_rule rule)
 	if (!str)
 		return (NULL);
 	len = ft_strlen(str) + (num < 0);
-	if (rule.format & F_ZERO && (int)len < rule.min_width)
+	if ((rule.format & F_ZERO) && ((int)len < rule.min_width))
 		str_pad_char(&str, '0', rule.min_width - len);
 	if (num > 0 && !(rule.format & F_MINUS))
 	{
