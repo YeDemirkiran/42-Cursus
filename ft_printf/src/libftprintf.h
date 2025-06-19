@@ -38,6 +38,9 @@ char	*ulong_to_hex(unsigned long n);
 char	*convert_char(char c);
 char	*convert_string(char *str);
 char	*convert_pointer(void *p, t_conv_rule rule);
+char	*convert_int(int num, t_conv_rule rule);
+char	*convert_uint(unsigned int num, t_conv_rule rule);
+char	*convert_hex(unsigned int num, t_conv_rule rule);
 
 size_t	print_len(const char *str);
 int		ft_printf(const char *format, ...);
