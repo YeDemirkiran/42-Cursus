@@ -22,13 +22,15 @@ char	*convert_int(int num, t_conv_rule rule)
 {
 	char	*str;
 	size_t	len;
+	int		padding;
 
+	padding = ft_int_bigger(rule.min_width, rule.max_width);
 	str = ft_utoa(ft_abs(num));
 	if (!str)
 		return (NULL);
 	len = ft_strlen(str) + (num < 0);
-	if ((rule.format & F_ZERO) && ((int)len < rule.min_width))
-		str_pad_char(&str, '0', rule.min_width - len);
+	if ((rule.format & F_ZERO) && ((int)len < padding))
+		str_pad_char(&str, '0', padding - len);
 	if (num > 0 && !(rule.format & F_MINUS))
 	{
 		if (rule.format & F_PLUS)
@@ -45,12 +47,14 @@ char	*convert_uint(unsigned int num, t_conv_rule rule)
 {
 	char	*str;
 	size_t	len;
+	int		padding;
 
+	padding = ft_int_bigger(rule.min_width, rule.max_width);
 	str = ft_utoa(num);
 	if (!str)
 		return (NULL);
 	len = ft_strlen(str);
-	if (rule.format & F_ZERO && (int)len < rule.min_width)
-		str_pad_char(&str, '0', rule.min_width - len);
+	if (rule.format & F_ZERO && (int)len < padding)
+		str_pad_char(&str, '0', padding - len);
 	return (str);
 }

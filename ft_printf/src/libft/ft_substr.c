@@ -12,8 +12,6 @@
 
 #include "libft.h"
 
-static size_t	ft_smaller(size_t x, size_t y);
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;
@@ -33,11 +31,4 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	else
 		ft_strlcpy(substr, s + start, size);
 	return (substr);
-}
-
-static size_t	ft_smaller(size_t x, size_t y)
-{
-	if (x < y)
-		return (x);
-	return (y);
 }

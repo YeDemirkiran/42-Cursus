@@ -32,6 +32,7 @@ char	*convert_hex(unsigned int num, t_conv_rule rule)
 	char	*str;
 	char	*tmp;
 	size_t	len;
+	int		padding;
 
 	if (!num)
 		str = ft_strdup("0");
@@ -39,11 +40,10 @@ char	*convert_hex(unsigned int num, t_conv_rule rule)
 		str = uint_to_hex(num);
 	if (!str)
 		return (NULL);
-	len = ft_strlen(str);
-	if (num && (rule.format & F_HASH))
-		len += 2;
-	if (rule.format & F_ZERO && (int)len < rule.min_width)
-		str_pad_char(&str, '0', rule.min_width - len);
+	len = ft_strlen(str) + ((num && (rule.format & F_HASH)) * 2);
+	padding = ft_int_bigger(rule.min_width, rule.max_width);
+	if (rule.format & F_ZERO && (int)len < padding)
+		str_pad_char(&str, '0', padding - len);
 	if (num && rule.format & F_HASH)
 	{
 		tmp = ft_strjoin("0x", str);
@@ -60,6 +60,7 @@ char	*convert_pointer(void *p, t_conv_rule rule)
 	char	*str;
 	char	*tmp;
 	size_t	len;
+	int		padding;
 
 	if (!p)
 		str = ft_strdup("(nil)");
@@ -69,8 +70,9 @@ char	*convert_pointer(void *p, t_conv_rule rule)
 		if (!str)
 			return (NULL);
 		len = ft_strlen(str) + 2;
-		if (rule.format & F_ZERO && (int)len < rule.min_width)
-			str_pad_char(&str, '0', rule.min_width - len);
+		padding = ft_int_bigger(rule.min_width, rule.max_width);
+		if (rule.format & F_ZERO && (int)len < padding)
+			str_pad_char(&str, '0', padding - len);
 		tmp = ft_strjoin("0x", str);
 		free(str);
 		str = tmp;

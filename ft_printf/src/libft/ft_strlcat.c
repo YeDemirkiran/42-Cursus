@@ -12,8 +12,6 @@
 
 #include "libft.h"
 
-static size_t	ft_smaller(size_t x, size_t y);
-
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	dst_len;
@@ -25,11 +23,4 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		return (total_len);
 	ft_strlcpy(dst + dst_len, src, size - dst_len);
 	return (total_len);
-}
-
-static size_t	ft_smaller(size_t x, size_t y)
-{
-	if (x < y)
-		return (x);
-	return (y);
 }

@@ -53,6 +53,8 @@ size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 size_t			ft_intlen(int n);
 size_t			ft_uintlen(unsigned int n);
+size_t			ft_smaller(size_t x, size_t y);
+int				ft_int_bigger(int x, int y);
 
 void			ft_putchar_fd(char c, int fd);
 void			ft_putnchr(char c, size_t n);

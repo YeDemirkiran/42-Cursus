@@ -17,18 +17,13 @@ static t_conv_rule	detect_format(const char **str)
 	}
 	if (**str == '.')
 	{
-		// ft_printf("**str then: %c", **str);
 		(*str)++;
-		// ft_printf("**str now: %c", **str);
 		rule.max_width = 0;
 		while (ft_isdigit(**str))
 		{
 			rule.max_width *= 10;
 			rule.max_width += *(*str)++ - '0';
 		}
-		// ft_printf("min width now: %i", rule.min_width);
-		// ft_printf("max width now: %i", rule.max_width);
-		// ft_printf("char now %c", **str);
 	}
 	rule.format |= is_formspec(*(*str)++);
 	return (rule);
