@@ -3,11 +3,7 @@
 
 int	main(void)
 {
-	int	res;
-	res = printf("%#014x", 22);
-	printf(" (returned: %i)\n", res);
-	res = ft_printf("%#014x", 22);
-	printf(" (returned: %i)\n", res);
+	
 
 	return (0);
 }
