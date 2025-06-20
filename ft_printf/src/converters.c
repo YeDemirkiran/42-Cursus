@@ -11,11 +11,24 @@ char	*convert_char(char c)
 	return (str);
 }
 
-char	*convert_string(char *str)
+char	*convert_string(char *str, t_conv_rule rule)
 {
+	char	*new;
+	size_t	len;
+
 	if (!str)
-		return (ft_strdup("(null)"));
-	return (ft_strdup(str));
+		new = ft_strdup("(null)");
+	else if (rule.max_width > 0)
+	{
+		len = ft_smaller((size_t)rule.max_width, ft_strlen(str)) + 1;
+		new = malloc(len);
+		ft_strlcpy(new, str, len);
+	}
+	else if (rule.max_width == 0)
+		new = NULL;
+	else
+		new = ft_strdup(str);
+	return (new);
 }
 
 char	*convert_int(int num, t_conv_rule rule)

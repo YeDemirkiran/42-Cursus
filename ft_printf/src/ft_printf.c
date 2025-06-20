@@ -38,7 +38,7 @@ static char	*get_format_string(t_conv_rule rule, va_list args)
 	else if (rule.format & C_CHAR)
 		str = convert_char((char)va_arg(args, int));
 	else if (rule.format & C_STR)
-		str = convert_string(va_arg(args, char *));
+		str = convert_string(va_arg(args, char *), rule);
 	else if (rule.format & C_POINTER)
 		str = convert_pointer(va_arg(args, void *), rule);
 	else if (rule.format & C_INT)

@@ -35,7 +35,7 @@ int		is_formspec(const char c);
 void	str_pad_char(char **str, char c, size_t amount);
 
 char	*convert_char(char c);
-char	*convert_string(char *str);
+char	*convert_string(char *str, t_conv_rule rule);
 char	*convert_int(int num, t_conv_rule rule);
 char	*convert_uint(unsigned int num, t_conv_rule rule);
 char	*convert_hex(unsigned int num, t_conv_rule rule);
