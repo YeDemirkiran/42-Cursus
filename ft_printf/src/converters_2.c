@@ -32,18 +32,17 @@ char	*convert_hex(unsigned int num, t_conv_rule rule)
 	char	*str;
 	char	*tmp;
 	size_t	len;
-	int		padding;
 
-	if (!num)
-		str = ft_strdup("0");
-	else
-		str = uint_to_hex(num);
+	if (!num && rule.max_width == 0)
+		return (NULL);
+	str = uint_to_hex(num);
 	if (!str)
 		return (NULL);
 	len = ft_strlen(str) + ((num && (rule.format & F_HASH)) * 2);
-	padding = ft_int_bigger(rule.min_width, rule.max_width);
-	if (rule.format & F_ZERO && (int)len < padding)
-		str_pad_char(&str, '0', padding - len);
+	if ((int)len < rule.max_width)
+		str_pad_char(&str, '0', rule.max_width - len);
+	else if (rule.format & F_ZERO && (int)len < rule.min_width)
+		str_pad_char(&str, '0', rule.min_width - len);
 	if (num && rule.format & F_HASH)
 	{
 		tmp = ft_strjoin("0x", str);

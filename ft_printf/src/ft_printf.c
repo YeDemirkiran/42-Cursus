@@ -54,7 +54,8 @@ static void	print_order(char *str, t_conv_rule rule, size_t *len)
 {
 	if (!(rule.format & F_MINUS) && (int)(*len) < rule.min_width)
 		ft_putnchr(' ', rule.min_width - (int)(*len));
-	ft_putstr_fd(str, 1);
+	if (str)
+		ft_putstr_fd(str, 1);
 	if ((rule.format & F_MINUS) && (int)(*len) < rule.min_width)
 		ft_putnchr(' ', rule.min_width - (int)(*len));
 	if ((int)(*len) < rule.min_width)
@@ -70,10 +71,12 @@ static size_t	print_format(const char **format, va_list args)
 	rule = detect_format(format);
 	str = get_format_string(rule, args);
 	if (!str)
-		return (0);
-	len = ft_strlen(str);
+		len = 0;
+	else
+		len = ft_strlen(str);
 	print_order(str, rule, &len);
-	free(str);
+	if (str)
+		free(str);
 	return (len);
 }
 
