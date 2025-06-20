@@ -4,9 +4,9 @@
 int	main(void)
 {
 	int	res;
-	res = printf("%-20.15u", -21);
+	res = printf("% 014i", 21);
 	printf(" (returned: %i)\n", res);
-	res = ft_printf("%-20.15u", -21);
+	res = ft_printf("% 014i", 21);
 	printf(" (returned: %i)\n", res);
 
 	return (0);

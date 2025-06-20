@@ -35,6 +35,7 @@ char	*convert_int(int num, t_conv_rule rule)
 {
 	char	*str;
 	size_t	len;
+	int		consider_sign;
 
 	if (rule.max_width == 0 && !num)
 		return (NULL);
@@ -42,12 +43,12 @@ char	*convert_int(int num, t_conv_rule rule)
 	if (!str)
 		return (NULL);
 	len = ft_strlen(str);
+	consider_sign = (num < 0 || rule.format & (F_PLUS | F_SPACE));
 	if ((int)len < rule.max_width)
 		str_pad_char(&str, '0', rule.max_width - len);
-	else if (rule.format & F_ZERO && (int)len < rule.min_width)
-		str_pad_char(&str, '0', rule.min_width - len);
-	len += (num < 0);
-	if (num > 0 && !(rule.format & F_MINUS))
+	else if (rule.format & F_ZERO && ((int)len) + consider_sign < rule.min_width)
+		str_pad_char(&str, '0', rule.min_width - len - consider_sign);
+	if (num > 0)
 	{
 		if (rule.format & F_PLUS)
 			str_pad_char(&str, '+', 1);
