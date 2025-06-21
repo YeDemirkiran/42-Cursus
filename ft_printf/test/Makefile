@@ -1,7 +1,7 @@
 NAME = test.out
 CC = cc
 SRCS = ./main.c
-INC = -I$(PRINTF_PATH) -I$(PRINTF_PATH)libft/
+INC = -I$(PRINTF_PATH)
 FLAGS = -Wall -Wextra -Werror
 PRINTF = libftprintf.a
 PRINTF_PATH = ../src/
