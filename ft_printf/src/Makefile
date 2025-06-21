@@ -11,11 +11,11 @@ all: $(NAME)
 
 bonus: all
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT_PATH)$(LIBFT)
 	cp $(LIBFT_PATH)$(LIBFT) ./$(NAME)
 	ar rcs $(NAME) $(OBJS)
 
-$(LIBFT):
+$(LIBFT_PATH)$(LIBFT): 
 	make -C $(LIBFT_PATH) bonus
 
 %.o: %.c
@@ -31,4 +31,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re

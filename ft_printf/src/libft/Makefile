@@ -16,7 +16,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $(NAME) ${OBJS}
 
-bonus:  $(NAME) ${BOBJS}
+bonus: $(NAME) ${BOBJS}
 	ar rcs $(NAME) ${BOBJS} 
 
 clean:

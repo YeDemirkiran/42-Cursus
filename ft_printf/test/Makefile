@@ -8,10 +8,10 @@ PRINTF_PATH = ../src/
 
 all: $(NAME)
 
-$(NAME): $(PRINTF)
+$(NAME): $(PRINTF_PATH)$(PRINTF)	
 	$(CC) $(FLAGS) $(SRCS) $(PRINTF_PATH)$(PRINTF) -o $(NAME) $(INC)
 
-$(PRINTF):
+$(PRINTF_PATH)$(PRINTF):
 	make -s -C $(PRINTF_PATH)
 
 noflag: $(PRINTF)
