@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:12:46 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/21 17:57:01 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:13:57 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,42 @@
 #include "stdio.h"
 #include "fcntl.h"
 
+static void	next_line_init(int fd, t_line_info *line)
+{
+	if (!line->index || line->index >= line->last_read_size)
+	{
+		line->last_read_size = read(fd, line->buffer, BUFFER_SIZE);
+		line->index = 0;
+		line->start = 0;
+	}
+}
+
+static void	at_no_newline(t_line_info *line)
+{
+	size_t				s_tmp;
+
+	if (line->str)
+	{
+		s_tmp = str_addalloc(&(line->str), ft_strlen(line->buffer));
+		ft_strlcat(line->str, line->buffer, s_tmp);
+	}
+	else
+	{
+		line->str = malloc((line->index - line->start) + 1);
+		ft_strlcpy(line->str, line->buffer + line->start,
+			(line->index - line->start) + 1);
+		line->start = ++(line->index);
+	}
+}
+
 char	*get_next_line(int fd)
 {
 	static t_line_info	line;
 	char				*tmp;
-	size_t				s_tmp;
 
 	if (fd < 0)
 		return (NULL);
-	if (!line.index || line.index >= line.last_read_size)
-	{
-		line.last_read_size = read(fd, line.buffer, BUFFER_SIZE);
-		line.index = 0;
-		line.start = 0;
-	}	
+	next_line_init(fd, &line);
 	if (!line.last_read_size)
 	{
 		tmp = line.str;
@@ -57,24 +79,14 @@ char	*get_next_line(int fd)
 		}
 		line.index++;
 	}
-	if (line.str)
-	{
-		s_tmp = str_addalloc(&(line.str), ft_strlen(line.buffer));
-		ft_strlcat(line.str, line.buffer, s_tmp);
-	}
-	else
-	{
-		line.str = malloc((line.index - line.start) + 1);
-		ft_strlcpy(line.str, line.buffer + line.start, (line.index - line.start) + 1);
-		line.start = ++(line.index);
-	}
+	at_no_newline(&line);
 	return (get_next_line(fd));
 }
 
 int main(void)
 {
-	int	fd;
-	int	i;
+	int		fd;
+	int		i;
 	char	*line;
 
 	fd = open("./get_next_line.c", O_RDONLY);
