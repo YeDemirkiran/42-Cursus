@@ -3,16 +3,16 @@
 #include "stdio.h"
 #include "fcntl.h"
 
-static void		buffer_clear(char *str)
-{
-	int	i;
+// static void		buffer_clear(char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < BUFFER_SIZE)
-		str[i++] = 0;
-}
+// 	i = 0;
+// 	while (i < BUFFER_SIZE)
+// 		str[i++] = 0;
+// }
 
-static size_t	ft_strlen(char *str)
+static size_t	ft_strlen(const char *str)
 {
 	size_t	len;
 
@@ -20,6 +20,13 @@ static size_t	ft_strlen(char *str)
 	while (str[len])
 		len++;
 	return (len);
+}
+
+static size_t	ft_smaller(size_t x, size_t y)
+{
+	if (x < y)
+		return (x);
+	return (y);
 }
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
@@ -35,59 +42,41 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (src_len);
 }
 
-static ssize_t	index_of_char(char *str, char c)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	ssize_t	index;
+	size_t	dst_len;
+	size_t	total_len;
 
-	index = 0;
-	while (str[index])
-	{
-		if (str[index] == c)
-			return (index);
-		index++;
-	}
-	// Check '\0'
-	if (str[index] == c)
-		return (index);
-	return (-1);
+	dst_len = ft_strlen(dst);
+	total_len = ft_smaller(size, dst_len) + ft_strlen(src);
+	if (size <= dst_len)
+		return (total_len);
+	ft_strlcpy(dst + dst_len, src, size - dst_len);
+	return (total_len);
 }
 
-static char	*copy_line(char buffer[BUFFER_SIZE], int start, int end)
-{
-	char	*str;
-	// int		i;
-	// int		j;
-	// int		k;
-	// ssize_t	target;
+// static ssize_t	index_of_char(char *str, char c)
+// {
+// 	ssize_t	index;
 
-	// str = malloc((size_t)((ssize_t)buffer_amount * last_read_size) + 1);
-	// if (!str)
-	// 	return (NULL);
-	// i = 0;
-	// k = 0;
-	// while (i < buffer_amount)
-	// {
-	// 	j = 0;
-	// 	target = BUFFER_SIZE;
-	// 	if (i == buffer_amount - 1)
-	// 		target = last_read_size;
-	// 	while (j < target)
-	// 	{
-	// 		str[k] = buffer[i][j];
-	// 		j++;
-	// 		k++;
-	// 	}
-	// 	i++;
-	// }
-	// str[k] = 0;
-	return (str);
-}
+// 	index = 0;
+// 	while (str[index])
+// 	{
+// 		if (str[index] == c)
+// 			return (index);
+// 		index++;
+// 	}
+// 	// Check '\0'
+// 	if (str[index] == c)
+// 		return (index);
+// 	return (-1);
+// }
 
 char	*get_next_line(int fd)
 {
 	static t_line_info	line;
 	char				*tmp;
-	size_t				buf_len;
+	// size_t				buf_len;
 
 	if (fd < 0)
 		return (NULL);
@@ -103,22 +92,36 @@ char	*get_next_line(int fd)
 	{
 		if (line.buffer[line.index] == '\n')
 		{
-			if (line.str)
-			{
-				tmp = malloc(ft_strlen(line.str) + line.index + 2);
-				ft_strlcpy(tmp, line.str, ft_strlen(line.str) + 1);
-				free(line.str);
-				line.str = tmp;
-			}
-			ft_strlcat(line.str, line.buffer[line.start],
-				ft_strlen(line.str) + line.index + 2);
+			// if (line.str)
+			// {
+			// 	// tmp = malloc(ft_strlen(line.str) + line.index + 2);
+			// 	// ft_strlcpy(tmp, line.str, ft_strlen(line.str) + 1);
+			// 	// free(line.str);
+			// 	// line.str = tmp;
+			// }
+			// else
+			// {
+				
+			// }
+			// printf("Size: %i\n", (line.index - line.start) + 2);
+			// printf("Copy starts with: %c\n", line.buffer[line.start]);
+			// printf("Copy ends with: %c\n", line.buffer[line.index + 1]);
+			tmp = malloc((line.index - line.start) + 2);
+			ft_strlcpy(tmp, line.buffer + line.start, (line.index - line.start) + 2);
+			//printf("New line ends with: (%c), before (%c)", tmp[(line.index - line.start) + 1], tmp[(line.index - line.start)]);
+			//printf("Line start: %i, Index: %i\n", line.start, line.index);
 			line.start = ++(line.index);
-			return (line.str);
+			//printf("Line start: %i, Index: %i\n", line.start, line.index);
+			return (tmp);
+			// ft_strlcat(line.str, line.buffer[line.start],
+			// 	ft_strlen(line.str) + line.index + 2);
+			// line.start = ++(line.index);
+			//return (line.str);
 		}
 		line.index++;
 	}
-	
-	return (get_next_line(fd));
+	//return (get_next_line(fd));
+	return (NULL);
 }
 
 int main(void)
@@ -131,7 +134,8 @@ int main(void)
 	line = get_next_line(fd);
 	while (line)
 	{
-		printf("Line 1: %s", line);
+		printf("%s", line);
+		free(line);
 		line = get_next_line(fd);
 	}
 	printf("\nEnd of lines\n");
