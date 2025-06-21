@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:22:10 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/21 11:22:11 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:07:22 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*char_rep(char c, size_t len)
 	return (str);
 }
 
-static char	*ft_strapp(char *str1, char *str2)
+char	*ft_strapp(char *str1, char *str2)
 {
 	char	*str;
 

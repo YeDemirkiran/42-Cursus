@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:22:25 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/21 11:22:26 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:10:17 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static char	*uint_to_hex(unsigned int n)
 char	*convert_hex(unsigned int num, t_conv_rule rule)
 {
 	char	*str;
-	char	*tmp;
 	size_t	len;
 	int		extra;
 
@@ -55,14 +54,11 @@ char	*convert_hex(unsigned int num, t_conv_rule rule)
 	extra = (num && (rule.format & F_HASH)) * 2;
 	if ((int)len < rule.max_width)
 		str_pad_char(&str, '0', rule.max_width - len);
-	else if (rule.format & F_ZERO && (int)len < rule.min_width)
+	else if (rule.format & F_ZERO && (int)len < rule.min_width
+		&& 0 > rule.max_width)
 		str_pad_char(&str, '0', rule.min_width - len - extra);
 	if (num && rule.format & F_HASH)
-	{
-		tmp = ft_strjoin("0x", str);
-		free(str);
-		str = tmp;
-	}
+		str = ft_strapp(ft_strdup("0x"), str);
 	if (num && rule.format & C_HEX_UP)
 		ft_str_toupper(str);
 	return (str);

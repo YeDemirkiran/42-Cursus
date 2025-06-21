@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:22:21 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/21 11:22:22 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:13:10 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ char	*convert_string(char *str, t_conv_rule rule)
 	size_t	len;
 
 	if (!str)
-		new = ft_strdup("(null)");
+	{
+		if (rule.max_width <= 0 || rule.max_width >= 6)
+			new = ft_strdup("(null)");
+		else
+			new = NULL;
+	}
 	else if (rule.max_width > 0)
 	{
 		len = ft_smaller((size_t)rule.max_width, ft_strlen(str)) + 1;
@@ -58,15 +63,13 @@ char	*convert_int(int num, t_conv_rule rule)
 	extra = (num < 0 || rule.format & (F_PLUS | F_SPACE));
 	if ((int)len < rule.max_width)
 		str_pad_char(&str, '0', rule.max_width - len);
-	else if (rule.format & F_ZERO && ((int)len) + extra < rule.min_width)
+	else if (rule.format & F_ZERO && ((int)len) + extra < rule.min_width
+		&& 0 > rule.max_width)
 		str_pad_char(&str, '0', rule.min_width - len - extra);
-	if (num > 0)
-	{
-		if (rule.format & F_PLUS)
-			str_pad_char(&str, '+', 1);
-		else if (rule.format & F_SPACE)
-			str_pad_char(&str, ' ', 1);
-	}
+	if (num >= 0 && rule.format & F_PLUS)
+		str_pad_char(&str, '+', 1);
+	else if (num >= 0 && rule.format & F_SPACE)
+		str_pad_char(&str, ' ', 1);
 	else if (num < 0)
 		str_pad_char(&str, '-', 1);
 	return (str);
@@ -85,7 +88,8 @@ char	*convert_uint(unsigned int num, t_conv_rule rule)
 	len = ft_strlen(str);
 	if ((int)len < rule.max_width)
 		str_pad_char(&str, '0', rule.max_width - len);
-	else if (rule.format & F_ZERO && (int)len < rule.min_width)
+	else if (rule.format & F_ZERO && (int)len < rule.min_width
+		&& 0 > rule.max_width)
 		str_pad_char(&str, '0', rule.min_width - len);
 	return (str);
 }

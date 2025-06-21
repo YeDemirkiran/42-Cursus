@@ -9,6 +9,8 @@ LIBFT_PATH = ./libft/
 
 all: $(NAME)
 
+bonus: all
+
 $(NAME): $(OBJS) $(LIBFT)
 	cp $(LIBFT_PATH)$(LIBFT) ./$(NAME)
 	ar rcs $(NAME) $(OBJS)

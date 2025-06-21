@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:22:18 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/21 11:22:19 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:20:44 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static char	*get_format_string(t_conv_rule rule, va_list args)
 {
 	char	*str;
 
+	str = NULL;
 	if (rule.format & C_PERCENT)
 		str = convert_char('%');
 	else if (rule.format & C_CHAR)
@@ -64,10 +65,17 @@ static char	*get_format_string(t_conv_rule rule, va_list args)
 
 static void	print_order(char *str, t_conv_rule rule, size_t *len)
 {
+	if (rule.format & C_CHAR && *str == 0)
+		(*len)++;
 	if (!(rule.format & F_MINUS) && (int)(*len) < rule.min_width)
 		ft_putnchr(' ', rule.min_width - (int)(*len));
 	if (str)
-		ft_putstr_fd(str, 1);
+	{
+		if (rule.format & C_CHAR && *str == 0)
+			ft_putnchr(0, 1);
+		else
+			ft_putstr_fd(str, 1);
+	}	
 	if ((rule.format & F_MINUS) && (int)(*len) < rule.min_width)
 		ft_putnchr(' ', rule.min_width - (int)(*len));
 	if ((int)(*len) < rule.min_width)

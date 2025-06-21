@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:24:00 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/21 11:24:28 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:07:54 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_conv_rule
 int		is_flag(const char c);
 int		is_formspec(const char c);
 
+char	*ft_strapp(char *str1, char *str2);
 void	str_pad_char(char **str, char c, size_t amount);
 
 char	*convert_char(char c);
