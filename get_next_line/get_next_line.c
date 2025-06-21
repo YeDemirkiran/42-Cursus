@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 16:12:46 by yademirk          #+#    #+#             */
+/*   Updated: 2025/06/21 16:22:29 by yademirk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 #include "stdio.h"
@@ -72,11 +84,26 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 // 	return (-1);
 // }
 
+static size_t	str_addalloc(char **p, size_t add)
+{
+	char	*tmp;
+	size_t	size;
+
+	if (!p || !*p || !add)
+		return (0);
+	size = ft_strlen(*p) + 1 + add;
+	tmp = malloc(size);
+	ft_strlcpy(tmp, (const char *)*p, size);
+	free(*p);
+	*p = tmp;
+	return (size);
+}
+
 char	*get_next_line(int fd)
 {
 	static t_line_info	line;
 	char				*tmp;
-	// size_t				buf_len;
+	size_t				s_tmp;
 
 	if (fd < 0)
 		return (NULL);
@@ -87,57 +114,79 @@ char	*get_next_line(int fd)
 		line.start = 0;
 	}	
 	if (!line.last_read_size)
+	{
+		tmp = line.str;
+		line.str = NULL;
+		return (tmp);
+	}
+	else if (line.last_read_size < 0)
 		return (NULL);
 	while (line.index < line.last_read_size)
 	{
 		if (line.buffer[line.index] == '\n')
 		{
-			// if (line.str)
-			// {
-			// 	// tmp = malloc(ft_strlen(line.str) + line.index + 2);
-			// 	// ft_strlcpy(tmp, line.str, ft_strlen(line.str) + 1);
-			// 	// free(line.str);
-			// 	// line.str = tmp;
-			// }
-			// else
-			// {
-				
-			// }
-			// printf("Size: %i\n", (line.index - line.start) + 2);
-			// printf("Copy starts with: %c\n", line.buffer[line.start]);
-			// printf("Copy ends with: %c\n", line.buffer[line.index + 1]);
 			tmp = malloc((line.index - line.start) + 2);
-			ft_strlcpy(tmp, line.buffer + line.start, (line.index - line.start) + 2);
-			//printf("New line ends with: (%c), before (%c)", tmp[(line.index - line.start) + 1], tmp[(line.index - line.start)]);
-			//printf("Line start: %i, Index: %i\n", line.start, line.index);
+			ft_strlcpy(tmp, line.buffer + line.start,
+				(line.index - line.start) + 2);
 			line.start = ++(line.index);
-			//printf("Line start: %i, Index: %i\n", line.start, line.index);
+			if (line.str)
+			{
+				s_tmp = str_addalloc(&(line.str), ft_strlen(tmp));
+				ft_strlcat(line.str, tmp, s_tmp);
+				free(tmp);
+				tmp = line.str;
+				line.str = NULL;
+			}
 			return (tmp);
-			// ft_strlcat(line.str, line.buffer[line.start],
-			// 	ft_strlen(line.str) + line.index + 2);
-			// line.start = ++(line.index);
-			//return (line.str);
 		}
 		line.index++;
 	}
-	//return (get_next_line(fd));
-	return (NULL);
+	if (line.str)
+	{
+		s_tmp = str_addalloc(&(line.str), ft_strlen(line.buffer));
+		ft_strlcat(line.str, line.buffer, s_tmp);
+	}
+	else
+	{
+		line.str = malloc((line.index - line.start) + 1);
+		ft_strlcpy(line.str, line.buffer + line.start, (line.index - line.start) + 1);
+		line.start = ++(line.index);
+	}
+	return (get_next_line(fd));
 }
 
 int main(void)
 {
 	int	fd;
+	int	fd_1;
+	int	fd_2;
+	int	i;
 	char	*line;
 
-	fd = open("./test.txt", O_RDONLY);
+	fd_1 = open("./test.txt", O_RDONLY);
+	fd_2 = open("./test_2.txt", O_RDONLY);
+	fd = fd_1;
+
 	printf("Target FD: %i\n\n", fd);
 	line = get_next_line(fd);
+
+	i = 0;
 	while (line)
 	{
 		printf("%s", line);
 		free(line);
+		if (i && i % 3 == 0)
+		{
+			if (fd == fd_1)
+				fd = fd_2;
+			else if (fd == fd_2)
+				fd = fd_1;
+		}
 		line = get_next_line(fd);
+		i++;
 	}
 	printf("\nEnd of lines\n");
+	close(fd_1);
+	close(fd_2);
 	return (0);
 }
