@@ -23,7 +23,7 @@
 typedef struct s_line_info
 {
 	char	*str;
-	char	buffer[BUFFER_SIZE];
+	char	*buffer;
 	ssize_t	last_read_size;
 	int		start;
 	int		index;
