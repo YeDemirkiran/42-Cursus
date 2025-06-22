@@ -12,9 +12,6 @@
 
 #include "get_next_line.h"
 
-#include "stdio.h"
-#include "fcntl.h"
-
 static void	next_line_init(int fd, t_line_info *line)
 {
 	size_t	i;
@@ -25,8 +22,12 @@ static void	next_line_init(int fd, t_line_info *line)
 		if (!line->buffer)
 			return ;
 		i = 0;
-		while (i < (size_t)BUFFER_SIZE)
+		while (i < (size_t)BUFFER_SIZE + 1)
+		{
+			if (i == BUFFER_SIZE)
+				break ;
 			line->buffer[i++] = 0;
+		}
 	}
 	if (!line->index || line->index >= line->last_read_size)
 	{
@@ -103,7 +104,7 @@ char	*get_next_line(int fd)
 {
 	static t_line_info	line;
 
-	if (fd < 0)
+	if (fd < 0 || !(size_t)BUFFER_SIZE)
 		return (NULL);
 	next_line_init(fd, &line);
 	if (line.last_read_size <= 0)
@@ -116,28 +117,4 @@ char	*get_next_line(int fd)
 	}
 	at_no_newline(&line);
 	return (get_next_line(fd));
-}
-
-int main(void)
-{
-	int		fd;
-	int		i;
-	char	*line;
-
-	fd = open("./test.txt", O_RDONLY);
-
-	printf("Target FD: %i\n\n", fd);
-	line = get_next_line(fd);
-
-	i = 0;
-	while (line)
-	{
-		printf("%s", line);
-		free(line);
-		line = get_next_line(fd);
-		i++;
-	}
-	printf("\nEnd of lines\n");
-	close(fd);
-	return (0);
 }
