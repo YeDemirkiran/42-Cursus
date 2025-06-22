@@ -16,9 +16,10 @@ int main(int argc, char **args)
 	printf("Target FD: %i\n\n", fd);
 
 	line = get_next_line(fd);
+	int i = 1;
 	while (line)
 	{
-		printf("Line 1: '%s'", line);
+		printf("Line %i: '%s'", i++, line);
 		free(line);
 		line = get_next_line(fd);
 	}
