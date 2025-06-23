@@ -12,29 +12,25 @@
 
 #include "get_next_line.h"
 
-static void	next_line_init(int fd, t_line_info *line)
-{
-	size_t	i;
+#include "stdio.h"
 
+static int	next_line_init(int fd, t_line_info *line)
+{
 	if (!line->buffer)
 	{
-		line->buffer = malloc((size_t)BUFFER_SIZE);
+		line->buffer = malloc(BUFFER_SIZE + 1);
 		if (!line->buffer)
-			return ;
-		i = 0;
-		while (i < (size_t)BUFFER_SIZE + 1)
-		{
-			if (i == BUFFER_SIZE)
-				break ;
-			line->buffer[i++] = 0;
-		}
+			return (0);
 	}
 	if (!line->index || line->index >= line->last_read_size)
 	{
-		line->last_read_size = read(fd, line->buffer, (size_t)BUFFER_SIZE);
+		line->last_read_size = read(fd, line->buffer, BUFFER_SIZE);
+		if (line->last_read_size > 0)
+			line->buffer[line->last_read_size] = 0;
 		line->index = 0;
 		line->start = 0;
 	}
+	return (1);
 }
 
 static char	*on_find_newline(t_line_info *line)
@@ -104,9 +100,10 @@ char	*get_next_line(int fd)
 {
 	static t_line_info	line;
 
-	if (fd < 0 || !(size_t)BUFFER_SIZE)
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (on_read_fail(&line));
+	if (!next_line_init(fd, &line))
 		return (NULL);
-	next_line_init(fd, &line);
 	if (line.last_read_size <= 0)
 		return (on_read_fail(&line));
 	while (line.index < line.last_read_size)

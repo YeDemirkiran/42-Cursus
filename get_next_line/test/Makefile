@@ -1,5 +1,5 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 MAIN = ./main.c 
 SRC = ../src/get_next_line.c ../src/get_next_line_utils.c 
 BSRC = ../src/get_next_line_bonus.c ../src/get_next_line_utils_bonus.c 
