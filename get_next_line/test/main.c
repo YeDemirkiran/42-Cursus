@@ -7,48 +7,40 @@ int main(int argc, char **args)
 {
 	int		fd;
 	char	*line;
+	int		i;
+	int		j;
 
 	//printf("BUFFER_SIZE: %lu\n", BUFFER_SIZE);
 	
 	if (argc >= 2)
-		fd = open(args[1], O_RDONLY);
-	else
-		fd = 0;
+	{
+		j = 1;
+		while (j < argc)
+		{
+			printf("File: %s\n", args[j]);
+			fd = open(args[j++], O_RDONLY);
 
-	printf("Target FD: %i\n\n", fd);
+			i = 1;
+			line = get_next_line(fd);
+			while (line)
+			{
+				printf("Line %i: %s", i++, line);
+				free(line);
+				line = get_next_line(fd);
+			}
+			printf("\n");
+			close(fd);
+		}
+		return (0);
+	}
 
-	int i = 1;
-
-	// line = get_next_line(fd);
-	// printf("Line %i: '%s'", i++, line);
-	// free(line);
-	line = get_next_line(fd);
-	printf("Line %i: '%s'", i++, line);
-	free(line);
-	line = get_next_line(-1);
-	printf("Line %i: '%s'", i++, line);
-	free(line);
-	// line = get_next_line(-1);
-	// printf("\nLine %i: '%s'", i++, line);
-	// free(line);
-	// line = get_next_line(-1);
-	// printf("\nLine %i: '%s'", i++, line);
-	// free(line);
-
-	close(fd);
-	if (argc >= 2)
-		fd = open(args[1], O_RDONLY);
-	else
-		fd = 0;
 	i = 1;
-	line = get_next_line(fd);
+	line = get_next_line(0);
 	while (line)
 	{
-		printf("Line %i: '%s'", i++, line);
+		printf("Line %i: %s", i++, line);
 		free(line);
-		line = get_next_line(fd);
-	}
-	printf("\n\nEnd of lines\n");
-	close(fd);
+		line = get_next_line(0);
+	}	
 	return (0);
 }
