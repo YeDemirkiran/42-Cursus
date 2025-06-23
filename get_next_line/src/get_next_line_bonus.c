@@ -12,26 +12,30 @@
 
 #include "get_next_line_bonus.h"
 
-static int	alloc_buffer(char **buffer)
+static int	alloc_buffer(char ***buffer)
 {
-	if (buffer)
-	{
-		while (buffer)
-		{
-			if (*buffer)
-			{
-				free(*buffer);
-				*buffer = NULL;
-			}
-			buffer++;
-		}
-	}
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char *));
+	size_t	i;
+
 	if (!buffer)
 		return (0);
-	buffer[BUFFER_SIZE] = NULL;
-	while (buffer)
-		*buffer++ = NULL;
+	i = 0;
+	while ((*buffer)[i])
+	{
+		if (*(buffer[i]))
+		{
+			free(*(buffer[i]));
+			*(buffer[i]) = NULL;
+		}
+		i++;
+	}
+	free(*buffer);
+	*buffer = malloc((BUFFER_SIZE + 1) * sizeof(char *));
+	if (!*buffer)
+		return (0);
+	i = 0;
+	*buffer[BUFFER_SIZE] = NULL;
+	while (*buffer[i])
+		*buffer[i++] = NULL;
 	return (1);
 }
 
@@ -47,7 +51,10 @@ static int	next_line_init(int fd, char ***buffer, size_t *start_pos)
 			return (0);
 	}
 	if (*buffer[fd])
+	{
 		*start_pos = ft_strlen(*buffer[fd]) + 1;
+		*buffer[fd][*start_pos - 1] = '\n';
+	}
 	else
 	{
 		*buffer[fd] = malloc(BUFFER_SIZE + 1);
@@ -71,68 +78,68 @@ static int	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	return (1);
 }
 
-static char	*on_find_newline(char *buffer)
+static char	*on_find_newline(char *buffer, size_t start, size_t end)
 {
-	size_t	s_tmp;
-	char	*tmp;
-
-	tmp = malloc((line->index - line->start) + 2);
-	if (!tmp)
-		return (NULL);
-	ft_strlcpy(tmp, line->buffer + line->start,
-		(line->index - line->start) + 2);
-	line->start = ++(line->index);
-	if (line->str)
-	{
-		s_tmp = str_addalloc(&(line->str), ft_strlen(tmp));
-		ft_strlcat(line->str, tmp, s_tmp);
-		free(tmp);
-		tmp = line->str;
-		line->str = NULL;
-	}
-	return (tmp);
-}
-
-static void	at_no_newline(t_line_info *line)
-{
-	size_t	s_tmp;
-
-	if (line->str)
-	{
-		s_tmp = str_addalloc(&(line->str), ft_strlen(line->buffer));
-		ft_strlcat(line->str, line->buffer, s_tmp);
-	}
-	else
-	{
-		line->str = malloc((line->index - line->start) + 1);
-		ft_strlcpy(line->str, line->buffer + line->start,
-			(line->index - line->start) + 1);
-		line->start = ++(line->index);
-	}
-	if (line->buffer)
-	{
-		free(line->buffer);
-		line->buffer = NULL;
-	}
-}
-
-static char	*on_read_fail(t_line_info *line)
-{
+	//size_t	s_tmp;
 	char	*str;
 
-	if (line->buffer)
-	{
-		free(line->buffer);
-		line->buffer = NULL;
-	}
-	if (line->last_read_size == 0)
-	{
-		str = line->str;
-		line->str = NULL;
-		return (str);
-	}
-	return (NULL);
+	str = malloc((end - start) + 2);
+	if (!str)
+		return (NULL);
+	buffer[end] = 0;
+	ft_strlcpy(str, buffer + start, (end - start) + 2);
+	//line->start = ++(line->index);
+	// if (start)
+	// {
+	// 	s_tmp = str_addalloc(&(line->str), ft_strlen(str));
+	// 	ft_strlcat(line->str, str, s_tmp);
+	// 	free(str);
+	// 	str = line->str;
+	// 	line->str = NULL;
+	// }
+	return (str);
 }
+
+// static void	at_no_newline(t_line_info *line)
+// {
+// 	size_t	s_tmp;
+
+// 	if (line->str)
+// 	{
+// 		s_tmp = str_addalloc(&(line->str), ft_strlen(line->buffer));
+// 		ft_strlcat(line->str, line->buffer, s_tmp);
+// 	}
+// 	else
+// 	{
+// 		line->str = malloc((line->index - line->start) + 1);
+// 		ft_strlcpy(line->str, line->buffer + line->start,
+// 			(line->index - line->start) + 1);
+// 		line->start = ++(line->index);
+// 	}
+// 	if (line->buffer)
+// 	{
+// 		free(line->buffer);
+// 		line->buffer = NULL;
+// 	}
+// }
+
+// static char	*on_read_fail(t_line_info *line)
+// {
+// 	char	*str;
+
+// 	if (line->buffer)
+// 	{
+// 		free(line->buffer);
+// 		line->buffer = NULL;
+// 	}
+// 	if (line->last_read_size == 0)
+// 	{
+// 		str = line->str;
+// 		line->str = NULL;
+// 		return (str);
+// 	}
+// 	return (NULL);
+// }
 
 char	*get_next_line(int fd)
 {
@@ -146,12 +153,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	// if (line.last_read_size <= 0)
 	// 	return (on_read_fail(&line));
-	while (buffer[fd][start_pos])
+	i = start_pos;
+	while (buffer[fd][i])
 	{
-		if (buffer[fd][start_pos] == '\n')
-			return (on_find_newline(&line));
-		start_pos++;
+		if (buffer[fd][i] == '\n')
+			return (on_find_newline(buffer[fd], start_pos, i));
+		i++;
 	}
-	at_no_newline(&line);
-	return (get_next_line(fd));
+	//at_no_newline(&line);
+	return (NULL);
 }
