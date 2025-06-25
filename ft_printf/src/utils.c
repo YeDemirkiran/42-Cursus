@@ -6,11 +6,11 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:22:10 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/21 12:07:22 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:37:59 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 static char	*char_rep(char c, size_t len)
 {

@@ -6,11 +6,11 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:22:18 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/21 12:35:39 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:37:46 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 static t_conv_rule	detect_format(const char **str)
 {
