@@ -13,26 +13,38 @@
 #include "get_next_line_bonus.h"
 #include "stdio.h"
 
-static int	alloc_buffer(char ***buffer)
+static int	alloc_buffer(char ***buffer, int fd)
 {
 	size_t	i;
 
 	if (!buffer)
 		return (0);
-	i = 0;
-	while (*buffer && (*buffer)[i])
-	{
-		free((*buffer)[i]);
-		(*buffer)[i] = NULL;
-		i++;
-	}
-	*buffer = malloc((BUFFER_SIZE + 1) * sizeof(char *));
+	// i = 0;
+	// while (*buffer && (*buffer)[i])
+	// {
+	// 	free((*buffer)[i]);
+	// 	(*buffer)[i] = NULL;
+	// 	i++;
+	// }
+	*buffer = malloc((fd + 2) * sizeof(char *));
 	if (!*buffer)
 		return (0);
-	i = 0;
-	while (i <= BUFFER_SIZE)
-		(*buffer)[i++] = NULL;
+	i = ((size_t)fd) + 2;
+	while (i > 0)
+		(*buffer)[--i] = NULL;
 	return (1);
+}
+
+static size_t	buff_len(char **buffer)
+{
+	size_t	len;
+
+	len = 0;
+	if (!buffer)
+		return (len);
+	while (buffer[len])
+		len++;
+	return (len);
 }
 
 static int	next_line_init(int fd, char ***buffer, size_t *start_pos)
@@ -40,11 +52,9 @@ static int	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	size_t	read_size;
 
 	if (!(*buffer))
-	{
-		if (!alloc_buffer(buffer))
+		if (!alloc_buffer(buffer, fd))
 			return (0);
-	}
-	if ((*buffer)[fd])
+	if (buff_len(*buffer) > (size_t)fd && (*buffer)[fd])
 	{
 		*start_pos = ft_strlen((*buffer)[fd]) + 1;
 		(*buffer)[fd][*start_pos - 1] = '\n';
