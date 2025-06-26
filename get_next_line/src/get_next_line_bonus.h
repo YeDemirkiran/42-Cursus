@@ -23,6 +23,7 @@
 size_t	ft_strlen(const char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
+char	*ft_substr(char const *s, size_t start, size_t len);
 size_t	str_addalloc(char **p, size_t add);
 
 char	*get_next_line(int fd);

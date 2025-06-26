@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include "stdio.h"
 
 static int	alloc_buffer(char ***buffer)
 {
@@ -19,23 +20,18 @@ static int	alloc_buffer(char ***buffer)
 	if (!buffer)
 		return (0);
 	i = 0;
-	while ((*buffer)[i])
+	while (*buffer && (*buffer)[i])
 	{
-		if (*(buffer[i]))
-		{
-			free(*(buffer[i]));
-			*(buffer[i]) = NULL;
-		}
+		free((*buffer)[i]);
+		(*buffer)[i] = NULL;
 		i++;
 	}
-	free(*buffer);
 	*buffer = malloc((BUFFER_SIZE + 1) * sizeof(char *));
 	if (!*buffer)
 		return (0);
 	i = 0;
-	*buffer[BUFFER_SIZE] = NULL;
-	while (*buffer[i])
-		*buffer[i++] = NULL;
+	while (i <= BUFFER_SIZE)
+		(*buffer)[i++] = NULL;
 	return (1);
 }
 
@@ -43,60 +39,40 @@ static int	next_line_init(int fd, char ***buffer, size_t *start_pos)
 {
 	size_t	read_size;
 
-	if (!buffer)
-		return (0);
-	if (!*buffer)
+	if (!(*buffer))
 	{
-		if (!alloc_buffer(*buffer))
+		if (!alloc_buffer(buffer))
 			return (0);
 	}
-	if (*buffer[fd])
+	if ((*buffer)[fd])
 	{
-		*start_pos = ft_strlen(*buffer[fd]) + 1;
-		*buffer[fd][*start_pos - 1] = '\n';
+		*start_pos = ft_strlen((*buffer)[fd]) + 1;
+		(*buffer)[fd][*start_pos - 1] = '\n';
 	}
 	else
 	{
-		*buffer[fd] = malloc(BUFFER_SIZE + 1);
-		if (!*buffer[fd])
+		(*buffer)[fd] = malloc(BUFFER_SIZE + 1);
+		if (!(*buffer)[fd])
 			return (0);
-		*buffer[fd][BUFFER_SIZE] = 0;
-		read_size = read(fd, *buffer[fd], BUFFER_SIZE);
+		read_size = read(fd, (*buffer)[fd], BUFFER_SIZE);
 		if (read_size <= 0)
 			return (0);
-		*buffer[fd][read_size] = 0;
+		(*buffer)[fd][read_size] = 0;
 		*start_pos = 0;
 	}
-	// if (!line->index || line->index >= line->last_read_size)
-	// {
-	// 	line->last_read_size = read(fd, line->buffer, BUFFER_SIZE);
-	// 	if (line->last_read_size > 0)
-	// 		line->buffer[line->last_read_size] = 0;
-	// 	line->index = 0;
-	// 	line->start = 0;
-	// }
 	return (1);
 }
 
+#include "stdio.h"
+
 static char	*on_find_newline(char *buffer, size_t start, size_t end)
 {
-	//size_t	s_tmp;
 	char	*str;
 
-	str = malloc((end - start) + 2);
+	str = ft_substr((const char *)buffer, start, end - start + 1);
 	if (!str)
 		return (NULL);
 	buffer[end] = 0;
-	ft_strlcpy(str, buffer + start, (end - start) + 2);
-	//line->start = ++(line->index);
-	// if (start)
-	// {
-	// 	s_tmp = str_addalloc(&(line->str), ft_strlen(str));
-	// 	ft_strlcat(line->str, str, s_tmp);
-	// 	free(str);
-	// 	str = line->str;
-	// 	line->str = NULL;
-	// }
 	return (str);
 }
 
@@ -151,8 +127,6 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!next_line_init(fd, &buffer, &start_pos))
 		return (NULL);
-	// if (line.last_read_size <= 0)
-	// 	return (on_read_fail(&line));
 	i = start_pos;
 	while (buffer[fd][i])
 	{
@@ -160,6 +134,6 @@ char	*get_next_line(int fd)
 			return (on_find_newline(buffer[fd], start_pos, i));
 		i++;
 	}
-	//at_no_newline(&line);
+	//at_no_newline(&buffer);
 	return (NULL);
 }

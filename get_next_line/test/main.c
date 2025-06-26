@@ -1,4 +1,5 @@
 #include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include "stdio.h"
 #include "fcntl.h"
 
@@ -10,7 +11,7 @@ int main(int argc, char **args)
 	int		i;
 	int		j;
 
-	//printf("BUFFER_SIZE: %lu\n", BUFFER_SIZE);
+	printf("BUFFER_SIZE: %lu\n", (size_t)BUFFER_SIZE);
 	
 	if (argc >= 2)
 	{

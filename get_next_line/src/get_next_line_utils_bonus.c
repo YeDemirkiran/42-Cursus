@@ -55,6 +55,31 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	return (total_len);
 }
 
+char	*ft_substr(char const *s, size_t start, size_t len)
+{
+	char	*substr;
+	size_t	size;
+	size_t	i;
+
+	size = len + 1;
+	substr = malloc(size);
+	if (!substr)
+		return (NULL);
+	if (size == 1)
+		*substr = 0;
+	else
+	{
+		i = 0;
+		while (i < size - 1)
+		{
+			substr[i] = s[i + start];
+			i++;
+		}
+		substr[i] = 0;
+	}
+	return (substr);
+}
+
 size_t	str_addalloc(char **p, size_t add)
 {
 	char	*tmp;
