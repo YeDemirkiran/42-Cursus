@@ -35,32 +35,38 @@ static int	alloc_buffer(char ***buffer, int fd)
 	return (1);
 }
 
-static size_t	buff_len(char **buffer)
-{
-	size_t	len;
+// static size_t	buff_len(char **buffer)
+// {
+// 	size_t	len;
 
-	len = 0;
-	if (!buffer)
-		return (len);
-	while (buffer[len])
-		len++;
-	return (len);
-}
+// 	len = 0;
+// 	if (!buffer)
+// 		return (len);
+// 	while (buffer[len])
+// 		len++;
+// 	return (len);
+// }
 
 static int	next_line_init(int fd, char ***buffer, size_t *start_pos)
 {
 	size_t	read_size;
 
+	//printf("\nfd: %i\n", fd);
 	if (!(*buffer))
 		if (!alloc_buffer(buffer, fd))
 			return (0);
-	if (buff_len(*buffer) > (size_t)fd && (*buffer)[fd])
+	// printf("\nbl: %lu\n", sizeof(*buffer));
+	// printf("\na: %i, b: %i\n", buff_len(*buffer) > (size_t)fd, (*buffer)[fd] != NULL);
+	if ((*buffer)[fd])
 	{
+		//printf("1");
 		*start_pos = ft_strlen((*buffer)[fd]) + 1;
 		(*buffer)[fd][*start_pos - 1] = '\n';
+		//printf("\nstart pos: %lu, char: %c", *start_pos, (*buffer)[fd][*start_pos - 1]);
 	}
 	else
 	{
+		//printf("2");
 		(*buffer)[fd] = malloc(BUFFER_SIZE + 1);
 		if (!(*buffer)[fd])
 			return (0);
