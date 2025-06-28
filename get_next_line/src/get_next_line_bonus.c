@@ -95,7 +95,8 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 		read_size = read(fd, (*buffer)[fd], BUFFER_SIZE);
 		if (read_size <= 0)
 		{
-			free((*buffer)[fd]);
+			on_read_fail((*buffer) + fd);
+			//free((*buffer)[fd]);
 			return (0);
 		}	
 		//printf("read size: %li", read_size);
@@ -146,7 +147,7 @@ char	*get_next_line(int fd)
 {
 	static char	**buffer;
 	char		*tmp;
-	//char		*tmp_2;
+	char		*tmp_2;
 	size_t		start_pos;
 	size_t		i;
 
@@ -172,10 +173,12 @@ char	*get_next_line(int fd)
 	if (!tmp)
 		return (NULL);
 	ft_strlcpy(tmp, buffer[fd] + start_pos, i);
-	//printf("\n(%s)\n", tmp);
-	// tmp_2 = get_next_line(fd);
-	// if (tmp_2)
-	// 	return (ft_strjoin(tmp, tmp_2, 1, 1));
-	//printf("brr");
+	// printf("\n(%s)\n", tmp);
+	free(buffer[fd]);
+	buffer[fd] = NULL;
+	tmp_2 = get_next_line(fd);
+	if (tmp_2)
+		return (ft_strjoin(tmp, tmp_2, 1, 1));
+	// printf("brr");
 	return (tmp);
 }
