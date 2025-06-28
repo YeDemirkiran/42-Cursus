@@ -53,6 +53,8 @@ static char	*on_read_fail(char **buffer)
 	{
 		free(*buffer);
 		*buffer = NULL;
+		// if (*buffer)
+		// 	printf("\neheh\n");
 	}
 	return (NULL);
 }
@@ -86,7 +88,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	}
 	else
 	{
-		printf("2");
+		//printf("2");
 		(*buffer)[fd] = malloc(BUFFER_SIZE + 2);
 		if (!(*buffer)[fd])
 			return (0);
@@ -96,7 +98,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 			free((*buffer)[fd]);
 			return (0);
 		}	
-		printf("read size: %li", read_size);
+		//printf("read size: %li", read_size);
 		(*buffer)[fd][read_size] = -1;
 		(*buffer)[fd][read_size + 1] = 0;
 		*start_pos = 0;
@@ -158,23 +160,22 @@ char	*get_next_line(int fd)
 	{
 		if (buffer[fd][i] == '\n')
 		{
-			printf("nl");
+			//printf("nl");
 			return (on_find_newline(buffer[fd], start_pos, i));
-		}
-			
+		}	
 		i++;
 	}	
-	printf("\n(%s)\n", buffer[fd] + start_pos);
+	//printf("\n(%s)\n", buffer[fd] + start_pos);
 	i = ft_strlen(buffer[fd] + start_pos);
-	printf("\n(%lu)\n", i);
+	//printf("\n(%lu)\n", i);
 	tmp = malloc(i);
 	if (!tmp)
 		return (NULL);
 	ft_strlcpy(tmp, buffer[fd] + start_pos, i);
-	printf("\n(%s)\n", tmp);
+	//printf("\n(%s)\n", tmp);
 	// tmp_2 = get_next_line(fd);
 	// if (tmp_2)
 	// 	return (ft_strjoin(tmp, tmp_2, 1, 1));
-	printf("brr");
+	//printf("brr");
 	return (tmp);
 }
