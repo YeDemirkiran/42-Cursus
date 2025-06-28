@@ -80,6 +80,24 @@ char	*ft_substr(char const *s, size_t start, size_t len)
 	return (substr);
 }
 
+char	*ft_strjoin(char *s1, char *s2, int free_1, int free_2)
+{
+	size_t	len;
+	char	*str;
+
+	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	str = malloc(len * sizeof(*str));
+	if (str == NULL)
+		return (NULL);
+	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
+	ft_strlcat(str, s2, len);
+	if (free_1)
+		free(s1);
+	if (free_2)
+		free(s2);
+	return (str);
+}
+
 size_t	str_addalloc(char **p, size_t add)
 {
 	char	*tmp;

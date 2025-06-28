@@ -47,9 +47,9 @@ static int	alloc_buffer(char ***buffer, int fd)
 // 	return (len);
 // }
 
-static int	next_line_init(int fd, char ***buffer, size_t *start_pos)
+static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 {
-	size_t	read_size;
+	ssize_t	read_size;
 
 	//printf("\nfd: %i\n", fd);
 	if (!(*buffer))
@@ -61,19 +61,23 @@ static int	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	{
 		//printf("1");
 		*start_pos = ft_strlen((*buffer)[fd]) + 1;
+		if ((*buffer)[fd][*start_pos - 2] == -1)
+			printf("AHAHAHA");
 		(*buffer)[fd][*start_pos - 1] = '\n';
 		//printf("\nstart pos: %lu, char: %c", *start_pos, (*buffer)[fd][*start_pos - 1]);
 	}
 	else
 	{
 		//printf("2");
-		(*buffer)[fd] = malloc(BUFFER_SIZE + 1);
+		(*buffer)[fd] = malloc(BUFFER_SIZE + 2);
 		if (!(*buffer)[fd])
 			return (0);
 		read_size = read(fd, (*buffer)[fd], BUFFER_SIZE);
 		if (read_size <= 0)
 			return (0);
-		(*buffer)[fd][read_size] = 0;
+		printf("read size: %li", read_size);
+		(*buffer)[fd][read_size] = -1;
+		(*buffer)[fd][read_size + 1] = 0;
 		*start_pos = 0;
 	}
 	return (1);
@@ -92,7 +96,7 @@ static char	*on_find_newline(char *buffer, size_t start, size_t end)
 	return (str);
 }
 
-// static void	at_no_newline(t_line_info *line)
+// static void	at_no_newline(char **buffer)
 // {
 // 	size_t	s_tmp;
 
@@ -108,48 +112,53 @@ static char	*on_find_newline(char *buffer, size_t start, size_t end)
 // 			(line->index - line->start) + 1);
 // 		line->start = ++(line->index);
 // 	}
-// 	if (line->buffer)
+// 	if (*buffer)
 // 	{
-// 		free(line->buffer);
-// 		line->buffer = NULL;
+// 		free(*buffer);
+// 		*buffer = NULL;
 // 	}
 // }
 
-// static char	*on_read_fail(t_line_info *line)
-// {
-// 	char	*str;
+static char	*on_read_fail(char **buffer)
+{
+	char	*str;
 
-// 	if (line->buffer)
-// 	{
-// 		free(line->buffer);
-// 		line->buffer = NULL;
-// 	}
-// 	if (line->last_read_size == 0)
-// 	{
-// 		str = line->str;
-// 		line->str = NULL;
-// 		return (str);
-// 	}
-// 	return (NULL);
-// }
+	str = NULL;
+	if (*buffer)
+	{
+		str = *buffer;
+		*buffer = NULL;
+		printf("eheh");
+	}
+	return (str);
+}
 
 char	*get_next_line(int fd)
 {
 	static char	**buffer;
+	// char		*tmp;
 	size_t		start_pos;
 	size_t		i;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!next_line_init(fd, &buffer, &start_pos))
-		return (NULL);
+		return (on_read_fail(&(buffer[fd])));
 	i = start_pos;
-	while (buffer[fd][i])
+	while (buffer[fd][i] >= (char)0)
 	{
 		if (buffer[fd][i] == '\n')
 			return (on_find_newline(buffer[fd], start_pos, i));
 		i++;
-	}
-	//at_no_newline(&buffer);
+	}	
 	return (NULL);
+	// i = ft_strlen(buffer[fd]) + 1;
+	// tmp = malloc(i);
+	// if (!tmp)
+	// 	return (NULL);
+	// printf("i: %lu", i);
+	// ft_strlcpy(tmp, buffer[fd], i);
+	// free(buffer[fd]);
+	// printf("tmp: %s", tmp);
+	// return (ft_strjoin(tmp, get_next_line(fd), 1, 1));
 }
