@@ -19,42 +19,35 @@ static int	alloc_buffer(char ***buffer, int fd)
 
 	if (!buffer)
 		return (0);
-	// i = 0;
-	// while (*buffer && (*buffer)[i])
-	// {
-	// 	free((*buffer)[i]);
-	// 	(*buffer)[i] = NULL;
-	// 	i++;
-	// }
 	*buffer = malloc((fd + 2) * sizeof(char *));
 	if (!*buffer)
 		return (0);
 	i = ((size_t)fd) + 2;
-	while (i > 0)
+	while (i > 1)
 		(*buffer)[--i] = NULL;
+	(*buffer)[i] = malloc(1);
+	(*buffer)[i][0] = -1;
 	return (1);
 }
 
-// static size_t	buff_len(char **buffer)
-// {
-// 	size_t	len;
-
-// 	len = 0;
-// 	if (!buffer)
-// 		return (len);
-// 	while (buffer[len])
-// 		len++;
-// 	return (len);
-// }
-
-static char	*on_read_fail(char **buffer)
+static char	*on_read_fail(char ***buffer, int fd)
 {
-	if (*buffer)
+	if ((*buffer)[fd])
 	{
-		free(*buffer);
-		*buffer = NULL;
-		// if (*buffer)
-		// 	printf("\neheh\n");
+		free((*buffer)[fd]);
+		(*buffer)[fd] = NULL;
+	}
+	fd = 0;
+	while (!(*buffer)[fd])
+	{
+		fd++;
+		if ((*buffer)[fd][0] == -1)
+		{
+			free((*buffer)[fd]);
+			free(*buffer);
+			*buffer = NULL;
+			break;
+		}
 	}
 	return (NULL);
 }
@@ -79,10 +72,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 		while ((*buffer)[fd][*start_pos] > 0)
 			(*start_pos)++;
 		if ((*buffer)[fd][*start_pos] == -1)
-		//{
-			//on_read_fail((*buffer) + fd);
 			return (0);
-		//}
 		(*buffer)[fd][(*start_pos)++] = '\n';
 		//printf("\nstart pos: %lu, char: %c", *start_pos, (*buffer)[fd][*start_pos - 1]);
 	}
@@ -94,11 +84,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 			return (0);
 		read_size = read(fd, (*buffer)[fd], BUFFER_SIZE);
 		if (read_size <= 0)
-		{
-			on_read_fail((*buffer) + fd);
-			//free((*buffer)[fd]);
 			return (0);
-		}	
 		//printf("read size: %li", read_size);
 		(*buffer)[fd][read_size] = -1;
 		(*buffer)[fd][read_size + 1] = 0;
@@ -154,7 +140,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!next_line_init(fd, &buffer, &start_pos))
-		return (on_read_fail(buffer + fd));
+		return (on_read_fail(&buffer, fd));
 		//return (NULL);
 	i = start_pos;
 	while (buffer[fd][i] > 0)
