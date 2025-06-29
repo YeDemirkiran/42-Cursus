@@ -19,12 +19,12 @@ static int	alloc_buffer(char ***buffer, int fd)
 
 	if (!buffer)
 		return (0);
-	*buffer = malloc((fd + 2) * sizeof(char *));
+	*buffer = malloc(((size_t)fd + 2) * sizeof(char *));
 	if (!*buffer)
 		return (0);
-	i = ((size_t)fd) + 2;
-	while (i > 1)
-		(*buffer)[--i] = NULL;
+	i = 0;
+	while (i < (size_t)fd + 1)
+		(*buffer)[i++] = NULL;
 	(*buffer)[i] = malloc(1);
 	(*buffer)[i][0] = -1;
 	return (1);
@@ -38,16 +38,16 @@ static char	*on_read_fail(char ***buffer, int fd)
 		(*buffer)[fd] = NULL;
 	}
 	fd = 0;
-	while (!(*buffer)[fd])
+	while (1)
 	{
-		fd++;
-		if ((*buffer)[fd][0] == -1)
+		if ((*buffer)[fd] && (*buffer)[fd][0] == -1)
 		{
 			free((*buffer)[fd]);
 			free(*buffer);
 			*buffer = NULL;
 			break;
 		}
+		fd++;
 	}
 	return (NULL);
 }
@@ -141,30 +141,22 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!next_line_init(fd, &buffer, &start_pos))
 		return (on_read_fail(&buffer, fd));
-		//return (NULL);
 	i = start_pos;
 	while (buffer[fd][i] > 0)
 	{
 		if (buffer[fd][i] == '\n')
-		{
-			//printf("nl");
 			return (on_find_newline(buffer[fd], start_pos, i));
-		}	
 		i++;
 	}	
-	//printf("\n(%s)\n", buffer[fd] + start_pos);
 	i = ft_strlen(buffer[fd] + start_pos);
-	//printf("\n(%lu)\n", i);
 	tmp = malloc(i);
 	if (!tmp)
 		return (NULL);
 	ft_strlcpy(tmp, buffer[fd] + start_pos, i);
-	// printf("\n(%s)\n", tmp);
 	free(buffer[fd]);
 	buffer[fd] = NULL;
 	tmp_2 = get_next_line(fd);
 	if (tmp_2)
 		return (ft_strjoin(tmp, tmp_2, 1, 1));
-	// printf("brr");
 	return (tmp);
 }
