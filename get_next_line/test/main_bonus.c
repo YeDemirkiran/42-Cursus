@@ -44,8 +44,10 @@ int main(int argc, char **args)
 					free(line);
 				}
 				else
+				{
+					printf("End of (%s)\n", args[j]);
 					fd[j - 1] = -1;
-				printf("\n");
+				}
 				j++;
 			}
 		}

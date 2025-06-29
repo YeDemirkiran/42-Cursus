@@ -38,29 +38,26 @@ static char	*on_read_fail(char ***buffer, int fd)
 static int	buffer_init(int fd, char ***buffer)
 {
 	size_t	i;
-	ssize_t	read_size;
 
 	i = 0;
-	while ((*buffer)[i] == NULL)
+	while (!((*buffer)[i] && (*buffer)[i][0] == -1))
 		i++;
 	if (i >= (size_t)fd + 1)
 	{
 		(*buffer)[fd] = malloc(BUFFER_SIZE + 2);
 		if (!(*buffer)[fd])
 			return (0);
-		read_size = read(fd, (*buffer)[fd], BUFFER_SIZE);
-		if (read_size <= 0)
+		i = read(fd, (*buffer)[fd], BUFFER_SIZE);
+		if (i <= 0)
 			return (0);
-		(*buffer)[fd][read_size] = -1;
-		(*buffer)[fd][read_size + 1] = 0;
+		(*buffer)[fd][i] = -1;
+		(*buffer)[fd][i + 1] = 0;
 	}
 	return (1);
 }
 
 static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 {
-	if (!buffer)
-		return (0);
 	if (!(*buffer) && !alloc_buffer(buffer, fd))
 		return (0);
 	if ((*buffer)[fd])
