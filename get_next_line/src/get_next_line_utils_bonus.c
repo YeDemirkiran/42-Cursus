@@ -81,3 +81,18 @@ char	*ft_strjoin(char *s1, char *s2, int free_1, int free_2)
 		free(s2);
 	return (str);
 }
+
+int	alloc_buffer(char ***buffer, int fd)
+{
+	size_t	i;
+
+	*buffer = malloc(((size_t)fd + 2) * sizeof(char *));
+	if (!*buffer)
+		return (0);
+	i = 0;
+	while (i < (size_t)fd + 1)
+		(*buffer)[i++] = NULL;
+	(*buffer)[i] = malloc(1);
+	(*buffer)[i][0] = -1;
+	return (1);
+}

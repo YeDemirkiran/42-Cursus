@@ -13,23 +13,6 @@
 #include "get_next_line_bonus.h"
 #include "stdio.h"
 
-static int	alloc_buffer(char ***buffer, int fd)
-{
-	size_t	i;
-
-	if (!buffer)
-		return (0);
-	*buffer = malloc(((size_t)fd + 2) * sizeof(char *));
-	if (!*buffer)
-		return (0);
-	i = 0;
-	while (i < (size_t)fd + 1)
-		(*buffer)[i++] = NULL;
-	(*buffer)[i] = malloc(1);
-	(*buffer)[i][0] = -1;
-	return (1);
-}
-
 static char	*on_read_fail(char ***buffer, int fd)
 {
 	if ((*buffer)[fd])
@@ -45,17 +28,37 @@ static char	*on_read_fail(char ***buffer, int fd)
 			free((*buffer)[fd]);
 			free(*buffer);
 			*buffer = NULL;
-			break;
+			break ;
 		}
 		fd++;
 	}
 	return (NULL);
 }
 
-static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
+static int	buffer_init(int fd, char ***buffer)
 {
+	size_t	i;
 	ssize_t	read_size;
 
+	i = 0;
+	while ((*buffer)[i] == NULL)
+		i++;
+	if (i >= (size_t)fd + 1)
+	{
+		(*buffer)[fd] = malloc(BUFFER_SIZE + 2);
+		if (!(*buffer)[fd])
+			return (0);
+		read_size = read(fd, (*buffer)[fd], BUFFER_SIZE);
+		if (read_size <= 0)
+			return (0);
+		(*buffer)[fd][read_size] = -1;
+		(*buffer)[fd][read_size + 1] = 0;
+	}
+	return (1);
+}
+
+static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
+{
 	if (!buffer)
 		return (0);
 	if (!(*buffer) && !alloc_buffer(buffer, fd))
@@ -71,28 +74,11 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	}
 	else
 	{
-		(*buffer)[fd] = malloc(BUFFER_SIZE + 2);
-		if (!(*buffer)[fd])
+		if (!buffer_init(fd, buffer))
 			return (0);
-		read_size = read(fd, (*buffer)[fd], BUFFER_SIZE);
-		if (read_size <= 0)
-			return (0);
-		(*buffer)[fd][read_size] = -1;
-		(*buffer)[fd][read_size + 1] = 0;
 		*start_pos = 0;
 	}
 	return (1);
-}
-
-static char	*on_find_newline(char *buffer, size_t start, size_t end)
-{
-	char	*str;
-
-	str = ft_substr((const char *)buffer, start, end - start + 1);
-	if (!str)
-		return (NULL);
-	buffer[end] = 0;
-	return (str);
 }
 
 static char	*at_no_newline(char **buffer, int fd, size_t start_pos)
@@ -119,6 +105,7 @@ static char	*at_no_newline(char **buffer, int fd, size_t start_pos)
 char	*get_next_line(int fd)
 {
 	static char	**buffer;
+	char		*str;
 	size_t		start_pos;
 	size_t		i;
 
@@ -130,8 +117,15 @@ char	*get_next_line(int fd)
 	while (buffer[fd][i] > 0)
 	{
 		if (buffer[fd][i] == '\n')
-			return (on_find_newline(buffer[fd], start_pos, i));
+		{
+			str = ft_substr((const char *)buffer[fd], start_pos,
+					i - start_pos + 1);
+			if (!str)
+				return (NULL);
+			buffer[fd][i] = 0;
+			return (str);
+		}
 		i++;
-	}	
+	}
 	return (at_no_newline(buffer, fd, start_pos));
 }

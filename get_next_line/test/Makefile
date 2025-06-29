@@ -1,6 +1,7 @@
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 MAIN = ./main.c 
+MAIN_BONUS = ./main_bonus.c 
 SRC = ../src/get_next_line.c ../src/get_next_line_utils.c 
 BSRC = ../src/get_next_line_bonus.c ../src/get_next_line_utils_bonus.c 
 INC = -I../src/
@@ -14,7 +15,7 @@ all: $(SRC)
 	$(CC) $(FLAGS) $(MAIN) $(SRC) -o $(NAME) $(INC) $(BUFFER)
 
 bonus: $(BSRC)
-	$(CC) $(FLAGS) $(MAIN) $(BSRC) -o $(NAME) $(INC) $(BUFFER) -D BONUS=1
+	$(CC) $(FLAGS) $(MAIN_BONUS) $(BSRC) -o $(NAME) $(INC) $(BUFFER) -D BONUS=1
 
 clean:
 	rm -f $(NAME)
