@@ -1,5 +1,8 @@
-#include "get_next_line.h"
-#include "get_next_line_bonus.h"
+#ifndef BONUS
+	#include "get_next_line.h"
+#else
+	#include "get_next_line_bonus.h"
+#endif
 #include "stdio.h"
 #include "fcntl.h"
 

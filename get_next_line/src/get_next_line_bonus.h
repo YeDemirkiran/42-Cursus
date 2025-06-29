@@ -20,12 +20,10 @@
 #  define BUFFER_SIZE 1024
 # endif
 
-size_t	ft_strlen(const char *str);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-size_t	ft_strlcat(char *dst, const char *src, size_t size);
+void	ft_strlcpy(char *dst, const char *src, size_t size);
+void	ft_strlcat(char *dst, const char *src, size_t size);
 char	*ft_substr(char const *s, size_t start, size_t len);
 char	*ft_strjoin(char *s1, char *s2, int free_1, int free_2);
-size_t	str_addalloc(char **p, size_t add);
 
 char	*get_next_line(int fd);
 

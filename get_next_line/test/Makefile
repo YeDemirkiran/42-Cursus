@@ -14,7 +14,7 @@ all: $(SRC)
 	$(CC) $(FLAGS) $(MAIN) $(SRC) -o $(NAME) $(INC) $(BUFFER)
 
 bonus: $(BSRC)
-	$(CC) $(FLAGS) $(MAIN) $(BSRC) -o $(NAME) $(INC) $(BUFFER)
+	$(CC) $(FLAGS) $(MAIN) $(BSRC) -o $(NAME) $(INC) $(BUFFER) -D BONUS=1
 
 clean:
 	rm -f $(NAME)
