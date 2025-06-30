@@ -93,6 +93,6 @@ int	alloc_buffer(char ***buffer, int fd)
 	while (i < (size_t)fd + 1)
 		(*buffer)[i++] = NULL;
 	(*buffer)[i] = malloc(1);
-	(*buffer)[i][0] = -1;
+	(*buffer)[i][0] = (char)-1;
 	return (1);
 }
