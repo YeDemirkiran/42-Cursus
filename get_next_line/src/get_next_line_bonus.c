@@ -27,9 +27,7 @@ static char	*on_read_fail(char ***buffer, int fd)
 		{
 			if ((*buffer)[fd][0] == -1)
 			{
-				printf("SENTINEL: %i\n", (*buffer)[fd][0]);
 				free((*buffer)[fd]);
-			//	printf("SENTINEL: %i\n", (*buffer)[fd][0]);
 				free(*buffer);
 				*buffer = NULL;
 			}
@@ -49,12 +47,12 @@ static int	buffer_init(int fd, char ***buffer)
 	i = 0;
 	while (!((*buffer)[i] && (*buffer)[i][0] == -1))
 		i++;
-	printf("BUFFER INIT FOR FD (%i)\n", fd);
+	// printf("BUFFER INIT FOR FD (%i)\n", fd);
 	//printf("ii: %lu, fd: %i\n", i, fd);
 	if (i < (size_t)fd + 1)
 	{
 		i++;
-		printf("EXTENDING BUFFER FOR FD (%i)\n", fd);
+		// printf("EXTENDING BUFFER FOR FD (%i)\n", fd);
 		if (!alloc_buffer(&new, fd))
 			return (0);
 		while (i-- > 0)
@@ -73,7 +71,7 @@ static int	buffer_init(int fd, char ***buffer)
 				while ((*buffer)[i][j] != -1)
 					j++;
 				new[i] = malloc(++j + 1);
-				printf("j: %lu\n", j);
+				// printf("j: %lu\n", j);
 				if (!new[i])
 					return (0);
 				ft_strlcpy(new[i], (*buffer)[i], j + 1);
@@ -87,12 +85,12 @@ static int	buffer_init(int fd, char ***buffer)
 	if (!(*buffer)[fd])
 		return (0);
 	i = read(fd, (*buffer)[fd], BUFFER_SIZE);
-	printf("ATTEMPTING TO READ FD (%i)\n", fd);
+	// printf("ATTEMPTING TO READ FD (%i)\n", fd);
 	if (i <= 0)
 		return (0);
 	(*buffer)[fd][i] = -1;
 	(*buffer)[fd][i + 1] = 0;
-	printf("NEW BUFFER FOR FD (%i): (%s)\n", fd, (*buffer)[fd]);
+	// printf("NEW BUFFER FOR FD (%i): (%s)\n", fd, (*buffer)[fd]);
 	return (1);
 }
 
@@ -100,7 +98,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 {
 	size_t	i;
 	
-	printf("NEXT LINE INIT FOR FD (%i)\n", fd);
+	// printf("NEXT LINE INIT FOR FD (%i)\n", fd);
 	if (!(*buffer) && !alloc_buffer(buffer, fd))
 		return (0);
 	i = 0;
@@ -111,7 +109,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	{
 		while ((*buffer)[fd][*start_pos] > 0)
 			(*start_pos)++;
-		printf("START POS FOR FD (%i): %lu\n", fd, *start_pos);
+		// printf("START POS FOR FD (%i): %lu\n", fd, *start_pos);
 		if ((*buffer)[fd][*start_pos] == -1)
 			return (0);
 		(*buffer)[fd][(*start_pos)++] = '\n';
@@ -119,7 +117,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	}
 	else
 	{
-		printf("FD (%i) DOESN'T EXIST IN THE BUFFER\n", fd);
+		// printf("FD (%i) DOESN'T EXIST IN THE BUFFER\n", fd);
 		if (!buffer_init(fd, buffer))
 			return (0);
 	}
@@ -133,7 +131,7 @@ static char	*at_no_newline(char **buffer, int fd, size_t start_pos)
 	char	*tmp_2;
 
 	i = 0;
-	printf("NO NEWLINE FOUND FOR FD (%i)\n", fd);
+	// printf("NO NEWLINE FOUND FOR FD (%i)\n", fd);
 	while ((buffer[fd] + start_pos)[i])
 		i++;
 	tmp = malloc(i);
@@ -145,7 +143,7 @@ static char	*at_no_newline(char **buffer, int fd, size_t start_pos)
 	tmp_2 = get_next_line(fd);
 	if (tmp_2)
 		return (ft_strjoin(tmp, tmp_2, 1, 1));
-	printf("END OF FILE FOR FD (%i)\n", fd);
+	// printf("END OF FILE FOR FD (%i)\n", fd);
 	return (tmp);
 }
 
@@ -170,7 +168,7 @@ char	*get_next_line(int fd)
 			if (!str)
 				return (NULL);
 			buffer[fd][i] = 0;
-			printf("NEWLINE FOUND FOR FD (%i): (%s)\n", fd, str);
+			// printf("NEWLINE FOUND FOR FD (%i): (%s)\n", fd, str);
 			return (str);
 		}
 		i++;
