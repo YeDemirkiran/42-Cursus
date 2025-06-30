@@ -14,6 +14,7 @@ int main(int argc, char **args)
 	int		j;
 	int		done;
 
+	setbuf(stdout, NULL);
 	printf("BUFFER_SIZE: %lu\n", (size_t)BUFFER_SIZE);
 	
 	if (argc >= 2)
@@ -25,18 +26,19 @@ int main(int argc, char **args)
 			j++;
 		}
 		done = 1;
-		while (done)
+		while (done > 0)
 		{
+			done = 0;
 			j = 1;
 			while (j < argc)
 			{
 				if (fd[j - 1] == -1)
 				{
-					done = 0;
+					//done = 0;
 					j++;
+					//printf("File completed, continue\n");
 					continue ;
 				}
-				done = 1;
 				line = get_next_line(fd[j - 1]);
 				if (line)
 				{
@@ -45,10 +47,11 @@ int main(int argc, char **args)
 				}
 				else
 				{
-					printf("End of (%s)\n", args[j]);
+					printf("\nEnd of (%s)\n", args[j]);
 					fd[j - 1] = -1;
 				}
 				j++;
+				done++;
 			}
 		}
 		

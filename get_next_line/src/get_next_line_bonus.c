@@ -38,42 +38,70 @@ static char	*on_read_fail(char ***buffer, int fd)
 static int	buffer_init(int fd, char ***buffer)
 {
 	size_t	i;
+	size_t	j;
+	char	**new;
 
 	i = 0;
 	while (!((*buffer)[i] && (*buffer)[i][0] == -1))
 		i++;
-	if (i >= (size_t)fd + 1)
+	//printf("ii: %lu, fd: %i\n", i, fd);
+	if (i < (size_t)fd + 1)
 	{
-		(*buffer)[fd] = malloc(BUFFER_SIZE + 2);
-		if (!(*buffer)[fd])
+		//printf("copy buffer\n");
+		if (!alloc_buffer(&new, fd))
 			return (0);
-		i = read(fd, (*buffer)[fd], BUFFER_SIZE);
-		if (i <= 0)
-			return (0);
-		(*buffer)[fd][i] = -1;
-		(*buffer)[fd][i + 1] = 0;
+		while (i-- > 0)
+		{
+			if (!(*buffer)[i])
+				continue ;
+			j = 0;
+			while ((*buffer)[i][j] != -1)
+				j++;
+			new[i] = malloc(++j + 1);
+			//printf("j: %lu\n", j);
+			if (!new[i])
+				return (0);
+			ft_strlcpy(new[i], (*buffer)[i], j + 1);
+			free((*buffer)[i]);
+		}
+		free(*buffer);
+		*buffer = new;
 	}
+	(*buffer)[fd] = malloc(BUFFER_SIZE + 2);
+	if (!(*buffer)[fd])
+		return (0);
+	i = read(fd, (*buffer)[fd], BUFFER_SIZE);
+	if (i <= 0)
+		return (0);
+	(*buffer)[fd][i] = -1;
+	(*buffer)[fd][i + 1] = 0;
 	return (1);
 }
 
 static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 {
+	size_t	i;
 	if (!(*buffer) && !alloc_buffer(buffer, fd))
 		return (0);
-	if ((*buffer)[fd])
+	i = 0;
+	while (!((*buffer)[i] && (*buffer)[i][0] == -1))
+		i++;
+	*start_pos = 0;
+	//printf("i: %lu, fd: %i\n", i, fd);
+	if ((i >= (size_t)fd + 1) && (*buffer)[fd])
 	{
-		*start_pos = 0;
 		while ((*buffer)[fd][*start_pos] > 0)
 			(*start_pos)++;
 		if ((*buffer)[fd][*start_pos] == -1)
 			return (0);
 		(*buffer)[fd][(*start_pos)++] = '\n';
+		//printf("s: %s\n", (*buffer)[fd]);
 	}
 	else
 	{
+		//printf("2\n");
 		if (!buffer_init(fd, buffer))
 			return (0);
-		*start_pos = 0;
 	}
 	return (1);
 }
