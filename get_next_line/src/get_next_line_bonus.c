@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:12:46 by yademirk          #+#    #+#             */
-/*   Updated: 2025/07/01 17:15:58 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:55:26 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,25 +82,33 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	return (1);
 }
 
-static char	*at_no_newline(char **buffer, int fd, size_t start_pos)
+static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 {
-	size_t	i;
 	char	*tmp;
-	char	*tmp_2;
+	size_t	i;
 
-	i = 0;
-	while ((buffer[fd] + start_pos)[i])
+	i = start_pos;
+	while (buffer[fd][i] > 0)
+	{
+		if (buffer[fd][i] == '\n')
+		{
+			*str = ft_strjoin(*str, ft_substr((const char *)buffer[fd],
+						start_pos, i - start_pos + 1), 1, 1);
+			if (!*str)
+				return (-1);
+			buffer[fd][i] = 0;
+			return (1);
+		}
 		i++;
-	tmp = malloc(i);
-	if (!tmp)
-		return (NULL);
-	ft_strlcpy(tmp, buffer[fd] + start_pos, i);
+	}
+	i = 0;
+	while ((buffer[fd] + start_pos)[i] > 0)
+		i++;
+	tmp = ft_substr(buffer[fd], start_pos, i);
+	*str = ft_strjoin(*str, tmp, 1, 1);
 	free(buffer[fd]);
 	buffer[fd] = NULL;
-	tmp_2 = get_next_line(fd);
-	if (tmp_2)
-		return (ft_strjoin(tmp, tmp_2, 1, 1));
-	return (tmp);
+	return (0);
 }
 
 char	*get_next_line(int fd)
@@ -108,25 +116,22 @@ char	*get_next_line(int fd)
 	static char	**buffer;
 	char		*str;
 	size_t		start_pos;
-	size_t		i;
+	int			res;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!next_line_init(fd, &buffer, &start_pos))
-		return (on_read_fail(&buffer, fd));
-	i = start_pos;
-	while (buffer[fd][i] > 0)
+	str = NULL;
+	while (1)
 	{
-		if (buffer[fd][i] == '\n')
+		if (!next_line_init(fd, &buffer, &start_pos))
 		{
-			str = ft_substr((const char *)buffer[fd], start_pos,
-					i - start_pos + 1);
-			if (!str)
-				return (NULL);
-			buffer[fd][i] = 0;
+			on_read_fail(&buffer, fd);
 			return (str);
 		}
-		i++;
+		res = find_line(buffer, &str, fd, start_pos);
+		if (res == -1)
+			return (NULL);
+		else if (res == 1)
+			return (str);
 	}
-	return (at_no_newline(buffer, fd, start_pos));
 }
