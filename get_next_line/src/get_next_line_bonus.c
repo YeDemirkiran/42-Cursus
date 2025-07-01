@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:12:46 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/21 18:13:57 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:00:53 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static char	*on_read_fail(char ***buffer, int fd)
 
 static int	buffer_init(int fd, char ***buffer)
 {
-	size_t	i;
-	size_t	j;
+	ssize_t	i;
+	ssize_t	j;
 	char	**new;
 
 	i = 0;
@@ -49,7 +49,7 @@ static int	buffer_init(int fd, char ***buffer)
 		i++;
 	// printf("BUFFER INIT FOR FD (%i)\n", fd);
 	//printf("ii: %lu, fd: %i\n", i, fd);
-	if (i < (size_t)fd + 1)
+	if (i < (ssize_t)fd + 1)
 	{
 		i++;
 		// printf("EXTENDING BUFFER FOR FD (%i)\n", fd);
@@ -81,11 +81,12 @@ static int	buffer_init(int fd, char ***buffer)
 		free(*buffer);
 		*buffer = new;
 	}
-	(*buffer)[fd] = malloc(BUFFER_SIZE + 2);
+	(*buffer)[fd] = malloc((size_t)BUFFER_SIZE + 2);
 	if (!(*buffer)[fd])
 		return (0);
-	i = read(fd, (*buffer)[fd], BUFFER_SIZE);
-	// printf("ATTEMPTING TO READ FD (%i)\n", fd);
+	printf("ATTEMPTING TO READ FD (%i)\n", fd);
+	i = read(fd, (*buffer)[fd], (size_t)BUFFER_SIZE);
+	printf("RESULT: (%li)\n", i);
 	if (i <= 0)
 		return (0);
 	(*buffer)[fd][i] = -1;
