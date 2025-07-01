@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:12:46 by yademirk          #+#    #+#             */
-/*   Updated: 2025/07/01 17:02:13 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:15:58 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,13 @@ static char	*on_read_fail(char ***buffer, int fd)
 static int	buffer_init(int fd, char ***buffer)
 {
 	ssize_t	i;
-	ssize_t	j;
-	char	**new;
 
 	i = 0;
 	while (!((*buffer)[i] && (*buffer)[i][0] == -1))
 		i++;
 	if (i < (ssize_t)fd + 1)
-	{
-		i++;
-		if (!alloc_buffer(&new, fd))
+		if (!expand_buffer(fd, buffer, ++i))
 			return (0);
-		while (i-- > 0)
-		{
-			if (!(*buffer)[i])
-				continue ;
-			if ((*buffer)[i][0] != -1)
-			{
-				j = 0;
-				while ((*buffer)[i][j] != -1)
-					j++;
-				new[i] = malloc(++j + 1);
-				if (!new[i])
-					return (0);
-				ft_strlcpy(new[i], (*buffer)[i], j + 1);
-			}
-			free((*buffer)[i]);
-		}
-		free(*buffer);
-		*buffer = new;
-	}
 	(*buffer)[fd] = malloc((size_t)BUFFER_SIZE + 2);
 	if (!(*buffer)[fd])
 		return (0);
