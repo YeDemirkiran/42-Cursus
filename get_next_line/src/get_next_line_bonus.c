@@ -6,13 +6,13 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:12:46 by yademirk          #+#    #+#             */
-/*   Updated: 2025/07/01 18:55:26 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:58:49 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static void clear_buffer(char ***buffer, int fd)
+static void	clear_buffer(char ***buffer, int fd)
 {
 	if ((*buffer)[fd])
 	{
@@ -83,10 +83,11 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 
 static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 {
-	//char	*tmp;
 	size_t	i;
 
 	i = start_pos;
+	if (buffer[fd][i] == -1)
+		return (1);
 	while (buffer[fd][i] > 0)
 	{
 		if (buffer[fd][i] == '\n')
@@ -100,9 +101,6 @@ static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 		}
 		i++;
 	}
-	// while ((buffer[fd] + start_pos)[i] > 0)
-	// 	i++;
-	// tmp = ft_substr(buffer[fd], start_pos, i);
 	*str = ft_strjoin(*str, buffer[fd] + start_pos, 1, 0);
 	if (buffer[fd])
 		free(buffer[fd]);
