@@ -55,10 +55,10 @@ char	*ft_strjoin(char *s1, char *s2, int free_1, int free_2)
 	if (s1 == NULL && s2 == NULL)
 		return (NULL);
 	s1_len = 0;
-	while (s1 && s1[s1_len])
+	while (s1 && s1[s1_len] > 0)
 		s1_len++;
 	s2_len = 0;
-	while (s2 && s2[s2_len])
+	while (s2 && s2[s2_len] > 0)
 		s2_len++;
 	str = malloc((s1_len + s2_len + 1) * sizeof(*str));
 	if (str == NULL)

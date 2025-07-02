@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-static char	*on_read_fail(char ***buffer, int fd)
+static void clear_buffer(char ***buffer, int fd)
 {
 	if ((*buffer)[fd])
 	{
@@ -34,7 +34,6 @@ static char	*on_read_fail(char ***buffer, int fd)
 		}
 		fd++;
 	}
-	return (NULL);
 }
 
 static int	buffer_init(int fd, char ***buffer)
@@ -84,7 +83,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 
 static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 {
-	char	*tmp;
+	//char	*tmp;
 	size_t	i;
 
 	i = start_pos;
@@ -101,12 +100,12 @@ static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 		}
 		i++;
 	}
-	i = 0;
-	while ((buffer[fd] + start_pos)[i] > 0)
-		i++;
-	tmp = ft_substr(buffer[fd], start_pos, i);
-	*str = ft_strjoin(*str, tmp, 1, 1);
-	free(buffer[fd]);
+	// while ((buffer[fd] + start_pos)[i] > 0)
+	// 	i++;
+	// tmp = ft_substr(buffer[fd], start_pos, i);
+	*str = ft_strjoin(*str, buffer[fd] + start_pos, 1, 0);
+	if (buffer[fd])
+		free(buffer[fd]);
 	buffer[fd] = NULL;
 	return (0);
 }
@@ -125,7 +124,7 @@ char	*get_next_line(int fd)
 	{
 		if (!next_line_init(fd, &buffer, &start_pos))
 		{
-			on_read_fail(&buffer, fd);
+			clear_buffer(&buffer, fd);
 			return (str);
 		}
 		res = find_line(buffer, &str, fd, start_pos);
