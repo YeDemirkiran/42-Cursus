@@ -22,7 +22,7 @@ int main(int argc, char **args)
 		while (j < argc)
 		{
 			printf("File: %s\n", args[j]);
-			fd = open(args[j++], O_RDONLY);
+			fd = open(args[j], O_RDONLY);
 
 			i = 1;
 			line = get_next_line(fd);
@@ -32,7 +32,7 @@ int main(int argc, char **args)
 				free(line);
 				line = get_next_line(fd);
 			}
-			printf("\n");
+			printf("End of (%s)\n", args[j++]);
 			close(fd);
 		}
 		return (0);
