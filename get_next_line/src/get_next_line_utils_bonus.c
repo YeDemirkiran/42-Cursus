@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 17:56:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/07/01 18:32:04 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:24:59 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ char	*ft_strjoin(char *s1, char *s2, int free_1, int free_2)
 	if (s1 == NULL && s2 == NULL)
 		return (NULL);
 	s1_len = 0;
-	while (s1 && s1[s1_len] > 0)
+	while (s1 && s1[s1_len])
 		s1_len++;
 	s2_len = 0;
-	while (s2 && s2[s2_len] > 0)
+	while (s2 && s2[s2_len])
 		s2_len++;
 	str = malloc((s1_len + s2_len + 1) * sizeof(*str));
 	if (str == NULL)
@@ -85,10 +85,10 @@ int	alloc_buffer(char ***buffer, int fd)
 	while (i < (size_t)fd + 1)
 		(*buffer)[i++] = NULL;
 	(*buffer)[i] = malloc(1);
-	(*buffer)[i][0] = (char)-1;
+	(*buffer)[i][0] = (unsigned char)30;
 	return (1);
 }
-
+#include "stdio.h"
 int	expand_buffer(int fd, char ***buffer, ssize_t i)
 {
 	ssize_t	j;
@@ -100,10 +100,11 @@ int	expand_buffer(int fd, char ***buffer, ssize_t i)
 	{
 		if (!(*buffer)[i])
 			continue ;
-		if ((*buffer)[i][0] != -1)
+		if ((unsigned char)(*buffer)[i][0] != 30)
 		{
+			printf("ohoho");
 			j = 0;
-			while ((*buffer)[i][j] != -1)
+			while ((unsigned char)(*buffer)[i][j] != 30)
 				j++;
 			new_buffer[i] = malloc(++j + 1);
 			if (!new_buffer[i])

@@ -6,11 +6,13 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:12:46 by yademirk          #+#    #+#             */
-/*   Updated: 2025/07/02 15:58:49 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:23:06 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+#include "stdio.h"
 
 static void	clear_buffer(char ***buffer, int fd)
 {
@@ -24,7 +26,7 @@ static void	clear_buffer(char ***buffer, int fd)
 	{
 		if ((*buffer)[fd])
 		{
-			if ((*buffer)[fd][0] == -1)
+			if ((unsigned char)(*buffer)[fd][0] == 30)
 			{
 				free((*buffer)[fd]);
 				free(*buffer);
@@ -41,21 +43,23 @@ static int	buffer_init(int fd, char ***buffer)
 	ssize_t	i;
 
 	i = 0;
-	while (!((*buffer)[i] && (*buffer)[i][0] == -1))
+	while (!((*buffer)[i] && (unsigned char)(*buffer)[i][0] == 30))
 		i++;
+	printf("%li\n", i);
 	if (i < (ssize_t)fd + 1)
 		if (!expand_buffer(fd, buffer, ++i))
 			return (0);
-	(*buffer)[fd] = malloc((size_t)BUFFER_SIZE + 2);
+	(*buffer)[fd] = malloc((size_t)BUFFER_SIZE + 1);
 	if (!(*buffer)[fd])
 		return (0);
 	i = read(fd, (*buffer)[fd], (size_t)BUFFER_SIZE);
 	if (i <= 0)
 		return (0);
-	(*buffer)[fd][i] = -1;
-	(*buffer)[fd][i + 1] = 0;
+	(*buffer)[fd][i] = 0;
 	return (1);
 }
+
+#include "stdio.h"	
 
 static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 {
@@ -64,39 +68,45 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	if (!(*buffer) && !alloc_buffer(buffer, fd))
 		return (0);
 	i = 0;
-	while (!((*buffer)[i] && (*buffer)[i][0] == -1))
+	while (!((*buffer)[i] && (unsigned char)(*buffer)[i][0] == 30))
 		i++;
 	*start_pos = 0;
 	if ((i >= (size_t)fd + 1) && (*buffer)[fd])
 	{
-		while ((*buffer)[fd][*start_pos] > 0)
+		while ((*buffer)[fd][*start_pos] && (*buffer)[fd][*start_pos] != 30)
 			(*start_pos)++;
-		if ((*buffer)[fd][*start_pos] == -1)
+		if (!(*buffer)[fd][*start_pos])
 			return (0);
 		(*buffer)[fd][(*start_pos)++] = '\n';
+		//printf("STARTPOS: %lu\n", *start_pos);
 	}
 	else
+	{
 		if (!buffer_init(fd, buffer))
 			return (0);
+		//printf("sadlsql");
+	}
+		
 	return (1);
 }
+
 
 static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 {
 	size_t	i;
 
 	i = start_pos;
-	if (buffer[fd][i] == -1)
+	if (!buffer[fd][i])
 		return (1);
-	while (buffer[fd][i] > 0)
+	while ((unsigned char)buffer[fd][i])
 	{
-		if (buffer[fd][i] == '\n')
+		if ((unsigned char)buffer[fd][i] == '\n')
 		{
 			*str = ft_strjoin(*str, ft_substr((const char *)buffer[fd],
 						start_pos, i - start_pos + 1), 1, 1);
 			if (!*str)
 				return (-1);
-			buffer[fd][i] = 0;
+			buffer[fd][i] = 30;
 			return (1);
 		}
 		i++;
