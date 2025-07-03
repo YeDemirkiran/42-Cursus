@@ -12,8 +12,6 @@
 
 #include "get_next_line_bonus.h"
 
-#include "stdio.h"
-
 static void	clear_buffer(char ***buffer, int fd)
 {
 	if ((*buffer)[fd])
@@ -26,7 +24,7 @@ static void	clear_buffer(char ***buffer, int fd)
 	{
 		if ((*buffer)[fd])
 		{
-			if ((unsigned char)(*buffer)[fd][0] == 30)
+			if (!(*buffer)[fd][0])
 			{
 				free((*buffer)[fd]);
 				free(*buffer);
@@ -43,9 +41,8 @@ static int	buffer_init(int fd, char ***buffer)
 	ssize_t	i;
 
 	i = 0;
-	while (!((*buffer)[i] && (unsigned char)(*buffer)[i][0] == 30))
+	while (!((*buffer)[i] && (unsigned char)(*buffer)[i][0] == 0))
 		i++;
-	printf("%li\n", i);
 	if (i < (ssize_t)fd + 1)
 		if (!expand_buffer(fd, buffer, ++i))
 			return (0);
@@ -59,8 +56,6 @@ static int	buffer_init(int fd, char ***buffer)
 	return (1);
 }
 
-#include "stdio.h"	
-
 static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 {
 	size_t	i;
@@ -68,7 +63,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 	if (!(*buffer) && !alloc_buffer(buffer, fd))
 		return (0);
 	i = 0;
-	while (!((*buffer)[i] && (unsigned char)(*buffer)[i][0] == 30))
+	while (!((*buffer)[i] && (unsigned char)(*buffer)[i][0] == 0))
 		i++;
 	*start_pos = 0;
 	if ((i >= (size_t)fd + 1) && (*buffer)[fd])
@@ -78,18 +73,12 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 		if (!(*buffer)[fd][*start_pos])
 			return (0);
 		(*buffer)[fd][(*start_pos)++] = '\n';
-		//printf("STARTPOS: %lu\n", *start_pos);
 	}
 	else
-	{
 		if (!buffer_init(fd, buffer))
 			return (0);
-		//printf("sadlsql");
-	}
-		
 	return (1);
 }
-
 
 static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 {

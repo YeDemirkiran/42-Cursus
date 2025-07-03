@@ -85,10 +85,10 @@ int	alloc_buffer(char ***buffer, int fd)
 	while (i < (size_t)fd + 1)
 		(*buffer)[i++] = NULL;
 	(*buffer)[i] = malloc(1);
-	(*buffer)[i][0] = (unsigned char)30;
+	(*buffer)[i][0] = 0;
 	return (1);
 }
-#include "stdio.h"
+
 int	expand_buffer(int fd, char ***buffer, ssize_t i)
 {
 	ssize_t	j;
@@ -100,13 +100,12 @@ int	expand_buffer(int fd, char ***buffer, ssize_t i)
 	{
 		if (!(*buffer)[i])
 			continue ;
-		if ((unsigned char)(*buffer)[i][0] != 30)
+		if ((unsigned char)(*buffer)[i][0])
 		{
-			printf("ohoho");
 			j = 0;
-			while ((unsigned char)(*buffer)[i][j] != 30)
+			while ((unsigned char)(*buffer)[i][j])
 				j++;
-			new_buffer[i] = malloc(++j + 1);
+			new_buffer[i] = malloc(j + 1);
 			if (!new_buffer[i])
 				return (0);
 			ft_strlcpy(new_buffer[i], (*buffer)[i], j + 1);
