@@ -85,8 +85,6 @@ static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 	size_t	i;
 
 	i = start_pos;
-	if (!buffer[fd][i])
-		return (1);
 	while ((unsigned char)buffer[fd][i])
 	{
 		if ((unsigned char)buffer[fd][i] == '\n')
@@ -100,7 +98,8 @@ static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 		}
 		i++;
 	}
-	*str = ft_strjoin(*str, buffer[fd] + start_pos, 1, 0);
+	if (buffer[fd][start_pos])
+		*str = ft_strjoin(*str, buffer[fd] + start_pos, 1, 0);
 	if (buffer[fd])
 		free(buffer[fd]);
 	buffer[fd] = NULL;
