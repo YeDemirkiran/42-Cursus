@@ -1,12 +1,15 @@
 CC = cc
 FLAGS = -Wall -Wextra -Werror
+INC = ./includes
 NAME = push_swap
-SRC = ./main.c
+
+SRC = ./main.c $(SORTING)
+SORTING = ./sorting/bubble_sort.c
 
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(CC) $(FLAGS) $(SRC) -o $(NAME)
+	$(CC) $(FLAGS) $(SRC) -I$(INC) -o $(NAME)
 
 clean: 
 	rm -rf $(NAME)
