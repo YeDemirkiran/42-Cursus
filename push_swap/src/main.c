@@ -5,7 +5,7 @@ int	main(int argc, char **argv)
 	t_stack	*stack;
 	int		*instructions;
 
-	if (argc <= 1)
+	if (argc <= 2)
 		return (EXIT_FAILURE);
 	stack = init_stack(argv + 1, argc - 1);
 	if (!stack)
@@ -18,6 +18,9 @@ int	main(int argc, char **argv)
 	// 		fail
 	// print_instructions(instructions);
 	// free(instructions);
-	// free(stack);
+	(void)stack;
+	(void)instructions;
+	free(stack);
+	ft_putstr_fd("pa\n", 1);
 	return (EXIT_SUCCESS);
 }

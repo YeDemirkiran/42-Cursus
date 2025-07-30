@@ -4,6 +4,6 @@
 # include "dependencies.h"
 # include "predicate.h"
 
-int	ft_atol(char *str);
+long long	ft_atol(char *str);
 
 #endif

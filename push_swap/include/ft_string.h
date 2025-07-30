@@ -3,7 +3,6 @@
 
 # include "dependencies.h"
 
-int	ft_isdigit(int c);
-int	ft_isnumber(char *str);
+size_t	ft_strlen(char *str);
 
 #endif

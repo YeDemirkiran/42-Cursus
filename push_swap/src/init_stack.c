@@ -1,12 +1,13 @@
 #include "push_swap.h"
+//#include "stdio.h"
 
-static int is_duplicate(int num, t_stack *stack, int count)
+static int is_duplicate(t_stack *stack, int index)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < count)
+	while (i < index)
 	{
 		j = 0;
 		while (j < i)
@@ -32,24 +33,25 @@ t_stack	*init_stack(char **arr, int argc)
 		return (NULL);
 	while (i < argc)
 	{
-		if (!is_number(arr[i]))
+		if (!ft_isnumber(arr[i]))
 		{
-			free(arr);
+			free(stack);
 			return (NULL);
 		}
 		num = ft_atol(arr[i]);
 		if (num > INT_MAX || num < INT_MIN)
 		{
-			free(arr);
+			free(stack);
 			return (NULL);
 		}
 		stack[i].index = i;
 		stack[i].number = (int)num;
-		if (!is_duplicate((int)num, stack, argc))
+		if (!is_duplicate(stack, i))
 		{
-			free(arr);
+			free(stack);
 			return (NULL);
 		}
+		i++;
 	}
 	return (stack);
 }

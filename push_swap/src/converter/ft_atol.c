@@ -1,6 +1,6 @@
 #include "converter.h"
 
-int	ft_atol(char *str)
+long long	ft_atol(char *str)
 {
 	long long	total;
 	char		sign;

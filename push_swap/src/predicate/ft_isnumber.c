@@ -2,6 +2,8 @@
 
 int	ft_isnumber(char *str)
 {
+	if (*str == '\0')
+		return (FALSE);
 	if (*str == '-' || *str == '+')
 		str++;
 	while (*str)
