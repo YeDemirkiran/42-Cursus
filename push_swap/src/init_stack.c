@@ -50,7 +50,6 @@ t_stack	*init_stack(char **arr, int argc)
 			free(arr);
 			return (NULL);
 		}
-		
 	}
 	return (stack);
 }

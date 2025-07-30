@@ -2,8 +2,22 @@
 
 int	main(int argc, char **argv)
 {
-	if (argc == 1)
-		return (0);
+	t_stack	*stack;
+	int		*instructions;
 
-	return (0);
+	if (argc <= 1)
+		return (EXIT_FAILURE);
+	stack = init_stack(argv + 1, argc - 1);
+	if (!stack)
+	{
+		ft_putstr_fd("Error\n", 2);
+		return(EXIT_FAILURE);
+	}
+	// instructions = get_instructions(stack, argc - 1);
+	// if (!instructions)
+	// 		fail
+	// print_instructions(instructions);
+	// free(instructions);
+	// free(stack);
+	return (EXIT_SUCCESS);
 }
