@@ -3,7 +3,7 @@ FLAGS = -Wall -Wextra -Werror
 NAME = push_swap
 
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c init_stack.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC)) 
+SRC = $(addprefix $(SRC_DIR), main.c init_stack.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC)) 
 
 SORTING_DIR = sorting/
 SORTING_SRC = $(addprefix $(SORTING_DIR), bubble_sort.c)
@@ -19,6 +19,9 @@ STRING_SRC = $(addprefix $(STRING_DIR), ft_strlen.c)
 
 WRITE_DIR = write/
 WRITE_SRC = $(addprefix $(WRITE_DIR), ft_putchar.c ft_putstr.c)
+
+STACK_DIR = stack/
+STACK_SRC = $(addprefix $(STACK_DIR), stack_rotate.c stack_rotate_rev.c stack_swap.c)
 
 INC = ./include
 

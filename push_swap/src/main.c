@@ -5,22 +5,25 @@ int	*get_instructions(t_stack *stack, int size)
 	int	*instructions;
 
 	instructions = malloc(sizeof(int) * 1024);
-	(void)stack;
-	(void)size;
+	if (!instructions)
+		return (NULL);
+	bubble_sort_ps(stack, size, instructions);
+	// (void)stack;
+	// (void)size;
 	// Analyze and sort the stack
 	// Fill the instructions
-	instructions[0] = INST_SWAP_A;
-	instructions[1] = INST_SWAP_B;
-	instructions[2] = INST_SWAP_AB;
-	instructions[3] = INST_PUSH_A;
-	instructions[4] = INST_PUSH_B;
-	instructions[5] = INST_ROT_A;
-	instructions[6] = INST_ROT_B;
-	instructions[7] = INST_ROT_AB;
-	instructions[8] = INST_RROT_A;
-	instructions[9] = INST_RROT_B;
-	instructions[10] = INST_RROT_AB;
-	instructions[11] = INST_END;
+	// instructions[0] = INST_SWAP_A;
+	// instructions[1] = INST_SWAP_B;
+	// instructions[2] = INST_SWAP_AB;
+	// instructions[3] = INST_PUSH_A;
+	// instructions[4] = INST_PUSH_B;
+	// instructions[5] = INST_ROT_A;
+	// instructions[6] = INST_ROT_B;
+	// instructions[7] = INST_ROT_AB;
+	// instructions[8] = INST_RROT_A;
+	// instructions[9] = INST_RROT_B;
+	// instructions[10] = INST_RROT_AB;
+	// instructions[11] = INST_END;
 	return (instructions);
 }
 

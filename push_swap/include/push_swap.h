@@ -9,11 +9,7 @@
 # include "write.h"
 # include "ft_string.h"
 
-typedef struct s_stack 
-{
-	int	number;
-	int	index;
-}			t_stack;
+# include "stack.h"
 
 enum e_instructions 
 {
