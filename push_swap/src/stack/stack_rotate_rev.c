@@ -14,3 +14,15 @@ void	stack_rotate_rev(t_stack *stack, int size)
 	}
 	stack[i + 1].number = tmp;
 }
+
+int	stack_rotate_rev_a(t_stack_pair *pair)
+{
+	stack_rotate_rev(pair->stack_a, pair->a_length);
+	return (INST_RROT_A);
+}
+
+int	stack_rotate_rev_b(t_stack_pair *pair)
+{
+	stack_rotate_rev(pair->stack_b, pair->b_length);
+	return (INST_RROT_B);
+}

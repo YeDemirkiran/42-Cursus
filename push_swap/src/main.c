@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-int	*get_instructions(t_stack *stack, int size)
+int	*get_instructions(t_stack_pair pair, int size)
 {
 	int	*instructions;
 
@@ -12,7 +12,7 @@ int	*get_instructions(t_stack *stack, int size)
 	// (void)size;
 	// Analyze the stack and choose an algorithm
 	// Sort and fill the instructions
-	bubble_sort_ps(stack, size, instructions);
+	bubble_sort_ps(pair.stack_a, size, instructions);
 	return (instructions);
 }
 
@@ -33,18 +33,18 @@ void	print_instructions(int *instructions)
 
 int	main(int argc, char **argv)
 {
-	t_stack	*stack;
-	int		*instructions;
+	t_stack_pair	pair;
+	int				*instructions;
 
 	if (argc <= 2)
 		return (EXIT_FAILURE);
-	stack = init_stack(argv + 1, argc - 1);
-	if (!stack)
+	pair = init_stack_pair(argv + 1, argc - 1);
+	if (!pair.stack_a || !pair.stack_b)
 	{
 		ft_putstr_fd("Error\n", 2);
 		return(EXIT_FAILURE);
 	}
-	instructions = get_instructions(stack, argc - 1);
+	instructions = get_instructions(pair, argc - 1);
 	if (!instructions)
 	{
 		ft_putstr_fd("Error\n", 2);
@@ -52,6 +52,7 @@ int	main(int argc, char **argv)
 	}
 	print_instructions(instructions);
 	free(instructions);
-	free(stack);
+	free(pair.stack_a);
+	free(pair.stack_b);
 	return (EXIT_SUCCESS);
 }

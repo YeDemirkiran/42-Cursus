@@ -2,11 +2,20 @@
 
 # define STACK_H
 
-typedef struct s_stack 
+typedef struct s_stack
 {
 	int	number;
 	int	index;
 }			t_stack;
+
+typedef struct s_stack_pair
+{
+	t_stack	*stack_a;
+	t_stack	*stack_b;
+
+	int		a_length;
+	int		b_length;
+}			t_stack_pair;
 
 enum e_instructions 
 {
@@ -24,10 +33,18 @@ enum e_instructions
 	INST_RROT_AB = 11,
 };
 
-void	stack_rotate(t_stack *stack, int size);
-void	stack_rotate_rev(t_stack *stack, int size);
-void	stack_swap(t_stack *stack);
+void			stack_swap(t_stack *stack);
+int				stack_swap_a(t_stack_pair *pair);
+int				stack_swap_b(t_stack_pair *pair);
 
-t_stack	*init_stack(char **arr, int argc);
+void			stack_rotate(t_stack *stack, int size);
+int				stack_rotate_a(t_stack_pair *pair);
+int				stack_rotate_b(t_stack_pair *pair);
+
+void			stack_rotate_rev(t_stack *stack, int size);
+int				stack_rotate_rev_a(t_stack_pair *pair);
+int				stack_rotate_rev_b(t_stack_pair *pair);
+
+t_stack_pair	init_stack_pair(char **arr, int argc);
 
 #endif
