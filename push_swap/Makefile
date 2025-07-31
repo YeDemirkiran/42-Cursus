@@ -30,6 +30,12 @@ all: $(NAME)
 $(NAME): $(SRC)
 	$(CC) $(FLAGS) $(SRC) -I$(INC) -o $(NAME)
 
+test: 
+	make -C ./test
+
+test_re: 
+	make re -C ./test
+
 clean: 
 	rm -rf $(NAME)
 
@@ -37,4 +43,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all test test_re clean fclean re
