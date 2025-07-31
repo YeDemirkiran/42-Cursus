@@ -1,12 +1,6 @@
 #include "sorting.h"
-#include "push_swap.h"
-
-void	copy_array(const int *src, int **target, size_t len)
-{
-	*target = malloc(len * sizeof(int));
-	while (len--)
-		(*target)[len] = src[len];		
-}
+#include "stack.h"
+#include "array.h"
 
 int	*bubble_sort(const int *arr, size_t len)
 {
@@ -14,7 +8,7 @@ int	*bubble_sort(const int *arr, size_t len)
 	int		tmp;
 	size_t	i;
 
-	copy_array(arr, &new_arr, len);
+	new_arr = dup_int_array(arr, len);
 	i = 1;
 	while (i < len)
 	{
@@ -48,7 +42,6 @@ void bubble_sort_ps(t_stack *stack, int size, int *instructions)
 		{
 			tmp = stack[i - 1].index;
 			tmp_2 = tmp;
-			//printf("%i\n", size);
 			while (tmp-- > 0)
 			{	
 				stack_rotate(stack, size);

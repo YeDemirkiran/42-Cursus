@@ -4,7 +4,9 @@ PS_PATH="../push_swap"
 CHECKER_PATH="./checker_linux"
 
 OUTPUT=$(${PS_PATH} "$@")
-COUNT=$(printf "${OUTPUT}" | wc -l)
+COUNT=$(echo "${OUTPUT}" | wc -l)
+
+echo "${OUTPUT}"
 
 echo "Count: ${COUNT}" 
 
