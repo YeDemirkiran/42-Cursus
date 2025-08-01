@@ -6,11 +6,15 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:02:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/01 13:03:20 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/01 13:23:03 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "so_long.h"
+
 int	main(int argc, char **argv)
 {
-
+	(void)argc;
+	(void)argv;
+	return (0);
 }

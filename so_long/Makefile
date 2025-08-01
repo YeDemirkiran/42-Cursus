@@ -6,12 +6,12 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/01 13:03:01 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/01 13:03:04 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/01 13:21:24 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -lm
 NAME = so_long
 
 SRC_DIR = ./src/

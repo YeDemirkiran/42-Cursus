@@ -6,11 +6,13 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:02:50 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/01 13:02:51 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/01 13:22:15 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
+
+# include "math.h"
 
 #endif
