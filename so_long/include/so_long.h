@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:02:50 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/01 13:22:15 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/01 13:59:51 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define SO_LONG_H
 
 # include "math.h"
+# include "mlx.h"
 
 #endif
