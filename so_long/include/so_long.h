@@ -23,11 +23,11 @@
 # endif
 
 # ifndef RES_X
-#  define RES_X 1920
+#  define RES_X 960
 # endif
 
 # ifndef RES_Y
-#  define RES_Y 1080
+#  define RES_Y 540
 # endif
 
 typedef struct s_image
