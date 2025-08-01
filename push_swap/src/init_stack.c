@@ -62,8 +62,11 @@ t_stack_pair	init_stack_pair(char **arr, int argc)
 	i = 0;
 	while (i < argc)
 	{
+		pair.stack_b[i].number = 0;
 		pair.stack_b[i].index = i;
 		i++;
 	}
+	pair.a_length = argc;
+	pair.b_length = 0;
 	return (pair);
 }

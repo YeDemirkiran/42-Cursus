@@ -15,14 +15,14 @@ void	stack_rotate(t_stack *stack, int size)
 	stack[i - 1].number = tmp;
 }
 
-int	stack_rotate_a(t_stack_pair *pair)
+int	stack_rotate_a(t_stack_pair pair)
 {
-	stack_rotate(pair->stack_a, pair->a_length);
+	stack_rotate(pair.stack_a, pair.a_length);
 	return (INST_ROT_A);
 }
 
-int	stack_rotate_b(t_stack_pair *pair)
+int	stack_rotate_b(t_stack_pair pair)
 {
-	stack_rotate(pair->stack_b, pair->b_length);
+	stack_rotate(pair.stack_b, pair.b_length);
 	return (INST_ROT_B);
 }

@@ -19,6 +19,7 @@ typedef struct s_stack_pair
 
 enum e_instructions 
 {
+	INST_NONE = -1,
 	INST_END = 0,
 	INST_SWAP_A = 1,
 	INST_SWAP_B = 2,
@@ -34,16 +35,16 @@ enum e_instructions
 };
 
 void			stack_swap(t_stack *stack);
-int				stack_swap_a(t_stack_pair *pair);
-int				stack_swap_b(t_stack_pair *pair);
+int				stack_swap_a(t_stack_pair pair);
+int				stack_swap_b(t_stack_pair pair);
 
 void			stack_rotate(t_stack *stack, int size);
-int				stack_rotate_a(t_stack_pair *pair);
-int				stack_rotate_b(t_stack_pair *pair);
+int				stack_rotate_a(t_stack_pair pair);
+int				stack_rotate_b(t_stack_pair pair);
 
 void			stack_rotate_rev(t_stack *stack, int size);
-int				stack_rotate_rev_a(t_stack_pair *pair);
-int				stack_rotate_rev_b(t_stack_pair *pair);
+int				stack_rotate_rev_a(t_stack_pair pair);
+int				stack_rotate_rev_b(t_stack_pair pair);
 
 t_stack_pair	init_stack_pair(char **arr, int argc);
 

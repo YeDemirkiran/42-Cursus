@@ -25,6 +25,8 @@ void	print_instructions(int *instructions)
 	i = 0;
 	while (instructions[i])
 	{
+		if (instructions[i] == INST_NONE)
+			continue ;
 		ft_putstr((char *)inst[instructions[i]]);
 		ft_putchar('\n');
 		i++;
