@@ -6,20 +6,20 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:58:06 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 12:17:03 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:17:50 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_byte	*get_instructions(t_stack_pair pair, int size)
+t_byte	*get_instructions(t_stack_pair *pair, int size)
 {
 	t_byte	*instructions;
 
-	instructions = malloc(sizeof(*instructions) * 1024);
+	instructions = malloc(sizeof(*instructions) * 4096);
 	if (!instructions)
 		return (NULL);
-	bubble_sort_ps(pair.stack_a, size, instructions);
+	push_sort(pair, instructions, size);
 	return (instructions);
 }
 
@@ -66,7 +66,7 @@ int	main(int argc, char **argv)
 	pair = init_stack_pair(argv + 1, argc - 1);
 	if (!pair.stack_a || !pair.stack_b)
 		return (err_print(clear_pair, &pair));
-	instructions = get_instructions(pair, argc - 1);
+	instructions = get_instructions(&pair, argc - 1);
 	if (!instructions)
 		return (err_print(clear_pair, &pair));
 	print_instructions(instructions);

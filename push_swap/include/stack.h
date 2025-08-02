@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:56:26 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 12:52:19 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:01:40 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int				stack_rotate_rev_a(t_stack_pair pair);
 int				stack_rotate_rev_b(t_stack_pair pair);
 int				stack_rotate_rev_ab(t_stack_pair pair);
 
-int				stack_push_a_to_b(t_stack_pair pair);
-int				stack_push_b_to_a(t_stack_pair pair);
+int				stack_push_a_to_b(t_stack_pair *pair);
+int				stack_push_b_to_a(t_stack_pair *pair);
 
 t_stack_pair	init_stack_pair(char **arr, int argc);
 

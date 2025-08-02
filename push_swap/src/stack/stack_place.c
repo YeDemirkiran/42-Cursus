@@ -1,25 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sorting.h                                          :+:      :+:    :+:   */
+/*   stack_place.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 11:56:23 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 15:03:51 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/02 12:53:32 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/02 14:52:13 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SORTING_H
-# define SORTING_H
+#include "stack.h"
 
-# include "dependencies.h"
-# include "stack.h"
-# include "array.h"
-
-int		*bubble_sort(const int *arr, size_t len);
-void	bubble_sort_ps(t_stack *stack, int size, t_byte *instructions);
-
-void	push_sort(t_stack_pair *pair, t_byte *instructions, int size);
-
-#endif
+// void	stack_move_in_place(t_stack_pair pair, int target_index, int target_place_index)
+// {
+// }
