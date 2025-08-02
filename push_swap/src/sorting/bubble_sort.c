@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bubble_sort.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/02 11:56:52 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/02 11:57:05 by yademirk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sorting.h"
 
 int	*bubble_sort(const int *arr, size_t len)
@@ -16,14 +28,14 @@ int	*bubble_sort(const int *arr, size_t len)
 			new_arr[i] = new_arr[i - 1];
 			new_arr[i - 1] = tmp;
 			i = 1;
-			continue;
+			continue ;
 		}
 		i++;
 	}
 	return (new_arr);
 }
 
-void bubble_sort_ps(t_stack *stack, int size, int *instructions)
+void	bubble_sort_ps(t_stack *stack, int size, int *instructions)
 {
 	int	i;
 	int	j;
