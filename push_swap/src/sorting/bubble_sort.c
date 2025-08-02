@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:56:52 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 11:57:05 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/02 12:16:00 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	*bubble_sort(const int *arr, size_t len)
 	return (new_arr);
 }
 
-void	bubble_sort_ps(t_stack *stack, int size, int *instructions)
+void	bubble_sort_ps(t_stack *stack, int size, t_byte *instructions)
 {
 	int	i;
 	int	j;
@@ -53,18 +53,18 @@ void	bubble_sort_ps(t_stack *stack, int size, int *instructions)
 			while (tmp-- > 0)
 			{	
 				stack_rotate(stack, size);
-				instructions[j++] = INST_ROT_A;
+				instructions[j++] = (t_byte)INST_ROT_A;
 			}	
 			stack_swap(stack);
-			instructions[j++] = INST_SWAP_A;
+			instructions[j++] = (t_byte)INST_SWAP_A;
 			while (tmp_2-- > 0)
 			{	
 				stack_rotate_rev(stack, size);
-				instructions[j++] = INST_RROT_A;
+				instructions[j++] = (t_byte)INST_RROT_A;
 			}
 			i = 0;
 		}
 		i++;
 	}
-	instructions[j] = INST_END;
+	instructions[j] = (t_byte)INST_END;
 }

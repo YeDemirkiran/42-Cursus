@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:56:26 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 11:56:27 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/02 12:11:54 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_stack_pair
 	int		b_length;
 }			t_stack_pair;
 
-enum e_instructions 
+enum e_instructions
 {
 	INST_NONE = -1,
 	INST_END = 0,

@@ -6,24 +6,24 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:58:06 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 12:08:31 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/02 12:17:03 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	*get_instructions(t_stack_pair pair, int size)
+t_byte	*get_instructions(t_stack_pair pair, int size)
 {
-	int	*instructions;
+	t_byte	*instructions;
 
-	instructions = malloc(sizeof(int) * 1024);
+	instructions = malloc(sizeof(*instructions) * 1024);
 	if (!instructions)
 		return (NULL);
 	bubble_sort_ps(pair.stack_a, size, instructions);
 	return (instructions);
 }
 
-void	print_instructions(int *instructions)
+void	print_instructions(t_byte *instructions)
 {
 	int			i;
 	const char	*inst[] = {NULL, "sa", "sb", "ss", "pa", "pb",
@@ -32,9 +32,9 @@ void	print_instructions(int *instructions)
 	i = 0;
 	while (instructions[i])
 	{
-		if (instructions[i] == INST_NONE)
+		if (instructions[i] == (t_byte)INST_NONE)
 			continue ;
-		ft_putstr((char *)inst[instructions[i]]);
+		ft_putstr((char *)inst[(int)instructions[i]]);
 		ft_putchar('\n');
 		i++;
 	}
@@ -59,7 +59,7 @@ static int	err_print(void (*clear)(t_stack_pair *), t_stack_pair *pair)
 int	main(int argc, char **argv)
 {
 	t_stack_pair	pair;
-	int				*instructions;
+	t_byte			*instructions;
 
 	if (argc <= 2)
 		return (EXIT_FAILURE);
