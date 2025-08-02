@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:57:37 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 11:57:38 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/02 12:51:08 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,11 @@ int	stack_rotate_b(t_stack_pair pair)
 {
 	stack_rotate(pair.stack_b, pair.b_length);
 	return (INST_ROT_B);
+}
+
+int	stack_rotate_ab(t_stack_pair pair)
+{
+	stack_rotate(pair.stack_a, pair.a_length);
+	stack_rotate(pair.stack_b, pair.b_length);
+	return (INST_ROT_AB);
 }

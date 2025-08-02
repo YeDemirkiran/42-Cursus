@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:57:39 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 11:57:40 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/02 12:50:52 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ int	stack_swap_b(t_stack_pair pair)
 {
 	stack_swap(pair.stack_b);
 	return (INST_SWAP_B);
+}
+
+int	stack_swap_ab(t_stack_pair pair)
+{
+	stack_swap(pair.stack_a);
+	stack_swap(pair.stack_b);
+	return (INST_SWAP_AB);
 }

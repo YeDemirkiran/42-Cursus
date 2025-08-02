@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:56:26 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 12:11:54 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/02 12:52:19 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,20 @@ enum e_instructions
 void			stack_swap(t_stack *stack);
 int				stack_swap_a(t_stack_pair pair);
 int				stack_swap_b(t_stack_pair pair);
+int				stack_swap_ab(t_stack_pair pair);
 
 void			stack_rotate(t_stack *stack, int size);
 int				stack_rotate_a(t_stack_pair pair);
 int				stack_rotate_b(t_stack_pair pair);
+int				stack_rotate_ab(t_stack_pair pair);
 
 void			stack_rotate_rev(t_stack *stack, int size);
 int				stack_rotate_rev_a(t_stack_pair pair);
 int				stack_rotate_rev_b(t_stack_pair pair);
+int				stack_rotate_rev_ab(t_stack_pair pair);
+
+int				stack_push_a_to_b(t_stack_pair pair);
+int				stack_push_b_to_a(t_stack_pair pair);
 
 t_stack_pair	init_stack_pair(char **arr, int argc);
 
