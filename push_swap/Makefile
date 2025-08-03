@@ -6,7 +6,7 @@ SRC_DIR = ./src/
 SRC = $(addprefix $(SRC_DIR), main.c init_stack.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(ARRAY_SRC)) 
 
 SORTING_DIR = sorting/
-SORTING_SRC = $(addprefix $(SORTING_DIR), bubble_sort.c insertion_sort.c selection_sort.c push_sort.c)
+SORTING_SRC = $(addprefix $(SORTING_DIR), bubble_sort.c insertion_sort.c selection_sort.c)
 
 CONV_DIR = converter/
 CONV_SRC = $(addprefix $(CONV_DIR), ft_atol.c)
