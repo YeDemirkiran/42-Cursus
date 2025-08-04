@@ -21,7 +21,7 @@ WRITE_DIR = write/
 WRITE_SRC = $(addprefix $(WRITE_DIR), ft_putchar.c ft_putstr.c)
 
 STACK_DIR = stack/
-STACK_SRC = $(addprefix $(STACK_DIR), stack_rotate.c stack_rotate_rev.c stack_swap.c stack_push.c stack_operations.c)
+STACK_SRC = $(addprefix $(STACK_DIR), stack_rotate.c stack_rotate_rev.c stack_swap.c stack_push.c stack_operations.c stack_move.c)
 
 ARRAY_DIR = array/
 ARRAY_SRC = $(addprefix $(ARRAY_DIR), dup_array.c)

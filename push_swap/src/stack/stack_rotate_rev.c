@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "stack.h"
+#include "stdio.h"
 
 void	stack_rotate_rev(t_stack *stack, int size)
 {
@@ -23,6 +24,7 @@ void	stack_rotate_rev(t_stack *stack, int size)
 	i = size - 2;
 	while (i >= 0)
 	{
+		//printf("Copying: %i\n", stack[i].number);
 		stack[i + 1].number = stack[i].number;
 		i--;
 	}

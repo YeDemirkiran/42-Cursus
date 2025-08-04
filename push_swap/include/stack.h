@@ -14,6 +14,8 @@
 
 # define STACK_H
 
+# include "dependencies.h"
+
 typedef struct s_stack
 {
 	int	number;
@@ -66,6 +68,7 @@ int				stack_push_a_to_b(t_stack_pair *pair);
 int				stack_push_b_to_a(t_stack_pair *pair);
 
 t_stack			find_smallest_index(t_stack *stack, int size);
+void			stack_a_move_to_first(t_stack_pair pair, t_stack target, t_byte *instructions, int *inst_index);
 int				is_stack_sorted(t_stack *stack, int size);
 
 t_stack_pair	init_stack_pair(char **arr, int argc);

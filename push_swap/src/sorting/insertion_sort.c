@@ -56,7 +56,7 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 		{
 			tmp = get_biggest(pair->stack_a, pair->a_length);
 			while (pair->stack_a[0].number != tmp.number)
-				instructions[inst_index++] = stack_rotate_a(*pair);
+				stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
 		}
 		else
 		{
@@ -68,5 +68,5 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 	}
 	tmp = find_smallest_index(pair->stack_a, pair->a_length);
 	while (pair->stack_a[0].number != tmp.number)
-		instructions[inst_index++] = stack_rotate_a(*pair);
+		stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
 }
