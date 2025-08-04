@@ -11,24 +11,6 @@
 /* ************************************************************************** */
 
 #include "sorting.h"
-#include "write.h"
-#include "stdio.h"
-
-static t_stack	find_smallest_index(t_stack *stack, int size)
-{
-	int		i;
-	t_stack	smallest;
-
-	i = 1;
-	smallest = *stack;
-	while (i < size)
-	{
-		if (stack[i].number < smallest.number)
-			smallest = stack[i];
-		i++;
-	}
-	return (smallest);
-}
 
 void	selection_sort(t_stack_pair *pair, t_byte *instructions, int size)
 {

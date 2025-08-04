@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-//#include "stdio.h"
 
 static int	is_duplicate(t_stack *stack, int index)
 {
@@ -86,6 +85,7 @@ t_stack_pair	init_stack_pair(char **arr, int argc)
 	if (!pair.stack_b)
 		return (free_stack(pair.stack_a));
 	init_stack_empty(pair.stack_b, argc);
+	pair.full_length = argc;
 	pair.a_length = argc;
 	pair.b_length = 0;
 	return (pair);

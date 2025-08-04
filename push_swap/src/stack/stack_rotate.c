@@ -17,6 +17,8 @@ void	stack_rotate(t_stack *stack, int size)
 	int	i;
 	int	tmp;
 
+	if (size <= 1)
+		return ;
 	tmp = stack[0].number;
 	i = 1;
 	while (i < size)
