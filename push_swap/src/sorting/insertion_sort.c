@@ -1,56 +1,72 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   insertion_sort.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 11:57:18 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 11:57:19 by yademirk         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "sorting.h"
 
-// void	move_between(t_stack_pair pair, t_stack target, t_stack min, t_stack max, int *instructions)
-// {
-// 	int	min_num;
-// 	int	max_num;
-// 	int	target_num;
-// 	int	index;
+static	int	is_biggest(t_stack *stack, int size, int number)
+{
+	int	i;
 
-// 	min_num = min.number;
-// 	max_num = max.number;
-// 	target_num = target.number;
-// 	index = (min.index + max.index) / 2;
-// 	while (pair.stack_a[0].number != target_num)
-// 	{
-// 		if (pair.a_length - target.index < target.index) // Rotate right
-// 		{
-// 			stack_rotate_rev_a(pair);
-// 		}
-// 		else										// Rotate left
-// 			stack_rotate_a(pair);
-// 	}	
-// }
+	i = 0;
+	while (i < size)
+	{
+		if (number < stack[i].number)
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
 
-// int	*insertion_sort_ps(t_stack_pair pair, int *instructions)
-// {
-// 	int	i;
-// 	int	j;
-// 	int	tmp;
-// 	int	tmp_2;
+static	t_stack	get_biggest(t_stack *stack, int size)
+{
+	int		i;
+	t_stack	num;
 
-// 	i = 1;
-// 	j = 0;
-// 	i++;
-// 	while (i < pair.stack_a)
-// 	{
-// 		if (pair.stack_a[i].number < pair.stack_a[i - 1].number)
-// 		{
-			
-// 		}
-// 		i++;
-// 	}
-// 	instructions[j] = INST_END;
-// }
+	if (size <= 1)
+		return (stack[0]);
+	i = 1;
+	num = stack[0];
+	while (i < size)
+	{
+		if (num.number < stack[i].number)
+			num = stack[i];
+		i++;
+	}
+	return (num);
+}
+
+void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
+{
+	int		inst_index;
+	t_stack	tmp;
+
+	(void)size;
+	if (is_stack_sorted(pair->stack_a, pair->a_length))
+		return ;
+	inst_index = 0;
+	while (TRUE)
+	{
+		while (pair->stack_a[1].number > pair->stack_a[0].number)
+			instructions[inst_index++] = stack_rotate_a(*pair);
+		while (pair->stack_a[1].number < pair->stack_a[0].number)
+			instructions[inst_index++] = stack_push_a_to_b(pair);
+		if (is_stack_sorted(pair->stack_a, pair->a_length))
+			break ;
+	}
+	while (pair->b_length)
+	{
+		if (is_biggest(pair->stack_a, pair->a_length, pair->stack_b[0].number))
+		{
+			tmp = get_biggest(pair->stack_a, pair->a_length);
+			while (pair->stack_a[0].number != tmp.number)
+				instructions[inst_index++] = stack_rotate_a(*pair);
+		}
+		else
+		{
+			while (!(pair->stack_b[0].number < pair->stack_a[1].number && pair->stack_b[0].number > pair->stack_a[0].number))
+				instructions[inst_index++] = stack_rotate_a(*pair);
+		}
+		instructions[inst_index++] = stack_rotate_a(*pair);
+		instructions[inst_index++] = stack_push_b_to_a(pair);
+	}
+	tmp = find_smallest_index(pair->stack_a, pair->a_length);
+	while (pair->stack_a[0].number != tmp.number)
+		instructions[inst_index++] = stack_rotate_a(*pair);
+}
