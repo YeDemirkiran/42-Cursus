@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/05 13:28:47 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:44:49 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,28 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*program_path;
 	int		execve_result;
+	pid_t	pid;
 
 	if (argc <= 1)
 		return (EXIT_FAILURE);
-	program_path = find_path_in_envp(argv[1], envp);
-	execve_result = execve(program_path, argv + 1, envp);
-	if (execve_result == -1)
+	pid = fork();
+	if (pid < 0)
 	{
 		perror(argv[1]);
-		free(program_path);
-		return (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
-	free(program_path);
+	else if (pid == 0)
+	{
+		program_path = find_path_in_envp(argv[1], envp);
+		execve_result = execve(program_path, argv + 1, envp);
+		if (execve_result == -1)
+		{
+			perror(argv[1]);
+			free(program_path);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+		wait(NULL);
 	return (EXIT_SUCCESS);
 }

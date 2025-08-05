@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/05 12:51:08 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:40:47 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "unistd.h"
 # include "stdio.h"
 # include "string.h"
+# include "sys/wait.h"
 
 # include "ft_string.h"
 
