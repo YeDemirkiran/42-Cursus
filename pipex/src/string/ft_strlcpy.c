@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 11:54:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/05 12:51:08 by yademirk         ###   ########.fr       */
+/*   Created: 2025/06/02 13:09:08 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/05 12:55:14 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "ft_string.h"
 
-# include "stdlib.h"
-# include "fcntl.h"
-# include "unistd.h"
-# include "stdio.h"
-# include "string.h"
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	src_len;
 
-# include "ft_string.h"
-
-#endif
+	src_len = ft_strlen(src);
+	if (size == 0)
+		return (src_len);
+	while (size-- > 1 && *src)
+		*dst++ = *src++;
+	*dst = 0;
+	return (src_len);
+}
