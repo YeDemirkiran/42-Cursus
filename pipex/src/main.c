@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/05 13:44:49 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/05 14:01:09 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ char	*find_path_in_envp(char *program, char **envp)
 				j = ++a;
 				while (envp[i][a] && envp[i][a] != ':')
 					a++;
-				//printf("J: %i, A: %i\n", j, a);
-				tmp = ft_substr(envp[i] + j, (size_t)0, (size_t)(a - j));
+				tmp = ft_substr(envp[i] + j, (size_t)0, (size_t)(a - j) + 1);
 				if (!tmp)
 					return (NULL);
 				tmp[a - j] = '/';
@@ -49,7 +48,6 @@ char	*find_path_in_envp(char *program, char **envp)
 					return (NULL);
 				if (access(tmp2, F_OK) == 0)
 					return (tmp2);
-				//printf("NOT FOUND IN PATH: %s\n", tmp2);
 				free(tmp2);
 				j = a;
 			}
@@ -65,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	int		execve_result;
 	pid_t	pid;
 
-	if (argc <= 1)
+	if (argc < 1)
 		return (EXIT_FAILURE);
 	pid = fork();
 	if (pid < 0)
