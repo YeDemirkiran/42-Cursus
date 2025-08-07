@@ -80,6 +80,46 @@ static	t_stack	get_between(t_stack *stack, int size, int target_num)
 	return (stack[i - 1]);
 }
 
+// int		smallest_after_target_index_bs(int *arr, int size, int target)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	while (i < size && arr[i] < target)
+// 		i++;
+// 	if (i == size)
+// 		return (size);
+// 	else
+// 		return (i - 1);
+// }
+
+// 2 4 10 1 6 7 5 8 3 9
+
+// t_lis	*get_lis(t_stack *stack, int size)
+// {
+// 	int		i;
+// 	int		j;
+// 	t_lis	lis;
+
+// 	i = 0;
+// 	lis.length = 0;
+// 	lis.arr = malloc(sizeof(int) * size);
+// 	while (i < size)
+// 	{
+// 		if (lis.length == 0)
+// 			lis.arr[0] = stack[i].number;
+// 		else
+// 		{
+// 			j = smallest_after_target_index_bs(lis.arr, lis.length, stack[i].number);
+// 			if (j == lis.length)
+// 				lis.arr[i] = stack[i].number;
+// 			else
+// 				lis.arr[j] = stack[i].number;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 {

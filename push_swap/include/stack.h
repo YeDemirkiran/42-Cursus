@@ -16,6 +16,12 @@
 
 # include "dependencies.h"
 
+typedef struct s_lis 
+{
+	int	*arr;
+	int	length;
+}			t_lis;
+
 typedef struct s_stack
 {
 	int	number;
