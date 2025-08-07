@@ -55,10 +55,8 @@ static	t_stack	get_smallest(t_stack *stack, int size)
 		return (stack[0]);
 	i = 1;
 	num = stack[0];
-	//printf("NUM 1: %i\n", stack[0].number);
 	while (i < size)
 	{
-		//printf("NUM: %i\n", stack[i].number);
 		if (num.number > stack[i].number)
 			num = stack[i];
 		i++;
@@ -127,7 +125,6 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 {
 	int		inst_index;
 	t_stack	tmp;
-	t_stack	tmp_2;
 
 	(void)size;
 	if (is_stack_sorted(pair->stack_a, pair->a_length))
@@ -142,55 +139,28 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 		if (is_stack_sorted(pair->stack_a, pair->a_length))
 			break ;
 	}
-	//printf("WAAAAAA\n");
 	while (pair->b_length)
 	{
 		if (is_biggest(pair->stack_a, pair->a_length, pair->stack_b[0].number))
 		{
-		//	printf("BIGGEST: %i\n", pair->stack_b[0].number);
 			tmp = get_biggest(pair->stack_a, pair->a_length);
 			stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
-			//printf("0 before: %i\n", pair->stack_a[0].number);
 			instructions[inst_index++] = stack_rotate_a(*pair);
 			instructions[inst_index++] = stack_push_b_to_a(pair);
-		//	printf("0 now: %i\n", pair->stack_a[0].number);
 		}
 		else if (is_smallest(pair->stack_a, pair->a_length, pair->stack_b[0].number))
 		{
-			//printf("SMALLEST: %i\n", pair->stack_b[0].number);
 			tmp = get_smallest(pair->stack_a, pair->a_length);
 			stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
 			instructions[inst_index++] = stack_push_b_to_a(pair);
 		}
 		else
 		{
-			//printf("NORMAL: %i\n", pair->stack_b[0].number);
 			tmp = get_between(pair->stack_a, pair->a_length, pair->stack_b[0].number);
-			tmp_2 = get_between(pair->stack_a, pair->a_length, pair->stack_b[1].number);
-			// printf("TMP 1 INDEX: %i\n", tmp.index);
-			// printf("TMP 2 INDEX: %i\n", tmp_2.index);
-			// printf("SIZE: %i\n", pair->a_length);
-			// printf("B SIZE: %i\n", pair->b_length);
-			// if (pair->b_length <= 1 || ((tmp.index < tmp_2.index) && (tmp.index < pair->a_length - tmp_2.index)))
-			// {
-			// 	//printf("STEP 1\n");
-			// 	stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
-			// }
-			// else
-			// {
-			// 	//printf("STEP 2\n");
-			// 	stack_a_move_to_first(*pair, tmp_2, instructions, &inst_index);
-			// 	instructions[inst_index++] = stack_swap_b(*pair);
-			// 	// printf("TMP 2: %i\n", tmp_2.number);
-			// 	// printf("A0: %i\n", pair->stack_a[0].number);
-			// }
-			(void)tmp_2;
 			stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
 			instructions[inst_index++] = stack_push_b_to_a(pair);
 		}
 	}
 	tmp = get_smallest(pair->stack_a, pair->a_length);
-	//printf("Smallest: %i\n", tmp.number);
 	stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
-	//printf("A 0: %i\n", pair->stack_a[0].number);
 }
