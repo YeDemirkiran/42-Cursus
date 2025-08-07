@@ -1,21 +1,5 @@
 #include "stack.h"
 
-// t_stack find_previous_by_index(t_stack *stack, int stack_size, int index)
-// {
-// 	if (index == 0)
-// 		return (stack[stack_size - 1]);
-// 	else
-// 		return (stack[index - 1]);
-// }
-
-// t_stack find_next_by_index(t_stack *stack, int stack_size, int index)
-// {
-// 	if (index == stack_size - 1)
-// 		return (stack[0]);
-// 	else
-// 		return (stack[index + 1]);
-// }
-
 int		is_stack_sorted(t_stack *stack, int size)
 {
 	int	i;
