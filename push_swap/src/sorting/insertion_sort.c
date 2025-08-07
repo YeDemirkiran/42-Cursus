@@ -64,6 +64,39 @@ static	t_stack	get_smallest(t_stack *stack, int size)
 	return (num);
 }
 
+static	t_stack	get_between_closest(t_stack *stack, int size, int min, int max)
+{
+	int		i;
+	t_stack	num;
+	//t_stack	num_2;
+
+	i = 0;
+	//num.index = -1;
+	//num_2.index = -1;
+	while (i < size)
+	{
+		if (stack[i].number >= min && stack[i].number < max)
+		{
+			num = stack[i];
+			break;
+		}	
+		i++;
+	}
+	// i = size - 1;
+	// while (i >= size / 2)
+	// {
+	// 	if (stack[i].number >= min && stack[i].number < max)
+	// 	{
+	// 		num_2 = stack[i];
+	// 		break;
+	// 	}	
+	// 	i++;
+	// }
+	// if (num.index == -1 || (num.index > size - num_2.index))
+	// 	return (num_2);
+	return (num);
+}
+
 static	t_stack	get_between(t_stack *stack, int size, int target_num)
 {
 	int	i;
@@ -143,11 +176,15 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 		i = 0;
 		while (i < chunk_border)
 		{
-			while (!(pair->stack_a[0].number >= chunk_border * current_border && pair->stack_a[0].number < chunk_border * (current_border + 1)))
-			{
-				//printf("a: %i\n", pair->stack_a[0].number);
-				instructions[inst_index++] = stack_rotate_a(*pair);
-			}
+			// while (!(pair->stack_a[0].number >= chunk_border * current_border && pair->stack_a[0].number < chunk_border * (current_border + 1)))
+			// {
+			// 	//printf("a: %i\n", pair->stack_a[0].number);
+			// 	instructions[inst_index++] = stack_rotate_a(*pair);
+			// }
+			//printf("%i %i\n", chunk_border * current_border, chunk_border * (current_border + 1));
+			tmp = get_between_closest(pair->stack_a, pair->a_length, chunk_border * current_border, chunk_border * (current_border + 1));
+			//printf("TMP INDEX: %i\n", tmp.number);
+			stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
 			instructions[inst_index++] = stack_push_a_to_b(pair);
 			i++;
 		}
