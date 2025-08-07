@@ -55,8 +55,10 @@ static	t_stack	get_smallest(t_stack *stack, int size)
 		return (stack[0]);
 	i = 1;
 	num = stack[0];
+	//printf("NUM 1: %i\n", stack[0].number);
 	while (i < size)
 	{
+		//printf("NUM: %i\n", stack[i].number);
 		if (num.number > stack[i].number)
 			num = stack[i];
 		i++;
@@ -125,6 +127,7 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 {
 	int		inst_index;
 	t_stack	tmp;
+	t_stack	tmp_2;
 
 	(void)size;
 	if (is_stack_sorted(pair->stack_a, pair->a_length))
@@ -163,7 +166,17 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 		{
 			//printf("NORMAL: %i\n", pair->stack_b[0].number);
 			tmp = get_between(pair->stack_a, pair->a_length, pair->stack_b[0].number);
-			stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
+			tmp_2 = get_between(pair->stack_a, pair->a_length, pair->stack_b[1].number);
+			if (tmp.index < tmp_2.index)
+			{
+				stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
+			}
+			else
+			{
+				if (pair->b_length > 1)
+					instructions[inst_index++] = stack_swap_b(*pair);
+				stack_a_move_to_first(*pair, tmp_2, instructions, &inst_index);
+			}
 			// while (!(pair->stack_b[0].number < pair->stack_a[1].number && pair->stack_b[0].number > pair->stack_a[0].number))
 			// {
 			// 	//printf("B[0]. %i, A[0]: %i, A[1]: %i\n", pair->stack_b[0].number, pair->stack_a[0].number, pair->stack_a[1].number);
@@ -173,8 +186,8 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 			instructions[inst_index++] = stack_push_b_to_a(pair);
 		}
 	}
-	tmp = find_smallest_index(pair->stack_a, pair->a_length);
-	//printf("WOOOOO\n");
-	while (pair->stack_a[0].number != tmp.number)
-		stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
+	tmp = get_smallest(pair->stack_a, pair->a_length);
+	//printf("Smallest: %i\n", tmp.number);
+	stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
+	//printf("A 0: %i\n", pair->stack_a[0].number);
 }
