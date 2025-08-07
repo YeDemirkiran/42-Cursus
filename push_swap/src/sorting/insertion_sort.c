@@ -167,16 +167,23 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 			//printf("NORMAL: %i\n", pair->stack_b[0].number);
 			tmp = get_between(pair->stack_a, pair->a_length, pair->stack_b[0].number);
 			tmp_2 = get_between(pair->stack_a, pair->a_length, pair->stack_b[1].number);
-			if (tmp.index < tmp_2.index)
-			{
-				stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
-			}
-			else
-			{
-				if (pair->b_length > 1)
-					instructions[inst_index++] = stack_swap_b(*pair);
-				stack_a_move_to_first(*pair, tmp_2, instructions, &inst_index);
-			}
+			// printf("TMP 1 INDEX: %i\n", tmp.index);
+			// printf("TMP 2 INDEX: %i\n", tmp_2.index);
+			// printf("SIZE: %i\n", pair->a_length);
+			// printf("B SIZE: %i\n", pair->b_length);
+			(void)tmp_2;
+			// if (pair->b_length <= 1 || ((tmp.index < tmp_2.index) && (tmp.index <= pair->a_length - tmp_2.index)))
+			// {
+			// 	//printf("STEP 1\n");
+			// 	stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
+			// }
+			// else
+			// {
+			// 	//printf("STEP 2\n");
+			// 	instructions[inst_index++] = stack_swap_b(*pair);
+			// 	stack_a_move_to_first(*pair, tmp_2, instructions, &inst_index);
+			// }
+			stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
 			// while (!(pair->stack_b[0].number < pair->stack_a[1].number && pair->stack_b[0].number > pair->stack_a[0].number))
 			// {
 			// 	//printf("B[0]. %i, A[0]: %i, A[1]: %i\n", pair->stack_b[0].number, pair->stack_a[0].number, pair->stack_a[1].number);
