@@ -70,6 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	int		execve_result;
 	int		pipe_1[2];
 	int		pipe_2[2];
+	int		pipe_3[2];
 	int		fd_tmp;
 	size_t	read_size;
 	char	*buffer;
@@ -132,8 +133,8 @@ int	main(int argc, char **argv, char **envp)
 			read_size = read(fd_tmp, buffer, (size_t)BUFFER_SIZE);
 		}
 		close(pipe_1[1]);
-		free(buffer);
 	}
+	pipe(pipe_3);
 	pid[1] = fork();
 	if (pid[1] < 0)
 	{
@@ -142,14 +143,17 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else if (pid[1] == 0)
 	{
-		close(pipe_2[1]);
 		free(cmd_args);
 		cmd_args = ft_split(argv[3], ' ');
 		if (!cmd_args)
 			exit(EXIT_FAILURE);
 		program_path = find_path_in_envp(cmd_args[0], envp);
 		dup2(pipe_2[0], STDIN_FILENO);
+		dup2(pipe_3[1], STDOUT_FILENO);
 		close(pipe_2[0]);
+		close(pipe_2[1]);
+		close(pipe_3[0]);
+		close(pipe_3[1]);
 		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
 		{
@@ -162,8 +166,17 @@ int	main(int argc, char **argv, char **envp)
 	{
 		close(pipe_2[0]);
 		close(pipe_2[1]);
+		close(pipe_3[1]);
 	}
 	waitpid(pid[0], NULL, 0);
 	waitpid(pid[1], NULL, 0);
+	fd_tmp = open(argv[4], O_WRONLY | O_CREAT, 0644);
+	read_size = read(pipe_3[0], buffer, BUFFER_SIZE);
+	while (read_size > 0)
+	{
+		write(fd_tmp, buffer, read_size);
+		read_size = read(pipe_3[0], buffer, BUFFER_SIZE);
+	}
+	free(buffer);
 	return (EXIT_SUCCESS);
 }
