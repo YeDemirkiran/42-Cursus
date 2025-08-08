@@ -113,47 +113,6 @@ static	t_stack	get_between(t_stack *stack, int size, int target_num)
 	return (stack[i - 1]);
 }
 
-// int		smallest_after_target_index_bs(int *arr, int size, int target)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (i < size && arr[i] < target)
-// 		i++;
-// 	if (i == size)
-// 		return (size);
-// 	else
-// 		return (i - 1);
-// }
-
-// 2 4 10 1 6 7 5 8 3 9
-
-// t_lis	*get_lis(t_stack *stack, int size)
-// {
-// 	int		i;
-// 	int		j;
-// 	t_lis	lis;
-
-// 	i = 0;
-// 	lis.length = 0;
-// 	lis.arr = malloc(sizeof(int) * size);
-// 	while (i < size)
-// 	{
-// 		if (lis.length == 0)
-// 			lis.arr[0] = stack[i].number;
-// 		else
-// 		{
-// 			j = smallest_after_target_index_bs(lis.arr, lis.length, stack[i].number);
-// 			if (j == lis.length)
-// 				lis.arr[i] = stack[i].number;
-// 			else
-// 				lis.arr[j] = stack[i].number;
-// 		}
-// 		i++;
-// 	}
-// }
-
 void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 {
 	int		inst_index;
@@ -166,37 +125,20 @@ void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
 	if (is_stack_sorted(pair->stack_a, pair->a_length))
 		return ;
 	inst_index = 0;
-	// while (pair->a_length > 1 && !is_stack_sorted(pair->stack_a, pair->a_length))
-	// 	instructions[inst_index++] = stack_push_a_to_b(pair);
-	chunk_border = pair->full_length / 5;
-//	printf("BORDER: %i\n", chunk_border);
+	chunk_border = pair->full_length / 10;
 	current_border = 0;
-	while (current_border < 5)
+	while (current_border < 10)
 	{
 		i = 0;
 		while (i < chunk_border)
 		{
-			// while (!(pair->stack_a[0].number >= chunk_border * current_border && pair->stack_a[0].number < chunk_border * (current_border + 1)))
-			// {
-			// 	//printf("a: %i\n", pair->stack_a[0].number);
-			// 	instructions[inst_index++] = stack_rotate_a(*pair);
-			// }
-			//printf("%i %i\n", chunk_border * current_border, chunk_border * (current_border + 1));
 			tmp = get_between_closest(pair->stack_a, pair->a_length, chunk_border * current_border, chunk_border * (current_border + 1));
-			//printf("TMP INDEX: %i\n", tmp.number);
 			stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
 			instructions[inst_index++] = stack_push_a_to_b(pair);
 			i++;
 		}
 		current_border++;
 	}
-	// while (!is_stack_sorted(pair->stack_a, pair->a_length))
-	// {
-	// 	while (pair->stack_a[1].number > pair->stack_a[0].number)
-	// 		instructions[inst_index++] = stack_rotate_a(*pair);
-	// 	while (pair->stack_a[1].number < pair->stack_a[0].number)
-	// 		instructions[inst_index++] = stack_push_a_to_b(pair);
-	// }
 	while (pair->b_length)
 	{
 		if (is_biggest(pair->stack_a, pair->a_length, pair->stack_b[0].number))
