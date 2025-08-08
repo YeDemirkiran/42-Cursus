@@ -57,32 +57,72 @@ char	*find_path_in_envp(char *program, char **envp)
 	return (NULL);
 }
 
+// char	**get_args(char *str)
+// {
+// 	char	**args;
+
+
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*program_path;
 	int		execve_result;
-	pid_t	pid;
+	char	**cmd_args;
+	pid_t	pid[2];
 
-	if (argc < 1)
+	if (argc <= 1)
 		return (EXIT_FAILURE);
-	pid = fork();
-	if (pid < 0)
+		
+	pid[0] = fork();
+	cmd_args = NULL;
+	if (pid[0] < 0)
 	{
 		perror(argv[1]);
 		exit(EXIT_FAILURE);
 	}
-	else if (pid == 0)
+	else if (pid[0] == 0)
 	{
-		program_path = find_path_in_envp(argv[1], envp);
-		execve_result = execve(program_path, argv + 1, envp);
+		cmd_args = ft_split(argv[2], ' ');
+		if (!cmd_args)
+			exit(EXIT_FAILURE);
+		//printf("CMD: %s\n", cmd_args[0]);
+		if (cmd_args[0][0] == '.' || cmd_args[0][0] == '/')
+			program_path = ft_strdup(cmd_args[0]);
+		else
+			program_path = find_path_in_envp(cmd_args[0], envp);
+		//printf("PROGRAM: %s\n", program_path);
+		//printf("ARG 1: %s\n", *(cmd_args + 1));
+		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
 		{
-			perror(argv[1]);
+			perror(cmd_args[0]);
 			free(program_path);
 			exit(EXIT_FAILURE);
 		}
 	}
-	else
-		wait(NULL);
+	// pid[1] = fork();
+	// if (pid < 0)
+	// {
+	// 	perror(argv[1]);
+	// 	exit(EXIT_FAILURE);
+	// }
+	// else if (pid[1] == 0)
+	// {
+	// 	free(cmd_args);
+	// 	cmd_args = ft_split(argv[3], ' ');
+	// 	if (!cmd_args)
+	// 		exit(EXIT_FAILURE);
+	// 	program_path = find_path_in_envp(cmd_args[0], envp);
+	// 	execve_result = execve(program_path, cmd_args + 1, envp);
+	// 	if (execve_result == -1)
+	// 	{
+	// 		perror(cmd_args[0]);
+	// 		free(program_path);
+	// 		exit(EXIT_FAILURE);
+	// 	}
+	// }
+	waitpid(pid[0], NULL, 0);
+	//waitpid(pid[1], NULL, 0);
 	return (EXIT_SUCCESS);
 }

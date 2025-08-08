@@ -17,7 +17,7 @@ SRC_DIR = ./src/
 INC_DIR = ./include/
 
 STRING_DIR = string/
-STRING_SRC = $(addprefix $(STRING_DIR), ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_substr.c)
+STRING_SRC = $(addprefix $(STRING_DIR), ft_split.c ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_substr.c)
 
 SRC = $(addprefix $(SRC_DIR), main.c $(STRING_SRC))
 
