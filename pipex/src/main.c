@@ -68,12 +68,19 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*program_path;
 	int		execve_result;
+	int		fds[2];
+	int		fd_tmp;
+	size_t	read_size;
+	char	*buffer;
 	char	**cmd_args;
 	pid_t	pid[2];
 
 	if (argc <= 1)
 		return (EXIT_FAILURE);
-		
+	if (access(argv[1], R_OK) == -1)
+		return (EXIT_FAILURE);
+	if (pipe(fds) == -1)
+		return (EXIT_FAILURE);
 	pid[0] = fork();
 	cmd_args = NULL;
 	if (pid[0] < 0)
@@ -83,6 +90,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else if (pid[0] == 0)
 	{
+		close(fds[1]);
 		cmd_args = ft_split(argv[2], ' ');
 		if (!cmd_args)
 			exit(EXIT_FAILURE);
@@ -93,6 +101,8 @@ int	main(int argc, char **argv, char **envp)
 			program_path = find_path_in_envp(cmd_args[0], envp);
 		//printf("PROGRAM: %s\n", program_path);
 		//printf("ARG 1: %s\n", *(cmd_args + 1));
+		dup2(fds[0], STDIN_FILENO);
+		close(fds[0]);
 		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
 		{
@@ -100,6 +110,22 @@ int	main(int argc, char **argv, char **envp)
 			free(program_path);
 			exit(EXIT_FAILURE);
 		}
+	}
+	else
+	{
+		close(fds[0]);
+		fd_tmp = open(argv[1], O_RDONLY);
+		buffer = malloc(sizeof(char) * (size_t)BUFFER_SIZE);
+		if (fd_tmp < 0 || !buffer)
+			exit (EXIT_FAILURE);
+		read_size = read(fd_tmp, buffer, (size_t)BUFFER_SIZE);
+		while (read_size > 0)
+		{
+			write(fds[1], buffer, read_size);
+			read_size = read(fd_tmp, buffer, (size_t)BUFFER_SIZE);
+		}
+		close(fds[1]);
+		free(buffer);
 	}
 	// pid[1] = fork();
 	// if (pid < 0)
