@@ -23,6 +23,7 @@
 # include "stdio.h"
 # include "string.h"
 # include "sys/wait.h"
+# include "sys/stat.h"
 
 # include "ft_string.h"
 
