@@ -68,12 +68,12 @@ static	t_stack	get_between_closest(t_stack *stack, int size, int min, int max)
 {
 	int		i;
 	t_stack	num;
-	//t_stack	num_2;
+	t_stack	num_2;
 
 	i = 0;
-	//num.index = -1;
-	//num_2.index = -1;
-	while (i < size)
+	num.index = -1;
+	num_2.index = -1;
+	while (i < size / 2)
 	{
 		if (stack[i].number >= min && stack[i].number < max)
 		{
@@ -82,18 +82,18 @@ static	t_stack	get_between_closest(t_stack *stack, int size, int min, int max)
 		}	
 		i++;
 	}
-	// i = size - 1;
-	// while (i >= size / 2)
-	// {
-	// 	if (stack[i].number >= min && stack[i].number < max)
-	// 	{
-	// 		num_2 = stack[i];
-	// 		break;
-	// 	}	
-	// 	i++;
-	// }
-	// if (num.index == -1 || (num.index > size - num_2.index))
-	// 	return (num_2);
+	i = size - 1;
+	while (i >= size / 2)
+	{
+		if (stack[i].number >= min && stack[i].number < max)
+		{
+			num_2 = stack[i];
+			break;
+		}	
+		i--;
+	}
+	if (num.index == -1 || (num.index > size - num_2.index))
+		return (num_2);
 	return (num);
 }
 
