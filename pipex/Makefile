@@ -19,7 +19,7 @@ INC_DIR = ./include/
 STRING_DIR = string/
 STRING_SRC = $(addprefix $(STRING_DIR), ft_split.c ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_substr.c)
 
-SRC = $(addprefix $(SRC_DIR), main.c $(STRING_SRC))
+SRC = $(addprefix $(SRC_DIR), main.c parser.c pipe_handler.c $(STRING_SRC))
 
 W_FLAGS = -Wall -Wextra -Werror
 INC_FLAGS = -I$(INC_DIR)

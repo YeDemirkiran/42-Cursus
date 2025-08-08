@@ -26,4 +26,6 @@
 
 # include "ft_string.h"
 
+char	*find_path_in_envp(char *program, char **envp);
+
 #endif
