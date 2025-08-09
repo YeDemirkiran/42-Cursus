@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	int		execve_result;
 	int		pipes[3][2];
 	int		fd_tmp;
+	int		redirect_fd;
 	ssize_t	read_size;
 	char	*buffer;
 	char	**cmd_args;
@@ -31,6 +32,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc <= 1)
 		return (EXIT_FAILURE);
+	redirect_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (access(argv[1], R_OK) == -1)
 	{
 		write(2, "bash: ", 6);
@@ -105,17 +107,18 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else if (pid[1] == 0)
 	{
+		close(pipes[1][1]);
+		close(pipes[2][0]);
+		close(pipes[2][1]);
 		free(cmd_args);
 		cmd_args = ft_split(argv[3], ' ');
 		if (!cmd_args)
 			exit(EXIT_FAILURE);
 		program_path = find_path_in_envp(cmd_args[0], envp);
 		dup2(pipes[1][0], STDIN_FILENO);
-		dup2(pipes[2][1], STDOUT_FILENO);
+		dup2(redirect_fd, STDOUT_FILENO);
 		close(pipes[1][0]);
-		close(pipes[1][1]);
-		close(pipes[2][0]);
-		close(pipes[2][1]);
+		close(redirect_fd);
 		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
 		{
@@ -129,17 +132,19 @@ int	main(int argc, char **argv, char **envp)
 		close(pipes[1][0]);
 		close(pipes[1][1]);
 		close(pipes[2][1]);
+		close(pipes[2][0]);
+		close(redirect_fd);
 	}
 	waitpid(pid[0], NULL, 0);
 	waitpid(pid[1], NULL, 0);
-	fd_tmp = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-	read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
-	while (read_size > 0)
-	{
-		write(fd_tmp, buffer, read_size);
-		read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
-	}
-	close(pipes[2][0]);
+	// read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
+	// while (read_size > 0)
+	// {
+	// 	write(redirect_fd, buffer, read_size);
+	// 	read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
+	// }
+	// close(pipes[2][0]);
+	// close(redirect_fd);
 	free(buffer);
 	return (EXIT_SUCCESS);
 }
