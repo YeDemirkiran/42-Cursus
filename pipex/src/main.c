@@ -18,40 +18,57 @@ static int	print_strerror(char *program_name)
 	return (EXIT_FAILURE);
 }
 
+static void	strerror_exit(char *perror_str)
+{
+	perror(perror_str);
+	exit(EXIT_FAILURE);
+}
+
+static void prepare_vars(char ***cmd_args, char **buffer)
+{
+	*cmd_args = NULL;
+	*buffer = malloc(sizeof(char) * (size_t)BUFFER_SIZE);
+	if (!*buffer)
+		strerror_exit("pipex");
+}
+
+static void	prepare_files(char *input_file_path, char *output_file_path, int *io_fd)
+{
+	if (access(input_file_path, R_OK) < 0)
+	{
+		write(2, "bash: ", 6);
+		perror(output_file_path);
+		io_fd[0] = -1;
+	}
+	else
+	{
+		io_fd[0] = open(input_file_path, O_RDONLY);
+		dup2(io_fd[0], STDIN_FILENO);
+		close(io_fd[0]);
+	}
+	io_fd[1] = open(output_file_path, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (io_fd[1] < 0)
+		strerror_exit("pipex: open");
+	//io_fd[0] = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*program_path;
 	int		execve_result;
 	int		pipes[3][2];
-	int		fd_tmp;
-	int		redirect_fd;
+	int		io_fd[2];
 	char	*buffer;
 	char	**cmd_args;
 	pid_t	pid[2];
 
 	if (argc <= 1)
 		return (EXIT_FAILURE);
-	redirect_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-	if (access(argv[1], R_OK) == -1)
-	{
-		write(2, "bash: ", 6);
-		perror(argv[1]);
-		fd_tmp = -1;
-	}
-	else
-		fd_tmp = 0;
+	prepare_vars(&cmd_args, &buffer);
+	prepare_files(argv[1], argv[4], io_fd);
 	if (pipe(pipes[0]) == -1)
 		return (print_strerror(argv[0]));
-	buffer = malloc(sizeof(char) * (size_t)BUFFER_SIZE);
-	if (!buffer)
-		return print_strerror(argv[0]);
 	pid[0] = fork();
-	cmd_args = NULL;
-	fd_tmp = open(argv[1], O_RDONLY);
-	if (fd_tmp < 0)
-		return (print_strerror(argv[0]));
-	dup2(fd_tmp, STDIN_FILENO);
-	close(fd_tmp);
 	if (pid[0] < 0)
 		return (print_strerror(argv[0]));
 	else if (pid[0] == 0)
@@ -89,9 +106,9 @@ int	main(int argc, char **argv, char **envp)
 			exit(EXIT_FAILURE);
 		program_path = find_path_in_envp(cmd_args[0], envp);
 		dup2(pipes[0][0], STDIN_FILENO);
-		dup2(redirect_fd, STDOUT_FILENO);
+		dup2(io_fd[1], STDOUT_FILENO);
 		close(pipes[0][0]);
-		close(redirect_fd);
+		close(io_fd[1]);
 		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
 		{
@@ -103,7 +120,7 @@ int	main(int argc, char **argv, char **envp)
 	else
 	{
 		close(pipes[0][0]);
-		close(redirect_fd);
+		close(io_fd[1]);
 	}
 	waitpid(pid[0], NULL, 0);
 	waitpid(pid[1], NULL, 0);
