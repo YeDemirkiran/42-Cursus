@@ -130,21 +130,15 @@ int	main(int argc, char **argv, char **envp)
 		close(pipes[1][1]);
 		close(pipes[2][1]);
 	}
-	//printf("(waiting for pid 0)\n");
 	waitpid(pid[0], NULL, 0);
-	//printf("(Done.\n");
-	//printf("(waiting for pid 1)\n");
 	waitpid(pid[1], NULL, 0);
-	//printf("(opening file)\n");
 	fd_tmp = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-	//printf("(done. reading file)\n");
 	read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
 	while (read_size > 0)
 	{
 		write(fd_tmp, buffer, read_size);
 		read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
 	}
-	//printf("(done.)\n");
 	close(pipes[2][0]);
 	free(buffer);
 	return (EXIT_SUCCESS);
