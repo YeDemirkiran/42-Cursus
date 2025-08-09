@@ -29,11 +29,11 @@
 
 char	*parse_program_path(char *path, char **envp);
 
-typedef struct s_fd_info 
+typedef struct s_fd_info
 {
-	int *fds_to_close_immediately;
-	int stdin_fd;
-	int stdout_fd;
+	int	*fds_to_close_immediately;
+	int	stdin_fd;
+	int	stdout_fd;
 }				t_fd_info;
 
 #endif

@@ -18,7 +18,8 @@ static void	strerror_exit(char *perror_str)
 	exit(EXIT_FAILURE);
 }
 
-static void	prepare_files(char *input_file_path, char *output_file_path, int *io_fd)
+static void	prepare_files(char *input_file_path, char *output_file_path,
+		int *io_fd)
 {
 	if (access(input_file_path, R_OK) < 0)
 	{
@@ -42,7 +43,8 @@ static void	set_fds(t_fd_info fd_info)
 	int	i;
 
 	i = 0;
-	while (fd_info.fds_to_close_immediately && fd_info.fds_to_close_immediately[i] != -1)
+	while (fd_info.fds_to_close_immediately
+		&& fd_info.fds_to_close_immediately[i] != -1)
 		close(fd_info.fds_to_close_immediately[i++]);
 	if (fd_info.stdin_fd >= 0)
 	{
@@ -56,7 +58,8 @@ static void	set_fds(t_fd_info fd_info)
 	}
 }
 
-static void	create_child_process(int *pid_save, char *program_name, char *program_args, char **envp, t_fd_info fd_info)
+static pid_t	create_child_process(char *program_name, char *program_args,
+		char **envp, t_fd_info fd_info)
 {
 	int		pid;
 	char	**cmd_args;
@@ -71,12 +74,12 @@ static void	create_child_process(int *pid_save, char *program_name, char *progra
 		cmd_args = ft_split(program_args, ' ');
 		if (!cmd_args)
 			strerror_exit(cmd_args[0]);
-		program_path = parse_program_path(cmd_args[0], envp);	
+		program_path = parse_program_path(cmd_args[0], envp);
 		execve(program_path, cmd_args, envp);
 		free(program_path);
 		strerror_exit(cmd_args[0]);
 	}
-	*pid_save = pid;
+	return (pid);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -96,52 +99,13 @@ int	main(int argc, char **argv, char **envp)
 	fd_info.fds_to_close_immediately[1] = -1;
 	fd_info.stdin_fd = -1;
 	fd_info.stdout_fd = pipes[0][1];
-	create_child_process(pid, argv[0], argv[2], envp, fd_info);
-	// pid[0] = fork();
-	// if (pid[0] < 0)
-	// 	strerror_exit(argv[0]);
-	// else if (pid[0] == 0)
-	// {
-	// 	close(pipes[0][0]);
-	// 	cmd_args = ft_split(argv[2], ' ');
-	// 	if (!cmd_args)
-	// 		strerror_exit(cmd_args[0]);
-	// 	program_path = parse_program_path(cmd_args[0], envp);
-	// 	dup2(pipes[0][1], STDOUT_FILENO);
-	// 	close(pipes[0][1]);
-	// 	execve_result = execve(program_path, cmd_args, envp);
-	// 	if (execve_result == -1)
-	// 	{
-	// 		free(program_path);
-	// 		strerror_exit(cmd_args[0]);
-	// 	}
-	// }
+	pid[0] = create_child_process(argv[0], argv[2], envp, fd_info);
 	close(pipes[0][1]);
 	free(fd_info.fds_to_close_immediately);
 	fd_info.fds_to_close_immediately = NULL;
 	fd_info.stdin_fd = pipes[0][0];
 	fd_info.stdout_fd = io_fd[1];
-	create_child_process(pid + 1, argv[0], argv[3], envp, fd_info);
-	pid[1] = fork();
-	// if (pid[1] < 0)
-	// 	strerror_exit(argv[0]);
-	// else if (pid[1] == 0)
-	// {
-	// 	cmd_args = ft_split(argv[3], ' ');
-	// 	if (!cmd_args)
-	// 		strerror_exit(cmd_args[0]);
-	// 	program_path = parse_program_path(cmd_args[0], envp);
-	// 	dup2(pipes[0][0], STDIN_FILENO);
-	// 	dup2(io_fd[1], STDOUT_FILENO);
-	// 	close(pipes[0][0]);
-	// 	close(io_fd[1]);
-	// 	execve_result = execve(program_path, cmd_args, envp);
-	// 	if (execve_result == -1)
-	// 	{
-	// 		free(program_path);
-	// 		strerror_exit(cmd_args[0]);
-	// 	}
-	// }
+	pid[1] = create_child_process(argv[0], argv[3], envp, fd_info);
 	close(pipes[0][0]);
 	close(io_fd[1]);
 	waitpid(pid[0], NULL, 0);
