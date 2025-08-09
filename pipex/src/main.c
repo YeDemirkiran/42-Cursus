@@ -49,7 +49,6 @@ static void	prepare_files(char *input_file_path, char *output_file_path, int *io
 	io_fd[1] = open(output_file_path, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (io_fd[1] < 0)
 		strerror_exit("pipex: open");
-	//io_fd[0] = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -76,18 +75,15 @@ int	main(int argc, char **argv, char **envp)
 		close(pipes[0][0]);
 		cmd_args = ft_split(argv[2], ' ');
 		if (!cmd_args)
-			return (print_strerror(argv[0]));
-		if (cmd_args[0][0] == '.' || cmd_args[0][0] == '/')
-			program_path = ft_strdup(cmd_args[0]);
-		else
-			program_path = find_path_in_envp(cmd_args[0], envp);
+			strerror_exit(cmd_args[0]);
+		program_path = parse_program_path(cmd_args[0], envp);
 		dup2(pipes[0][1], STDOUT_FILENO);
 		close(pipes[0][1]);
 		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
 		{
 			free(program_path);
-			return (print_strerror(cmd_args[0]));
+			strerror_exit(cmd_args[0]);
 		}
 	}
 	else
@@ -100,11 +96,10 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else if (pid[1] == 0)
 	{
-		free(cmd_args);
 		cmd_args = ft_split(argv[3], ' ');
 		if (!cmd_args)
-			exit(EXIT_FAILURE);
-		program_path = find_path_in_envp(cmd_args[0], envp);
+			strerror_exit(cmd_args[0]);
+		program_path = parse_program_path(cmd_args[0], envp);
 		dup2(pipes[0][0], STDIN_FILENO);
 		dup2(io_fd[1], STDOUT_FILENO);
 		close(pipes[0][0]);
@@ -112,9 +107,8 @@ int	main(int argc, char **argv, char **envp)
 		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
 		{
-			perror(cmd_args[0]);
 			free(program_path);
-			exit(EXIT_FAILURE);
+			strerror_exit(cmd_args[0]);
 		}
 	}
 	else
