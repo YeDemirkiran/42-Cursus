@@ -25,7 +25,6 @@ int	main(int argc, char **argv, char **envp)
 	int		pipes[3][2];
 	int		fd_tmp;
 	int		redirect_fd;
-	ssize_t	read_size;
 	char	*buffer;
 	char	**cmd_args;
 	pid_t	pid[2];
@@ -43,23 +42,21 @@ int	main(int argc, char **argv, char **envp)
 		fd_tmp = 0;
 	if (pipe(pipes[0]) == -1)
 		return (print_strerror(argv[0]));
-	if (pipe(pipes[1]) == -1)
-	{
-		close(pipes[0][0]);
-		close(pipes[0][1]);
-		return (print_strerror(argv[0]));
-	}
 	buffer = malloc(sizeof(char) * (size_t)BUFFER_SIZE);
 	if (!buffer)
 		return print_strerror(argv[0]);
 	pid[0] = fork();
 	cmd_args = NULL;
+	fd_tmp = open(argv[1], O_RDONLY);
+	if (fd_tmp < 0)
+		return (print_strerror(argv[0]));
+	dup2(fd_tmp, STDIN_FILENO);
+	close(fd_tmp);
 	if (pid[0] < 0)
 		return (print_strerror(argv[0]));
 	else if (pid[0] == 0)
 	{
-		close(pipes[0][1]);
-		close(pipes[1][0]);
+		close(pipes[0][0]);
 		cmd_args = ft_split(argv[2], ' ');
 		if (!cmd_args)
 			return (print_strerror(argv[0]));
@@ -67,10 +64,8 @@ int	main(int argc, char **argv, char **envp)
 			program_path = ft_strdup(cmd_args[0]);
 		else
 			program_path = find_path_in_envp(cmd_args[0], envp);
-		dup2(pipes[0][0], STDIN_FILENO);
-		dup2(pipes[1][1], STDOUT_FILENO);
-		close(pipes[0][0]);
-		close(pipes[1][1]);
+		dup2(pipes[0][1], STDOUT_FILENO);
+		close(pipes[0][1]);
 		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
 		{
@@ -79,26 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 	}
 	else
-	{
-		if (fd_tmp != -1)
-		{
-			fd_tmp = open(argv[1], O_RDONLY);
-			if (fd_tmp < 0)
-				perror(argv[1]);
-			else
-			{
-				read_size = read(fd_tmp, buffer, (size_t)BUFFER_SIZE);
-				while (read_size > 0)
-				{
-					write(pipes[0][1], buffer, read_size);
-					read_size = read(fd_tmp, buffer, (size_t)BUFFER_SIZE);
-				}
-			}
-		}
-		close(pipes[0][0]);
 		close(pipes[0][1]);
-	}
-	pipe(pipes[2]);
 	pid[1] = fork();
 	if (pid[1] < 0)
 	{
@@ -107,17 +83,14 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else if (pid[1] == 0)
 	{
-		close(pipes[1][1]);
-		close(pipes[2][0]);
-		close(pipes[2][1]);
 		free(cmd_args);
 		cmd_args = ft_split(argv[3], ' ');
 		if (!cmd_args)
 			exit(EXIT_FAILURE);
 		program_path = find_path_in_envp(cmd_args[0], envp);
-		dup2(pipes[1][0], STDIN_FILENO);
+		dup2(pipes[0][0], STDIN_FILENO);
 		dup2(redirect_fd, STDOUT_FILENO);
-		close(pipes[1][0]);
+		close(pipes[0][0]);
 		close(redirect_fd);
 		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
@@ -129,22 +102,11 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 	{
-		close(pipes[1][0]);
-		close(pipes[1][1]);
-		close(pipes[2][1]);
-		close(pipes[2][0]);
+		close(pipes[0][0]);
 		close(redirect_fd);
 	}
 	waitpid(pid[0], NULL, 0);
 	waitpid(pid[1], NULL, 0);
-	// read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
-	// while (read_size > 0)
-	// {
-	// 	write(redirect_fd, buffer, read_size);
-	// 	read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
-	// }
-	// close(pipes[2][0]);
-	// close(redirect_fd);
 	free(buffer);
 	return (EXIT_SUCCESS);
 }
