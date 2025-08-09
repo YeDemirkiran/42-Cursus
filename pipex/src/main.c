@@ -12,13 +12,19 @@
 
 #include "pipex.h"
 
+static int	print_strerror(char *program_name)
+{
+	perror(program_name);
+	return (EXIT_FAILURE);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*program_path;
 	int		execve_result;
 	int		pipes[3][2];
 	int		fd_tmp;
-	size_t	read_size;
+	ssize_t	read_size;
 	char	*buffer;
 	char	**cmd_args;
 	pid_t	pid[2];
@@ -28,30 +34,33 @@ int	main(int argc, char **argv, char **envp)
 	if (access(argv[1], R_OK) == -1)
 	{
 		write(2, "bash: ", 6);
-		write(2, argv[1], ft_strlen(argv[1]));
-		write(2, ": ", 2);
-		perror(NULL);
+		perror(argv[1]);
+		fd_tmp = -1;
 	}
+	else
+		fd_tmp = 0;
 	if (pipe(pipes[0]) == -1)
-		return (EXIT_FAILURE);
+		return (print_strerror(argv[0]));
 	if (pipe(pipes[1]) == -1)
 	{
 		close(pipes[0][0]);
 		close(pipes[0][1]);
-		return (EXIT_FAILURE);
+		return (print_strerror(argv[0]));
 	}
+	buffer = malloc(sizeof(char) * (size_t)BUFFER_SIZE);
+	if (!buffer)
+		return print_strerror(argv[0]);
 	pid[0] = fork();
 	cmd_args = NULL;
 	if (pid[0] < 0)
-	{
-		perror(argv[1]);
-		exit(EXIT_FAILURE);
-	}
+		return (print_strerror(argv[0]));
 	else if (pid[0] == 0)
 	{
+		close(pipes[0][1]);
+		close(pipes[1][0]);
 		cmd_args = ft_split(argv[2], ' ');
 		if (!cmd_args)
-			exit(EXIT_FAILURE);
+			return (print_strerror(argv[0]));
 		if (cmd_args[0][0] == '.' || cmd_args[0][0] == '/')
 			program_path = ft_strdup(cmd_args[0]);
 		else
@@ -59,30 +68,32 @@ int	main(int argc, char **argv, char **envp)
 		dup2(pipes[0][0], STDIN_FILENO);
 		dup2(pipes[1][1], STDOUT_FILENO);
 		close(pipes[0][0]);
-		close(pipes[0][1]);
-		close(pipes[1][0]);
 		close(pipes[1][1]);
 		execve_result = execve(program_path, cmd_args, envp);
 		if (execve_result == -1)
 		{
-			perror(cmd_args[0]);
 			free(program_path);
-			exit(EXIT_FAILURE);
+			return (print_strerror(cmd_args[0]));
 		}
 	}
 	else
 	{
-		close(pipes[0][0]);
-		fd_tmp = open(argv[1], O_RDONLY);
-		buffer = malloc(sizeof(char) * (size_t)BUFFER_SIZE);
-		if (fd_tmp < 0 || !buffer)
-			exit (EXIT_FAILURE);
-		read_size = read(fd_tmp, buffer, (size_t)BUFFER_SIZE);
-		while (read_size > 0)
+		if (fd_tmp != -1)
 		{
-			write(pipes[0][1], buffer, read_size);
-			read_size = read(fd_tmp, buffer, (size_t)BUFFER_SIZE);
+			fd_tmp = open(argv[1], O_RDONLY);
+			if (fd_tmp < 0)
+				perror(argv[1]);
+			else
+			{
+				read_size = read(fd_tmp, buffer, (size_t)BUFFER_SIZE);
+				while (read_size > 0)
+				{
+					write(pipes[0][1], buffer, read_size);
+					read_size = read(fd_tmp, buffer, (size_t)BUFFER_SIZE);
+				}
+			}
 		}
+		close(pipes[0][0]);
 		close(pipes[0][1]);
 	}
 	pipe(pipes[2]);
@@ -119,15 +130,22 @@ int	main(int argc, char **argv, char **envp)
 		close(pipes[1][1]);
 		close(pipes[2][1]);
 	}
+	//printf("(waiting for pid 0)\n");
 	waitpid(pid[0], NULL, 0);
+	//printf("(Done.\n");
+	//printf("(waiting for pid 1)\n");
 	waitpid(pid[1], NULL, 0);
-	fd_tmp = open(argv[4], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	//printf("(opening file)\n");
+	fd_tmp = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	//printf("(done. reading file)\n");
 	read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
 	while (read_size > 0)
 	{
 		write(fd_tmp, buffer, read_size);
 		read_size = read(pipes[2][0], buffer, BUFFER_SIZE);
 	}
+	//printf("(done.)\n");
+	close(pipes[2][0]);
 	free(buffer);
 	return (EXIT_SUCCESS);
 }
