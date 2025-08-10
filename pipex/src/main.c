@@ -81,7 +81,6 @@ static pid_t	create_child_process(char *program_name, char *program_args,
 	int		pid;
 	char	**cmd_args;
 	char	*program_path;
-	char	*name;
 
 	pid = fork();
 	if (pid < 0)
@@ -91,20 +90,17 @@ static pid_t	create_child_process(char *program_name, char *program_args,
 		cmd_args = ft_split(program_args, ' ');
 		if (!cmd_args)
 			strerror_exit(program_name, 0);
-		name = ft_strdup(cmd_args[0]);
-		if (!name)
-			strerror_exit(program_name, 0);
-		program_path = parse_program_path(name, envp);
+		program_path = parse_program_path(cmd_args[0], envp);
 		if (!program_path)
 		{
 			free_string_array(cmd_args);
-			strerror_exit(name, 1);
+			strerror_exit(program_name, 0);
 		}
 		set_fds(fd_info);
 		execve(program_path, cmd_args, envp);
 		free(program_path);
 		free_string_array(cmd_args);
-		strerror_exit(name, 1);
+		strerror_exit(program_name, 0);
 	}
 	return (pid);
 }
