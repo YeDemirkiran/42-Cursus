@@ -154,7 +154,7 @@ int	main(int argc, char **argv, char **envp)
 		return(EXIT_FAILURE);
 	}
 	prepare_files(argv[1], argv[4], io_fd);
-	pipes = prepare_pipes(1);
+	pipes = prepare_pipes(argc - 4);
 	fd_info.fds_to_close_immediately = malloc(sizeof(int) * 2);
 	fd_info.fds_to_close_immediately[0] = pipes[0][0];
 	fd_info.fds_to_close_immediately[1] = -1;
