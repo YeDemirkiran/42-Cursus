@@ -12,9 +12,11 @@
 
 #include "pipex.h"
 
-static void	strerror_exit(char *perror_str)
+static void	strerror_exit(char *perror_str, int free_str)
 {
 	perror(perror_str);
+	if (free_str)
+		free(perror_str);
 	exit(EXIT_FAILURE);
 }
 
@@ -35,7 +37,7 @@ static void	prepare_files(char *input_file_path, char *output_file_path,
 	}
 	io_fd[1] = open(output_file_path, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (io_fd[1] < 0)
-		strerror_exit("pipex: open");
+		strerror_exit("pipex: open", 0);
 }
 
 static void	set_fds(t_fd_info fd_info)
@@ -58,26 +60,51 @@ static void	set_fds(t_fd_info fd_info)
 	}
 }
 
+static void	free_string_array(char **arr)
+{
+	int	i;
+
+	if (arr == NULL)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
 static pid_t	create_child_process(char *program_name, char *program_args,
 		char **envp, t_fd_info fd_info)
 {
 	int		pid;
 	char	**cmd_args;
 	char	*program_path;
+	char	*name;
 
 	pid = fork();
 	if (pid < 0)
-		strerror_exit(program_name);
+		strerror_exit(program_name, 0);
 	else if (pid == 0)
 	{
-		set_fds(fd_info);
 		cmd_args = ft_split(program_args, ' ');
 		if (!cmd_args)
-			strerror_exit(cmd_args[0]);
-		program_path = parse_program_path(cmd_args[0], envp);
+			strerror_exit(program_name, 0);
+		name = ft_strdup(cmd_args[0]);
+		if (!name)
+			strerror_exit(program_name, 0);
+		program_path = parse_program_path(name, envp);
+		if (!program_path)
+		{
+			free_string_array(cmd_args);
+			strerror_exit(name, 1);
+		}
+		set_fds(fd_info);
 		execve(program_path, cmd_args, envp);
 		free(program_path);
-		strerror_exit(cmd_args[0]);
+		free_string_array(cmd_args);
+		strerror_exit(name, 1);
 	}
 	return (pid);
 }
@@ -93,7 +120,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	prepare_files(argv[1], argv[4], io_fd);
 	if (pipe(pipes[0]) == -1)
-		strerror_exit(argv[0]);
+		strerror_exit(argv[0], 0);
 	fd_info.fds_to_close_immediately = malloc(sizeof(int) * 2);
 	fd_info.fds_to_close_immediately[0] = pipes[0][0];
 	fd_info.fds_to_close_immediately[1] = -1;

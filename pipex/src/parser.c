@@ -42,7 +42,10 @@ static char	*create_program_path(char *program_name, char *start, size_t len)
 	path = ft_substr(start, (size_t)0, len);
 	if (!path)
 		return (NULL);
-	path[len - 1] = '/';
+	if (path[len - 1])
+		path[len - 1] = '/';
+	else
+		path = ft_append(path, "/", 1, 0);
 	path = ft_append(path, program_name, 1, 0);
 	return (path);
 }
@@ -69,8 +72,9 @@ static char	*find_path_in_envp(char *program, char **envp)
 		if (access(program_path, F_OK) == 0)
 			return (program_path);
 		free(program_path);
-		if (path_var[a] == ':')
-			a++;
+		if (path_var[a] == '\0')
+			break ;
+		a++;
 	}
 	return (NULL);
 }
@@ -79,6 +83,10 @@ char	*parse_program_path(char *path, char **envp)
 {
 	char	*program_path;
 
+	if (path == NULL || path[0] == '\0')
+		return (NULL);
+	if (envp == NULL || envp[0] == NULL)
+		return (NULL);
 	if ((path[0] == '.' && path[1] == '/') || path[0] == '/')
 		program_path = ft_strdup(path);
 	else
