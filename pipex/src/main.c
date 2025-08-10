@@ -40,6 +40,40 @@ static void	prepare_files(char *input_file_path, char *output_file_path,
 		strerror_exit("pipex: open", 0);
 }
 
+static int	**prepare_pipes(int pipe_count)
+{
+	int	i;
+	int	**pipes;
+
+	i = 0;
+	pipes = malloc(sizeof(int *) * pipe_count);
+	if (!pipes)
+		strerror_exit("pipex", 0);
+	while (i < pipe_count)
+	{
+		pipes[i] = malloc(sizeof(int) * 2);
+		if (!pipes[i])
+			strerror_exit("pipex", 0);
+		if (pipe(pipes[i]) == -1)
+			strerror_exit("pipex", 0);
+		i++;
+	}
+	return (pipes);
+}
+
+static void	clear_pipes(int **pipes, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		free(pipes[i]);
+		i++;
+	}
+	free(pipes);
+}
+
 static void	set_fds(t_fd_info fd_info)
 {
 	int	i;
@@ -109,16 +143,18 @@ static pid_t	create_child_process(char *program_name, char *program_args,
 
 int	main(int argc, char **argv, char **envp)
 {
-	int			pipes[3][2];
+	int			**pipes;
 	int			io_fd[2];
 	pid_t		pid[2];
 	t_fd_info	fd_info;
 
-	if (argc <= 1)
-		return (EXIT_FAILURE);
+	if (argc <= 4)
+	{
+		write(2, "usage: pipex [infile] [cmd1] [cmd2] ... [cmd n] [outfile]\n", 58);
+		return(EXIT_FAILURE);
+	}
 	prepare_files(argv[1], argv[4], io_fd);
-	if (pipe(pipes[0]) == -1)
-		strerror_exit(argv[0], 0);
+	pipes = prepare_pipes(1);
 	fd_info.fds_to_close_immediately = malloc(sizeof(int) * 2);
 	fd_info.fds_to_close_immediately[0] = pipes[0][0];
 	fd_info.fds_to_close_immediately[1] = -1;
@@ -135,5 +171,6 @@ int	main(int argc, char **argv, char **envp)
 	close(io_fd[1]);
 	waitpid(pid[0], NULL, 0);
 	waitpid(pid[1], NULL, 0);
+	clear_pipes(pipes, 1);
 	return (EXIT_SUCCESS);
 }
