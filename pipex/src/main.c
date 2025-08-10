@@ -93,8 +93,10 @@ static pid_t	create_child_process(char *program_name, char *program_args,
 		program_path = parse_program_path(cmd_args[0], envp);
 		if (!program_path)
 		{
+			write(2, cmd_args[0], ft_strlen(cmd_args[0]));
+			write(2, ": command not found\n", 20);
 			free_string_array(cmd_args);
-			strerror_exit(program_name, 0);
+			exit(EXIT_FAILURE);
 		}
 		set_fds(fd_info);
 		execve(program_path, cmd_args, envp);

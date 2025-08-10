@@ -76,7 +76,7 @@ static char	*find_path_in_envp(char *program, char **envp)
 			break ;
 		a++;
 	}
-	return (program);
+	return (NULL);
 }
 
 char	*parse_program_path(char *path, char **envp)
