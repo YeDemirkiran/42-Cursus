@@ -12,9 +12,9 @@
 
 #include "pipex.h"
 
-static void	on_wrong_usage(int argc)
+static void	on_wrong_usage(char **argv, int argc)
 {
-	if (argc <= 4)
+	if (argc < 5 || (ft_strncmp(argv[1], "here_doc", 9) == 0 && argc < 6))
 	{
 		write(2,
 			"usage: pipex { here_doc delimiter | infile } cmd1 cmd2"
@@ -31,15 +31,16 @@ int	main(int argc, char **argv, char **envp)
 	int			i;
 	t_proc_info	proc_info;
 
-	on_wrong_usage(argc);
-	io_fd[1] = prepare_stdin(argv[1], io_fd);
-	prepare_pipes(pipes, argc - 4);
-	pids[argc - 3] = -2;
+	on_wrong_usage(argv, argc);
+	io_fd[1] = prepare_stdin(argv[1], io_fd, argv[2]);
+	prepare_pipes(pipes, argc - 4 - io_fd[1]);
+	pids[argc - 3 - io_fd[1]] = -2;
 	proc_info.main_name = argv[0];
 	proc_info.envp = envp;
-	proc_info.cmd_args = argv[2];
+	proc_info.cmd_args = argv[2 + io_fd[1]];
+	printf("%s\n",argv[2 + io_fd[1]]);
 	pids[0] = create_first_process(proc_info, pipes[0], io_fd[0]);
-	i = 1;
+	i = 1 + io_fd[1];
 	while (i < argc - 4)
 	{
 		proc_info.cmd_args = argv[i + 2];
@@ -47,9 +48,12 @@ int	main(int argc, char **argv, char **envp)
 		i++;
 	}
 	proc_info.cmd_args = argv[i + 2];
-	pids[argc - 4] = create_last_process(proc_info, pipes[i - 1],
+	printf("sdgdg\n");
+	pids[argc - 4 - io_fd[1]] = create_last_process(proc_info, pipes[i - 1],
 			argv[argc - 1], io_fd[1]);
+	printf("UUU\n");
 	i = wait_all_processes(pids);
+	printf("AAAA\n");
 	unlink(TMP_FILE_PATH);
 	return ((((i) & 0xff00) >> 8));
 }

@@ -117,6 +117,7 @@ int	wait_all_processes(pid_t *pids)
 	stat = 0;
 	while (pids[i] != -2)
 	{
+		printf("Waiting for process %i\n", pids[i]);
 		if (pids[i] == -1)
 		{
 			i++;

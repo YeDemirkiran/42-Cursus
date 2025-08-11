@@ -44,8 +44,9 @@ typedef struct s_fd_info
 
 char	*parse_program_path(char *path, char **envp);
 
+int		start_heredoc(char *delimiter);
 int		prepare_stdin(char *input_file_path,
-			int *io_fd);
+			int *io_fd, char *delimiter);
 int		prepare_stdout(char *stdout_path, int append);
 void	prepare_pipes(int pipes[BUFFER_SIZE][2], int pipe_count);
 void	set_fds(t_fd_info fd_info);

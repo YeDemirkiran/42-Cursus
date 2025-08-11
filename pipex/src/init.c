@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-int	start_heredoc(void)
+int	start_heredoc(char *delimiter)
 {
 	char	buffer[BUFFER_SIZE];
 	ssize_t	read_size;
@@ -25,19 +25,24 @@ int	start_heredoc(void)
 		write(1, "> ", 2);
 		read_size = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 		if (read_size > 0)
+		{
+			(void)delimiter;
+			// if (ft_strncmp(buffer, delimiter, ft_strlen(delimiter)) == 0)
+			// 	break ;
+			// else
 			write(tmp_fd, buffer, read_size);
+		}
 	}
 	close(tmp_fd);
 	tmp_fd = open(TMP_FILE_PATH, O_RDONLY);
 	return (tmp_fd);
 }
 
-int	prepare_stdin(char *input_file_path, int *io_fd)
+int	prepare_stdin(char *input_file_path, int *io_fd, char *delimiter)
 {
 	if (ft_strncmp(input_file_path, "here_doc", 9) == 0)
 	{
-		io_fd[0] = start_heredoc();
-		printf("TMP FD: %i\n", io_fd[0]);
+		io_fd[0] = start_heredoc(delimiter);
 		return (1);
 	}
 	else if (access(input_file_path, R_OK) < 0)
