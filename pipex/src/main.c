@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 12:54:41 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 14:51:03 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,38 +38,17 @@ static void	prepare_files(char *input_file_path, char *output_file_path,
 		strerror_exit("pipex: open", 0);
 }
 
-static int	**prepare_pipes(int pipe_count)
+static void	prepare_pipes(int pipes[BUFFER_SIZE][2], int pipe_count)
 {
 	int	i;
-	int	**pipes;
 
 	i = 0;
-	pipes = malloc(sizeof(int *) * pipe_count);
-	if (!pipes)
-		strerror_exit("pipex", 0);
 	while (i < pipe_count)
 	{
-		pipes[i] = malloc(sizeof(int) * 2);
-		if (!pipes[i])
-			strerror_exit("pipex", 0);
 		if (pipe(pipes[i]) == -1)
 			strerror_exit("pipex", 0);
 		i++;
 	}
-	return (pipes);
-}
-
-static void	clear_pipes(int **pipes, int count)
-{
-	int	i;
-
-	i = 0;
-	while (i < count)
-	{
-		free(pipes[i]);
-		i++;
-	}
-	free(pipes);
 }
 
 static void	set_fds(t_fd_info fd_info)
@@ -107,6 +86,8 @@ static void create_child_process(char *main_name, char *program_args,
 	char		**cmd_args;
 	char		*program_path;
 
+	if (program_args == NULL || ft_strlen(program_args) == 0)
+		exit(EXIT_FAILURE);
 	cmd_args = ft_split(program_args, ' ');
 	if (!cmd_args)
 		strerror_exit(main_name, 0);
@@ -197,15 +178,13 @@ static void	wait_all_processes(pid_t *pids)
 		waitpid(pids[i], NULL, 0);
 		i++;
 	}
-	free(pids);
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {
-	int			**pipes;
+	int			pipes[BUFFER_SIZE][2];
 	int			io_fd[2];
-	pid_t		*pids;
+	pid_t		pids[BUFFER_SIZE];
 	int			i;
 	t_proc_info	proc_info;
 
@@ -216,8 +195,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	}
 	prepare_files(argv[1], argv[argc - 1], io_fd);
-	pipes = prepare_pipes(argc - 4);
-	pids = malloc(sizeof(pid_t) * argc - 2);
+	prepare_pipes(pipes, argc - 4);
 	pids[argc - 3] = -1;
 	proc_info.main_name = argv[0];
 	proc_info.envp = envp;
@@ -233,6 +211,5 @@ int	main(int argc, char **argv, char **envp)
 	proc_info.cmd_args = argv[i + 2];
 	pids[argc - 4] = create_last_process(proc_info, pipes[i - 1], io_fd[1]);
 	wait_all_processes(pids);
-	clear_pipes(pipes, argc - 4);
 	return (EXIT_SUCCESS);
 }
