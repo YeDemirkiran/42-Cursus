@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 16:16:43 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 16:50:32 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **envp)
 	on_wrong_usage(argc);
 	prepare_stdin(argv[1], io_fd);
 	prepare_pipes(pipes, argc - 4);
-	pids[argc - 3] = -1;
+	pids[argc - 3] = -2;
 	proc_info.main_name = argv[0];
 	proc_info.envp = envp;
 	proc_info.cmd_args = argv[2];
