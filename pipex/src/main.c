@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 15:34:32 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 15:56:00 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	proc_info.cmd_args = argv[i + 2];
 	pids[argc - 4] = create_last_process(proc_info, pipes[i - 1], io_fd[1]);
-	wait_all_processes(pids);
-	return (EXIT_SUCCESS);
+	i = wait_all_processes(pids);
+	return ((((i) & 0xff00) >> 8));
 }

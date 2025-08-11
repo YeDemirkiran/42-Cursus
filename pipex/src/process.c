@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:04:11 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 15:23:23 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 15:46:04 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,20 @@ pid_t	create_last_process(t_proc_info proc_info,
 	return (pid);
 }
 
-void	wait_all_processes(pid_t *pids)
+int	wait_all_processes(pid_t *pids)
 {
 	int	i;
+	int	stat;
 
 	i = 0;
+	stat = 0;
 	while (pids[i] >= 0)
 	{
-		waitpid(pids[i], NULL, 0);
+		if (pids[i + 1] < 0)
+			waitpid(pids[i], &stat, 0);
+		else
+			waitpid(pids[i], NULL, 0);
 		i++;
 	}
+	return (stat);
 }

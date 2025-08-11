@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:49:56 by yademirk          #+#    #+#             */
-/*   Updated: 2025/06/12 17:49:56 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 15:36:57 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ char	**ft_split(char const *s, char c)
 	size_t	len;
 	size_t	j;
 
-	if (s == NULL)
-		return (NULL);
 	str_arr = malloc((word_count(s, c) + 1) * sizeof(char *));
 	if (!str_arr)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 15:23:31 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 15:41:16 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ pid_t	create_normal_process(t_proc_info proc_info,
 			int *in_pipe, int *out_pipe);
 pid_t	create_last_process(t_proc_info proc_info,
 			int *pipe, int stdout_fd);
-void	wait_all_processes(pid_t *pids);
+int		wait_all_processes(pid_t *pids);
 
 #endif
