@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:04:11 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 17:14:21 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 17:18:14 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ pid_t	create_normal_process(t_proc_info proc_info,
 }
 
 pid_t	create_last_process(t_proc_info proc_info,
-	int *pipe, char *stdout_path)
+	int *pipe, char *stdout_path, int is_heredoc)
 {
 	pid_t		pid;
 	t_fd_info	fd_info;
@@ -101,7 +101,7 @@ pid_t	create_last_process(t_proc_info proc_info,
 	else if (pid == 0)
 	{
 		fd_info.stdin_fd = pipe[0];
-		fd_info.stdout_fd = prepare_stdout(stdout_path);
+		fd_info.stdout_fd = prepare_stdout(stdout_path, is_heredoc);
 		//printf("Last process stdin: %i, stdout: %i\n", fd_info.stdin_fd, fd_info.stdout_fd);
 		create_child_process(proc_info.main_name, proc_info.cmd_args,
 			proc_info.envp, fd_info);

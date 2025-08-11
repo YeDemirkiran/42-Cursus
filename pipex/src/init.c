@@ -6,18 +6,19 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:02:38 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 17:12:26 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 17:20:30 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	prepare_stdin(char *input_file_path, int *io_fd)
+int	prepare_stdin(char *input_file_path, int *io_fd)
 {
 	if (ft_strncmp(input_file_path, "here_doc", 9) == 0)
 	{
 		//printf("FIRST ARG IS HEREDOOOOOOOC\n");
 		io_fd[0] = 0;
+		return (1);
 	}
 	else if (access(input_file_path, R_OK) < 0)
 	{
@@ -27,13 +28,19 @@ void	prepare_stdin(char *input_file_path, int *io_fd)
 	}
 	else
 		io_fd[0] = open(input_file_path, O_RDONLY);
+	return (0);
 }
 
-int	prepare_stdout(char *stdout_path)
+int	prepare_stdout(char *stdout_path, int append)
 {
 	int	fd;
+	int	flags;
 
-	fd = open(stdout_path, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (append)
+		flags = O_WRONLY | O_CREAT | O_APPEND;
+	else
+		flags = O_WRONLY | O_CREAT | O_TRUNC;
+	fd = open(stdout_path, flags, 0664);
 	if (fd < 0)
 		strerror_exit("pipex: open", 0);
 	return (fd);

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 16:13:58 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 17:17:26 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef struct s_fd_info
 
 char	*parse_program_path(char *path, char **envp);
 
-void	prepare_stdin(char *input_file_path,
+int		prepare_stdin(char *input_file_path,
 			int *io_fd);
-int		prepare_stdout(char *stdout_path);
+int		prepare_stdout(char *stdout_path, int append);
 void	prepare_pipes(int pipes[BUFFER_SIZE][2], int pipe_count);
 void	set_fds(t_fd_info fd_info);
 
@@ -58,7 +58,7 @@ pid_t	create_first_process(t_proc_info proc_info,
 pid_t	create_normal_process(t_proc_info proc_info,
 			int *in_pipe, int *out_pipe);
 pid_t	create_last_process(t_proc_info proc_info,
-			int *pipe, char *stdout_path);
+			int *pipe, char *stdout_path, int is_heredoc);
 int		wait_all_processes(pid_t *pids);
 
 #endif
