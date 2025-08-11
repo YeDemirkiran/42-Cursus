@@ -27,6 +27,8 @@
 
 # include "ft_string.h"
 
+# define TMP_FILE_PATH "./pipex_tmp_12351316"
+
 typedef struct s_proc_info
 {
 	char	*main_name;

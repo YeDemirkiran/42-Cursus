@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	i = 1;
 	while (i < argc - 4)
 	{
-		proc_info.cmd_args = argv[i + 2];	
+		proc_info.cmd_args = argv[i + 2];
 		pids[i] = create_normal_process(proc_info, pipes[i - 1], pipes[i]);
 		i++;
 	}
@@ -50,6 +50,6 @@ int	main(int argc, char **argv, char **envp)
 	pids[argc - 4] = create_last_process(proc_info, pipes[i - 1],
 			argv[argc - 1], io_fd[1]);
 	i = wait_all_processes(pids);
-	unlink("./pipex_tmp_1234567890");
+	unlink(TMP_FILE_PATH);
 	return ((((i) & 0xff00) >> 8));
 }

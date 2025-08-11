@@ -12,14 +12,13 @@
 
 #include "pipex.h"
 
-int	start_heredoc()
+int	start_heredoc(void)
 {
-	const char	*tmp_name = "./pipex_tmp_1234567890";
 	char	buffer[BUFFER_SIZE];
 	ssize_t	read_size;
 	int		tmp_fd;
 
-	tmp_fd = open(tmp_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	tmp_fd = open(TMP_FILE_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	read_size = 1;
 	while (read_size > 0)
 	{
@@ -29,7 +28,7 @@ int	start_heredoc()
 			write(tmp_fd, buffer, read_size);
 	}
 	close(tmp_fd);
-	tmp_fd = open(tmp_name, O_RDONLY);
+	tmp_fd = open(TMP_FILE_PATH, O_RDONLY);
 	return (tmp_fd);
 }
 

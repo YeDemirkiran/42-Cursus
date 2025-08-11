@@ -57,11 +57,11 @@ pid_t	create_first_process(t_proc_info proc_info,
 		close(pipe[0]);
 		fd_info.stdin_fd = stdin_fd;
 		fd_info.stdout_fd = pipe[1];
-		printf("First process stdin: %i, stdout: %i\n", fd_info.stdin_fd, fd_info.stdout_fd);
 		create_child_process(proc_info.main_name, proc_info.cmd_args,
 			proc_info.envp, fd_info);
 	}
-	//close(stdin_fd);
+	if (stdin_fd > 2)
+		close(stdin_fd);
 	close(pipe[1]);
 	return (pid);
 }
@@ -80,7 +80,6 @@ pid_t	create_normal_process(t_proc_info proc_info,
 		close(out_pipe[0]);
 		fd_info.stdin_fd = in_pipe[0];
 		fd_info.stdout_fd = out_pipe[1];
-		//printf("Normal process stdin: %i, stdout: %i\n", fd_info.stdin_fd, fd_info.stdout_fd);
 		create_child_process(proc_info.main_name, proc_info.cmd_args,
 			proc_info.envp, fd_info);
 	}
@@ -102,7 +101,6 @@ pid_t	create_last_process(t_proc_info proc_info,
 	{
 		fd_info.stdin_fd = pipe[0];
 		fd_info.stdout_fd = prepare_stdout(stdout_path, is_heredoc);
-		//printf("Last process stdin: %i, stdout: %i\n", fd_info.stdin_fd, fd_info.stdout_fd);
 		create_child_process(proc_info.main_name, proc_info.cmd_args,
 			proc_info.envp, fd_info);
 	}
@@ -119,7 +117,6 @@ int	wait_all_processes(pid_t *pids)
 	stat = 0;
 	while (pids[i] != -2)
 	{
-		//printf("Waiting for process %i\n", pids[i]);
 		if (pids[i] == -1)
 		{
 			i++;
@@ -129,7 +126,6 @@ int	wait_all_processes(pid_t *pids)
 			waitpid(pids[i], &stat, 0);
 		else
 			waitpid(pids[i], NULL, 0);
-		//printf("Process %i is completed\n", pids[i]);
 		i++;
 	}
 	return (stat);
