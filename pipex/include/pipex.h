@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 11:53:47 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 12:33:43 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@
 # include "ft_string.h"
 
 char	*parse_program_path(char *path, char **envp);
+
+typedef struct s_proc_info
+{
+	char	*main_name;
+	char	*cmd_args;
+	char	**envp;
+}				t_proc_info;
 
 typedef struct s_fd_info
 {

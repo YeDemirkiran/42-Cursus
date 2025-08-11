@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 12:30:04 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 12:46:11 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ static void create_child_process(char *main_name, char *program_args,
 	strerror_exit(main_name, 0);
 }
 
-static pid_t	create_first_process(char **argv, char **envp,
+static pid_t	create_first_process(t_proc_info proc_info,
 	int *pipe, int stdin_fd)
 {
 	pid_t		pid;
@@ -133,20 +133,20 @@ static pid_t	create_first_process(char **argv, char **envp,
 
 	pid = fork();
 	if (pid < 0)
-		strerror_exit(argv[0], 0);
+		strerror_exit(proc_info.main_name, 0);
 	else if (pid == 0)
 	{
 		close(pipe[0]);
 		fd_info.stdin_fd = stdin_fd;
 		fd_info.stdout_fd = pipe[1];
-		create_child_process(argv[0], argv[2], envp, fd_info);
+		create_child_process(proc_info.main_name, proc_info.cmd_args, proc_info.envp, fd_info);
 	}
 	close(stdin_fd);
 	close(pipe[1]);
 	return (pid);
 }
 
-static pid_t	create_normal_process(char **argv, char **envp,
+static pid_t	create_normal_process(t_proc_info proc_info,
 	int *in_pipe, int *out_pipe)
 {
 	pid_t		pid;
@@ -154,20 +154,20 @@ static pid_t	create_normal_process(char **argv, char **envp,
 
 	pid = fork();
 	if (pid < 0)
-		strerror_exit(argv[0], 0);
+		strerror_exit(proc_info.main_name, 0);
 	else if (pid == 0)
 	{
 		close(out_pipe[0]);
 		fd_info.stdin_fd = in_pipe[0];
 		fd_info.stdout_fd = out_pipe[1];
-		create_child_process(argv[0], argv[2], envp, fd_info);
+		create_child_process(proc_info.main_name, proc_info.cmd_args, proc_info.envp, fd_info);
 	}
 	close(in_pipe[0]);
 	close(out_pipe[1]);
 	return (pid);
 }
 
-static pid_t	create_last_process(char **argv, char **envp,
+static pid_t	create_last_process(t_proc_info proc_info,
 	int *pipe, int stdout_fd)
 {
 	pid_t		pid;
@@ -175,12 +175,12 @@ static pid_t	create_last_process(char **argv, char **envp,
 
 	pid = fork();
 	if (pid < 0)
-		strerror_exit(argv[0], 0);
+		strerror_exit(proc_info.main_name, 0);
 	else if (pid == 0)
 	{
 		fd_info.stdin_fd = pipe[0];
 		fd_info.stdout_fd = stdout_fd;
-		create_child_process(argv[0], argv[3], envp, fd_info);
+		create_child_process(proc_info.main_name, proc_info.cmd_args, proc_info.envp, fd_info);
 	}
 	close(pipe[0]);
 	close(stdout_fd);
@@ -200,13 +200,6 @@ static void	wait_all_processes(pid_t *pids)
 	free(pids);
 }
 
-// static pid_t	*create_all_processes()
-// {
-// 	int	i;
-
-	
-// }
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -214,6 +207,7 @@ int	main(int argc, char **argv, char **envp)
 	int			io_fd[2];
 	pid_t		*pids;
 	int			i;
+	t_proc_info	proc_info;
 
 	if (argc <= 4)
 	{
@@ -221,18 +215,23 @@ int	main(int argc, char **argv, char **envp)
 			"usage: pipex [infile] [cmd1] [cmd2] ...[cmd n] [outfile]\n", 58);
 		return (EXIT_FAILURE);
 	}
-	prepare_files(argv[1], argv[4], io_fd);
+	prepare_files(argv[1], argv[argc - 1], io_fd);
 	pipes = prepare_pipes(argc - 4);
 	pids = malloc(sizeof(pid_t) * argc - 2);
 	pids[argc - 3] = -1;
-	pids[0] = create_first_process(argv, envp, pipes[0], io_fd[0]);
+	proc_info.main_name = argv[0];
+	proc_info.envp = envp;
+	proc_info.cmd_args = argv[2];
+	pids[0] = create_first_process(proc_info, pipes[0], io_fd[0]);
 	i = 1;
 	while (i < argc - 4)
 	{
-		pids[i] = create_normal_process(argv, envp, pipes[i - 1], pipes[i]);
+		proc_info.cmd_args = argv[i + 2];
+		pids[i] = create_normal_process(proc_info, pipes[i - 1], pipes[i]);
 		i++;
 	}
-	pids[argc - 4] = create_last_process(argv, envp, pipes[0], io_fd[1]);
+	proc_info.cmd_args = argv[i + 2];
+	pids[argc - 4] = create_last_process(proc_info, pipes[i - 1], io_fd[1]);
 	wait_all_processes(pids);
 	clear_pipes(pipes, 1);
 	return (EXIT_SUCCESS);
