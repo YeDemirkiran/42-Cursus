@@ -6,11 +6,22 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 15:07:35 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 15:34:32 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+static void	on_wrong_usage(int argc)
+{
+	if (argc <= 4)
+	{
+		write(2,
+			"usage: pipex { here_doc delimiter | infile } cmd1 cmd2"
+			" [cmd3 ... cmd n] outfile\n", 80);
+		exit(EXIT_FAILURE);
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -20,12 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	int			i;
 	t_proc_info	proc_info;
 
-	if (argc <= 4)
-	{
-		write(2,
-			"usage: pipex [infile] [cmd1] [cmd2] ...[cmd n] [outfile]\n", 58);
-		return (EXIT_FAILURE);
-	}
+	on_wrong_usage(argc);
 	prepare_files(argv[1], argv[argc - 1], io_fd);
 	prepare_pipes(pipes, argc - 4);
 	pids[argc - 3] = -1;
