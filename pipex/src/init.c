@@ -6,28 +6,32 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:02:38 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 15:24:07 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 16:14:04 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	prepare_files(char *input_file_path, char *output_file_path,
-		int *io_fd)
+void	prepare_stdin(char *input_file_path, int *io_fd)
 {
 	if (access(input_file_path, R_OK) < 0)
 	{
 		write(2, "bash: ", 6);
-		perror(output_file_path);
+		perror(input_file_path);
 		io_fd[0] = 0;
 	}
 	else
-	{
 		io_fd[0] = open(input_file_path, O_RDONLY);
-	}
-	io_fd[1] = open(output_file_path, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (io_fd[1] < 0)
+}
+
+int	prepare_stdout(char *stdout_path)
+{
+	int	fd;
+
+	fd = open(stdout_path, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (fd < 0)
 		strerror_exit("pipex: open", 0);
+	return (fd);
 }
 
 void	prepare_pipes(int pipes[BUFFER_SIZE][2], int pipe_count)
