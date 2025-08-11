@@ -50,5 +50,6 @@ int	main(int argc, char **argv, char **envp)
 	pids[argc - 4] = create_last_process(proc_info, pipes[i - 1],
 			argv[argc - 1], io_fd[1]);
 	i = wait_all_processes(pids);
+	unlink("./pipex_tmp_1234567890");
 	return ((((i) & 0xff00) >> 8));
 }

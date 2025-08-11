@@ -57,7 +57,7 @@ pid_t	create_first_process(t_proc_info proc_info,
 		close(pipe[0]);
 		fd_info.stdin_fd = stdin_fd;
 		fd_info.stdout_fd = pipe[1];
-		//printf("First process stdin: %i, stdout: %i\n", fd_info.stdin_fd, fd_info.stdout_fd);
+		printf("First process stdin: %i, stdout: %i\n", fd_info.stdin_fd, fd_info.stdout_fd);
 		create_child_process(proc_info.main_name, proc_info.cmd_args,
 			proc_info.envp, fd_info);
 	}

@@ -14,7 +14,23 @@
 
 int	start_heredoc()
 {
-	
+	const char	*tmp_name = "./pipex_tmp_1234567890";
+	char	buffer[BUFFER_SIZE];
+	ssize_t	read_size;
+	int		tmp_fd;
+
+	tmp_fd = open(tmp_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	read_size = 1;
+	while (read_size > 0)
+	{
+		write(1, "> ", 2);
+		read_size = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+		if (read_size > 0)
+			write(tmp_fd, buffer, read_size);
+	}
+	close(tmp_fd);
+	tmp_fd = open(tmp_name, O_RDONLY);
+	return (tmp_fd);
 }
 
 int	prepare_stdin(char *input_file_path, int *io_fd)
@@ -22,6 +38,7 @@ int	prepare_stdin(char *input_file_path, int *io_fd)
 	if (ft_strncmp(input_file_path, "here_doc", 9) == 0)
 	{
 		io_fd[0] = start_heredoc();
+		printf("TMP FD: %i\n", io_fd[0]);
 		return (1);
 	}
 	else if (access(input_file_path, R_OK) < 0)
