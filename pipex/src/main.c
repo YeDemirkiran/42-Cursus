@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/05 14:01:09 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 11:38:19 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static void	prepare_files(char *input_file_path, char *output_file_path,
 	{
 		write(2, "bash: ", 6);
 		perror(output_file_path);
-		io_fd[0] = -1;
+		io_fd[0] = 0;
 	}
 	else
 	{
 		io_fd[0] = open(input_file_path, O_RDONLY);
-		dup2(io_fd[0], STDIN_FILENO);
-		close(io_fd[0]);
+		//dup2(io_fd[0], STDIN_FILENO);
+		//close(io_fd[0]);
 	}
 	io_fd[1] = open(output_file_path, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (io_fd[1] < 0)
@@ -141,34 +141,53 @@ static pid_t	create_child_process(char *program_name, char *program_args,
 	return (pid);
 }
 
+static pid_t	create_first_process(char **argv, char **envp, int **pipes, int stdin_fd)
+{
+	pid_t		pid;
+	t_fd_info	fd_info;
+
+	fd_info.fds_to_close_immediately = malloc(sizeof(int) * 2);
+	fd_info.fds_to_close_immediately[0] = pipes[0][0];
+	fd_info.fds_to_close_immediately[1] = -1;
+	fd_info.stdin_fd = stdin_fd;
+	fd_info.stdout_fd = pipes[0][1];
+	pid = create_child_process(argv[0], argv[2], envp, fd_info);
+	close(pipes[0][1]);
+	free(fd_info.fds_to_close_immediately);
+	return (pid);
+}
+
+static pid_t	create_last_process(char **argv, char **envp, int **pipes, int stdout_fd)
+{
+	pid_t		pid;
+	t_fd_info	fd_info;
+
+	fd_info.fds_to_close_immediately = NULL;
+	fd_info.stdin_fd = pipes[0][0];
+	fd_info.stdout_fd = stdout_fd;
+	pid = create_child_process(argv[0], argv[3], envp, fd_info);
+	close(pipes[0][0]);
+	close(stdout_fd);
+	return (pid);
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	int			**pipes;
 	int			io_fd[2];
 	pid_t		pid[2];
-	t_fd_info	fd_info;
 
 	if (argc <= 4)
 	{
-		write(2, "usage: pipex [infile] [cmd1] [cmd2] ... [cmd n] [outfile]\n", 58);
-		return(EXIT_FAILURE);
+		write(2,
+			"usage: pipex [infile] [cmd1] [cmd2] ...[cmd n] [outfile]\n", 58);
+		return (EXIT_FAILURE);
 	}
 	prepare_files(argv[1], argv[4], io_fd);
 	pipes = prepare_pipes(argc - 4);
-	fd_info.fds_to_close_immediately = malloc(sizeof(int) * 2);
-	fd_info.fds_to_close_immediately[0] = pipes[0][0];
-	fd_info.fds_to_close_immediately[1] = -1;
-	fd_info.stdin_fd = -1;
-	fd_info.stdout_fd = pipes[0][1];
-	pid[0] = create_child_process(argv[0], argv[2], envp, fd_info);
-	close(pipes[0][1]);
-	free(fd_info.fds_to_close_immediately);
-	fd_info.fds_to_close_immediately = NULL;
-	fd_info.stdin_fd = pipes[0][0];
-	fd_info.stdout_fd = io_fd[1];
-	pid[1] = create_child_process(argv[0], argv[3], envp, fd_info);
-	close(pipes[0][0]);
-	close(io_fd[1]);
+	pid[0] = create_first_process(argv, envp, pipes, io_fd[0]);
+	pid[1] = create_last_process(argv, envp, pipes, io_fd[1]);
 	waitpid(pid[0], NULL, 0);
 	waitpid(pid[1], NULL, 0);
 	clear_pipes(pipes, 1);
