@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 11:38:19 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 12:27:42 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static void	prepare_files(char *input_file_path, char *output_file_path,
 	else
 	{
 		io_fd[0] = open(input_file_path, O_RDONLY);
-		//dup2(io_fd[0], STDIN_FILENO);
-		//close(io_fd[0]);
 	}
 	io_fd[1] = open(output_file_path, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (io_fd[1] < 0)
@@ -76,12 +74,6 @@ static void	clear_pipes(int **pipes, int count)
 
 static void	set_fds(t_fd_info fd_info)
 {
-	int	i;
-
-	i = 0;
-	while (fd_info.fds_to_close_immediately
-		&& fd_info.fds_to_close_immediately[i] != -1)
-		close(fd_info.fds_to_close_immediately[i++]);
 	if (fd_info.stdin_fd >= 0)
 	{
 		dup2(fd_info.stdin_fd, STDIN_FILENO);
@@ -109,74 +101,106 @@ static void	free_string_array(char **arr)
 	free(arr);
 }
 
-static pid_t	create_child_process(char *program_name, char *program_args,
+static void create_child_process(char *main_name, char *program_args,
 		char **envp, t_fd_info fd_info)
 {
-	int		pid;
-	char	**cmd_args;
-	char	*program_path;
+	char		**cmd_args;
+	char		*program_path;
+
+	cmd_args = ft_split(program_args, ' ');
+	if (!cmd_args)
+		strerror_exit(main_name, 0);
+	program_path = parse_program_path(cmd_args[0], envp);
+	if (!program_path)
+	{
+		write(2, cmd_args[0], ft_strlen(cmd_args[0]));
+		write(2, ": command not found\n", 20);
+		free_string_array(cmd_args);
+		exit(EXIT_FAILURE);
+	}
+	set_fds(fd_info);
+	execve(program_path, cmd_args, envp);
+	free(program_path);
+	free_string_array(cmd_args);
+	strerror_exit(main_name, 0);
+}
+
+static pid_t	create_first_process(char **argv, char **envp,
+	int *pipe, int stdin_fd)
+{
+	pid_t		pid;
+	t_fd_info	fd_info;
 
 	pid = fork();
 	if (pid < 0)
-		strerror_exit(program_name, 0);
+		strerror_exit(argv[0], 0);
 	else if (pid == 0)
 	{
-		cmd_args = ft_split(program_args, ' ');
-		if (!cmd_args)
-			strerror_exit(program_name, 0);
-		program_path = parse_program_path(cmd_args[0], envp);
-		if (!program_path)
-		{
-			write(2, cmd_args[0], ft_strlen(cmd_args[0]));
-			write(2, ": command not found\n", 20);
-			free_string_array(cmd_args);
-			exit(EXIT_FAILURE);
-		}
-		set_fds(fd_info);
-		execve(program_path, cmd_args, envp);
-		free(program_path);
-		free_string_array(cmd_args);
-		strerror_exit(program_name, 0);
+		close(pipe[0]);
+		fd_info.stdin_fd = stdin_fd;
+		fd_info.stdout_fd = pipe[1];
+		create_child_process(argv[0], argv[2], envp, fd_info);
 	}
+	close(stdin_fd);
+	close(pipe[1]);
 	return (pid);
 }
 
-static pid_t	create_first_process(char **argv, char **envp, int **pipes, int stdin_fd)
+static pid_t	create_normal_process(char **argv, char **envp,
+	int *in_pipe, int *out_pipe)
 {
 	pid_t		pid;
 	t_fd_info	fd_info;
 
-	fd_info.fds_to_close_immediately = malloc(sizeof(int) * 2);
-	fd_info.fds_to_close_immediately[0] = pipes[0][0];
-	fd_info.fds_to_close_immediately[1] = -1;
-	fd_info.stdin_fd = stdin_fd;
-	fd_info.stdout_fd = pipes[0][1];
-	pid = create_child_process(argv[0], argv[2], envp, fd_info);
-	close(pipes[0][1]);
-	free(fd_info.fds_to_close_immediately);
+	pid = fork();
+	if (pid < 0)
+		strerror_exit(argv[0], 0);
+	else if (pid == 0)
+	{
+		close(out_pipe[0]);
+		fd_info.stdin_fd = in_pipe[0];
+		fd_info.stdout_fd = out_pipe[1];
+		create_child_process(argv[0], argv[2], envp, fd_info);
+	}
+	close(in_pipe[0]);
+	close(out_pipe[1]);
 	return (pid);
 }
 
-static pid_t	create_last_process(char **argv, char **envp, int **pipes, int stdout_fd)
+static pid_t	create_last_process(char **argv, char **envp,
+	int *pipe, int stdout_fd)
 {
 	pid_t		pid;
 	t_fd_info	fd_info;
 
-	fd_info.fds_to_close_immediately = NULL;
-	fd_info.stdin_fd = pipes[0][0];
-	fd_info.stdout_fd = stdout_fd;
-	pid = create_child_process(argv[0], argv[3], envp, fd_info);
-	close(pipes[0][0]);
+	pid = fork();
+	if (pid < 0)
+		strerror_exit(argv[0], 0);
+	else if (pid == 0)
+	{
+		fd_info.stdin_fd = pipe[0];
+		fd_info.stdout_fd = stdout_fd;
+		create_child_process(argv[0], argv[3], envp, fd_info);
+	}
+	close(pipe[0]);
 	close(stdout_fd);
 	return (pid);
 }
+
+// static pid_t	*create_all_processes()
+// {
+// 	int	i;
+
+	
+// }
 
 
 int	main(int argc, char **argv, char **envp)
 {
 	int			**pipes;
 	int			io_fd[2];
-	pid_t		pid[2];
+	pid_t		*pids;
+	int			i;
 
 	if (argc <= 4)
 	{
@@ -186,10 +210,19 @@ int	main(int argc, char **argv, char **envp)
 	}
 	prepare_files(argv[1], argv[4], io_fd);
 	pipes = prepare_pipes(argc - 4);
-	pid[0] = create_first_process(argv, envp, pipes, io_fd[0]);
-	pid[1] = create_last_process(argv, envp, pipes, io_fd[1]);
-	waitpid(pid[0], NULL, 0);
-	waitpid(pid[1], NULL, 0);
+	pids = malloc(sizeof(pid_t) * argc - 2);
+	pids[argc - 3] = -1;
+	pids[0] = create_first_process(argv, envp, pipes[0], io_fd[0]);
+	i = 1;
+	while (i < argc - 4)
+	{
+		pids[i] = create_normal_process(argv, envp, pipes[i - 1], pipes[i]);
+		i++;
+	}
+	pids[argc - 4] = create_last_process(argv, envp, pipes[0], io_fd[1]);
+	waitpid(pids[0], NULL, 0);
+	waitpid(pids[argc - 4], NULL, 0);
 	clear_pipes(pipes, 1);
+	free(pids);
 	return (EXIT_SUCCESS);
 }

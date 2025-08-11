@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/05 13:56:16 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 11:53:47 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*parse_program_path(char *path, char **envp);
 
 typedef struct s_fd_info
 {
-	int	*fds_to_close_immediately;
 	int	stdin_fd;
 	int	stdout_fd;
 }				t_fd_info;
