@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:22 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 12:27:42 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 12:30:04 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,19 @@ static pid_t	create_last_process(char **argv, char **envp,
 	return (pid);
 }
 
+static void	wait_all_processes(pid_t *pids)
+{
+	int	i;
+
+	i = 0;
+	while (pids[i] >= 0)
+	{
+		waitpid(pids[i], NULL, 0);
+		i++;
+	}
+	free(pids);
+}
+
 // static pid_t	*create_all_processes()
 // {
 // 	int	i;
@@ -220,9 +233,7 @@ int	main(int argc, char **argv, char **envp)
 		i++;
 	}
 	pids[argc - 4] = create_last_process(argv, envp, pipes[0], io_fd[1]);
-	waitpid(pids[0], NULL, 0);
-	waitpid(pids[argc - 4], NULL, 0);
+	wait_all_processes(pids);
 	clear_pipes(pipes, 1);
-	free(pids);
 	return (EXIT_SUCCESS);
 }
