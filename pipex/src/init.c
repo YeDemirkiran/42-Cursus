@@ -6,18 +6,22 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:02:38 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 17:20:30 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 17:47:07 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+int	start_heredoc()
+{
+	
+}
+
 int	prepare_stdin(char *input_file_path, int *io_fd)
 {
 	if (ft_strncmp(input_file_path, "here_doc", 9) == 0)
 	{
-		//printf("FIRST ARG IS HEREDOOOOOOOC\n");
-		io_fd[0] = 0;
+		io_fd[0] = start_heredoc();
 		return (1);
 	}
 	else if (access(input_file_path, R_OK) < 0)
