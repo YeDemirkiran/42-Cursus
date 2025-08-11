@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 12:33:43 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/11 15:23:31 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 
 # include "ft_string.h"
 
-char	*parse_program_path(char *path, char **envp);
-
 typedef struct s_proc_info
 {
 	char	*main_name;
@@ -41,5 +39,25 @@ typedef struct s_fd_info
 	int	stdin_fd;
 	int	stdout_fd;
 }				t_fd_info;
+
+char	*parse_program_path(char *path, char **envp);
+
+void	prepare_files(char *input_file_path, char *output_file_path,
+			int *io_fd);
+void	prepare_pipes(int pipes[BUFFER_SIZE][2], int pipe_count);
+void	set_fds(t_fd_info fd_info);
+
+void	free_string_array(char **arr);
+void	strerror_exit(char *perror_str, int free_str);
+
+void	create_child_process(char *main_name, char *program_args,
+			char **envp, t_fd_info fd_info);
+pid_t	create_first_process(t_proc_info proc_info,
+			int *pipe, int stdin_fd);
+pid_t	create_normal_process(t_proc_info proc_info,
+			int *in_pipe, int *out_pipe);
+pid_t	create_last_process(t_proc_info proc_info,
+			int *pipe, int stdout_fd);
+void	wait_all_processes(pid_t *pids);
 
 #endif
