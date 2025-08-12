@@ -8,13 +8,14 @@
 
 4 - Opening too many processes result in (Too many files) error. The limit seems to be BUFFER_SIZE / 2
 
-(FIXED)5 - It can handle it if infile is "" (empty) or doesn't exist. But if it's empty, then the message is bash: doesn't exist.
+(VGOK)(FIXED)5 - It can handle it if infile is "" (empty) or doesn't exist. But if it's empty, then the message is bash: doesn't exist.
 	The real bash prints an extra column.
 
-(FIXED)6 - When a command is empty, nothing is printed. But the real shell prints an error message (not found).
+(VGOK)(FIXED)6 - When a command is empty, nothing is printed. But the real shell prints an error message (not found).
 
-(INENTIONAL)7 - When any file or command is not found, it returns 0 instead of 1. It returns the last exit status of the last command, matching the real shell behavior.
+(INTENTIONAL)7 - When any file or command is not found, it returns 0 instead of 1. It returns the last exit status of the last command, matching the real shell behavior.
 
-(FIXED)8 - When the output file is "" (empty) or a directory, error message starts with "pipex: open". It should start like "bash: ", like the real bash.
+(VGOK)(FIXED)8 - When the output file is "" (empty) or a directory, error message starts with "pipex: open". It should start like "bash: ", like the real bash.
 
-9 - Weird things happen after exceeding the buffer size on each here_doc line
+(VGOK)(FIXED)9 - Weird things happen after exceeding the buffer size on each here_doc line
+	NOTE: This is the same reason as 2
