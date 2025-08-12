@@ -12,13 +12,6 @@
 
 #include "pipex.h"
 
-void	print_cmd_not_found(char *cmd_name)
-{
-	if (cmd_name)
-		write(2, cmd_name, ft_strlen(cmd_name));
-	write(2, ": command not found\n", 20);
-}
-
 void	create_child_process(char *main_name, char *program_args,
 		char **envp, t_fd_info fd_info)
 {

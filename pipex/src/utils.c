@@ -48,3 +48,10 @@ int	is_delimiter(char *str, char *delimiter, ssize_t read_size)
 	str[read_size - 1] = tmp;
 	return (is_delimiter);
 }
+
+void	print_cmd_not_found(char *cmd_name)
+{
+	if (cmd_name)
+		write(2, cmd_name, ft_strlen(cmd_name));
+	write(2, ": command not found\n", 20);
+}
