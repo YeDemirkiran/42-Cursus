@@ -23,6 +23,23 @@ static void	on_wrong_usage(char **argv, int argc)
 	}
 }
 
+static void	prepare_io_pipes(char **argv, int argc, int *io_fd,
+		int pipes[BUFFER_SIZE][2])
+{
+	io_fd[1] = prepare_stdin(argv[1], io_fd, argv[2]);
+	prepare_pipes(pipes, argc - 4 - io_fd[1]);
+}
+
+static t_proc_info	init_proc_info(char *main_name, char **envp, char *cmd_args)
+{
+	t_proc_info	proc_info;
+
+	proc_info.main_name = main_name;
+	proc_info.envp = envp;
+	proc_info.cmd_args = cmd_args;
+	return (proc_info);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	int			pipes[BUFFER_SIZE][2];
@@ -32,26 +49,21 @@ int	main(int argc, char **argv, char **envp)
 	t_proc_info	proc_info;
 
 	on_wrong_usage(argv, argc);
-	io_fd[1] = prepare_stdin(argv[1], io_fd, argv[2]);
-	//printf("Pipe count: %i\n", argc - 4 - io_fd[1]);
-	prepare_pipes(pipes, argc - 4 - io_fd[1]);
+	prepare_io_pipes(argv, argc, io_fd, pipes);
 	pids[argc - 3 - io_fd[1]] = -2;
-	proc_info.main_name = argv[0];
-	proc_info.envp = envp;
-	proc_info.cmd_args = argv[2 + io_fd[1]];
+	proc_info = init_proc_info(argv[0], envp, argv[2 + io_fd[1]]);
 	pids[0] = create_first_process(proc_info, pipes[0], io_fd[0]);
 	i = 1 + io_fd[1];
 	while (i < argc - 4)
 	{
-		//printf("Normal proc %i\n", i);
 		proc_info.cmd_args = argv[i + 2];
-		pids[i] = create_normal_process(proc_info, pipes[i - 1 - io_fd[1]], pipes[i - io_fd[1]]);
+		pids[i] = create_normal_process(proc_info, pipes[i - 1 - io_fd[1]],
+				pipes[i - io_fd[1]]);
 		i++;
 	}
 	proc_info.cmd_args = argv[i + 2];
-	pids[argc - 4 - io_fd[1]] = create_last_process(proc_info, pipes[i - 1 - io_fd[1]],
-			argv[argc - 1], io_fd[1]);
+	pids[argc - 4 - io_fd[1]] = create_last_process(proc_info,
+			pipes[i - 1 - io_fd[1]], argv[argc - 1], io_fd[1]);
 	i = wait_all_processes(pids);
-	unlink(TMP_FILE_PATH);
 	return ((((i) & 0xff00) >> 8));
 }

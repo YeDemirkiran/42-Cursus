@@ -19,6 +19,8 @@ int	start_heredoc(char *delimiter)
 	int		tmp_fd;
 
 	tmp_fd = open(TMP_FILE_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (tmp_fd < 0)
+		strerror_exit("pipex", 0);
 	read_size = 1;
 	while (read_size > 0)
 	{
@@ -35,6 +37,7 @@ int	start_heredoc(char *delimiter)
 	}
 	close(tmp_fd);
 	tmp_fd = open(TMP_FILE_PATH, O_RDONLY);
+	unlink(TMP_FILE_PATH);
 	return (tmp_fd);
 }
 
