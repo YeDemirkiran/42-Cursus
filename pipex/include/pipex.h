@@ -52,6 +52,7 @@ void	set_fds(t_fd_info fd_info);
 
 void	free_string_array(char **arr);
 void	strerror_exit(char *perror_str, int free_str);
+int		is_delimiter(char *str, char *delimiter, ssize_t read_size);
 
 void	create_child_process(char *main_name, char *program_args,
 			char **envp, t_fd_info fd_info);

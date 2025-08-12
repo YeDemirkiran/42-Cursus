@@ -34,3 +34,17 @@ void	strerror_exit(char *perror_str, int free_str)
 		free(perror_str);
 	exit(EXIT_FAILURE);
 }
+
+int	is_delimiter(char *str, char *delimiter, ssize_t read_size)
+{
+	int		is_delimiter;
+	char	tmp;
+
+	is_delimiter = 0;
+	tmp = str[read_size - 1];
+	str[read_size - 1] = 0;
+	if (ft_strcmp(str, delimiter) == 0)
+		is_delimiter = 1;
+	str[read_size - 1] = tmp;
+	return (is_delimiter);
+}

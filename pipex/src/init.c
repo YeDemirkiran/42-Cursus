@@ -29,7 +29,7 @@ int	start_heredoc(char *delimiter)
 		buffer[read_size] = 0;
 		if (read_size > 0)
 		{
-			if (ft_strncmp(buffer, delimiter, ft_strlen(buffer) - 1) == 0)
+			if (is_delimiter(buffer, delimiter, read_size))
 				break ;
 			else
 				write(tmp_fd, buffer, read_size);

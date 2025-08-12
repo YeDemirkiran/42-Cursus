@@ -1,4 +1,4 @@
-1 - EOF: Entering with no chars, or writing some part of EOF will still count as EOF
+(FIXED)1 - EOF: Entering with no chars, or writing some part of EOF will still count as EOF
 	Note: If EOF is empty, on real heredoc, entering an empty file counts as EOF. Don't forget to keep it.
 
 2 - When the heredoc line is too long, it will print the > char multiple times
