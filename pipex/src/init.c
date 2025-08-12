@@ -24,13 +24,13 @@ int	start_heredoc(char *delimiter)
 	{
 		write(1, "> ", 2);
 		read_size = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+		buffer[read_size] = 0;
 		if (read_size > 0)
 		{
-			(void)delimiter;
-			// if (ft_strncmp(buffer, delimiter, ft_strlen(delimiter)) == 0)
-			// 	break ;
-			// else
-			write(tmp_fd, buffer, read_size);
+			if (ft_strncmp(buffer, delimiter, ft_strlen(buffer) - 1) == 0)
+				break ;
+			else
+				write(tmp_fd, buffer, read_size);
 		}
 	}
 	close(tmp_fd);

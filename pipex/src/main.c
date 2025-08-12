@@ -33,27 +33,25 @@ int	main(int argc, char **argv, char **envp)
 
 	on_wrong_usage(argv, argc);
 	io_fd[1] = prepare_stdin(argv[1], io_fd, argv[2]);
+	//printf("Pipe count: %i\n", argc - 4 - io_fd[1]);
 	prepare_pipes(pipes, argc - 4 - io_fd[1]);
 	pids[argc - 3 - io_fd[1]] = -2;
 	proc_info.main_name = argv[0];
 	proc_info.envp = envp;
 	proc_info.cmd_args = argv[2 + io_fd[1]];
-	printf("%s\n",argv[2 + io_fd[1]]);
 	pids[0] = create_first_process(proc_info, pipes[0], io_fd[0]);
 	i = 1 + io_fd[1];
 	while (i < argc - 4)
 	{
+		//printf("Normal proc %i\n", i);
 		proc_info.cmd_args = argv[i + 2];
-		pids[i] = create_normal_process(proc_info, pipes[i - 1], pipes[i]);
+		pids[i] = create_normal_process(proc_info, pipes[i - 1 - io_fd[1]], pipes[i - io_fd[1]]);
 		i++;
 	}
 	proc_info.cmd_args = argv[i + 2];
-	printf("sdgdg\n");
-	pids[argc - 4 - io_fd[1]] = create_last_process(proc_info, pipes[i - 1],
+	pids[argc - 4 - io_fd[1]] = create_last_process(proc_info, pipes[i - 1 - io_fd[1]],
 			argv[argc - 1], io_fd[1]);
-	printf("UUU\n");
 	i = wait_all_processes(pids);
-	printf("AAAA\n");
 	unlink(TMP_FILE_PATH);
 	return ((((i) & 0xff00) >> 8));
 }
