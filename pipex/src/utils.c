@@ -55,3 +55,9 @@ void	print_cmd_not_found(char *cmd_name)
 		write(2, cmd_name, ft_strlen(cmd_name));
 	write(2, ": command not found\n", 20);
 }
+
+void	print_input_prompt(char *buffer, ssize_t read_size)
+{
+	if (read_size == -999 || buffer[read_size - 1] == '\n')
+		write(1, "> ", 2);
+}

@@ -1,9 +1,10 @@
-(FIXED)1 - EOF: Entering with no chars, or writing some part of EOF will still count as EOF
+(VGOK)(FIXED)1 - EOF: Entering with no chars, or writing some part of EOF will still count as EOF
 	Note: If EOF is empty, on real heredoc, entering an empty file counts as EOF. Don't forget to keep it.
 
-2 - When the heredoc line is too long, it will print the > char multiple times
+(VGOK)(FIXED)2 - When the heredoc line is too long, it will print the > char multiple times
+	Note: The canonical TTY mode truncates the line if it's above 4096. 
 
-3 - Too long heredoc seems to be working fine
+(VGOK)3 - Too long heredoc seems to be working fine
 
 4 - Opening too many processes result in (Too many files) error. The limit seems to be BUFFER_SIZE / 2
 

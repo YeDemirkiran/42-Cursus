@@ -14,7 +14,7 @@
 # define PIPEX_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2048
+#  define BUFFER_SIZE 1024
 # endif
 
 # include "stdlib.h"
@@ -54,6 +54,7 @@ void	free_string_array(char **arr);
 void	strerror_exit(char *perror_str, int free_str);
 int		is_delimiter(char *str, char *delimiter, ssize_t read_size);
 void	print_cmd_not_found(char *cmd_name);
+void	print_input_prompt(char *buffer, ssize_t read_size);
 
 void	create_child_process(char *main_name, char *program_args,
 			char **envp, t_fd_info fd_info);

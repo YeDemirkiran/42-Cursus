@@ -14,17 +14,17 @@
 
 int	start_heredoc(char *delimiter)
 {
-	char	buffer[BUFFER_SIZE];
+	char	buffer[BUFFER_SIZE + 1];
 	ssize_t	read_size;
 	int		tmp_fd;
 
 	tmp_fd = open(TMP_FILE_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)
 		strerror_exit("pipex", 0);
-	read_size = 1;
-	while (read_size > 0)
+	read_size = -999;
+	while (read_size > 0 || read_size == -999)
 	{
-		write(1, "> ", 2);
+		print_input_prompt(buffer, read_size);
 		read_size = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 		buffer[read_size] = 0;
 		if (read_size > 0)
