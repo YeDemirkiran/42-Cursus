@@ -72,7 +72,10 @@ int	prepare_stdout(char *stdout_path, int append)
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
 	fd = open(stdout_path, flags, 0664);
 	if (fd < 0)
-		strerror_exit("pipex: open", 0);
+	{
+		write(2, "bash: ", 6);
+		strerror_exit(stdout_path, 0);
+	}
 	return (fd);
 }
 

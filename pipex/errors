@@ -12,10 +12,8 @@
 
 (FIXED)6 - When a command is empty, nothing is printed. But the real shell prints an error message (not found).
 
-7 - When any file or command is not found, it returns 0 instead of 1.
+7 - When any file or command is not found, it returns 0 instead of 1. It returns the last exit status of the last command, matching the real shell behavior.
 
-8 - It returns the last exit status of the last command, matching the real shell behavior.
+8 - When the output file is "" (empty) or a directory, error message starts with "pipex: open". It should start like "bash: ", like the real bash.
 
-9 - When the output file is "" (empty) or a directory, error message starts with "pipex: open". It should start like "bash: ", like the real bash.
-
-10 - Weird things happen after exceeding the buffer size on each here_doc line
+9 - Weird things happen after exceeding the buffer size on each here_doc line
