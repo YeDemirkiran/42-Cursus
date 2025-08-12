@@ -14,7 +14,7 @@
 # define PIPEX_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 2048
 # endif
 
 # include "stdlib.h"
@@ -23,7 +23,6 @@
 # include "stdio.h"
 # include "string.h"
 # include "sys/wait.h"
-# include "sys/stat.h"
 
 # include "ft_string.h"
 
