@@ -51,6 +51,8 @@ int	prepare_stdin(char *input_file_path, int *io_fd, char *delimiter)
 	else if (access(input_file_path, R_OK) < 0)
 	{
 		write(2, "bash: ", 6);
+		if (input_file_path[0] == 0)
+			write (2, ": ", 2);
 		perror(input_file_path);
 		io_fd[0] = -1;
 	}

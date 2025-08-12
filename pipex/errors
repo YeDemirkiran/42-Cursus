@@ -7,10 +7,10 @@
 
 4 - Opening too many processes result in (Too many files) error. The limit seems to be BUFFER_SIZE / 2
 
-5 - It can handle it if infile is "" (empty) or doesn't exist. But if it's empty, then the message is bash: doesn't exist.
+(FIXED)5 - It can handle it if infile is "" (empty) or doesn't exist. But if it's empty, then the message is bash: doesn't exist.
 	The real bash prints an extra column.
 
-6 - When a command is empty, nothing is printed and it returns 0. But the real shell prints an error message (not found).
+(FIXED)6 - When a command is empty, nothing is printed. But the real shell prints an error message (not found).
 
 7 - When any file or command is not found, it returns 0 instead of 1.
 

@@ -12,6 +12,12 @@
 
 #include "pipex.h"
 
+void	empty_cmd_not_found()
+{
+	write(2, " : command not found\n", 21);
+	exit(EXIT_FAILURE);
+}
+
 void	create_child_process(char *main_name, char *program_args,
 		char **envp, t_fd_info fd_info)
 {
@@ -19,10 +25,10 @@ void	create_child_process(char *main_name, char *program_args,
 	char		*program_path;
 
 	if (program_args == NULL || ft_strlen(program_args) == 0)
-		exit(EXIT_FAILURE);
+		empty_cmd_not_found();
 	cmd_args = ft_split(program_args, ' ');
-	if (!cmd_args)
-		strerror_exit(main_name, 0);
+	if (!cmd_args || cmd_args[0] == NULL)
+		empty_cmd_not_found();
 	program_path = parse_program_path(cmd_args[0], envp);
 	if (!program_path)
 	{
