@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_move.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/13 13:10:49 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/13 13:10:50 by yademirk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "stack.h"
 
 void	stack_a_move_to_first(t_stack_pair pair, t_stack target, t_byte *instructions, int *inst_index)

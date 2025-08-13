@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:56:26 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 15:01:40 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:09:35 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 # include "dependencies.h"
 
-typedef struct s_lis 
+typedef struct s_lis
 {
 	int	*arr;
 	int	length;
@@ -74,7 +74,8 @@ int				stack_push_a_to_b(t_stack_pair *pair);
 int				stack_push_b_to_a(t_stack_pair *pair);
 
 t_stack			find_smallest_index(t_stack *stack, int size);
-void			stack_a_move_to_first(t_stack_pair pair, t_stack target, t_byte *instructions, int *inst_index);
+void			stack_a_move_to_first(t_stack_pair pair, t_stack target,
+					t_byte *instructions, int *inst_index);
 int				is_stack_sorted(t_stack *stack, int size);
 
 t_stack_pair	init_stack_pair(char **arr, int argc);
