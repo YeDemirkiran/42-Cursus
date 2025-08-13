@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:03:42 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 15:23:16 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:41:25 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,6 @@ void	free_string_array(char **arr)
 	free(arr);
 }
 
-void	strerror_exit(char *perror_str, int free_str)
-{
-	perror(perror_str);
-	if (free_str)
-		free(perror_str);
-	exit(EXIT_FAILURE);
-}
-
 int	is_delimiter(char *str, char *delimiter, ssize_t read_size)
 {
 	int		is_delimiter;
@@ -49,15 +41,3 @@ int	is_delimiter(char *str, char *delimiter, ssize_t read_size)
 	return (is_delimiter);
 }
 
-void	print_cmd_not_found(char *cmd_name)
-{
-	if (cmd_name)
-		write(2, cmd_name, ft_strlen(cmd_name));
-	write(2, ": command not found\n", 20);
-}
-
-void	print_input_prompt(char *buffer, ssize_t read_size)
-{
-	if (read_size == -999 || buffer[read_size - 1] == '\n')
-		write(1, "> ", 2);
-}

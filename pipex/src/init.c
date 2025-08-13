@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:02:38 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 17:47:07 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:31:51 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int	start_heredoc(char *delimiter)
 	return (tmp_fd);
 }
 
-int	prepare_stdin(char *input_file_path, int *io_fd, char *delimiter)
+int	prepare_stdin(char *input_file_path, int *stdin_fd, char *delimiter)
 {
 	if (ft_strncmp(input_file_path, "here_doc", 9) == 0)
 	{
-		io_fd[0] = start_heredoc(delimiter);
+		stdin_fd[0] = start_heredoc(delimiter);
 		return (1);
 	}
 	else if (access(input_file_path, R_OK) < 0)
@@ -54,10 +54,10 @@ int	prepare_stdin(char *input_file_path, int *io_fd, char *delimiter)
 		if (input_file_path[0] == 0)
 			write (2, ": ", 2);
 		perror(input_file_path);
-		io_fd[0] = -1;
+		stdin_fd[0] = -1;
 	}
 	else
-		io_fd[0] = open(input_file_path, O_RDONLY);
+		stdin_fd[0] = open(input_file_path, O_RDONLY);
 	return (0);
 }
 

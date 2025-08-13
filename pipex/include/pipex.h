@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/11 17:17:26 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:42:32 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,18 @@ char	*parse_program_path(char *path, char **envp);
 
 int		start_heredoc(char *delimiter);
 int		prepare_stdin(char *input_file_path,
-			int *io_fd, char *delimiter);
+			int *stdin_fd, char *delimiter);
 int		prepare_stdout(char *stdout_path, int append);
 void	prepare_pipes(int pipes[BUFFER_SIZE][2], int pipe_count);
 void	set_fds(t_fd_info fd_info);
 
-void	free_string_array(char **arr);
 void	strerror_exit(char *perror_str, int free_str);
-int		is_delimiter(char *str, char *delimiter, ssize_t read_size);
 void	print_cmd_not_found(char *cmd_name);
+void	not_found_exit(char *cmd_name);
 void	print_input_prompt(char *buffer, ssize_t read_size);
+
+void	free_string_array(char **arr);
+int		is_delimiter(char *str, char *delimiter, ssize_t read_size);
 
 void	create_child_process(char *main_name, char *program_args,
 			char **envp, t_fd_info fd_info);
