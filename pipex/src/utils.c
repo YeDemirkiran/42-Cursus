@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:03:42 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/13 12:41:25 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:50:04 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,3 @@ int	is_delimiter(char *str, char *delimiter, ssize_t read_size)
 	str[read_size - 1] = tmp;
 	return (is_delimiter);
 }
-

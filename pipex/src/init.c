@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:02:38 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/13 12:31:51 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:53:13 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	prepare_stdout(char *stdout_path, int append)
 	if (fd < 0)
 	{
 		write(2, "bash: ", 6);
+		if (stdout_path[0] == 0)
+			write (2, ": ", 2);
 		strerror_exit(stdout_path, 0);
 	}
 	return (fd);

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:04:11 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/13 12:40:03 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:49:54 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,13 @@ void	create_child_process(char *main_name, char *program_args,
 	char		*program_path;
 
 	if (program_args == NULL || ft_strlen(program_args) == 0)
-	{
-		print_cmd_not_found(" ");
-		exit(EXIT_FAILURE);
-	}
+		not_found_exit(" ");
 	cmd_args = ft_split(program_args, ' ');
 	if (!cmd_args || cmd_args[0] == NULL)
 	{
 		if (cmd_args)
 			free_string_array(cmd_args);
-		print_cmd_not_found(program_args);
-		exit(EXIT_FAILURE);
+		not_found_exit(program_args);
 	}
 	program_path = parse_program_path(cmd_args[0], envp);
 	if (!program_path)
