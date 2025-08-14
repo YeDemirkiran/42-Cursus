@@ -207,6 +207,19 @@ void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr)
 	sprites_buffer[i].image.img_addr = mlx_xpm_file_to_image(mlx_addr, path, &(sprites_buffer[i].size.x), &(sprites_buffer[i].size.y));
 }
 
+void	add_object(t_object *objects_buffer, t_sprite sprite, int pos_x, int pos_y)
+{
+	int			i;
+	
+	i = 0;
+	while (objects_buffer[i].sprite_id >= 0)
+		i++;
+	objects_buffer[i].sprite = sprite;
+	objects_buffer[i].sprite_id = 1;
+	objects_buffer[i].position.x = pos_x;
+	objects_buffer[i].position.y = pos_y;
+}
+
 void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 {
 	init_sprites_empty(sprites_buffer);
@@ -221,9 +234,11 @@ void	init_background(t_frame *frame)
 	frame->background.sprite.image = frame->sprites[0].image;
 }
 
-void	init_objects(t_object *objects_buffer)
+void	init_objects(t_object *objects_buffer, t_sprite *sprites)
 {
 	init_objects_empty(objects_buffer);
+	add_object(objects_buffer, sprites[2], 200, 250);
+	add_object(objects_buffer, sprites[2], 400, 500);
 }
 
 void	init_player(t_frame *frame)
@@ -240,8 +255,6 @@ void	render_objects(t_object *objects, t_frame frame)
 	i = 0;
 	while (objects[i].sprite_id >= 0)
 	{
-		printf("hahaha\n");
-		mlx_destroy_image(frame.mlx_addr, objects[i].sprite.image.img_addr);
 		mlx_put_image_to_window(frame.mlx_addr, frame.mlx_window, objects[i].sprite.image.img_addr, objects[i].position.x, objects[i].position.y);
 		i++;
 	}
@@ -304,7 +317,7 @@ int	main(int argc, char **argv)
 	printf("Done. Init background...\n");
 	init_background(&frame);
 	printf("Done. Init objects...\n");
-	init_objects(frame.objects);
+	init_objects(frame.objects, frame.sprites);
 	printf("Done. Init player...\n");
 	init_player(&frame);
 	printf("Done. Init hooks...\n");
