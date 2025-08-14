@@ -163,6 +163,19 @@ t_image	gen_triangle_img(void *mlx_pointer, int width, int height)
 // 	return (img);
 // }
 
+int	render_frame(t_image *img) 
+{
+	static t_vec_2	current_pos;
+
+	if (current_pos.x != img->pos.x || current_pos.y != img->pos.y)
+	{
+		mlx_put_image_to_window(img->mlx_addr, img->mlx_window, img->img_addr, img->pos.x, img->pos.y);
+		current_pos.x = img->pos.x;
+		current_pos.y = img->pos.y;
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	void	*mlx_addr;
@@ -178,10 +191,16 @@ int	main(int argc, char **argv)
 	mlx_window = mlx_new_window(mlx_addr, RES_X, RES_Y, WINDOW_TITLE);
 	if (!mlx_window)
 		return (EXIT_FAILURE);
+	mlx_image.mlx_addr = mlx_addr;
+	mlx_image.mlx_window = mlx_window;
+	mlx_image.pos.x = RES_X / 2;
+	mlx_image.pos.y = RES_Y / 2;
 	mlx_image.img_addr = mlx_xpm_file_to_image(mlx_addr, TEXTURES_PATH "Water.xpm", &(vec_2.x), &(vec_2.y));
-	mlx_put_image_to_window(mlx_addr, mlx_window, mlx_image.img_addr, RES_X / 2, RES_Y / 2);
-	mlx_hook(mlx_window, KeyPress, KeyPressMask, on_esc_press, NULL);
-	mlx_hook(mlx_window, ButtonPress, ButtonPressMask, on_cross_press, NULL);
+	//mlx_put_image_to_window(mlx_addr, mlx_window, mlx_image.img_addr, mlx_image.pos.x, mlx_image.pos.x);
+	mlx_hook(mlx_window, KeyPress, KeyPressMask, on_key_press, &(mlx_image.pos));
+	//mlx_hook(mlx_window, KeyPress, KeyPressMask, on_movement, &(mlx_image.pos));
+	//mlx_hook(mlx_window, ButtonPress, ButtonPressMask, on_cross_press, );
+	mlx_loop_hook(mlx_addr, render_frame, &mlx_image);
 	mlx_loop(mlx_addr);
 	return (EXIT_SUCCESS);
 }

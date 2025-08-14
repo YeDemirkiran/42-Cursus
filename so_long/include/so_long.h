@@ -53,19 +53,27 @@ typedef struct s_vec_2
 
 typedef struct s_image
 {
+	void	*mlx_addr;
+	void	*mlx_window;
 	void	*img_addr;
 	char	*mod_addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	t_vec_2	pos;
 }			t_image;
 
 enum	e_keys
 {
 	K_ESC = 27,
+	K_W = 119,
+	K_S = 115,
+	K_A = 97,
+	K_D = 100,
 };
 
-int	on_esc_press(int keycode);
-int	on_cross_press(int button_code);
+int		on_key_press(int keycode, t_vec_2 *current_pos);
+void	on_esc_press(unsigned char key);
+void	on_move(unsigned int key, t_vec_2 *current_pos);
 
 #endif
