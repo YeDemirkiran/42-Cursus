@@ -197,10 +197,17 @@ int	main(int argc, char **argv)
 	mlx_image.pos.y = RES_Y / 2;
 	mlx_image.img_addr = mlx_xpm_file_to_image(mlx_addr, TEXTURES_PATH "Water.xpm", &(vec_2.x), &(vec_2.y));
 	//mlx_put_image_to_window(mlx_addr, mlx_window, mlx_image.img_addr, mlx_image.pos.x, mlx_image.pos.x);
-	mlx_hook(mlx_window, KeyPress, KeyPressMask, on_key_press, &(mlx_image.pos));
+	mlx_hook(mlx_window, KeyPress, KeyPressMask, on_key_press, &(mlx_image));
 	//mlx_hook(mlx_window, KeyPress, KeyPressMask, on_movement, &(mlx_image.pos));
 	//mlx_hook(mlx_window, ButtonPress, ButtonPressMask, on_cross_press, );
 	mlx_loop_hook(mlx_addr, render_frame, &mlx_image);
 	mlx_loop(mlx_addr);
+	mlx_destroy_window(mlx_addr, mlx_window);
+	mlx_destroy_display(mlx_addr);
+	free(mlx_addr);
+	free(mlx_image.img_addr);
+	// free(mlx_window);
+	//free(mlx_image.mod_addr);
+	printf("END\n");
 	return (EXIT_SUCCESS);
 }

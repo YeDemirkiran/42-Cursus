@@ -72,8 +72,8 @@ enum	e_keys
 	K_D = 100,
 };
 
-int		on_key_press(int keycode, t_vec_2 *current_pos);
-void	on_esc_press(unsigned char key);
+int		on_key_press(int keycode, t_image *image);
+void	on_esc_press(unsigned char key, void *mlx_addr);
 void	on_move(unsigned int key, t_vec_2 *current_pos);
 
 #endif
