@@ -17,9 +17,23 @@
 # include "mlx.h"
 # include "stddef.h"
 # include "stdlib.h"
+# include "unistd.h"
+# include "fcntl.h"
 
 # ifndef WINDOW_TITLE
 #  define WINDOW_TITLE "So Long"
+# endif
+
+# ifndef ASSETS_PATH
+#  define ASSETS_PATH "./assets/"
+# endif
+
+# ifndef TEXTURES_PATH
+#  define TEXTURES_PATH "./assets/textures/"
+# endif
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 8192
 # endif
 
 # ifndef RES_X
@@ -29,6 +43,13 @@
 # ifndef RES_Y
 #  define RES_Y 540
 # endif
+
+typedef struct s_vec_2
+{
+	int	x;
+	int	y;
+}			t_vec_2;
+
 
 typedef struct s_image
 {

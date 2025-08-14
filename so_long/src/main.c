@@ -87,6 +87,81 @@ t_image	gen_triangle_img(void *mlx_pointer, int width, int height)
 	return (img);
 }
 
+// t_vec_2	get_texture_size(char *texture_path)
+// {
+// 	t_vec_2	vec_2;
+// 	int		fd;
+// 	int		i;
+// 	ssize_t	read_size;
+// 	char	buffer[BUFFER_SIZE];
+
+// 	fd = open(texture_path, O_RDONLY);
+// 	if (fd < 0)
+// 		exit(EXIT_FAILURE);
+// 	read_size = -999;
+// 	vec_2.x = 0;
+// 	vec_2.y = 0;
+// 	while (read_size > 0 || read_size == -999)
+// 	{
+// 		read_size = read(fd, buffer, BUFFER_SIZE - 1);
+// 		buffer[read_size] = 0;
+// 		i = 0;
+// 		while (i < read_size)
+// 		{
+// 			if (buffer[i] == '\n')
+// 				(vec_2.y)++;
+// 			else
+// 				(vec_2.x)++;
+// 			i += 4;
+// 		}
+// 	}
+// 	return (vec_2);
+// }
+
+// t_image	gen_texture_img(char *texture_path, void *mlx_pointer)
+// {
+// 	char	buffer[BUFFER_SIZE];
+// 	ssize_t	read_size;
+// 	t_image	img;
+// 	int		x;
+// 	int		y;
+// 	int		fd;
+// 	t_vec_2	txt_size;
+
+// 	txt_size = get_texture_size(texture_path);
+// 	printf("TEXT X: %i, Y: %i\n", txt_size.x, txt_size.y);
+// 	img.img_addr = mlx_new_image(mlx_pointer, txt_size.x, txt_size.y);
+// 	img.mod_addr = mlx_get_data_addr(img.img_addr, &img.bits_per_pixel, &img.line_length, &img.endian);
+// 	read_size = -999;
+// 	fd = open(texture_path, O_RDONLY);
+// 	if (fd < 0)
+// 		exit(EXIT_FAILURE);
+// 	y = 0;
+// 	x = 0;
+// 	read_size = -999;
+// 	while (read_size > 0 || read_size == -999)
+// 	{
+// 		read_size = read(fd, buffer, BUFFER_SIZE - 1);
+// 		buffer[BUFFER_SIZE - 1] = 0;
+// 		while (x < read_size)
+// 		{
+
+// 		}
+// 	}
+// 	y = 0;
+// 	while (y * 2 < txt_size.y)
+// 	{
+// 		x = 0;
+// 		while (x <= y * 2)
+// 		{
+// 			ft_put_pixel(img, (txt_size.x / 2) + (x - y), y, 0x00FFFFFF);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// 	return (img);
+// }
+
 int	main(int argc, char **argv)
 {
 	void	*mlx_addr;
@@ -101,7 +176,7 @@ int	main(int argc, char **argv)
 	mlx_window = mlx_new_window(mlx_addr, RES_X, RES_Y, WINDOW_TITLE);
 	if (!mlx_window)
 		return (EXIT_FAILURE);
-	mlx_image = gen_triangle_img(mlx_addr, RES_X / 2, RES_Y / 2);
+	mlx_image = gen_texture_img(TEXTURES_PATH "Water.bmp", mlx_addr);
 	mlx_put_image_to_window(mlx_addr, mlx_window, mlx_image.img_addr, RES_X / 4, RES_Y / 4);
 	mlx_loop(mlx_addr);
 	return (EXIT_SUCCESS);
