@@ -165,9 +165,10 @@ t_image	gen_triangle_img(void *mlx_pointer, int width, int height, int color)
 
 void	clear_screen(void *mlx_addr, void *mlx_window)
 {
-	t_image	img;
+	static t_image	img;
 
-	img = gen_square_img(mlx_addr, RES_X, RES_Y, 0);
+	if (img.img_addr == NULL)
+		img = gen_square_img(mlx_addr, RES_X, RES_Y, 0);
 	mlx_put_image_to_window(mlx_addr, mlx_window, img.img_addr, 0, 0);
 }
 
