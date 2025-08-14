@@ -21,7 +21,7 @@ LIB_DIRS = -L/usr/lib -L$(MLX_DIR)
 LIBS = -lm -l$(MLX_LIB) -lXext -lX11 -lz
 
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c)
+SRC = $(addprefix $(SRC_DIR), main.c events.c)
 
 INC = -I./include -I/usr/include -I$(MLX_DIR)
 

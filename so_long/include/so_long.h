@@ -60,4 +60,12 @@ typedef struct s_image
 	int		endian;
 }			t_image;
 
+enum	e_keys
+{
+	K_ESC = 27,
+};
+
+int	on_esc_press(int keycode);
+int	on_cross_press(int button_code);
+
 #endif

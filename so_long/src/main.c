@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include "X11/X.h"
 #include "stdio.h"
 
 void	ft_put_pixel(t_image image, int pos_x, int pos_y, int color)
@@ -179,6 +180,8 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	mlx_image.img_addr = mlx_xpm_file_to_image(mlx_addr, TEXTURES_PATH "Water.xpm", &(vec_2.x), &(vec_2.y));
 	mlx_put_image_to_window(mlx_addr, mlx_window, mlx_image.img_addr, RES_X / 2, RES_Y / 2);
+	mlx_hook(mlx_window, KeyPress, KeyPressMask, on_esc_press, NULL);
+	mlx_hook(mlx_window, ButtonPress, ButtonPressMask, on_cross_press, NULL);
 	mlx_loop(mlx_addr);
 	return (EXIT_SUCCESS);
 }
