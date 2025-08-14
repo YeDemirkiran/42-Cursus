@@ -163,13 +163,13 @@ t_image	gen_triangle_img(void *mlx_pointer, int width, int height, int color)
 // 	return (img);
 // }
 
-void	clear_screen(void *mlx_addr, void *mlx_window)
+void	render_background(t_frame *frame)
 {
-	static t_image	img;
+	// static t_image	img;
 
-	if (img.img_addr == NULL)
-		img = gen_square_img(mlx_addr, RES_X, RES_Y, 0);
-	mlx_put_image_to_window(mlx_addr, mlx_window, img.img_addr, 0, 0);
+	// if (img.img_addr == NULL)
+	// 	img = gen_square_img(mlx_addr, RES_X, RES_Y, 0);
+	mlx_put_image_to_window(frame->mlx_addr, frame->mlx_window, frame->background.sprite.image.img_addr, 0, 0);
 }
 
 void	init_sprites_empty(t_sprite *sprites_buffer)
@@ -211,7 +211,13 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 {
 	init_sprites_empty(sprites_buffer);
 	// Add all the required textures here
+	add_sprite(TEXTURES_PATH "background_placeholder.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Water.xpm", sprites_buffer, mlx_addr);
+}
+
+void	init_background(t_frame *frame)
+{
+	frame->background.sprite.image = frame->sprites[0].image;
 }
 
 void	init_objects(t_object *objects_buffer)
@@ -221,7 +227,7 @@ void	init_objects(t_object *objects_buffer)
 
 void	init_player(t_frame *frame)
 {
-	frame->player.object.sprite.image = frame->sprites[0].image;
+	frame->player.object.sprite.image = frame->sprites[1].image;
 	frame->player.object.position.x = RES_X / 2;
 	frame->player.object.position.y = RES_Y / 2;
 }
@@ -250,7 +256,8 @@ void	render_player(t_frame frame)
 int	render_frame(t_frame *frame) 
 {
 	//printf("Cleaning screen...\n");
-	clear_screen(frame->mlx_addr, frame->mlx_window);
+	//clear_screen(frame->mlx_addr, frame->mlx_window);
+	render_background(frame);
 	//printf("Done. Rendering objects...\n");
 	render_objects(frame->objects, *frame);
 	//printf("Done. Rendering player...\n");
@@ -279,6 +286,8 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	printf("Init sprites...\n");
 	init_sprites(frame.sprites, frame.mlx_addr);
+	printf("Done. Init background...\n");
+	init_background(&frame);
 	printf("Done. Init objects...\n");
 	init_objects(frame.objects);
 	printf("Done. Init player...\n");
