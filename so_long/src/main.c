@@ -21,13 +21,32 @@ void	ft_put_pixel(t_image image, int pos_x, int pos_y, int color)
 	*(unsigned int *)dst = color;
 }
 
+t_image	generate_square_img(void *mlx_pointer)
+{
+	t_image	img;
+	int		x;
+	int		y;
+
+	img.img_addr = mlx_new_image(mlx_pointer, RES_X / 2, RES_Y / 2);
+	img.mod_addr = mlx_get_data_addr(img.img_addr, &img.bits_per_pixel, &img.line_length, &img.endian);
+	while (x < RES_X / 2)
+	{
+		y = 0;
+		while (y < RES_Y / 2)
+		{
+			ft_put_pixel(img, x, y, 0x00FFFFFF);
+			y++;
+		}
+		x++;
+	}
+	return (img);
+}
+
 int	main(int argc, char **argv)
 {
 	void	*mlx_addr;
 	void	*mlx_window;
 	t_image	mlx_image;
-	int		x;
-	int		y;
 
 	(void)argc;
 	(void)argv;
@@ -37,19 +56,7 @@ int	main(int argc, char **argv)
 	mlx_window = mlx_new_window(mlx_addr, RES_X, RES_Y, WINDOW_TITLE);
 	if (!mlx_window)
 		return (EXIT_FAILURE);
-	mlx_image.img_addr = mlx_new_image(mlx_addr, RES_X / 2, RES_Y / 2);
-	mlx_image.mod_addr = mlx_get_data_addr(mlx_image.img_addr, &mlx_image.bits_per_pixel, &mlx_image.line_length, &mlx_image.endian);
-	x = 0;
-	while (x < RES_X / 2)
-	{
-		y = 0;
-		while (y < RES_Y / 2)
-		{
-			ft_put_pixel(mlx_image, x, y, 0x00FFFFFF);
-			y++;
-		}
-		x++;
-	}
+	mlx_image = generate_square_img(mlx_addr);
 	mlx_put_image_to_window(mlx_addr, mlx_window, mlx_image.img_addr, RES_X / 4, RES_Y / 4);
 	mlx_loop(mlx_addr);
 	return (EXIT_SUCCESS);
