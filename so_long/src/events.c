@@ -1,14 +1,14 @@
 #include "so_long.h"
 #include "stdio.h"
 
-int	on_key_press(int keycode, t_image *image)
+int	on_key_press(int keycode, t_frame *frame)
 {
 	unsigned char	key;
 
 	key = keycode;
-	printf("Keycode: %i\n", key);
-	on_esc_press(key, image->mlx_addr);
-	on_move(key, &(image->pos));
+	//printf("Keycode: %i\n", key);
+	on_esc_press(key, frame->mlx_addr);
+	on_move(key, &(frame->player));
 	return (0);
 }
 
@@ -18,22 +18,16 @@ void	on_esc_press(unsigned char key, void *mlx_addr)
 		mlx_loop_end(mlx_addr);
 }
 
-int	on_cross_press(int button_code)
-{
-	printf("Button Code: %i\n", (unsigned char)button_code);
-	return (0);
-}
+// int	on_cross_press(int button_code)
+// {
+// //	printf("Button Code: %i\n", (unsigned char)button_code);
+// 	return (0);
+// }
 
-void	on_move(unsigned int key, t_vec_2 *current_pos)
+void	on_move(unsigned int key, t_player *player)
 {
-	printf("OLD POS: x %i, y %i\n", current_pos->x, current_pos->y);
-	if (key == K_W)
-		current_pos->y -= 10;
-	if (key == K_S)
-		current_pos->y += 10;
-	if (key == K_A)
-		current_pos->x -= 10;
-	if (key == K_D)
-		current_pos->x += 10;
-	printf("NEW POS: x %i, y %i\n", current_pos->x, current_pos->y);
+	//printf("OLD POS: x %i, y %i\n", current_pos->x, current_pos->y);
+	player->object.position.y += ((key == K_S) - (key == K_W)) * 10;
+	player->object.position.x += ((key == K_D) - (key == K_A)) * 10;
+	//printf("NEW POS: x %i, y %i\n", player->object.position.x, player->object.position.y);
 }

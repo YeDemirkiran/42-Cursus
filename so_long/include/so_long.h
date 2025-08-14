@@ -50,18 +50,48 @@ typedef struct s_vec_2
 	int	y;
 }			t_vec_2;
 
-
 typedef struct s_image
 {
-	void	*mlx_addr;
-	void	*mlx_window;
 	void	*img_addr;
 	char	*mod_addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	t_vec_2	pos;
 }			t_image;
+
+typedef struct s_sprite
+{
+	t_image	image;
+	int		id;
+	t_vec_2	size;
+}			t_sprite;
+
+
+typedef struct s_object
+{
+	int			sprite_id;
+	t_sprite	sprite;
+	t_vec_2		position;
+}			t_object;
+
+typedef struct s_player
+{
+	t_object	object;
+	int			move_count;
+	int			target_collect;
+	int			current_collect;
+}			t_player;
+
+typedef struct s_frame
+{
+	void		*mlx_addr;
+	void		*mlx_window;
+	t_object	background;
+	t_sprite	sprites[BUFFER_SIZE];
+	t_object	objects[BUFFER_SIZE];
+	size_t		object_count;
+	t_player	player;
+}			t_frame;
 
 enum	e_keys
 {
@@ -70,10 +100,14 @@ enum	e_keys
 	K_S = 115,
 	K_A = 97,
 	K_D = 100,
+	K_UP = 0,
+	K_DOWN = 0,
+	K_LEFT = 0,
+	K_RIGHT = 0,
 };
 
-int		on_key_press(int keycode, t_image *image);
+int		on_key_press(int keycode, t_frame *frame);
 void	on_esc_press(unsigned char key, void *mlx_addr);
-void	on_move(unsigned int key, t_vec_2 *current_pos);
+void	on_move(unsigned int key, t_player *player);
 
 #endif

@@ -22,21 +22,21 @@ void	ft_put_pixel(t_image image, int pos_x, int pos_y, int color)
 	*(unsigned int *)dst = color;
 }
 
-t_image	gen_square_img(void *mlx_pointer)
+t_image	gen_square_img(void *mlx_pointer, int width, int height, int color)
 {
 	t_image	img;
 	int		x;
 	int		y;
 
-	img.img_addr = mlx_new_image(mlx_pointer, RES_X / 2, RES_Y / 2);
+	img.img_addr = mlx_new_image(mlx_pointer, width, height);
 	img.mod_addr = mlx_get_data_addr(img.img_addr, &img.bits_per_pixel, &img.line_length, &img.endian);
 	x = 0;
-	while (x < RES_X / 2)
+	while (x < width)
 	{
 		y = 0;
-		while (y < RES_Y / 2)
+		while (y < height)
 		{
-			ft_put_pixel(img, x, y, 0x00FFFFFF);
+			ft_put_pixel(img, x, y, color);
 			y++;
 		}
 		x++;
@@ -66,7 +66,7 @@ t_image	gen_right_triangle_img(void *mlx_pointer)
 	return (img);
 }
 
-t_image	gen_triangle_img(void *mlx_pointer, int width, int height)
+t_image	gen_triangle_img(void *mlx_pointer, int width, int height, int color)
 {
 	t_image	img;
 	int		x;
@@ -80,7 +80,7 @@ t_image	gen_triangle_img(void *mlx_pointer, int width, int height)
 		x = 0;
 		while (x <= y * 2)
 		{
-			ft_put_pixel(img, (width / 2) + (x - y), y, 0x00FFFFFF);
+			ft_put_pixel(img, (width / 2) + (x - y), y, color);
 			x++;
 		}
 		y++;
@@ -163,51 +163,132 @@ t_image	gen_triangle_img(void *mlx_pointer, int width, int height)
 // 	return (img);
 // }
 
-int	render_frame(t_image *img) 
+void	clear_screen(void *mlx_addr, void *mlx_window)
 {
-	static t_vec_2	current_pos;
+	t_image	img;
 
-	if (current_pos.x != img->pos.x || current_pos.y != img->pos.y)
+	img = gen_square_img(mlx_addr, RES_X, RES_Y, 0);
+	mlx_put_image_to_window(mlx_addr, mlx_window, img.img_addr, 0, 0);
+}
+
+void	init_sprites_empty(t_sprite *sprites_buffer)
+{
+	int	i;
+
+	i = 0;
+	while (i < BUFFER_SIZE)
 	{
-		mlx_put_image_to_window(img->mlx_addr, img->mlx_window, img->img_addr, img->pos.x, img->pos.y);
-		current_pos.x = img->pos.x;
-		current_pos.y = img->pos.y;
+		sprites_buffer[i].id = -1;
+		i++;
 	}
+}
+
+void	init_objects_empty(t_object *objects_buffer)
+{
+	int	i;
+
+	i = 0;
+	while (i < BUFFER_SIZE)
+	{
+		objects_buffer[i].sprite_id = -1;
+		i++;
+	}
+}
+
+void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr)
+{
+	int			i;
+	
+	i = 0;
+	while (sprites_buffer[i].id >= 0)
+		i++;
+	sprites_buffer[i].id = i;
+	sprites_buffer[i].image.img_addr = mlx_xpm_file_to_image(mlx_addr, path, &(sprites_buffer[i].size.x), &(sprites_buffer[i].size.y));
+}
+
+void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
+{
+	init_sprites_empty(sprites_buffer);
+	// Add all the required textures here
+	add_sprite(TEXTURES_PATH "Water.xpm", sprites_buffer, mlx_addr);
+}
+
+void	init_objects(t_object *objects_buffer)
+{
+	init_objects_empty(objects_buffer);
+}
+
+void	init_player(t_frame *frame)
+{
+	frame->player.object.sprite.image = frame->sprites[0].image;
+	frame->player.object.position.x = RES_X / 2;
+	frame->player.object.position.y = RES_Y / 2;
+}
+
+void	render_objects(t_object *objects, t_frame frame)
+{
+	int	i;
+
+	i = 0;
+	while (objects[i].sprite_id >= 0)
+	{
+		printf("hahaha\n");
+		mlx_destroy_image(frame.mlx_addr, objects[i].sprite.image.img_addr);
+		mlx_put_image_to_window(frame.mlx_addr, frame.mlx_window, objects[i].sprite.image.img_addr, objects[i].position.x, objects[i].position.y);
+		i++;
+	}
+}
+
+void	render_player(t_frame frame)
+{
+	//printf("Player pos: x %i, y %i\n", frame.player.object.position.x, frame.player.object.position.y);
+	//mlx_destroy_image(frame.mlx_addr, frame.player.object.sprite.image.img_addr);
+	mlx_put_image_to_window(frame.mlx_addr, frame.mlx_window, frame.player.object.sprite.image.img_addr, frame.player.object.position.x, frame.player.object.position.y);
+}
+
+int	render_frame(t_frame *frame) 
+{
+	//printf("Cleaning screen...\n");
+	clear_screen(frame->mlx_addr, frame->mlx_window);
+	//printf("Done. Rendering objects...\n");
+	render_objects(frame->objects, *frame);
+	//printf("Done. Rendering player...\n");
+	render_player(*frame);
+//	printf("Done.\n");
 	return (0);
+}
+
+void	init_hooks(t_frame *frame)
+{
+	mlx_hook(frame->mlx_window, KeyPress, KeyPressMask, on_key_press, frame);
+	mlx_loop_hook(frame->mlx_addr, render_frame, frame);
 }
 
 int	main(int argc, char **argv)
 {
-	void	*mlx_addr;
-	void	*mlx_window;
-	t_image	mlx_image;
-	t_vec_2	vec_2;
+	t_frame	frame;
 
 	(void)argc;
 	(void)argv;
-	mlx_addr = mlx_init();
-	if (!mlx_addr)
+	frame.mlx_addr = mlx_init();
+	if (!frame.mlx_addr)
 		return (EXIT_FAILURE);
-	mlx_window = mlx_new_window(mlx_addr, RES_X, RES_Y, WINDOW_TITLE);
-	if (!mlx_window)
+	frame.mlx_window = mlx_new_window(frame.mlx_addr, RES_X, RES_Y, WINDOW_TITLE);
+	if (!frame.mlx_window)
 		return (EXIT_FAILURE);
-	mlx_image.mlx_addr = mlx_addr;
-	mlx_image.mlx_window = mlx_window;
-	mlx_image.pos.x = RES_X / 2;
-	mlx_image.pos.y = RES_Y / 2;
-	mlx_image.img_addr = mlx_xpm_file_to_image(mlx_addr, TEXTURES_PATH "Water.xpm", &(vec_2.x), &(vec_2.y));
-	//mlx_put_image_to_window(mlx_addr, mlx_window, mlx_image.img_addr, mlx_image.pos.x, mlx_image.pos.x);
-	mlx_hook(mlx_window, KeyPress, KeyPressMask, on_key_press, &(mlx_image));
-	//mlx_hook(mlx_window, KeyPress, KeyPressMask, on_movement, &(mlx_image.pos));
-	//mlx_hook(mlx_window, ButtonPress, ButtonPressMask, on_cross_press, );
-	mlx_loop_hook(mlx_addr, render_frame, &mlx_image);
-	mlx_loop(mlx_addr);
-	mlx_destroy_window(mlx_addr, mlx_window);
-	mlx_destroy_display(mlx_addr);
-	free(mlx_addr);
-	free(mlx_image.img_addr);
-	// free(mlx_window);
-	//free(mlx_image.mod_addr);
+	printf("Init sprites...\n");
+	init_sprites(frame.sprites, frame.mlx_addr);
+	printf("Done. Init objects...\n");
+	init_objects(frame.objects);
+	printf("Done. Init player...\n");
+	init_player(&frame);
+	printf("Done. Init hooks...\n");
+	init_hooks(&frame);
+	printf("Done. Start loop...\n");
+	mlx_loop(frame.mlx_addr);
+	printf("Done. Start cleaning...\n");
+	mlx_destroy_window(frame.mlx_addr, frame.mlx_window);
+	mlx_destroy_display(frame.mlx_addr);
 	printf("END\n");
 	return (EXIT_SUCCESS);
 }
