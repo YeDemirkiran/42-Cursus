@@ -254,7 +254,13 @@ void	render_player(t_frame frame)
 	mlx_put_image_to_window(frame.mlx_addr, frame.mlx_window, frame.player.object.sprite.image.img_addr, frame.player.object.position.x, frame.player.object.position.y);
 }
 
-int	render_frame(t_frame *frame) 
+void	update_player(t_player *player)
+{
+	player->object.position.x += player->object.velocity.x;
+	player->object.position.y += player->object.velocity.y;
+}
+
+void	render_frame(t_frame *frame) 
 {
 	//printf("Cleaning screen...\n");
 	//clear_screen(frame->mlx_addr, frame->mlx_window);
@@ -264,13 +270,20 @@ int	render_frame(t_frame *frame)
 	//printf("Done. Rendering player...\n");
 	render_player(*frame);
 //	printf("Done.\n");
+}
+
+int	frame_update(t_frame *frame)
+{
+	update_player(&(frame->player));
+	render_frame(frame);
 	return (0);
 }
 
 void	init_hooks(t_frame *frame)
 {
 	mlx_hook(frame->mlx_window, KeyPress, KeyPressMask, on_key_press, frame);
-	mlx_loop_hook(frame->mlx_addr, render_frame, frame);
+	mlx_hook(frame->mlx_window, KeyRelease, KeyReleaseMask, on_key_press, frame);
+	mlx_loop_hook(frame->mlx_addr, frame_update, frame);
 }
 
 int	main(int argc, char **argv)
@@ -285,6 +298,7 @@ int	main(int argc, char **argv)
 	frame.mlx_window = mlx_new_window(frame.mlx_addr, RES_X, RES_Y, WINDOW_TITLE);
 	if (!frame.mlx_window)
 		return (EXIT_FAILURE);
+	mlx_do_key_autorepeatoff(frame.mlx_addr);
 	printf("Init sprites...\n");
 	init_sprites(frame.sprites, frame.mlx_addr);
 	printf("Done. Init background...\n");
