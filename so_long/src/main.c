@@ -269,6 +269,7 @@ void	render_player(t_frame frame)
 
 void	update_player(t_player *player)
 {
+	//printf("Vel: %i %i\n", player->object.velocity.x, player->object.velocity.y);
 	player->object.position.x += player->object.velocity.x;
 	player->object.position.y += player->object.velocity.y;
 }
@@ -295,7 +296,7 @@ int	frame_update(t_frame *frame)
 void	init_hooks(t_frame *frame)
 {
 	mlx_hook(frame->mlx_window, KeyPress, KeyPressMask, on_key_press, frame);
-	mlx_hook(frame->mlx_window, KeyRelease, KeyReleaseMask, on_key_press, frame);
+	mlx_hook(frame->mlx_window, KeyRelease, KeyReleaseMask, on_key_up, frame);
 	mlx_loop_hook(frame->mlx_addr, frame_update, frame);
 }
 

@@ -111,5 +111,6 @@ int		on_key_press(int keycode, t_frame *frame);
 int		on_key_up(int keycode, t_frame *frame);
 void	on_esc_press(unsigned char key, void *mlx_addr);
 void	on_move(unsigned int key, t_player *player);
+void	on_stop_move(unsigned int key, t_player *player);
 
 #endif
