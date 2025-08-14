@@ -167,6 +167,7 @@ int	main(int argc, char **argv)
 	void	*mlx_addr;
 	void	*mlx_window;
 	t_image	mlx_image;
+	t_vec_2	vec_2;
 
 	(void)argc;
 	(void)argv;
@@ -176,8 +177,8 @@ int	main(int argc, char **argv)
 	mlx_window = mlx_new_window(mlx_addr, RES_X, RES_Y, WINDOW_TITLE);
 	if (!mlx_window)
 		return (EXIT_FAILURE);
-	mlx_image = gen_texture_img(TEXTURES_PATH "Water.bmp", mlx_addr);
-	mlx_put_image_to_window(mlx_addr, mlx_window, mlx_image.img_addr, RES_X / 4, RES_Y / 4);
+	mlx_image.img_addr = mlx_xpm_file_to_image(mlx_addr, TEXTURES_PATH "Water.xpm", &(vec_2.x), &(vec_2.y));
+	mlx_put_image_to_window(mlx_addr, mlx_window, mlx_image.img_addr, RES_X / 2, RES_Y / 2);
 	mlx_loop(mlx_addr);
 	return (EXIT_SUCCESS);
 }
