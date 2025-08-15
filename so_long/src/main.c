@@ -406,9 +406,9 @@ void	init_hooks(t_frame *frame)
 	mlx_loop_hook(frame->mlx_addr, frame_update, frame);
 }
 
-void	parse_map(char *path)
+t_map	parse_map(char *path)
 {
-	int		map_width;
+	t_map	map;
 	int		i;
 	int		tmp;
 	int		fd;
@@ -417,16 +417,16 @@ void	parse_map(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit(EXIT_FAILURE);
-	map_width = -1;
+	map.map_width = -1;
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (map_width == -1)
-			map_width = (int)ft_strlen(line) - 1;
+		if (map.map_width == -1)
+			map.map_width = (int)ft_strlen(line) - 1;
 		else
 		{
 			tmp = (int)ft_strlen(line) - 1;
-			if (map_width != tmp)
+			if (map.map_width != tmp)
 				exit(EXIT_FAILURE);
 		}
 		i = 0;
@@ -455,24 +455,8 @@ void	parse_map(char *path)
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (map_width == -1)
+	if (map.map_width == -1)
 		exit(EXIT_FAILURE);
-	//read_size = -999;
-	// while (read_size > 0 || read_size == -999)
-	// {
-	// 	read_size = read(fd, buffer, BUFFER_SIZE);
-	// 	if (read_size <= 0 && )
-	// 	while (i < read_size)
-	// 	{
-	// 		if (map_width < 0 && buffer[i] == '\n')
-	// 			map_width = i + 1;
-	// 		else if (map_width != j - i + 1 && buffer[i] == '\n')
-	// 			exit(EXIT_FAILURE);
-	// 		if (buffer[i] == '\n')
-	// 			j = i;
-	// 		i++;
-	// 	}
-	// }
 }
 
 int	main(int argc, char **argv)

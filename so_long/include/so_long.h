@@ -108,6 +108,17 @@ typedef struct s_frame
 	t_vec_2		camera_offset;
 }			t_frame;
 
+typedef	struct s_map
+{
+	int			map_valid;
+	int			map_width;
+	t_object	walls[BUFFER_SIZE];
+	t_object	collectibles[BUFFER_SIZE];
+	t_vec_2		start_pos;
+	t_vec_2		exit_pos;
+}			t_map;
+
+
 enum	e_keys
 {
 	K_ESC = 27,
