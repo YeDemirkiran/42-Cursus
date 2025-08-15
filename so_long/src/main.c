@@ -406,12 +406,50 @@ void	init_hooks(t_frame *frame)
 	mlx_loop_hook(frame->mlx_addr, frame_update, frame);
 }
 
+void	parse_map(char *path)
+{
+	int		map_width;
+	int		i;
+	int		j;
+	int		fd;
+	ssize_t	read_size;
+	char	buffer[BUFFER_SIZE];
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		exit(EXIT_FAILURE);
+	map_width = -1;
+	read_size = -999;
+	while (read_size > 0 || read_size == -999)
+	{
+		read_size = read(fd, buffer, BUFFER_SIZE);
+		if (read_size <= 0 && )
+		while (i < read_size)
+		{
+			if (map_width < 0 && buffer[i] == '\n')
+				map_width = i + 1;
+			else if (map_width != j - i + 1 && buffer[i] == '\n')
+				exit(EXIT_FAILURE);
+			if (buffer[i] == '\n')
+				j = i;
+			i++;
+		}
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_frame	frame;
 
 	(void)argc;
 	(void)argv;
+	if (argc != 2)
+	{
+		write(2, "Error\n", 6);
+		write(2, "Too few or too much arguments!\n", 31);
+		exit(EXIT_FAILURE);
+	}
+	parse_map();
 	frame.mlx_addr = mlx_init();
 	if (!frame.mlx_addr)
 		return (EXIT_FAILURE);
