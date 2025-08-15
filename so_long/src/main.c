@@ -263,7 +263,7 @@ void	init_objects(t_object *objects_buffer, t_sprite *sprites)
 
 void	init_player(t_frame *frame)
 {
-	frame->player.object.sprite.image = frame->sprites[1].image;
+	frame->player.object.sprite = frame->sprites[1];
 	frame->player.object.position.x = RES_X / 2;
 	frame->player.object.position.y = RES_Y / 2;
 }
@@ -301,11 +301,62 @@ void	render_player(t_frame frame)
 	render_sprite(frame, frame.player.object.sprite, frame.player.object.position, NULL);
 }
 
-void	update_player(t_player *player)
+t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 {
-	//printf("Vel: %i %i\n", player->object.velocity.x, player->object.velocity.y);
+	t_vec_2	overlap;
+
+	overlap.x = (obj_2.position.x >= obj_1.position.x && obj_2.position.x <= obj_1.position.x + obj_1.sprite.size.x)
+				|| (obj_1.position.x >= obj_2.position.x && obj_1.position.x <= obj_2.position.x + obj_2.sprite.size.x);
+	overlap.y = (obj_2.position.y >= obj_1.position.y && obj_2.position.y <= obj_1.position.y + obj_1.sprite.size.y)
+				|| (obj_1.position.y >= obj_2.position.y && obj_1.position.y <= obj_2.position.y + obj_2.sprite.size.y);
+	if (overlap.x || overlap.y)
+	{	
+		printf("S1 Size %f %f\n", obj_1.sprite.size.x, obj_1.sprite.size.y);
+		printf("S2 Size %f %f\n", obj_2.sprite.size.x, obj_2.sprite.size.y);
+		printf("Overlap %f %f\n", overlap.x, overlap.y);
+	}
+	return (overlap);
+}
+
+t_vec_2	player_overlapping_wall(t_frame frame)
+{
+	int		i;
+	t_vec_2	overlap;
+
+	i = 0;
+	while (frame.objects[i].sprite_id >= 0)
+	{
+		if (frame.objects[i].type == OBJ_WALL)
+		{
+			overlap = are_objects_overlapping(frame.player.object, frame.objects[i]);
+			if (overlap.x && overlap.y)
+			{
+				printf("Found overlap with wall\n");
+				return (overlap);
+			}
+		}
+		i++;
+	}
+	overlap.x = 0;
+	overlap.y = 0;
+	return (overlap);
+}
+
+void	update_player(t_player *player, t_frame frame)
+{
+	t_vec_2	old_pos;
+	t_vec_2	overlap;
+
+	old_pos.x = player->object.position.x;
+	old_pos.y = player->object.position.y;
 	player->object.position.x += player->object.velocity.x;
 	player->object.position.y += player->object.velocity.y;
+	overlap = player_overlapping_wall(frame);
+	if (overlap.x)
+		player->object.position.x = old_pos.x;
+	if (overlap.y)
+		player->object.position.y = old_pos.y;
+	//printf("Vel: %i %i\n", player->object.velocity.x, player->object.velocity.y);
 }
 
 void	update_camera_offset(t_frame *frame, t_vec_2 pos)
@@ -328,7 +379,7 @@ void	render_frame(t_frame *frame)
 
 int	frame_update(t_frame *frame)
 {
-	update_player(&(frame->player));
+	update_player(&(frame->player), *frame);
 	//update_camera_offset(frame, frame->player.object.position);
 	render_frame(frame);
 	return (0);
