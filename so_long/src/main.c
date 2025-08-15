@@ -298,8 +298,7 @@ void	render_player(t_frame frame)
 {
 	//printf("Player pos: x %i, y %i\n", frame.player.object.position.x, frame.player.object.position.y);
 	//mlx_destroy_image(frame.mlx_addr, frame.player.object.sprite.image.img_addr);
-	render_sprite(frame, frame.player.object.sprite, frame.player.object.position, &(frame.camera_offset));
-	mlx_put_image_to_window(frame.mlx_addr, frame.mlx_window, frame.player.object.sprite.image.img_addr, frame.player.object.position.x, frame.player.object.position.y);
+	render_sprite(frame, frame.player.object.sprite, frame.player.object.position, NULL);
 }
 
 void	update_player(t_player *player)
@@ -307,6 +306,12 @@ void	update_player(t_player *player)
 	//printf("Vel: %i %i\n", player->object.velocity.x, player->object.velocity.y);
 	player->object.position.x += player->object.velocity.x;
 	player->object.position.y += player->object.velocity.y;
+}
+
+void	update_camera_offset(t_frame *frame, t_vec_2 pos)
+{
+	frame->camera_offset = pos;
+	printf("Cam offset: %f %f\n", pos.x, pos.y);
 }
 
 void	render_frame(t_frame *frame) 
@@ -324,6 +329,7 @@ void	render_frame(t_frame *frame)
 int	frame_update(t_frame *frame)
 {
 	update_player(&(frame->player));
+	//update_camera_offset(frame, frame->player.object.position);
 	render_frame(frame);
 	return (0);
 }
