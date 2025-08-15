@@ -268,6 +268,20 @@ void	init_player(t_frame *frame)
 	frame->player.object.position.y = RES_Y / 2;
 }
 
+void	render_sprite(t_frame frame, t_sprite sprite, t_vec_2 pos, t_vec_2 *offset)
+{
+	t_vec_2	tmp;
+
+	tmp.x = 0;
+	tmp.y = 0;
+	if (offset)
+	{
+		tmp.x = offset->x;
+		tmp.y = offset->y;
+	}
+	mlx_put_image_to_window(frame.mlx_addr, frame.mlx_window, sprite.image.img_addr, (int)(pos.x + tmp.x), (int)(pos.y + tmp.y));
+}
+
 void	render_objects(t_object *objects, t_frame frame)
 {
 	int	i;
@@ -275,7 +289,7 @@ void	render_objects(t_object *objects, t_frame frame)
 	i = 0;
 	while (objects[i].sprite_id >= 0)
 	{
-		mlx_put_image_to_window(frame.mlx_addr, frame.mlx_window, objects[i].sprite.image.img_addr, (int)(objects[i].position.x), (int)(objects[i].position.y));
+		render_sprite(frame, objects[i].sprite, objects[i].position, &(frame.camera_offset));
 		i++;
 	}
 }
@@ -284,6 +298,7 @@ void	render_player(t_frame frame)
 {
 	//printf("Player pos: x %i, y %i\n", frame.player.object.position.x, frame.player.object.position.y);
 	//mlx_destroy_image(frame.mlx_addr, frame.player.object.sprite.image.img_addr);
+	render_sprite(frame, frame.player.object.sprite, frame.player.object.position, &(frame.camera_offset));
 	mlx_put_image_to_window(frame.mlx_addr, frame.mlx_window, frame.player.object.sprite.image.img_addr, frame.player.object.position.x, frame.player.object.position.y);
 }
 
@@ -333,6 +348,8 @@ int	main(int argc, char **argv)
 	if (!frame.mlx_window)
 		return (EXIT_FAILURE);
 	mlx_do_key_autorepeatoff(frame.mlx_addr);
+	frame.camera_offset.x = 0;
+	frame.camera_offset.y = 0;
 	printf("Init sprites...\n");
 	init_sprites(frame.sprites, frame.mlx_addr);
 	printf("Done. Init background...\n");

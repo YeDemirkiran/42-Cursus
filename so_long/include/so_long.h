@@ -96,6 +96,7 @@ typedef struct s_frame
 	t_object	objects[BUFFER_SIZE];
 	size_t		object_count;
 	t_player	player;
+	t_vec_2		camera_offset;
 }			t_frame;
 
 enum	e_keys
