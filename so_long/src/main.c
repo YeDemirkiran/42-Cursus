@@ -305,16 +305,26 @@ t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 {
 	t_vec_2	overlap;
 
-	overlap.x = (obj_2.position.x >= obj_1.position.x && obj_2.position.x <= obj_1.position.x + obj_1.sprite.size.x)
-				|| (obj_1.position.x >= obj_2.position.x && obj_1.position.x <= obj_2.position.x + obj_2.sprite.size.x);
-	overlap.y = (obj_2.position.y >= obj_1.position.y && obj_2.position.y <= obj_1.position.y + obj_1.sprite.size.y)
-				|| (obj_1.position.y >= obj_2.position.y && obj_1.position.y <= obj_2.position.y + obj_2.sprite.size.y);
-	if (overlap.x || overlap.y)
-	{	
-		printf("S1 Size %f %f\n", obj_1.sprite.size.x, obj_1.sprite.size.y);
-		printf("S2 Size %f %f\n", obj_2.sprite.size.x, obj_2.sprite.size.y);
-		printf("Overlap %f %f\n", overlap.x, overlap.y);
-	}
+	overlap.x = 0;
+	if (obj_2.position.x > obj_1.position.x && obj_2.position.x < obj_1.position.x + obj_1.sprite.size.x)
+		overlap.x = (obj_1.position.x + obj_1.sprite.size.x) - obj_2.position.x;
+	else if (obj_1.position.x > obj_2.position.x && obj_1.position.x < obj_2.position.x + obj_2.sprite.size.x)
+		overlap.x = (obj_2.position.x + obj_2.sprite.size.x) - obj_1.position.x;
+	overlap.y = 0;
+	if (obj_2.position.y > obj_1.position.y && obj_2.position.y < obj_1.position.y + obj_1.sprite.size.y)
+		overlap.y = (obj_1.position.y + obj_1.sprite.size.y) - obj_2.position.y;
+	else if (obj_1.position.y > obj_2.position.y && obj_1.position.y < obj_2.position.y + obj_2.sprite.size.y)
+		overlap.y = (obj_2.position.y + obj_2.sprite.size.y) - obj_1.position.y;
+	// overlap.x = (obj_2.position.x > obj_1.position.x && obj_2.position.x < obj_1.position.x + obj_1.sprite.size.x)
+	// 			|| (obj_1.position.x >= obj_2.position.x && obj_1.position.x < obj_2.position.x + obj_2.sprite.size.x);
+	// overlap.y = (obj_2.position.y >= obj_1.position.y && obj_2.position.y < obj_1.position.y + obj_1.sprite.size.y)
+	// 			|| (obj_1.position.y > obj_2.position.y && obj_1.position.y < obj_2.position.y + obj_2.sprite.size.y);
+	// if (overlap.x || overlap.y)
+	// {	
+	// 	printf("S1 Size %f %f\n", obj_1.sprite.size.x, obj_1.sprite.size.y);
+	// 	printf("S2 Size %f %f\n", obj_2.sprite.size.x, obj_2.sprite.size.y);
+	// 	printf("Overlap %f %f\n", overlap.x, overlap.y);
+	// }
 	return (overlap);
 }
 
@@ -331,7 +341,7 @@ t_vec_2	player_overlapping_wall(t_frame frame)
 			overlap = are_objects_overlapping(frame.player.object, frame.objects[i]);
 			if (overlap.x && overlap.y)
 			{
-				printf("Found overlap with wall\n");
+			//	printf("Found overlap with wall\n");
 				return (overlap);
 			}
 		}
@@ -344,18 +354,22 @@ t_vec_2	player_overlapping_wall(t_frame frame)
 
 void	update_player(t_player *player, t_frame frame)
 {
-	t_vec_2	old_pos;
+	//t_vec_2	old_pos;
 	t_vec_2	overlap;
 
-	old_pos.x = player->object.position.x;
-	old_pos.y = player->object.position.y;
+	// old_pos.x = player->object.position.x;
+	// old_pos.y = player->object.position.y;
 	player->object.position.x += player->object.velocity.x;
 	player->object.position.y += player->object.velocity.y;
 	overlap = player_overlapping_wall(frame);
-	if (overlap.x)
-		player->object.position.x = old_pos.x;
-	if (overlap.y)
-		player->object.position.y = old_pos.y;
+	if (overlap.x && overlap.y)
+	{
+		printf("X Y %f %f\n", overlap.x, overlap.y);
+		if (overlap.x < overlap.y)
+			player->object.position.x += overlap.x;
+		else if (overlap.y < overlap.x)
+			player->object.position.y += overlap.y;
+	}
 	//printf("Vel: %i %i\n", player->object.velocity.x, player->object.velocity.y);
 }
 
