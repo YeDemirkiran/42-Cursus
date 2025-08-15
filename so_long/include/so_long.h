@@ -44,10 +44,14 @@
 #  define RES_Y 540
 # endif
 
+# ifndef PLAYER_SPEED
+#  define PLAYER_SPEED 0.3
+# endif
+
 typedef struct s_vec_2
 {
-	int	x;
-	int	y;
+	float	x;
+	float	y;
 }			t_vec_2;
 
 typedef struct s_image

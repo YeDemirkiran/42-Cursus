@@ -37,9 +37,9 @@ void	on_move(unsigned int key, t_player *player)
 	// printf("Input X: %i\n", input_x);
 	// printf("Input Y: %i\n", input_y);
 	if (input_x)
-		player->object.velocity.x = input_x * 1;
+		player->object.velocity.x = input_x * PLAYER_SPEED;
 	if (input_y)
-		player->object.velocity.y = input_y * 1;
+		player->object.velocity.y = input_y * PLAYER_SPEED;
 	//printf("Vel now: %i %i\n", player->object.velocity.x, player->object.velocity.y);
 	if (input_x || input_y)
 	{
