@@ -307,12 +307,12 @@ t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 
 	overlap.x = 0;
 	if (obj_2.position.x > obj_1.position.x && obj_2.position.x < obj_1.position.x + obj_1.sprite.size.x)
-		overlap.x = (obj_1.position.x + obj_1.sprite.size.x) - obj_2.position.x;
+		overlap.x = obj_2.position.x - (obj_1.position.x + obj_1.sprite.size.x);
 	else if (obj_1.position.x > obj_2.position.x && obj_1.position.x < obj_2.position.x + obj_2.sprite.size.x)
 		overlap.x = (obj_2.position.x + obj_2.sprite.size.x) - obj_1.position.x;
 	overlap.y = 0;
 	if (obj_2.position.y > obj_1.position.y && obj_2.position.y < obj_1.position.y + obj_1.sprite.size.y)
-		overlap.y = (obj_1.position.y + obj_1.sprite.size.y) - obj_2.position.y;
+		overlap.y = obj_2.position.y - (obj_1.position.y + obj_1.sprite.size.y);
 	else if (obj_1.position.y > obj_2.position.y && obj_1.position.y < obj_2.position.y + obj_2.sprite.size.y)
 		overlap.y = (obj_2.position.y + obj_2.sprite.size.y) - obj_1.position.y;
 	// overlap.x = (obj_2.position.x > obj_1.position.x && obj_2.position.x < obj_1.position.x + obj_1.sprite.size.x)
