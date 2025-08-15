@@ -212,7 +212,7 @@ void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr)
 	sprites_buffer[i].image.img_addr = mlx_xpm_file_to_image(mlx_addr, path, &x, &y);
 	sprites_buffer[i].size.x = (float)x;
 	sprites_buffer[i].size.y = (float)y;
-	printf("Size %f %f\n", sprites_buffer[i].size.x, sprites_buffer[i].size.y);
+	//printf("Size %f %f\n", sprites_buffer[i].size.x, sprites_buffer[i].size.y);
 }
 
 void	add_object(t_object *objects_buffer, t_sprite sprite, t_vec_2 pos, int object_type)
@@ -243,22 +243,22 @@ void	init_background(t_frame *frame)
 	frame->background.sprite = frame->sprites[0];
 }
 
-void	init_walls()
+void	init_walls(t_object *objects_buffer, t_sprite wall_sprite)
 {
+	t_vec_2	tmp;
 
+	tmp.x = 200;
+	tmp.y = 400;
+	add_object(objects_buffer, wall_sprite, tmp, OBJ_WALL);
+	tmp.x = 400;
+	tmp.y = 500;
+	add_object(objects_buffer, wall_sprite, tmp, OBJ_WALL);
 }
 
 void	init_objects(t_object *objects_buffer, t_sprite *sprites)
 {
-	t_vec_2	tmp;
-
 	init_objects_empty(objects_buffer);
-	tmp.x = 200;
-	tmp.y = 400;
-	add_object(objects_buffer, sprites[2], tmp, OBJ_WALL);
-	tmp.x = 400;
-	tmp.y = 500;
-	add_object(objects_buffer, sprites[2], tmp, OBJ_WALL);
+	init_walls(objects_buffer, sprites[2]);
 }
 
 void	init_player(t_frame *frame)
