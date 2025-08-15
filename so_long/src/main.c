@@ -410,31 +410,69 @@ void	parse_map(char *path)
 {
 	int		map_width;
 	int		i;
-	int		j;
+	int		tmp;
 	int		fd;
-	ssize_t	read_size;
-	char	buffer[BUFFER_SIZE];
+	char	*line;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit(EXIT_FAILURE);
 	map_width = -1;
-	read_size = -999;
-	while (read_size > 0 || read_size == -999)
+	line = get_next_line(fd);
+	while (line)
 	{
-		read_size = read(fd, buffer, BUFFER_SIZE);
-		if (read_size <= 0 && )
-		while (i < read_size)
+		if (map_width == -1)
+			map_width = (int)ft_strlen(line) - 1;
+		else
 		{
-			if (map_width < 0 && buffer[i] == '\n')
-				map_width = i + 1;
-			else if (map_width != j - i + 1 && buffer[i] == '\n')
+			tmp = (int)ft_strlen(line) - 1;
+			if (map_width != tmp)
 				exit(EXIT_FAILURE);
-			if (buffer[i] == '\n')
-				j = i;
+		}
+		i = 0;
+		while (line[i])
+		{
+			if (line[i] == OBJ_WALL_CHAR)
+			{
+				// Add to map wall
+			}
+			else if (line[i] == OBJ_COLL_CHAR)
+			{
+				// Add to map collectibles
+			}
+			else if (line[i] == OBJ_EXIT_CHAR)
+			{
+				// Add to map exit
+			}
+			else if (line[i] == OBJ_START_CHAR)
+			{
+				// Add to map start
+			}
+			else if (line[i] != OBJ_EMPTY_CHAR)
+				exit(EXIT_FAILURE);
 			i++;
 		}
+		free(line);
+		line = get_next_line(fd);
 	}
+	if (map_width == -1)
+		exit(EXIT_FAILURE);
+	//read_size = -999;
+	// while (read_size > 0 || read_size == -999)
+	// {
+	// 	read_size = read(fd, buffer, BUFFER_SIZE);
+	// 	if (read_size <= 0 && )
+	// 	while (i < read_size)
+	// 	{
+	// 		if (map_width < 0 && buffer[i] == '\n')
+	// 			map_width = i + 1;
+	// 		else if (map_width != j - i + 1 && buffer[i] == '\n')
+	// 			exit(EXIT_FAILURE);
+	// 		if (buffer[i] == '\n')
+	// 			j = i;
+	// 		i++;
+	// 	}
+	// }
 }
 
 int	main(int argc, char **argv)

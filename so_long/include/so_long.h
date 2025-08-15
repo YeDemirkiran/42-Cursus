@@ -20,6 +20,9 @@
 # include "unistd.h"
 # include "fcntl.h"
 
+# include "get_next_line.h"
+# include "ft_string.h"
+
 # ifndef WINDOW_TITLE
 #  define WINDOW_TITLE "So Long"
 # endif
@@ -47,6 +50,12 @@
 # ifndef PLAYER_SPEED
 #  define PLAYER_SPEED 0.3
 # endif
+
+# define OBJ_EMPTY_CHAR '0'
+# define OBJ_WALL_CHAR '1'
+# define OBJ_COLL_CHAR 'C'
+# define OBJ_EXIT_CHAR 'E'
+# define OBJ_START_CHAR 'P'
 
 typedef struct s_vec_2
 {
