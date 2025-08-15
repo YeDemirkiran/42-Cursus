@@ -66,13 +66,13 @@ typedef struct s_sprite
 	t_vec_2	size;
 }			t_sprite;
 
-
 typedef struct s_object
 {
 	int			sprite_id;
 	t_sprite	sprite;
 	t_vec_2		position;
 	t_vec_2		velocity;
+	int			type;
 }			t_object;
 
 typedef struct s_player
@@ -105,6 +105,13 @@ enum	e_keys
 	K_DOWN = 0,
 	K_LEFT = 0,
 	K_RIGHT = 0,
+};
+
+enum	e_object_type
+{
+	OBJ_WALL = 0,
+	OBJ_COLL = 1,
+	OBJ_EXIT = 2,
 };
 
 int		on_key_press(int keycode, t_frame *frame);
