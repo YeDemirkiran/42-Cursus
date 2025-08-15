@@ -169,7 +169,8 @@ void	render_background(t_frame *frame)
 
 	// if (img.img_addr == NULL)
 	// 	img = gen_square_img(mlx_addr, RES_X, RES_Y, 0);
-	mlx_put_image_to_window(frame->mlx_addr, frame->mlx_window, frame->background.sprite.image.img_addr, 0, 0);
+	printf("SIZE %i %i\n", frame->background.sprite.size.x, frame->background.sprite.size.y);
+	mlx_put_image_to_window(frame->mlx_addr, frame->mlx_window, frame->background.sprite.image.img_addr, frame->background.sprite.size.x / -4, frame->background.sprite.size.y / -4);
 }
 
 void	init_sprites_empty(t_sprite *sprites_buffer)
@@ -205,6 +206,7 @@ void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr)
 		i++;
 	sprites_buffer[i].id = i;
 	sprites_buffer[i].image.img_addr = mlx_xpm_file_to_image(mlx_addr, path, &(sprites_buffer[i].size.x), &(sprites_buffer[i].size.y));
+	//printf("Size %i %i\n", sprites_buffer[i].size.x, sprites_buffer[i].size.y);
 }
 
 void	add_object(t_object *objects_buffer, t_sprite sprite, int pos_x, int pos_y)
@@ -231,7 +233,7 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 
 void	init_background(t_frame *frame)
 {
-	frame->background.sprite.image = frame->sprites[0].image;
+	frame->background.sprite = frame->sprites[0];
 }
 
 void	init_objects(t_object *objects_buffer, t_sprite *sprites)
