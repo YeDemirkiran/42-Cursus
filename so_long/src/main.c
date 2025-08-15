@@ -282,9 +282,9 @@ void	render_frame(t_frame *frame)
 	//clear_screen(frame->mlx_addr, frame->mlx_window);
 	render_background(frame);
 	//printf("Done. Rendering objects...\n");
+	render_player(*frame);
 	render_objects(frame->objects, *frame);
 	//printf("Done. Rendering player...\n");
-	render_player(*frame);
 //	printf("Done.\n");
 }
 
