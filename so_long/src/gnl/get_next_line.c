@@ -46,10 +46,10 @@ static int	buffer_init(int fd, char ***buffer)
 	if (i < (ssize_t)fd + 1)
 		if (!gnl_expand_buffer(fd, buffer, ++i))
 			return (0);
-	(*buffer)[fd] = malloc((size_t)BUFFER_SIZE + 1);
+	(*buffer)[fd] = malloc((size_t)BUFFER_SIZE_GNL + 1);
 	if (!(*buffer)[fd])
 		return (0);
-	i = read(fd, (*buffer)[fd], (size_t)BUFFER_SIZE);
+	i = read(fd, (*buffer)[fd], (size_t)BUFFER_SIZE_GNL);
 	if (i <= 0)
 		return (0);
 	(*buffer)[fd][i] = 0;
@@ -113,7 +113,7 @@ char	*get_next_line(int fd)
 	size_t		start_pos;
 	int			res;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE_GNL <= 0)
 		return (NULL);
 	str = NULL;
 	while (1)

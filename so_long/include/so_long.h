@@ -19,21 +19,16 @@
 # include "stdlib.h"
 # include "unistd.h"
 # include "fcntl.h"
-
-# ifndef WINDOW_TITLE
-#  define WINDOW_TITLE "So Long"
-# endif
-
-# ifndef ASSETS_PATH
-#  define ASSETS_PATH "./assets/"
-# endif
-
-# ifndef TEXTURES_PATH
-#  define TEXTURES_PATH "./assets/textures/"
-# endif
+# include "X11/X.h"
+# include "get_next_line.h"
+# include "ft_string.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
+# endif
+
+# ifndef WINDOW_TITLE
+#  define WINDOW_TITLE "So Long"
 # endif
 
 # ifndef RES_X
@@ -44,8 +39,16 @@
 #  define RES_Y 540
 # endif
 
+# ifndef ASSETS_PATH
+#  define ASSETS_PATH "./assets/"
+# endif
+
+# ifndef TEXTURES_PATH
+#  define TEXTURES_PATH "./assets/textures/"
+# endif
+
 # ifndef PLAYER_SPEED
-#  define PLAYER_SPEED 5
+#  define PLAYER_SPEED 2
 # endif
 
 # define OBJ_EMPTY_CHAR '0'
@@ -53,9 +56,6 @@
 # define OBJ_COLL_CHAR 'C'
 # define OBJ_EXIT_CHAR 'E'
 # define OBJ_START_CHAR 'P'
-
-# include "get_next_line.h"
-# include "ft_string.h"
 
 typedef struct s_vec_2
 {
@@ -94,7 +94,7 @@ typedef struct s_player
 	int			current_collect;
 }			t_player;
 
-typedef	struct s_map
+typedef struct s_map
 {
 	int			map_valid;
 	int			map_width;
@@ -108,9 +108,9 @@ typedef struct s_frame
 	void		*mlx_window;
 	t_map		*map;
 	t_object	background;
-	t_sprite	sprites[BUFFER_SIZE];
-	t_object	walls[BUFFER_SIZE];
-	t_object	collectibles[BUFFER_SIZE];
+	t_sprite	sprites[BUFFER_SIZE_GNL];
+	t_object	walls[BUFFER_SIZE_GNL];
+	t_object	collectibles[BUFFER_SIZE_GNL];
 	t_player	player;
 	t_object	exit;
 	t_vec_2		camera_offset;
@@ -137,10 +137,45 @@ enum	e_sprite_indexes
 	S_WALL = 3,
 };
 
-int		on_key_press(int keycode, t_frame *frame);
+// check.c
+t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2);
+t_vec_2	player_overlapping_wall(t_frame *frame);
+
+// events.c
+int		on_key_down(int keycode, t_frame *frame);
 int		on_key_up(int keycode, t_frame *frame);
-void	on_esc_press(unsigned char key, void *mlx_addr);
-void	on_move(unsigned int key, t_player *player);
-void	on_stop_move(unsigned int key, t_player *player);
+
+// init.c
+void	init_sprites_empty(t_sprite *sprites_buffer);
+void	init_objects_empty(t_object *objects_buffer);
+void	init_background(t_frame *frame);
+void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr);
+void	init_objects(t_frame *frame);
+
+// init_extra.c
+void	init_player(t_frame *frame);
+void	init_exit(t_frame *frame);
+void	init_hooks(t_frame *frame);
+
+// map.c
+t_map	parse_map(char *path, t_frame *frame);
+
+// render.c
+void	render_sprite(t_frame *frame, t_sprite *sprite,
+			t_vec_2 pos, t_vec_2 *offset);
+void	render_background(t_frame *frame);
+void	render_object(t_frame *frame, t_object object, t_vec_2 *offset);
+void	render_objects(t_object *objects, t_frame *frame);
+void	render_frame(t_frame *frame);
+
+// update.c
+void	update_player(t_player *player, t_frame *frame);
+void	update_camera_offset(t_frame *frame);
+int		update_frame(t_frame *frame);
+
+// utils.c
+void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr);
+void	add_object(t_object *objects_buffer, t_sprite *sprite, t_vec_2 pos);
+void	add_wall(t_frame *frame, t_vec_2 pos);
 
 #endif
