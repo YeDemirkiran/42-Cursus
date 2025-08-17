@@ -169,6 +169,7 @@ void	init_walls(t_object *objects_buffer, t_sprite *wall_sprite)
 
 void	add_wall(t_frame *frame, t_vec_2 pos)
 {
+	printf("New wall: Pos X: %f, Y: %f\n", pos.x, pos.y);
 	add_object(frame->walls, frame->sprites + 2, pos);
 }
 
@@ -342,7 +343,7 @@ t_map	parse_map(char *path, t_frame *frame)
 			if (line[i] == OBJ_WALL_CHAR)
 			{
 				pos.x = i * frame->sprites[2].size.x;
-				pos.x = j * frame->sprites[2].size.y;
+				pos.y = j * frame->sprites[2].size.y;
 				add_wall(frame, pos);
 				// Add to map wall
 			}
