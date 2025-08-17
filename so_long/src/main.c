@@ -236,18 +236,26 @@ t_vec_2	player_overlapping_wall(t_frame *frame)
 {
 	int		i;
 	t_vec_2	overlap;
+	t_vec_2	total;
 
 	i = 0;
+	total.x = 0;
+	total.y = 0;
 	while (frame->walls[i].sprite)
 	{
 		overlap = are_objects_overlapping(frame->player.object, frame->walls[i]);
 		if (overlap.x && overlap.y)
+		{
 			return (overlap);
+			// if (fabs(overlap.x) < fabs(total.x) || !first)
+			// 	total.x = overlap.x;
+			// if (fabs(overlap.y) < fabs(total.y) || !first)
+			// 	total.y = overlap.y;
+			// first = 1;
+		}
 		i++;
 	}
-	overlap.x = 0;
-	overlap.y = 0;
-	return (overlap);
+	return (total);
 }
 
 void	update_player(t_player *player, t_frame *frame)
@@ -262,9 +270,10 @@ void	update_player(t_player *player, t_frame *frame)
 	overlap = player_overlapping_wall(frame);
 	if (overlap.x && overlap.y)
 	{
-		if (player->object.velocity.x)
+		printf("OVERLAP: %f %f\n", overlap.x, overlap.y);
+		if (fabs(overlap.x) < fabs(overlap.y))
 			player->object.position.x += overlap.x;
-		if (player->object.velocity.y)
+		else
 			player->object.position.y += overlap.y;
 	}
 }
