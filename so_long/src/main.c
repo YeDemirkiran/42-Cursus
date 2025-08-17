@@ -102,12 +102,17 @@ void	init_sprites_empty(t_sprite *sprites_buffer)
 
 void	init_objects_empty(t_object *objects_buffer)
 {
-	int	i;
+	int		i;
+	t_vec_2	zero;
 
 	i = 0;
+	zero.x = 0;
+	zero.y = 0;
 	while (i < BUFFER_SIZE)
 	{
 		objects_buffer[i].sprite = NULL;
+		objects_buffer[i].position = zero;
+		objects_buffer[i].velocity = zero;
 		i++;
 	}
 }
@@ -131,7 +136,7 @@ void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr)
 
 void	add_object(t_object *objects_buffer, t_sprite *sprite, t_vec_2 pos)
 {
-	int			i;
+	int	i;
 	
 	i = 0;
 	while (objects_buffer[i].sprite)
@@ -139,6 +144,8 @@ void	add_object(t_object *objects_buffer, t_sprite *sprite, t_vec_2 pos)
 	objects_buffer[i].sprite = sprite;
 	objects_buffer[i].position.x = pos.x;
 	objects_buffer[i].position.y = pos.y;
+	objects_buffer[i].velocity.x = 0;
+	objects_buffer[i].velocity.y = 0;
 }
 
 void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
@@ -152,27 +159,27 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 
 void	init_background(t_frame *frame)
 {
-	frame->background.sprite = frame->sprites + 0;
+	frame->background.sprite =  &(frame->sprites[0]);
 }
 
 void	add_wall(t_frame *frame, t_vec_2 pos)
 {
-	add_object(frame->walls, frame->sprites + 2, pos);
+	add_object(frame->walls, &(frame->sprites[2]), pos);
 }
 
-void	init_objects(t_frame frame, t_sprite *sprites)
+void	init_objects(t_frame *frame)
 {
-	(void)sprites;
-	init_objects_empty(frame.walls);
-	init_objects_empty(frame.collectibles);
-	//init_walls(objects_buffer, sprites[2]);
+	init_objects_empty(frame->walls);
+	init_objects_empty(frame->collectibles);
 }
 
 void	init_player(t_frame *frame)
 {
-	frame->player.object.sprite = frame->sprites + 1;
+	frame->player.object.sprite =  &(frame->sprites[1]);
 	frame->player.object.position.x = frame->map->start_pos.x;
 	frame->player.object.position.y = frame->map->start_pos.y;
+	frame->player.object.velocity.x = 0;
+	frame->player.object.velocity.y = 0;
 }
 
 void	render_sprite(t_frame *frame, t_sprite *sprite, t_vec_2 pos, t_vec_2 *offset)
@@ -270,7 +277,7 @@ void	update_player(t_player *player, t_frame *frame)
 	overlap = player_overlapping_wall(frame);
 	if (overlap.x && overlap.y)
 	{
-		printf("OVERLAP: %f %f\n", overlap.x, overlap.y);
+		//printf("OVERLAP: %f %f\n", overlap.x, overlap.y);
 		if (fabs(overlap.x) < fabs(overlap.y))
 			player->object.position.x += overlap.x;
 		else
@@ -397,8 +404,9 @@ int	main(int argc, char **argv)
 	frame.camera_offset.y = 0;
 	init_sprites(frame.sprites, frame.mlx_addr);
 	init_background(&frame);
-	init_objects(frame, frame.sprites);
-	map = parse_map(argv[1],&frame);
+	init_objects(&frame);
+	map = parse_map(argv[1], &frame);
+	fflush(stdout);
 	frame.map = &map;
 	init_player(&frame);
 	init_hooks(&frame);
