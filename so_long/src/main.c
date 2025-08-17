@@ -155,21 +155,8 @@ void	init_background(t_frame *frame)
 	frame->background.sprite = frame->sprites + 0;
 }
 
-void	init_walls(t_object *objects_buffer, t_sprite *wall_sprite)
-{
-	t_vec_2	tmp;
-
-	tmp.x = 200;
-	tmp.y = 400;
-	add_object(objects_buffer, wall_sprite, tmp);
-	tmp.x = 400;
-	tmp.y = 500;
-	add_object(objects_buffer, wall_sprite, tmp);
-}
-
 void	add_wall(t_frame *frame, t_vec_2 pos)
 {
-	printf("New wall: Pos X: %f, Y: %f\n", pos.x, pos.y);
 	add_object(frame->walls, frame->sprites + 2, pos);
 }
 
@@ -233,14 +220,14 @@ t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 	t_vec_2	overlap;
 
 	overlap.x = 0;
-	if (obj_2.position.x > obj_1.position.x && obj_2.position.x < obj_1.position.x + obj_1.sprite->size.x)
+	if (obj_2.position.x >= obj_1.position.x && obj_2.position.x <= obj_1.position.x + obj_1.sprite->size.x)
 		overlap.x = obj_2.position.x - (obj_1.position.x + obj_1.sprite->size.x);
-	else if (obj_1.position.x > obj_2.position.x && obj_1.position.x < obj_2.position.x + obj_2.sprite->size.x)
+	else if (obj_1.position.x >= obj_2.position.x && obj_1.position.x <= obj_2.position.x + obj_2.sprite->size.x)
 		overlap.x = (obj_2.position.x + obj_2.sprite->size.x) - obj_1.position.x;
 	overlap.y = 0;
-	if (obj_2.position.y > obj_1.position.y && obj_2.position.y < obj_1.position.y + obj_1.sprite->size.y)
+	if (obj_2.position.y >= obj_1.position.y && obj_2.position.y <= obj_1.position.y + obj_1.sprite->size.y)
 		overlap.y = obj_2.position.y - (obj_1.position.y + obj_1.sprite->size.y);
-	else if (obj_1.position.y > obj_2.position.y && obj_1.position.y < obj_2.position.y + obj_2.sprite->size.y)
+	else if (obj_1.position.y >= obj_2.position.y && obj_1.position.y <= obj_2.position.y + obj_2.sprite->size.y)
 		overlap.y = (obj_2.position.y + obj_2.sprite->size.y) - obj_1.position.y;
 	return (overlap);
 }
@@ -275,9 +262,9 @@ void	update_player(t_player *player, t_frame *frame)
 	overlap = player_overlapping_wall(frame);
 	if (overlap.x && overlap.y)
 	{
-		if (overlap.x < overlap.y)
+		if (player->object.velocity.x)
 			player->object.position.x += overlap.x;
-		else if (overlap.y < overlap.x)
+		if (player->object.velocity.y)
 			player->object.position.y += overlap.y;
 	}
 }
