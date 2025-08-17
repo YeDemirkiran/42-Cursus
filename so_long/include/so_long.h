@@ -112,6 +112,7 @@ typedef struct s_frame
 	t_object	walls[BUFFER_SIZE];
 	t_object	collectibles[BUFFER_SIZE];
 	t_player	player;
+	t_object	exit;
 	t_vec_2		camera_offset;
 }			t_frame;
 
@@ -126,6 +127,14 @@ enum	e_keys
 	K_DOWN = 0,
 	K_LEFT = 0,
 	K_RIGHT = 0,
+};
+
+enum	e_sprite_indexes
+{
+	S_BACKGROUND = 0,
+	S_PLAYER = 1,
+	S_EXIT = 2,
+	S_WALL = 3,
 };
 
 int		on_key_press(int keycode, t_frame *frame);

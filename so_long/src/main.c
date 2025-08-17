@@ -154,17 +154,18 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 	// Add all the required textures here
 	add_sprite(TEXTURES_PATH "background_placeholder.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Player.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "exit.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Water.xpm", sprites_buffer, mlx_addr);
 }
 
 void	init_background(t_frame *frame)
 {
-	frame->background.sprite =  &(frame->sprites[0]);
+	frame->background.sprite =  &(frame->sprites[S_BACKGROUND]);
 }
 
 void	add_wall(t_frame *frame, t_vec_2 pos)
 {
-	add_object(frame->walls, &(frame->sprites[2]), pos);
+	add_object(frame->walls, &(frame->sprites[S_WALL]), pos);
 }
 
 void	init_objects(t_frame *frame)
@@ -175,11 +176,20 @@ void	init_objects(t_frame *frame)
 
 void	init_player(t_frame *frame)
 {
-	frame->player.object.sprite =  &(frame->sprites[1]);
+	frame->player.object.sprite =  &(frame->sprites[S_PLAYER]);
 	frame->player.object.position.x = frame->map->start_pos.x;
 	frame->player.object.position.y = frame->map->start_pos.y;
 	frame->player.object.velocity.x = 0;
 	frame->player.object.velocity.y = 0;
+}
+
+void	init_exit(t_frame *frame)
+{
+	frame->exit.sprite =  &(frame->sprites[S_EXIT]);
+	frame->exit.position.x = frame->map->exit_pos.x;
+	frame->exit.position.y = frame->map->exit_pos.y;
+	frame->exit.velocity.x = 0;
+	frame->exit.velocity.y = 0;
 }
 
 void	render_sprite(t_frame *frame, t_sprite *sprite, t_vec_2 pos, t_vec_2 *offset)
@@ -217,9 +227,9 @@ void	render_objects(t_object *objects, t_frame *frame)
 	}
 }
 
-void	render_player(t_frame *frame)
+void	render_object(t_frame *frame, t_object object)
 {
-	render_sprite(frame, frame->player.object.sprite, frame->player.object.position, NULL);
+	render_sprite(frame, object.sprite, object.position, NULL);
 }
 
 t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
@@ -293,7 +303,8 @@ void	update_camera_offset(t_frame *frame, t_vec_2 pos)
 void	render_frame(t_frame *frame) 
 {
 	render_background(frame);
-	render_player(frame);
+	render_object(frame, frame->exit);
+	render_object(frame, frame->player.object);
 	render_objects(frame->walls, frame);
 	render_objects(frame->collectibles, frame);
 }
@@ -345,8 +356,8 @@ t_map	parse_map(char *path, t_frame *frame)
 		{
 			if (line[i] == OBJ_WALL_CHAR)
 			{
-				pos.x = i * frame->sprites[2].size.x;
-				pos.y = j * frame->sprites[2].size.y;
+				pos.x = i * frame->sprites[S_WALL].size.x;
+				pos.y = j * frame->sprites[S_WALL].size.y;
 				add_wall(frame, pos);
 				// Add to map wall
 			}
@@ -359,14 +370,16 @@ t_map	parse_map(char *path, t_frame *frame)
 			}
 			else if (line[i] == OBJ_EXIT_CHAR)
 			{
-				map.exit_pos.x = i * frame->sprites[1].size.x;
-				map.exit_pos.y = j * frame->sprites[1].size.y;
+				map.exit_pos.x = i * frame->sprites[S_EXIT].size.x;
+				map.exit_pos.y = j * frame->sprites[S_EXIT].size.y;
+				printf("EXIT ADDED at %f %f\n", map.exit_pos.x, map.exit_pos.y);
 				// Add to map exit
 			}
 			else if (line[i] == OBJ_START_CHAR)
 			{
-				map.start_pos.x = i * frame->sprites[1].size.x;
-				map.start_pos.y = j * frame->sprites[1].size.y;
+				map.start_pos.x = i * frame->sprites[S_PLAYER].size.x;
+				map.start_pos.y = j * frame->sprites[S_PLAYER].size.y;
+				printf("PLAYER ADDED at %f %f\n", map.start_pos.x, map.start_pos.y);
 				// Add to map start
 			}
 			else if (line[i] != OBJ_EMPTY_CHAR)
@@ -409,8 +422,10 @@ int	main(int argc, char **argv)
 	fflush(stdout);
 	frame.map = &map;
 	init_player(&frame);
+	init_exit(&frame);
 	init_hooks(&frame);
 	mlx_loop(frame.mlx_addr);
+	mlx_do_key_autorepeaton(frame.mlx_addr);
 	mlx_destroy_window(frame.mlx_addr, frame.mlx_window);
 	mlx_destroy_display(frame.mlx_addr);
 	printf("End.\n");
