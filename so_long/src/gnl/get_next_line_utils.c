@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-void	ft_strlcpy(char *dst, const char *src, size_t size)
+void	gnl_strlcpy(char *dst, const char *src, size_t size)
 {
 	if (size == 0)
 		return ;
@@ -21,7 +21,7 @@ void	ft_strlcpy(char *dst, const char *src, size_t size)
 	*dst = 0;
 }
 
-char	*ft_substr(char const *s, size_t start, size_t len)
+char	*gnl_substr(char const *s, size_t start, size_t len)
 {
 	char	*substr;
 	size_t	size;
@@ -46,7 +46,7 @@ char	*ft_substr(char const *s, size_t start, size_t len)
 	return (substr);
 }
 
-char	*ft_strjoin(char *s1, char *s2, int free_1, int free_2)
+char	*gnl_strjoin(char *s1, char *s2, int free_1, int free_2)
 {
 	size_t	s1_len;
 	size_t	s2_len;
@@ -64,9 +64,9 @@ char	*ft_strjoin(char *s1, char *s2, int free_1, int free_2)
 	if (str == NULL)
 		return (NULL);
 	if (s1)
-		ft_strlcpy(str, s1, s1_len + 1);
+		gnl_strlcpy(str, s1, s1_len + 1);
 	if (s2)
-		ft_strlcpy(str + s1_len, s2, (s2_len + 1));
+		gnl_strlcpy(str + s1_len, s2, (s2_len + 1));
 	if (free_1 && s1)
 		free(s1);
 	if (free_2 && s2)
@@ -74,7 +74,7 @@ char	*ft_strjoin(char *s1, char *s2, int free_1, int free_2)
 	return (str);
 }
 
-int	alloc_buffer(char ***buffer, int fd)
+int	gnl_alloc_buffer(char ***buffer, int fd)
 {
 	size_t	i;
 
@@ -89,12 +89,12 @@ int	alloc_buffer(char ***buffer, int fd)
 	return (1);
 }
 
-int	expand_buffer(int fd, char ***buffer, ssize_t i)
+int	gnl_expand_buffer(int fd, char ***buffer, ssize_t i)
 {
 	ssize_t	j;
 	char	**new_buffer;
 
-	if (!alloc_buffer(&new_buffer, fd))
+	if (!gnl_alloc_buffer(&new_buffer, fd))
 		return (0);
 	while (i-- > 0)
 	{
@@ -108,7 +108,7 @@ int	expand_buffer(int fd, char ***buffer, ssize_t i)
 			new_buffer[i] = malloc(j + 1);
 			if (!new_buffer[i])
 				return (0);
-			ft_strlcpy(new_buffer[i], (*buffer)[i], j + 1);
+			gnl_strlcpy(new_buffer[i], (*buffer)[i], j + 1);
 		}
 		free((*buffer)[i]);
 	}

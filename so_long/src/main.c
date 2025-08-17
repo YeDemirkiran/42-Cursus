@@ -255,10 +255,17 @@ void	init_walls(t_object *objects_buffer, t_sprite wall_sprite)
 	add_object(objects_buffer, wall_sprite, tmp, OBJ_WALL);
 }
 
-void	init_objects(t_object *objects_buffer, t_sprite *sprites)
+void	add_wall(t_frame frame, t_vec_2 pos)
 {
-	init_objects_empty(objects_buffer);
-	init_walls(objects_buffer, sprites[2]);
+	add_object(frame.walls, frame.sprites[2], pos, OBJ_WALL);
+}
+
+void	init_objects(t_frame frame, t_sprite *sprites)
+{
+	(void)sprites;
+	init_objects_empty(frame.walls);
+	init_objects_empty(frame.collectibles);
+	//init_walls(objects_buffer, sprites[2]);
 }
 
 void	init_player(t_frame *frame)
@@ -334,16 +341,13 @@ t_vec_2	player_overlapping_wall(t_frame frame)
 	t_vec_2	overlap;
 
 	i = 0;
-	while (frame.objects[i].sprite_id >= 0)
+	while (frame.walls[i].sprite_id >= 0)
 	{
-		if (frame.objects[i].type == OBJ_WALL)
+		overlap = are_objects_overlapping(frame.player.object, frame.walls[i]);
+		if (overlap.x && overlap.y)
 		{
-			overlap = are_objects_overlapping(frame.player.object, frame.objects[i]);
-			if (overlap.x && overlap.y)
-			{
-			//	printf("Found overlap with wall\n");
-				return (overlap);
-			}
+		//	printf("Found overlap with wall\n");
+			return (overlap);
 		}
 		i++;
 	}
@@ -386,7 +390,8 @@ void	render_frame(t_frame *frame)
 	render_background(frame);
 	//printf("Done. Rendering objects...\n");
 	render_player(*frame);
-	render_objects(frame->objects, *frame);
+	render_objects(frame->walls, *frame);
+	render_objects(frame->collectibles, *frame);
 	//printf("Done. Rendering player...\n");
 //	printf("Done.\n");
 }
@@ -406,46 +411,61 @@ void	init_hooks(t_frame *frame)
 	mlx_loop_hook(frame->mlx_addr, frame_update, frame);
 }
 
-t_map	parse_map(char *path)
+t_map	parse_map(char *path, t_frame frame)
 {
 	t_map	map;
 	int		i;
+	int		j;
 	int		tmp;
 	int		fd;
 	char	*line;
+	t_vec_2	pos;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit(EXIT_FAILURE);
 	map.map_width = -1;
 	line = get_next_line(fd);
+	j = 0;
 	while (line)
 	{
 		if (map.map_width == -1)
 			map.map_width = (int)ft_strlen(line) - 1;
 		else
 		{
-			tmp = (int)ft_strlen(line) - 1;
+			tmp = (int)ft_strlen(line);
+			if (line[tmp - 1] == '\n')
+				tmp--;
 			if (map.map_width != tmp)
 				exit(EXIT_FAILURE);
 		}
 		i = 0;
-		while (line[i])
+		while (line[i] && line[i] != '\n')
 		{
 			if (line[i] == OBJ_WALL_CHAR)
 			{
+				pos.x = i * frame.sprites[2].size.x;
+				pos.x = j * frame.sprites[2].size.y;
+				add_wall(frame, pos);
 				// Add to map wall
 			}
 			else if (line[i] == OBJ_COLL_CHAR)
 			{
+				// pos.x = i * frame.sprites[2].size.x;
+				// pos.x = j * frame.sprites[2].size.y;
+				// add_wall(frame, pos);
 				// Add to map collectibles
 			}
 			else if (line[i] == OBJ_EXIT_CHAR)
 			{
+				map.exit_pos.x = i * frame.sprites[1].size.x;
+				map.exit_pos.y = j * frame.sprites[1].size.y;
 				// Add to map exit
 			}
 			else if (line[i] == OBJ_START_CHAR)
 			{
+				map.start_pos.x = i * frame.sprites[1].size.x;
+				map.start_pos.y = j * frame.sprites[1].size.y;
 				// Add to map start
 			}
 			else if (line[i] != OBJ_EMPTY_CHAR)
@@ -454,9 +474,11 @@ t_map	parse_map(char *path)
 		}
 		free(line);
 		line = get_next_line(fd);
+		j++;
 	}
 	if (map.map_width == -1)
 		exit(EXIT_FAILURE);
+	return (map);
 }
 
 int	main(int argc, char **argv)
@@ -471,7 +493,6 @@ int	main(int argc, char **argv)
 		write(2, "Too few or too much arguments!\n", 31);
 		exit(EXIT_FAILURE);
 	}
-	parse_map();
 	frame.mlx_addr = mlx_init();
 	if (!frame.mlx_addr)
 		return (EXIT_FAILURE);
@@ -486,7 +507,8 @@ int	main(int argc, char **argv)
 	printf("Done. Init background...\n");
 	init_background(&frame);
 	printf("Done. Init objects...\n");
-	init_objects(frame.objects, frame.sprites);
+	init_objects(frame, frame.sprites);
+	parse_map(argv[1], frame);
 	printf("Done. Init player...\n");
 	init_player(&frame);
 	printf("Done. Init hooks...\n");

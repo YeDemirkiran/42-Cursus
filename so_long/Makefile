@@ -20,8 +20,14 @@ MLX_LIB = mlx_Linux
 LIB_DIRS = -L/usr/lib -L$(MLX_DIR)
 LIBS = -lm -l$(MLX_LIB) -lXext -lX11 -lz
 
+STRING_DIR = string/
+STRING_SRC = $(addprefix $(STRING_DIR), ft_split.c ft_strcmp.c ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_substr.c)
+
+GNL_DIR = gnl/
+GNL_SRC = $(addprefix $(GNL_DIR), get_next_line.c get_next_line_utils.c)
+
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c events.c)
+SRC = $(addprefix $(SRC_DIR), main.c events.c $(STRING_SRC) $(GNL_SRC))
 
 INC = -I./include -I/usr/include -I$(MLX_DIR)
 

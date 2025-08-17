@@ -102,7 +102,8 @@ typedef struct s_frame
 	void		*mlx_window;
 	t_object	background;
 	t_sprite	sprites[BUFFER_SIZE];
-	t_object	objects[BUFFER_SIZE];
+	t_object	walls[BUFFER_SIZE];
+	t_object	collectibles[BUFFER_SIZE];
 	size_t		object_count;
 	t_player	player;
 	t_vec_2		camera_offset;

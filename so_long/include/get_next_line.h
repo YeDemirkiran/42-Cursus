@@ -20,11 +20,11 @@
 #  define BUFFER_SIZE 8192
 # endif
 
-void	ft_strlcpy(char *dst, const char *src, size_t size);
-char	*ft_substr(char const *s, size_t start, size_t len);
-char	*ft_strjoin(char *s1, char *s2, int free_1, int free_2);
-int		alloc_buffer(char ***buffer, int fd);
-int		expand_buffer(int fd, char ***buffer, ssize_t i);
+void	gnl_strlcpy(char *dst, const char *src, size_t size);
+char	*gnl_substr(char const *s, size_t start, size_t len);
+char	*gnl_strjoin(char *s1, char *s2, int free_1, int free_2);
+int		gnl_alloc_buffer(char ***buffer, int fd);
+int		gnl_expand_buffer(int fd, char ***buffer, ssize_t i);
 
 char	*get_next_line(int fd);
 

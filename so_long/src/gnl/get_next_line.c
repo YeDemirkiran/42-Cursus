@@ -44,7 +44,7 @@ static int	buffer_init(int fd, char ***buffer)
 	while (!((*buffer)[i] && (unsigned char)(*buffer)[i][0] == 0))
 		i++;
 	if (i < (ssize_t)fd + 1)
-		if (!expand_buffer(fd, buffer, ++i))
+		if (!gnl_expand_buffer(fd, buffer, ++i))
 			return (0);
 	(*buffer)[fd] = malloc((size_t)BUFFER_SIZE + 1);
 	if (!(*buffer)[fd])
@@ -60,7 +60,7 @@ static ssize_t	next_line_init(int fd, char ***buffer, size_t *start_pos)
 {
 	size_t	i;
 
-	if (!(*buffer) && !alloc_buffer(buffer, fd))
+	if (!(*buffer) && !gnl_alloc_buffer(buffer, fd))
 		return (0);
 	i = 0;
 	while (!((*buffer)[i] && (unsigned char)(*buffer)[i][0] == 0))
@@ -89,7 +89,7 @@ static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 	{
 		if ((unsigned char)buffer[fd][i] == '\n')
 		{
-			*str = ft_strjoin(*str, ft_substr((const char *)buffer[fd],
+			*str = gnl_strjoin(*str, gnl_substr((const char *)buffer[fd],
 						start_pos, i - start_pos + 1), 1, 1);
 			if (!*str)
 				return (-1);
@@ -99,7 +99,7 @@ static int	find_line(char **buffer, char **str, int fd, size_t start_pos)
 		i++;
 	}
 	if (buffer[fd][start_pos])
-		*str = ft_strjoin(*str, buffer[fd] + start_pos, 1, 0);
+		*str = gnl_strjoin(*str, buffer[fd] + start_pos, 1, 0);
 	if (buffer[fd])
 		free(buffer[fd]);
 	buffer[fd] = NULL;
