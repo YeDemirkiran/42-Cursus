@@ -209,10 +209,17 @@ void	render_sprite(t_frame *frame, t_sprite *sprite, t_vec_2 pos, t_vec_2 *offse
 void	render_background(t_frame *frame)
 {
 	t_vec_2	pos;
+	t_vec_2	pos_2;
+	t_vec_2	offset;
 
 	pos.x = (int)(frame->background.sprite->size.x) / -4;
 	pos.y = (int)(frame->background.sprite->size.y) / -4;
-	render_sprite(frame, frame->background.sprite, pos, NULL);
+	pos_2.x = pos.x + frame->background.sprite->size.x;
+	pos_2.y = pos.y;
+	offset.x = frame->camera_offset.x * 0.1f;
+	offset.y = frame->camera_offset.y * 0.1f;
+	render_sprite(frame, frame->background.sprite, pos, &offset);
+	render_sprite(frame, frame->background.sprite, pos_2, &offset);
 }
 
 void	render_object(t_frame *frame, t_object object, t_vec_2 *offset)
@@ -311,6 +318,7 @@ void	render_frame(t_frame *frame)
 	render_object(frame, frame->player.object, &(frame->camera_offset));
 	render_objects(frame->walls, frame);
 	render_objects(frame->collectibles, frame);
+	mlx_string_put(frame->mlx_addr, frame->mlx_window, RES_X / 2, RES_Y / 2, 0x00000000, "TEST");
 }
 
 int	frame_update(t_frame *frame)
