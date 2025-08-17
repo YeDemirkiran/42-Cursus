@@ -215,6 +215,11 @@ void	render_background(t_frame *frame)
 	render_sprite(frame, frame->background.sprite, pos, NULL);
 }
 
+void	render_object(t_frame *frame, t_object object, t_vec_2 *offset)
+{
+	render_sprite(frame, object.sprite, object.position, offset);
+}
+
 void	render_objects(t_object *objects, t_frame *frame)
 {
 	int	i;
@@ -222,14 +227,9 @@ void	render_objects(t_object *objects, t_frame *frame)
 	i = 0;
 	while (objects[i].sprite)
 	{
-		render_sprite(frame, objects[i].sprite, objects[i].position, &(frame->camera_offset));
+		render_object(frame, objects[i], &(frame->camera_offset));
 		i++;
 	}
-}
-
-void	render_object(t_frame *frame, t_object object)
-{
-	render_sprite(frame, object.sprite, object.position, NULL);
 }
 
 t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
@@ -295,16 +295,20 @@ void	update_player(t_player *player, t_frame *frame)
 	}
 }
 
-void	update_camera_offset(t_frame *frame, t_vec_2 pos)
+void	update_camera_offset(t_frame *frame)
 {
-	frame->camera_offset = pos;
+	if (frame->player.object.position.x + frame->camera_offset.x >= RES_X)
+		frame->camera_offset.x = frame->player.object.position.x * -1;
+	else if ((frame->player.object.position.x + frame->player.object.sprite->size.x) + frame->camera_offset.x <= 0)
+		frame->camera_offset.x = RES_X - (frame->player.object.position.x + frame->player.object.sprite->size.x);
+	frame->camera_offset.y = 0;
 }
 
 void	render_frame(t_frame *frame) 
 {
 	render_background(frame);
-	render_object(frame, frame->exit);
-	render_object(frame, frame->player.object);
+	render_object(frame, frame->exit, &(frame->camera_offset));
+	render_object(frame, frame->player.object, &(frame->camera_offset));
 	render_objects(frame->walls, frame);
 	render_objects(frame->collectibles, frame);
 }
@@ -312,6 +316,7 @@ void	render_frame(t_frame *frame)
 int	frame_update(t_frame *frame)
 {
 	update_player(&(frame->player), frame);
+	update_camera_offset(frame);
 	render_frame(frame);
 	return (0);
 }
