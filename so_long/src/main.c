@@ -170,7 +170,7 @@ void	render_background(t_frame *frame)
 	// if (img.img_addr == NULL)
 	// 	img = gen_square_img(mlx_addr, RES_X, RES_Y, 0);
 	//printf("SIZE %i %i\n", frame->background.sprite.size.x, frame->background.sprite.size.y);
-	mlx_put_image_to_window(frame->mlx_addr, frame->mlx_window, frame->background.sprite.image.img_addr, (int)(frame->background.sprite.size.x) / -4, (int)(frame->background.sprite.size.y) / -4);
+	mlx_put_image_to_window(frame->mlx_addr, frame->mlx_window, frame->background.sprite->image.img_addr, (int)(frame->background.sprite->size.x) / -4, (int)(frame->background.sprite->size.y) / -4);
 }
 
 void	init_sprites_empty(t_sprite *sprites_buffer)
@@ -192,7 +192,7 @@ void	init_objects_empty(t_object *objects_buffer)
 	i = 0;
 	while (i < BUFFER_SIZE)
 	{
-		objects_buffer[i].sprite_id = -1;
+		objects_buffer[i].sprite = NULL;
 		i++;
 	}
 }
@@ -215,18 +215,16 @@ void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr)
 	//printf("Size %f %f\n", sprites_buffer[i].size.x, sprites_buffer[i].size.y);
 }
 
-void	add_object(t_object *objects_buffer, t_sprite sprite, t_vec_2 pos, int object_type)
+void	add_object(t_object *objects_buffer, t_sprite *sprite, t_vec_2 pos)
 {
 	int			i;
 	
 	i = 0;
-	while (objects_buffer[i].sprite_id >= 0)
+	while (objects_buffer[i].sprite)
 		i++;
 	objects_buffer[i].sprite = sprite;
-	objects_buffer[i].sprite_id = 1;
 	objects_buffer[i].position.x = pos.x;
 	objects_buffer[i].position.y = pos.y;
-	objects_buffer[i].type = object_type;
 }
 
 void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
@@ -240,24 +238,25 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 
 void	init_background(t_frame *frame)
 {
-	frame->background.sprite = frame->sprites[0];
+	frame->background.sprite = frame->sprites + 0;
 }
 
-void	init_walls(t_object *objects_buffer, t_sprite wall_sprite)
+void	init_walls(t_object *objects_buffer, t_sprite *wall_sprite)
 {
 	t_vec_2	tmp;
 
 	tmp.x = 200;
 	tmp.y = 400;
-	add_object(objects_buffer, wall_sprite, tmp, OBJ_WALL);
+	add_object(objects_buffer, wall_sprite, tmp);
 	tmp.x = 400;
 	tmp.y = 500;
-	add_object(objects_buffer, wall_sprite, tmp, OBJ_WALL);
+	add_object(objects_buffer, wall_sprite, tmp);
 }
 
-void	add_wall(t_frame frame, t_vec_2 pos)
+void	add_wall(t_frame *frame, t_vec_2 pos)
 {
-	add_object(frame.walls, frame.sprites[2], pos, OBJ_WALL);
+	printf("Adding wall\n");
+	add_object(frame->walls, frame->sprites + 2, pos);
 }
 
 void	init_objects(t_frame frame, t_sprite *sprites)
@@ -270,12 +269,12 @@ void	init_objects(t_frame frame, t_sprite *sprites)
 
 void	init_player(t_frame *frame)
 {
-	frame->player.object.sprite = frame->sprites[1];
-	frame->player.object.position.x = RES_X / 2;
-	frame->player.object.position.y = RES_Y / 2;
+	frame->player.object.sprite = frame->sprites + 1;
+	frame->player.object.position.x = frame->map->start_pos.x;
+	frame->player.object.position.y = frame->map->start_pos.y;
 }
 
-void	render_sprite(t_frame frame, t_sprite sprite, t_vec_2 pos, t_vec_2 *offset)
+void	render_sprite(t_frame *frame, t_sprite *sprite, t_vec_2 pos, t_vec_2 *offset)
 {
 	t_vec_2	tmp;
 
@@ -286,26 +285,26 @@ void	render_sprite(t_frame frame, t_sprite sprite, t_vec_2 pos, t_vec_2 *offset)
 		tmp.x = offset->x;
 		tmp.y = offset->y;
 	}
-	mlx_put_image_to_window(frame.mlx_addr, frame.mlx_window, sprite.image.img_addr, (int)(pos.x + tmp.x), (int)(pos.y + tmp.y));
+	mlx_put_image_to_window(frame->mlx_addr, frame->mlx_window, sprite->image.img_addr, (int)(pos.x + tmp.x), (int)(pos.y + tmp.y));
 }
 
-void	render_objects(t_object *objects, t_frame frame)
+void	render_objects(t_object *objects, t_frame *frame)
 {
 	int	i;
 
 	i = 0;
-	while (objects[i].sprite_id >= 0)
+	while (objects[i].sprite)
 	{
-		render_sprite(frame, objects[i].sprite, objects[i].position, &(frame.camera_offset));
+		render_sprite(frame, objects[i].sprite, objects[i].position, &(frame->camera_offset));
 		i++;
 	}
 }
 
-void	render_player(t_frame frame)
+void	render_player(t_frame *frame)
 {
 	//printf("Player pos: x %i, y %i\n", frame.player.object.position.x, frame.player.object.position.y);
 	//mlx_destroy_image(frame.mlx_addr, frame.player.object.sprite.image.img_addr);
-	render_sprite(frame, frame.player.object.sprite, frame.player.object.position, NULL);
+	render_sprite(frame, frame->player.object.sprite, frame->player.object.position, NULL);
 }
 
 t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
@@ -313,15 +312,15 @@ t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 	t_vec_2	overlap;
 
 	overlap.x = 0;
-	if (obj_2.position.x > obj_1.position.x && obj_2.position.x < obj_1.position.x + obj_1.sprite.size.x)
-		overlap.x = obj_2.position.x - (obj_1.position.x + obj_1.sprite.size.x);
-	else if (obj_1.position.x > obj_2.position.x && obj_1.position.x < obj_2.position.x + obj_2.sprite.size.x)
-		overlap.x = (obj_2.position.x + obj_2.sprite.size.x) - obj_1.position.x;
+	if (obj_2.position.x > obj_1.position.x && obj_2.position.x < obj_1.position.x + obj_1.sprite->size.x)
+		overlap.x = obj_2.position.x - (obj_1.position.x + obj_1.sprite->size.x);
+	else if (obj_1.position.x > obj_2.position.x && obj_1.position.x < obj_2.position.x + obj_2.sprite->size.x)
+		overlap.x = (obj_2.position.x + obj_2.sprite->size.x) - obj_1.position.x;
 	overlap.y = 0;
-	if (obj_2.position.y > obj_1.position.y && obj_2.position.y < obj_1.position.y + obj_1.sprite.size.y)
-		overlap.y = obj_2.position.y - (obj_1.position.y + obj_1.sprite.size.y);
-	else if (obj_1.position.y > obj_2.position.y && obj_1.position.y < obj_2.position.y + obj_2.sprite.size.y)
-		overlap.y = (obj_2.position.y + obj_2.sprite.size.y) - obj_1.position.y;
+	if (obj_2.position.y > obj_1.position.y && obj_2.position.y < obj_1.position.y + obj_1.sprite->size.y)
+		overlap.y = obj_2.position.y - (obj_1.position.y + obj_1.sprite->size.y);
+	else if (obj_1.position.y > obj_2.position.y && obj_1.position.y < obj_2.position.y + obj_2.sprite->size.y)
+		overlap.y = (obj_2.position.y + obj_2.sprite->size.y) - obj_1.position.y;
 	// overlap.x = (obj_2.position.x > obj_1.position.x && obj_2.position.x < obj_1.position.x + obj_1.sprite.size.x)
 	// 			|| (obj_1.position.x >= obj_2.position.x && obj_1.position.x < obj_2.position.x + obj_2.sprite.size.x);
 	// overlap.y = (obj_2.position.y >= obj_1.position.y && obj_2.position.y < obj_1.position.y + obj_1.sprite.size.y)
@@ -335,15 +334,16 @@ t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 	return (overlap);
 }
 
-t_vec_2	player_overlapping_wall(t_frame frame)
+t_vec_2	player_overlapping_wall(t_frame *frame)
 {
 	int		i;
 	t_vec_2	overlap;
 
 	i = 0;
-	while (frame.walls[i].sprite_id >= 0)
+	while (frame->walls[i].sprite)
 	{
-		overlap = are_objects_overlapping(frame.player.object, frame.walls[i]);
+		printf("overlap %i\n", i);
+		overlap = are_objects_overlapping(frame->player.object, frame->walls[i]);
 		if (overlap.x && overlap.y)
 		{
 		//	printf("Found overlap with wall\n");
@@ -356,7 +356,7 @@ t_vec_2	player_overlapping_wall(t_frame frame)
 	return (overlap);
 }
 
-void	update_player(t_player *player, t_frame frame)
+void	update_player(t_player *player, t_frame *frame)
 {
 	//t_vec_2	old_pos;
 	t_vec_2	overlap;
@@ -365,7 +365,9 @@ void	update_player(t_player *player, t_frame frame)
 	// old_pos.y = player->object.position.y;
 	player->object.position.x += player->object.velocity.x;
 	player->object.position.y += player->object.velocity.y;
+	printf("Calling overlap checker...\n");
 	overlap = player_overlapping_wall(frame);
+	printf("Checking player overlap\n");
 	if (overlap.x && overlap.y)
 	{
 		printf("X Y %f %f\n", overlap.x, overlap.y);
@@ -389,16 +391,18 @@ void	render_frame(t_frame *frame)
 	//clear_screen(frame->mlx_addr, frame->mlx_window);
 	render_background(frame);
 	//printf("Done. Rendering objects...\n");
-	render_player(*frame);
-	render_objects(frame->walls, *frame);
-	render_objects(frame->collectibles, *frame);
+	render_player(frame);
+	render_objects(frame->walls, frame);
+	render_objects(frame->collectibles, frame);
 	//printf("Done. Rendering player...\n");
 //	printf("Done.\n");
 }
 
 int	frame_update(t_frame *frame)
 {
-	update_player(&(frame->player), *frame);
+	printf("Updating the player...\n");
+	update_player(&(frame->player), frame);
+	printf("Rendering...\n");
 	//update_camera_offset(frame, frame->player.object.position);
 	render_frame(frame);
 	return (0);
@@ -411,7 +415,7 @@ void	init_hooks(t_frame *frame)
 	mlx_loop_hook(frame->mlx_addr, frame_update, frame);
 }
 
-t_map	parse_map(char *path, t_frame frame)
+t_map	parse_map(char *path, t_frame *frame)
 {
 	t_map	map;
 	int		i;
@@ -421,14 +425,17 @@ t_map	parse_map(char *path, t_frame frame)
 	char	*line;
 	t_vec_2	pos;
 
+	printf("Opening map file...\n");
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit(EXIT_FAILURE);
 	map.map_width = -1;
 	line = get_next_line(fd);
 	j = 0;
+	printf("Opened the file. Reading now...\n");
 	while (line)
 	{
+		printf("Line %i\n", j);
 		if (map.map_width == -1)
 			map.map_width = (int)ft_strlen(line) - 1;
 		else
@@ -444,9 +451,10 @@ t_map	parse_map(char *path, t_frame frame)
 		{
 			if (line[i] == OBJ_WALL_CHAR)
 			{
-				pos.x = i * frame.sprites[2].size.x;
-				pos.x = j * frame.sprites[2].size.y;
+				pos.x = i * frame->sprites[2].size.x;
+				pos.x = j * frame->sprites[2].size.y;
 				add_wall(frame, pos);
+				printf("Wall: Y %i, X %i\n", j, i);
 				// Add to map wall
 			}
 			else if (line[i] == OBJ_COLL_CHAR)
@@ -458,21 +466,24 @@ t_map	parse_map(char *path, t_frame frame)
 			}
 			else if (line[i] == OBJ_EXIT_CHAR)
 			{
-				map.exit_pos.x = i * frame.sprites[1].size.x;
-				map.exit_pos.y = j * frame.sprites[1].size.y;
+				map.exit_pos.x = i * frame->sprites[1].size.x;
+				map.exit_pos.y = j * frame->sprites[1].size.y;
 				// Add to map exit
 			}
 			else if (line[i] == OBJ_START_CHAR)
 			{
-				map.start_pos.x = i * frame.sprites[1].size.x;
-				map.start_pos.y = j * frame.sprites[1].size.y;
+				map.start_pos.x = i * frame->sprites[1].size.x;
+				map.start_pos.y = j * frame->sprites[1].size.y;
+				printf("Start: Y %i, X %i\n", j, i);
 				// Add to map start
 			}
 			else if (line[i] != OBJ_EMPTY_CHAR)
 				exit(EXIT_FAILURE);
+			printf("Wooo\n");
 			i++;
 		}
 		free(line);
+		printf("Line %i is over\n", j);
 		line = get_next_line(fd);
 		j++;
 	}
@@ -484,7 +495,9 @@ t_map	parse_map(char *path, t_frame frame)
 int	main(int argc, char **argv)
 {
 	t_frame	frame;
+	t_map	map;
 
+	printf("Frame size: %lu\n", sizeof(t_object));
 	(void)argc;
 	(void)argv;
 	if (argc != 2)
@@ -506,9 +519,11 @@ int	main(int argc, char **argv)
 	init_sprites(frame.sprites, frame.mlx_addr);
 	printf("Done. Init background...\n");
 	init_background(&frame);
-	printf("Done. Init objects...\n");
+	printf("Done. Init objects buffers to empty...\n");
 	init_objects(frame, frame.sprites);
-	parse_map(argv[1], frame);
+	printf("Done. Parsing map...\n");
+	map = parse_map(argv[1],&frame);
+	frame.map = &map;
 	printf("Done. Init player...\n");
 	init_player(&frame);
 	printf("Done. Init hooks...\n");

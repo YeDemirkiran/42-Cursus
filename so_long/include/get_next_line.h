@@ -17,7 +17,7 @@
 # include "unistd.h"
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 8192
+#  define BUFFER_SIZE 1024
 # endif
 
 void	gnl_strlcpy(char *dst, const char *src, size_t size);

@@ -20,9 +20,6 @@
 # include "unistd.h"
 # include "fcntl.h"
 
-# include "get_next_line.h"
-# include "ft_string.h"
-
 # ifndef WINDOW_TITLE
 #  define WINDOW_TITLE "So Long"
 # endif
@@ -36,7 +33,7 @@
 # endif
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 8192
+#  define BUFFER_SIZE 1024
 # endif
 
 # ifndef RES_X
@@ -48,7 +45,7 @@
 # endif
 
 # ifndef PLAYER_SPEED
-#  define PLAYER_SPEED 0.3
+#  define PLAYER_SPEED 1
 # endif
 
 # define OBJ_EMPTY_CHAR '0'
@@ -56,6 +53,9 @@
 # define OBJ_COLL_CHAR 'C'
 # define OBJ_EXIT_CHAR 'E'
 # define OBJ_START_CHAR 'P'
+
+# include "get_next_line.h"
+# include "ft_string.h"
 
 typedef struct s_vec_2
 {
@@ -81,11 +81,9 @@ typedef struct s_sprite
 
 typedef struct s_object
 {
-	int			sprite_id;
-	t_sprite	sprite;
+	t_sprite	*sprite;
 	t_vec_2		position;
 	t_vec_2		velocity;
-	int			type;
 }			t_object;
 
 typedef struct s_player
@@ -96,29 +94,26 @@ typedef struct s_player
 	int			current_collect;
 }			t_player;
 
-typedef struct s_frame
-{
-	void		*mlx_addr;
-	void		*mlx_window;
-	t_object	background;
-	t_sprite	sprites[BUFFER_SIZE];
-	t_object	walls[BUFFER_SIZE];
-	t_object	collectibles[BUFFER_SIZE];
-	size_t		object_count;
-	t_player	player;
-	t_vec_2		camera_offset;
-}			t_frame;
-
 typedef	struct s_map
 {
 	int			map_valid;
 	int			map_width;
-	t_object	walls[BUFFER_SIZE];
-	t_object	collectibles[BUFFER_SIZE];
 	t_vec_2		start_pos;
 	t_vec_2		exit_pos;
 }			t_map;
 
+typedef struct s_frame
+{
+	void		*mlx_addr;
+	void		*mlx_window;
+	t_map		*map;
+	t_object	background;
+	t_sprite	sprites[BUFFER_SIZE];
+	t_object	walls[BUFFER_SIZE];
+	t_object	collectibles[BUFFER_SIZE];
+	t_player	player;
+	t_vec_2		camera_offset;
+}			t_frame;
 
 enum	e_keys
 {
@@ -131,13 +126,6 @@ enum	e_keys
 	K_DOWN = 0,
 	K_LEFT = 0,
 	K_RIGHT = 0,
-};
-
-enum	e_object_type
-{
-	OBJ_WALL = 0,
-	OBJ_COLL = 1,
-	OBJ_EXIT = 2,
 };
 
 int		on_key_press(int keycode, t_frame *frame);
