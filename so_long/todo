@@ -1,0 +1,14 @@
+MANDATORY
+
+- Parse map and enforce rules
+- Add collectibles
+- Add game exit
+- Add error handling and logging
+- Fix collision with cross movement
+- Fix memory leaks and proper clean up 
+
+BONUS
+
+- Add enemy objects
+- Add sprite animations
+- Display score as text on screen
