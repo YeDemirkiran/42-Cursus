@@ -145,6 +145,9 @@ t_vec_2	player_overlapping_wall(t_frame *frame);
 int		on_key_down(int keycode, t_frame *frame);
 int		on_key_up(int keycode, t_frame *frame);
 
+// events_extra.c
+int		on_destroy_notify(void *mlx_addr);
+
 // init.c
 void	init_sprites_empty(t_sprite *sprites_buffer);
 void	init_objects_empty(t_object *objects_buffer);
