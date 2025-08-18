@@ -205,7 +205,7 @@ t_map	parse_map(char *path, t_frame *frame)
 		printf("Map is not valid.\n");
 		return (map);
 	}
-	printf("Map is valid so far\n");
+	printf("Map is valid so far. Checking the path now\n");
 	// int		i;
 	// int		j;
 	// int		tmp;
