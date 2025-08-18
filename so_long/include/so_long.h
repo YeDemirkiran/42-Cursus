@@ -98,6 +98,7 @@ typedef struct s_map
 {
 	int			map_valid;
 	int			map_width;
+	int			map_height;
 	t_vec_2		start_pos;
 	t_vec_2		exit_pos;
 }			t_map;
