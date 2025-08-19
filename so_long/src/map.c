@@ -5,41 +5,6 @@
 // STEP 2: Check if the map is valid (rectangular, enclosed by walls, start, exit)
 // STEP 3: Check if a path exists from start to finish
 
-static int	read_line(char *line, int line_y, t_map *map, t_frame *frame)
-{
-	int		i;
-	t_vec_2	pos;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == OBJ_WALL_CHAR)
-		{
-			pos.x = i * frame->sprites[S_WALL].size.x;
-			pos.y = line_y * frame->sprites[S_WALL].size.y;
-			add_wall(frame, pos);
-		}
-		else if (line[i] == OBJ_COLL_CHAR)
-		{
-			
-		}
-		else if (line[i] == OBJ_EXIT_CHAR)
-		{
-			map->exit_pos.x = i * frame->sprites[S_EXIT].size.x;
-			map->exit_pos.y = line_y * frame->sprites[S_EXIT].size.y;
-		}
-		else if (line[i] == OBJ_START_CHAR)
-		{
-			map->start_pos.x = i * frame->sprites[S_PLAYER].size.x;
-			map->start_pos.y = line_y * frame->sprites[S_PLAYER].size.y;
-		}
-		else if (line[i] != OBJ_EMPTY_CHAR)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 char	**save_map(char *path, t_map *map)
 {
 	int		i;
@@ -97,6 +62,61 @@ char	**save_map(char *path, t_map *map)
 	return (map_buff);
 }
 
+static int	read_line(char *line, int line_y, t_map *map, t_frame *frame)
+{
+	int		i;
+	t_vec_2	pos;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == OBJ_WALL_CHAR)
+		{
+			pos.x = i * frame->sprites[S_WALL].size.x;
+			pos.y = line_y * frame->sprites[S_WALL].size.y;
+			add_wall(frame, pos);
+		}
+		else if (line[i] == OBJ_COLL_CHAR)
+		{
+			
+		}
+		else if (line[i] == OBJ_EXIT_CHAR)
+		{
+			map->exit_pos.x = i * frame->sprites[S_EXIT].size.x;
+			map->exit_pos.y = line_y * frame->sprites[S_EXIT].size.y;
+		}
+		else if (line[i] == OBJ_START_CHAR)
+		{
+			map->start_pos.x = i * frame->sprites[S_PLAYER].size.x;
+			map->start_pos.y = line_y * frame->sprites[S_PLAYER].size.y;
+		}
+		else if (line[i] != OBJ_EMPTY_CHAR)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int		valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit)
+{
+	(void)map;
+	(void)start;
+	(void)exit;
+	return (1);
+}
+
+void	free_map_buffer(char **buffer)
+{
+	int	i;
+
+	if (!buffer)
+		return ;
+	i = 0;
+	while (buffer[i])
+		free(buffer[i++]);
+	free(buffer);
+}
+
 t_map	parse_map(char *path, t_frame *frame)
 {
 	t_map	map;
@@ -105,10 +125,8 @@ t_map	parse_map(char *path, t_frame *frame)
 
 	map.map_valid = 0;
 	map_buff = save_map(path, &map);
-	if (!map_buff)
-		return (map);
 	i = 0;
-	while (map_buff[i])
+	while (map_buff && map_buff[i])
 	{
 		if ((i == 0 || map_buff[i + 1] == NULL) && !is_full_wall(map_buff[i]))
 			break;
@@ -120,8 +138,8 @@ t_map	parse_map(char *path, t_frame *frame)
 			break ;
 		i++;
 	}
-	if (map_buff[i])
-		return (map);
-	map.map_valid = 1;
+	if ((map_buff && !map_buff[i]) && valid_path_exists(map_buff, map.start_pos, map.exit_pos))
+		map.map_valid = 1;
+	free_map_buffer(map_buff);
 	return (map);
 }
