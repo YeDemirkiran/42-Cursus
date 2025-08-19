@@ -116,6 +116,17 @@ t_map	init_map()
 	return (map);
 }
 
+int		is_map_valid(char **map_buff, char *current_line, t_map *map)
+{
+	if (!map_buff || current_line)
+		return (0);
+	if (map->start_pos.x == -999 || map->exit_pos.x == -999)
+		return (0);
+	if (!valid_path_exists(map_buff, map->start_pos, map->exit_pos))
+		return (0);
+	return (1);
+}
+
 t_map	parse_map(char *path, t_frame *frame)
 {
 	t_map	map;
@@ -137,8 +148,7 @@ t_map	parse_map(char *path, t_frame *frame)
 			break ;
 		i++;
 	}
-	if ((map_buff && !map_buff[i]) && valid_path_exists(map_buff, map.start_pos, map.exit_pos))
-		map.map_valid = 1;
+	map.map_valid = is_map_valid(map_buff, map_buff[i], &map);
 	free_map_buffer(map_buff);
 	return (map);
 }
