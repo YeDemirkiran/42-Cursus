@@ -41,3 +41,17 @@ void	add_collectible(t_frame *frame, t_vec_2 pos)
 {
 	add_object(frame->collectibles, &(frame->sprites[S_COLL]), pos);
 }
+
+t_map	init_map()
+{
+	t_map	map;
+
+	map.map_valid = 0;
+	map.map_width = 0;
+	map.map_height = 0;
+	map.start_pos.x = -999;
+	map.start_pos.y = -999;
+	map.exit_pos.x = -999;
+	map.exit_pos.y = -999;
+	return (map);
+}

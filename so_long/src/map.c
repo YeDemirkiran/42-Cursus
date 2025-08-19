@@ -5,20 +5,18 @@
 // STEP 2: Check if the map is valid (rectangular, enclosed by walls, start, exit)
 // STEP 3: Check if a path exists from start to finish
 
-char	**save_map(char *path, t_map *map)
+static int	get_map_height(char *path)
 {
 	int		i;
-	ssize_t	read_size;
 	int		fd;
-	char	**map_buff;
-	char	*buffer;
+	int		height;
+	ssize_t	read_size;
+	char	buffer[BUFFER_SIZE];
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (NULL);
-	buffer = malloc(sizeof(char) * BUFFER_SIZE);
-	if (!buffer)
-		return (NULL);
+		return (0);
+	height = 0;
 	read_size = read(fd, buffer, BUFFER_SIZE - 1);
 	while (read_size > 0)
 	{
@@ -27,20 +25,30 @@ char	**save_map(char *path, t_map *map)
 		while (buffer[i])
 		{
 			if (buffer[i] == '\n')
-				map->map_height++;
+				height++;
 			i++;
 		}
 		read_size = read(fd, buffer, BUFFER_SIZE - 1);
 	}
-	free(buffer);
-	if (map->map_height == 0)
+	close(fd);
+	return (height);
+}
+
+char	**save_map(char *path, t_map *map)
+{
+	int		i;
+	ssize_t	read_size;
+	int		fd;
+	char	**map_buff;
+	char	*buffer;
+
+	map->map_height = get_map_height(path);
+	if (map->map_height <= 1)
 		return (NULL);
-	map->map_height++;
 	printf("MAP HEIGHT: %i\n", map->map_height);
 	map_buff = malloc(sizeof(char *) * (map->map_height + 1));
 	if (!map_buff)
 		return (NULL);
-	close(fd);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
@@ -79,7 +87,6 @@ static int	read_line(char *line, int line_y, t_map *map, t_frame *frame)
 		}
 		else if (line[i] == OBJ_COLL_CHAR)
 		{
-			printf("ADDING COLLECTIBLE\n");
 			pos.x = i * frame->sprites[S_COLL].size.x;
 			pos.y = line_y * frame->sprites[S_COLL].size.y;
 			add_collectible(frame, pos);
@@ -103,20 +110,6 @@ static int	read_line(char *line, int line_y, t_map *map, t_frame *frame)
 		i++;
 	}
 	return (1);
-}
-
-t_map	init_map()
-{
-	t_map	map;
-
-	map.map_valid = 0;
-	map.map_width = 0;
-	map.map_height = 0;
-	map.start_pos.x = -999;
-	map.start_pos.y = -999;
-	map.exit_pos.x = -999;
-	map.exit_pos.y = -999;
-	return (map);
 }
 
 int		is_map_valid(char **map_buff, char *current_line, t_map *map)
