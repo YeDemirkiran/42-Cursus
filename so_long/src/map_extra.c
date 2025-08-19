@@ -1,57 +1,72 @@
 #include "so_long.h"
 
-int	is_full_wall(char *str)
+static int	get_map_height(char *path)
 {
-	int	i;
+	int		i;
+	int		fd;
+	int		height;
+	ssize_t	read_size;
+	char	buffer[BUFFER_SIZE];
 
-	i = 0;
-	while (str[i])
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	height = 0;
+	read_size = read(fd, buffer, BUFFER_SIZE - 1);
+	while (read_size > 0)
 	{
-		if (str[i] != OBJ_WALL_CHAR)
-			return (0);
-		i++;
+		buffer[read_size] = 0;
+		i = 0;
+		while (buffer[i])
+		{
+			if (buffer[i] == '\n')
+				height++;
+			i++;
+		}
+		read_size = read(fd, buffer, BUFFER_SIZE - 1);
 	}
-	return (1);
+	close(fd);
+	return (height);
 }
 
-int	is_enclosed_wall(char *str)
+static void	save_to_buffer(char **map_buff, int fd)
 {
-	size_t	len;
+	char	*buffer;
+	ssize_t	read_size;
+	int		i;
 
-	len = ft_strlen(str);
-	return (str[0] == OBJ_WALL_CHAR && str[len - 1] == OBJ_WALL_CHAR);
-}
-
-int	valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit)
-{
-	(void)map;
-	(void)start;
-	(void)exit;
-	return (1);
-}
-
-int	is_map_valid(char **map_buff, char *current_line, t_map *map)
-{
-	if (!map_buff || current_line)
-		return (0);
-	if (map->start_pos.x == -999 || map->exit_pos.x == -999)
-		return (0);
-	if (!valid_path_exists(map_buff, map->start_pos, map->exit_pos))
-		return (0);
-	return (1);
-}
-
-void	free_map_buffer(char **buffer)
-{
-	int	i;
-
+	buffer = get_next_line(fd);
 	if (!buffer)
-		return ;
-	i = 0;
-	while (buffer[i])
 	{
-		free(buffer[i]);
-		i++;
+		free(map_buff);
+		return ;
 	}
-	free(buffer);
+	i = 0;
+	while (buffer)
+	{
+		read_size = ft_strlen(buffer);
+		if (buffer[read_size - 1] == '\n')
+			buffer[read_size - 1] = 0;
+		map_buff[i++] = buffer;
+		buffer = get_next_line(fd);
+	}
+	map_buff[i] = NULL;
+}
+
+char	**save_map(char *path, t_map *map)
+{
+	int		fd;
+	char	**map_buff;
+
+	map->map_height = get_map_height(path);
+	if (map->map_height <= 1)
+		return (NULL);
+	map_buff = malloc(sizeof(char *) * (map->map_height + 1));
+	if (!map_buff)
+		return (NULL);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	save_to_buffer(map_buff, fd);
+	return (map_buff);
 }
