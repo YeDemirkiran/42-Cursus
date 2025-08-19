@@ -167,6 +167,8 @@ t_map	parse_map(char *path, t_frame *frame);
 // map_extra.c
 int		is_full_wall(char *str);
 int		is_enclosed_wall(char *str);
+int		valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit);
+void	free_map_buffer(char **buffer);
 
 // render.c
 void	render_sprite(t_frame *frame, t_sprite *sprite,
