@@ -109,9 +109,9 @@ typedef struct s_frame
 	void		*mlx_window;
 	t_map		*map;
 	t_object	background;
-	t_sprite	sprites[BUFFER_SIZE_GNL];
-	t_object	walls[BUFFER_SIZE_GNL];
-	t_object	collectibles[BUFFER_SIZE_GNL];
+	t_sprite	sprites[BUFFER_SIZE];
+	t_object	walls[BUFFER_SIZE];
+	t_object	collectibles[BUFFER_SIZE];
 	t_player	player;
 	t_object	exit;
 	t_vec_2		camera_offset;
@@ -136,6 +136,7 @@ enum	e_sprite_indexes
 	S_PLAYER = 1,
 	S_EXIT = 2,
 	S_WALL = 3,
+	S_COLL = 4,
 };
 
 // check.c
@@ -187,5 +188,6 @@ int		update_frame(t_frame *frame);
 void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr);
 void	add_object(t_object *objects_buffer, t_sprite *sprite, t_vec_2 pos);
 void	add_wall(t_frame *frame, t_vec_2 pos);
+void	add_collectible(t_frame *frame, t_vec_2 pos);
 
 #endif

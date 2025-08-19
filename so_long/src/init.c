@@ -5,7 +5,7 @@ void	init_sprites_empty(t_sprite *sprites_buffer)
 	int	i;
 
 	i = 0;
-	while (i < BUFFER_SIZE_GNL)
+	while (i < BUFFER_SIZE)
 	{
 		sprites_buffer[i].id = -1;
 		i++;
@@ -20,7 +20,7 @@ void	init_objects_empty(t_object *objects_buffer)
 	i = 0;
 	zero.x = 0;
 	zero.y = 0;
-	while (i < BUFFER_SIZE_GNL)
+	while (i < BUFFER_SIZE)
 	{
 		objects_buffer[i].sprite = NULL;
 		objects_buffer[i].position = zero;
@@ -42,6 +42,7 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 	add_sprite(TEXTURES_PATH "Player.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "exit.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Water.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Collectible.xpm", sprites_buffer, mlx_addr);
 }
 
 void	init_objects(t_frame *frame)

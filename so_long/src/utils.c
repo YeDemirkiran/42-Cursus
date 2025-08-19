@@ -36,3 +36,8 @@ void	add_wall(t_frame *frame, t_vec_2 pos)
 {
 	add_object(frame->walls, &(frame->sprites[S_WALL]), pos);
 }
+
+void	add_collectible(t_frame *frame, t_vec_2 pos)
+{
+	add_object(frame->collectibles, &(frame->sprites[S_COLL]), pos);
+}

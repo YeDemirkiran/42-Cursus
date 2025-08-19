@@ -79,7 +79,10 @@ static int	read_line(char *line, int line_y, t_map *map, t_frame *frame)
 		}
 		else if (line[i] == OBJ_COLL_CHAR)
 		{
-			
+			printf("ADDING COLLECTIBLE\n");
+			pos.x = i * frame->sprites[S_COLL].size.x;
+			pos.y = line_y * frame->sprites[S_COLL].size.y;
+			add_collectible(frame, pos);
 		}
 		else if (line[i] == OBJ_EXIT_CHAR)
 		{
