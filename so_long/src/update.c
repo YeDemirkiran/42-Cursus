@@ -22,7 +22,7 @@ void	update_player(t_player *player, t_frame *frame)
 	{
 		count = player->move_count;
 		ft_putstr("PLAYER MOVE COUNT: ");
-		ft_putnbr(count);
+		ft_putnbr(player->move_count);
 		ft_putstr("\n");
 	}
 }
