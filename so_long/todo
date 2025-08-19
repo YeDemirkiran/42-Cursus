@@ -1,11 +1,11 @@
 MANDATORY
 
 - Parse map and enforce rules
-- Add collectibles
-- Add game exit object
-- Add error handling and logging
+- Add collectibles (sprites done)
+- Add game exit object (sprites done)
+- Add error handling and logging (somewhat)
 - Fix collision with cross movement
-- Fix memory leaks and proper clean up 
+- Fix memory leaks and proper clean up (somewhat)
 
 BONUS
 

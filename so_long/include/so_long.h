@@ -169,6 +169,7 @@ t_map	parse_map(char *path, t_frame *frame);
 int		is_full_wall(char *str);
 int		is_enclosed_wall(char *str);
 int		valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit);
+int		is_map_valid(char **map_buff, char *current_line, t_map *map);
 void	free_map_buffer(char **buffer);
 
 // render.c

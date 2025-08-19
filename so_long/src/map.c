@@ -2,7 +2,8 @@
 #include "stdio.h"
 
 // STEP 1: Save map to a 2D buffer array
-// STEP 2: Check if the map is valid (rectangular, enclosed by walls, start, exit)
+/* STEP 2: Check if the map is valid (rectangular, 
+enclosed by walls, start, exit) */
 // STEP 3: Check if a path exists from start to finish
 
 static int	get_map_height(char *path)
@@ -34,29 +35,17 @@ static int	get_map_height(char *path)
 	return (height);
 }
 
-char	**save_map(char *path, t_map *map)
+void	save_to_buffer(char **map_buff, int fd)
 {
-	int		i;
-	ssize_t	read_size;
-	int		fd;
-	char	**map_buff;
 	char	*buffer;
+	ssize_t	read_size;
+	int		i;
 
-	map->map_height = get_map_height(path);
-	if (map->map_height <= 1)
-		return (NULL);
-	printf("MAP HEIGHT: %i\n", map->map_height);
-	map_buff = malloc(sizeof(char *) * (map->map_height + 1));
-	if (!map_buff)
-		return (NULL);
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
 	buffer = get_next_line(fd);
 	if (!buffer)
 	{
 		free(map_buff);
-		return (NULL);
+		return ;
 	}
 	i = 0;
 	while (buffer)
@@ -68,6 +57,24 @@ char	**save_map(char *path, t_map *map)
 		buffer = get_next_line(fd);
 	}
 	map_buff[i] = NULL;
+}
+
+char	**save_map(char *path, t_map *map)
+{
+	int		fd;
+	char	**map_buff;
+
+	map->map_height = get_map_height(path);
+	if (map->map_height <= 1)
+		return (NULL);
+	printf("MAP HEIGHT: %i\n", map->map_height);
+	map_buff = malloc(sizeof(char *) * (map->map_height + 1));
+	if (!map_buff)
+		return (NULL);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	save_to_buffer(map_buff, fd);
 	return (map_buff);
 }
 
@@ -112,17 +119,6 @@ static int	read_line(char *line, int line_y, t_map *map, t_frame *frame)
 	return (1);
 }
 
-int		is_map_valid(char **map_buff, char *current_line, t_map *map)
-{
-	if (!map_buff || current_line)
-		return (0);
-	if (map->start_pos.x == -999 || map->exit_pos.x == -999)
-		return (0);
-	if (!valid_path_exists(map_buff, map->start_pos, map->exit_pos))
-		return (0);
-	return (1);
-}
-
 t_map	parse_map(char *path, t_frame *frame)
 {
 	t_map	map;
@@ -135,11 +131,11 @@ t_map	parse_map(char *path, t_frame *frame)
 	while (map_buff && map_buff[i])
 	{
 		if ((i == 0 || map_buff[i + 1] == NULL) && !is_full_wall(map_buff[i]))
-			break;
+			break ;
 		if (i == 0)
 			map.map_width = ft_strlen(map_buff[i]);
 		else if (map.map_width != (int)ft_strlen(map_buff[i]) || !is_enclosed_wall(map_buff[i]))
-			break;
+			break ;
 		if (!read_line(map_buff[i], i, &map, frame))
 			break ;
 		i++;
