@@ -16,15 +16,9 @@ static void	on_move(unsigned int key, t_player *player)
 	input_y = ((key == K_S) || (key == K_DOWN))
 		- ((key == K_W) || (key == K_UP));
 	if (input_x)
-	{
 		player->object.velocity.x = input_x * PLAYER_SPEED;
-		//player->object.velocity.y = 0;
-	}
 	else if (input_y)
-	{
-		//player->object.velocity.x = 0;
 		player->object.velocity.y = input_y * PLAYER_SPEED;
-	}
 	if (input_x || input_y)
 		player->move_count += input_x || input_y;
 }

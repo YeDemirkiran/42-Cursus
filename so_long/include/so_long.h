@@ -190,6 +190,6 @@ void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr);
 void	add_object(t_object *objects_buffer, t_sprite *sprite, t_vec_2 pos);
 void	add_wall(t_frame *frame, t_vec_2 pos);
 void	add_collectible(t_frame *frame, t_vec_2 pos);
-t_map	init_map();
+t_map	init_map(void);
 
 #endif

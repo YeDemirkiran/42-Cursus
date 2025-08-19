@@ -67,7 +67,6 @@ char	**save_map(char *path, t_map *map)
 	map->map_height = get_map_height(path);
 	if (map->map_height <= 1)
 		return (NULL);
-	printf("MAP HEIGHT: %i\n", map->map_height);
 	map_buff = malloc(sizeof(char *) * (map->map_height + 1));
 	if (!map_buff)
 		return (NULL);
