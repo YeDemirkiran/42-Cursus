@@ -3,7 +3,6 @@
 void	init_player(t_frame *frame)
 {
 	frame->player.current_collect = 0;
-	frame->player.target_collect = 0;
 	frame->player.move_count = 0;
 	frame->player.object.sprite = &(frame->sprites[S_PLAYER]);
 	frame->player.object.position.x = frame->map->start_pos.x;

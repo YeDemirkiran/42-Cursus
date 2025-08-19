@@ -18,6 +18,16 @@ void	check_collectibles(t_frame *frame)
 		i++;
 	}
 }
+#include "stdio.h"
+void	check_exit(t_frame *frame)
+{
+	t_vec_2	overlap;
+	if (frame->player.current_collect != frame->map->target_collect)
+		return ;
+	overlap = are_objects_overlapping(frame->player.object, frame->exit);
+	if (overlap.x && overlap.y)
+		mlx_loop_end(frame->mlx_addr);
+}
 
 void	update_player(t_player *player, t_frame *frame)
 {
@@ -26,7 +36,6 @@ void	update_player(t_player *player, t_frame *frame)
 
 	player->object.position.x += player->object.velocity.x;
 	player->object.position.y += player->object.velocity.y;
-	check_collectibles(frame);
 	overlap = player_overlapping_wall(frame);
 	if (overlap.x && overlap.y)
 	{
@@ -37,6 +46,8 @@ void	update_player(t_player *player, t_frame *frame)
 		if (player->move_count != count)
 			player->move_count = count;
 	}
+	check_collectibles(frame);
+	check_exit(frame);
 	if (player->move_count != count)
 	{
 		count = player->move_count;

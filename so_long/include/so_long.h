@@ -90,7 +90,6 @@ typedef struct s_player
 {
 	t_object	object;
 	int			move_count;
-	int			target_collect;
 	int			current_collect;
 }			t_player;
 
@@ -101,6 +100,7 @@ typedef struct s_map
 	int			map_height;
 	t_vec_2		start_pos;
 	t_vec_2		exit_pos;
+	int			target_collect;
 }			t_map;
 
 typedef struct s_frame

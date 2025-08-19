@@ -13,11 +13,11 @@ static void	parse_wall(t_frame *frame, t_vec_2 pos)
 	add_wall(frame, pos);
 }
 
-static void	parse_collectible(t_frame *frame, t_vec_2 pos)
+static void	parse_collectible(t_frame *frame, t_map *map, t_vec_2 pos)
 {
 	pos.x *= frame->sprites[S_COLL].size.x;
 	pos.y *= frame->sprites[S_COLL].size.y;
-	frame->player.target_collect++;
+	(map->target_collect)++;
 	add_collectible(frame, pos);
 }
 
@@ -53,7 +53,7 @@ static int	read_line(char *line, int line_y, t_map *map, t_frame *frame)
 		if (line[i] == OBJ_WALL_CHAR)
 			parse_wall(frame, pos);
 		else if (line[i] == OBJ_COLL_CHAR)
-			parse_collectible(frame, pos);
+			parse_collectible(frame, map, pos);
 		else if (line[i] == OBJ_START_CHAR || line[i] == OBJ_EXIT_CHAR)
 		{
 			if (!parse_start_exit(map, frame, line[i], pos))
