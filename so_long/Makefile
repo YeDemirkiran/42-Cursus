@@ -30,7 +30,7 @@ GNL_DIR = gnl/
 GNL_SRC = $(addprefix $(GNL_DIR), get_next_line.c get_next_line_utils.c)
 
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c check.c events.c events_extra.c generate.c init_extra.c init.c map.c map_extra.c map_utils.c render.c update.c utils.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC))
+SRC = $(addprefix $(SRC_DIR), main.c check.c events.c events_extra.c generate.c init_extra.c init.c map.c map_extra.c map_utils.c render.c update.c utils.c utils_extra.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC))
 
 INC = -I./include -I/usr/include -I$(MLX_DIR)
 

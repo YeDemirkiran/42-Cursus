@@ -17,6 +17,7 @@ static void	parse_collectible(t_frame *frame, t_vec_2 pos)
 {
 	pos.x *= frame->sprites[S_COLL].size.x;
 	pos.y *= frame->sprites[S_COLL].size.y;
+	frame->player.target_collect++;
 	add_collectible(frame, pos);
 }
 

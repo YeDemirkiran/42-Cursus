@@ -195,4 +195,7 @@ void	add_wall(t_frame *frame, t_vec_2 pos);
 void	add_collectible(t_frame *frame, t_vec_2 pos);
 t_map	init_map(void);
 
+// utils_extra.c
+void	destroy_object(t_object *buffer, int index);
+
 #endif

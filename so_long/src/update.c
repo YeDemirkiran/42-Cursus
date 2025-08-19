@@ -1,6 +1,24 @@
 #include "so_long.h"
 #include "ft_write.h"
 
+void	check_collectibles(t_frame *frame)
+{
+	int		i;
+	t_vec_2	overlap;
+
+	i = 0;
+	while (frame->collectibles[i].sprite)
+	{
+		overlap = are_objects_overlapping(frame->player.object, frame->collectibles[i]);
+		if (overlap.x && overlap.y)
+		{
+			frame->player.current_collect++;
+			destroy_object(frame->collectibles, i);
+		}
+		i++;
+	}
+}
+
 void	update_player(t_player *player, t_frame *frame)
 {
 	static int	count;
@@ -8,6 +26,7 @@ void	update_player(t_player *player, t_frame *frame)
 
 	player->object.position.x += player->object.velocity.x;
 	player->object.position.y += player->object.velocity.y;
+	check_collectibles(frame);
 	overlap = player_overlapping_wall(frame);
 	if (overlap.x && overlap.y)
 	{
