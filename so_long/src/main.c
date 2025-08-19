@@ -37,7 +37,12 @@ int	main(int argc, char **argv)
 	init_background(&frame);
 	init_objects(&frame);
 	map = parse_map(argv[1], &frame);
-	fflush(stdout);
+	if (!map.map_valid)
+	{
+		write(2, "Error\n", 6);
+		write(2, "The given map is not valid!\n", 28);
+		return (EXIT_FAILURE);
+	}
 	frame.map = &map;
 	init_player(&frame);
 	init_exit(&frame);

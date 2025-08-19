@@ -164,6 +164,10 @@ void	init_hooks(t_frame *frame);
 // map.c
 t_map	parse_map(char *path, t_frame *frame);
 
+// map_extra.c
+int		is_full_wall(char *str);
+int		is_enclosed_wall(char *str);
+
 // render.c
 void	render_sprite(t_frame *frame, t_sprite *sprite,
 			t_vec_2 pos, t_vec_2 *offset);
