@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:47 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:03:48 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 13:38:08 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 {
 	init_sprites_empty(sprites_buffer);
 	add_sprite(TEXTURES_PATH "background_placeholder.xpm",
-			sprites_buffer, mlx_addr);
+		sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Player.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "exit.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Water.xpm", sprites_buffer, mlx_addr);
