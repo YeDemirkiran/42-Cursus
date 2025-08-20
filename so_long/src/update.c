@@ -6,40 +6,12 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:16 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:04:17 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:15:30 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "ft_write.h"
-
-void	check_collectibles(t_frame *frame)
-{
-	int		i;
-	t_vec_2	overlap;
-
-	i = 0;
-	while (frame->collectibles[i].sprite)
-	{
-		overlap = are_objects_overlapping(frame->player.object, frame->collectibles[i]);
-		if (overlap.x && overlap.y)
-		{
-			frame->player.current_collect++;
-			destroy_object(frame->collectibles, i);
-		}
-		i++;
-	}
-}
-#include "stdio.h"
-void	check_exit(t_frame *frame)
-{
-	t_vec_2	overlap;
-	if (frame->player.current_collect != frame->map->target_collect)
-		return ;
-	overlap = are_objects_overlapping(frame->player.object, frame->exit);
-	if (overlap.x && overlap.y)
-		mlx_loop_end(frame->mlx_addr);
-}
 
 void	update_player(t_player *player, t_frame *frame)
 {
@@ -48,7 +20,7 @@ void	update_player(t_player *player, t_frame *frame)
 
 	player->object.position.x += player->object.velocity.x;
 	player->object.position.y += player->object.velocity.y;
-	overlap = player_overlapping_wall(frame);
+	overlap = check_walls(frame);
 	if (overlap.x && overlap.y)
 	{
 		if (fabs(overlap.x) < fabs(overlap.y))

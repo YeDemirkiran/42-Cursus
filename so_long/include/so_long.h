@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:02:50 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:01:16 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:15:56 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 # endif
 
 # ifndef PLAYER_SPEED
-#  define PLAYER_SPEED 2
+#  define PLAYER_SPEED 0.1
 # endif
 
 # define OBJ_EMPTY_CHAR '0'
@@ -139,9 +139,11 @@ enum	e_sprite_indexes
 	S_COLL = 4,
 };
 
-// check.c
+// overlap.c
 t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2);
-t_vec_2	player_overlapping_wall(t_frame *frame);
+t_vec_2	check_walls(t_frame *frame);
+void	check_collectibles(t_frame *frame);
+void	check_exit(t_frame *frame);
 
 // events.c
 int		on_key_down(int keycode, t_frame *frame);
