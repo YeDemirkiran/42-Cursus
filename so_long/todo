@@ -1,9 +1,25 @@
 OBJECTIVES
-- 
 
-MANDATORY
+Mandatory
+- Sprites: Player, collectible, wall, exit, background
+- Take .ber map and parse it
+- W, A, S, D keys
+- Correct window management (cross and ESC to close, minimize, move etc)
+- The use of the images of the MiniLibX is mandatory
+- Map must contain at least 1 collectible
+- Map must not contain duplicate start-exit
+- Map must be rectangular
+- A valid path must exist
 
-- Parse map and enforce rules (.ber extension and path remains)
+Bonus
+- Lose when touching an enemy
+- Add sprite animation
+- Write the count on screen
+
+TODO MANDATORY
+
+- Parse map and enforce rules (.ber extension and path remains) (done)
+- Fix Y camera offset
 - Add collectibles (done)
 - Add game exit object (done)
 - Add error handling and logging (somewhat)
@@ -11,7 +27,7 @@ MANDATORY
 - Fix memory leaks and proper clean up (somewhat)
 - Handle incorrect filename (Done)
 
-BONUS
+TODO BONUS
 
 - Add enemy objects
 - Add sprite animations
@@ -20,3 +36,6 @@ BONUS
 ERRORS
 
 - When the file doesn't exist, it gives segfault (Fixed)
+- Player stutters when colliding with wall diagonally
+- Player stops when two same move buttons are used at the same time
+- Move count sometimes is ignored due to the collision check

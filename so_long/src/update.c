@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:16 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:27:25 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 12:49:08 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,22 @@ void	update_player(t_player *player, t_frame *frame)
 
 void	update_camera_offset(t_frame *frame)
 {
-	if (frame->player.object.position.x + frame->camera_offset.x >= RES_X)
-		frame->camera_offset.x = frame->player.object.position.x * -1;
-	else if ((frame->player.object.position.x + frame->player.object.sprite->size.x) + frame->camera_offset.x <= 0)
-		frame->camera_offset.x = RES_X - (frame->player.object.position.x + frame->player.object.sprite->size.x);
-	frame->camera_offset.y = 0;
+	t_vec_2	p_pos;
+	t_vec_2	p_size;
+	t_vec_2	offset;
+
+	p_pos = frame->player.object.position;
+	p_size = frame->player.object.sprite->size;
+	offset = frame->camera_offset;
+	if (p_pos.x + offset.x >= RES_X)
+		offset.x = p_pos.x * -1;
+	else if ((p_pos.x + p_size.x) + offset.x <= 0)
+		offset.x = RES_X - (p_pos.x + p_size.x);
+	if (p_pos.y + offset.y >= RES_Y)
+		offset.y = p_pos.y * -1;
+	else if ((p_pos.y + p_size.y) + offset.y <= 0)
+		offset.y = RES_Y - (p_pos.y + p_size.y);
+	frame->camera_offset = offset;
 }
 
 int	update_frame(t_frame *frame)
