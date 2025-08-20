@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:16 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:15:30 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:27:25 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,10 @@
 void	update_player(t_player *player, t_frame *frame)
 {
 	static int	count;
-	t_vec_2		overlap;
 
 	player->object.position.x += player->object.velocity.x;
 	player->object.position.y += player->object.velocity.y;
-	overlap = check_walls(frame);
-	if (overlap.x && overlap.y)
-	{
-		if (fabs(overlap.x) < fabs(overlap.y))
-			player->object.position.x += overlap.x;
-		else
-			player->object.position.y += overlap.y;
-		if (player->move_count != count)
-			player->move_count = count;
-	}
+	check_walls(frame, count);
 	check_collectibles(frame);
 	check_exit(frame);
 	if (player->move_count != count)

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:27 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:15:30 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:27:40 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,27 @@ t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 		overlap.y = (obj_2.position.y + obj_2.sprite->size.y) - obj_1.position.y;
 	return (overlap);
 }
-
-t_vec_2	check_walls(t_frame *frame)
+#include "stdio.h"
+void	check_walls(t_frame *frame, int move_count)
 {
 	int		i;
 	t_vec_2	overlap;
-	t_vec_2	total;
 
 	i = 0;
-	total.x = 0;
-	total.y = 0;
 	while (frame->walls[i].sprite)
 	{
-		overlap = are_objects_overlapping(frame->player.object, frame->walls[i]);
+		overlap = are_objects_overlapping(frame->player.object,
+				frame->walls[i]);
 		if (overlap.x && overlap.y)
-			return (overlap);
+		{
+			if (fabs(overlap.x) < fabs(overlap.y))
+				frame->player.object.position.x += overlap.x;
+			else
+				frame->player.object.position.y += overlap.y;
+			frame->player.move_count = move_count;
+		}
 		i++;
 	}
-	return (total);
 }
 
 void	check_collectibles(t_frame *frame)

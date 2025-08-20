@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:02:50 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:15:56 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:27:45 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ enum	e_sprite_indexes
 
 // overlap.c
 t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2);
-t_vec_2	check_walls(t_frame *frame);
+void	check_walls(t_frame *frame, int move_count);
 void	check_collectibles(t_frame *frame);
 void	check_exit(t_frame *frame);
 

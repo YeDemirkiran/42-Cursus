@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:04 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:04:05 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:25:16 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,15 @@ int	valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit)
 	(void)exit;
 	return (1);
 }
-#include "stdio.h"
+
 int	is_map_valid(char **map_buff, char *current_line, t_map *map)
 {
-	printf("ahahah\n");
-	fflush(stdout);
 	if (!map_buff || current_line)
 		return (0);
-	printf("gırgırıgı\n");
-	fflush(stdout);
 	if (map->start_pos.x == -999 || map->exit_pos.x == -999)
 		return (0);
-	printf("belebelel\n");
-	fflush(stdout);
 	if (!valid_path_exists(map_buff, map->start_pos, map->exit_pos))
 		return (0);
-	printf("yoooo\n");
-	fflush(stdout);
 	return (1);
 }
 
