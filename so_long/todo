@@ -1,3 +1,6 @@
+OBJECTIVES
+- 
+
 MANDATORY
 
 - Parse map and enforce rules (.ber extension and path remains)
@@ -6,6 +9,7 @@ MANDATORY
 - Add error handling and logging (somewhat)
 - Fix collision with cross movement
 - Fix memory leaks and proper clean up (somewhat)
+- Handle incorrect filename (Done)
 
 BONUS
 
@@ -15,4 +19,4 @@ BONUS
 
 ERRORS
 
-- When the file doesn't exist, it gives segfault
+- When the file doesn't exist, it gives segfault (Fixed)

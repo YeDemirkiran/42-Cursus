@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:02:50 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:56:42 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 12:14:45 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,10 @@ enum	e_keys
 	K_S = 115,
 	K_A = 97,
 	K_D = 100,
-	K_UP = 0,
-	K_DOWN = 0,
-	K_LEFT = 0,
-	K_RIGHT = 0,
+	K_UP = 82,
+	K_DOWN = 84,
+	K_LEFT = 81,
+	K_RIGHT = 83,
 };
 
 enum	e_sprite_indexes

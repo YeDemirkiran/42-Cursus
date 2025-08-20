@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:27 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:27:40 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 12:04:42 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 		overlap.y = (obj_2.position.y + obj_2.sprite->size.y) - obj_1.position.y;
 	return (overlap);
 }
-#include "stdio.h"
+
 void	check_walls(t_frame *frame, int move_count)
 {
 	int		i;

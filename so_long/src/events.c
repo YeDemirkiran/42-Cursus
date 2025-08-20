@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:36 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:03:37 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 12:15:58 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ static void	on_move(unsigned int key, t_player *player)
 		player->object.velocity.x = input_x * PLAYER_SPEED;
 	else if (input_y)
 		player->object.velocity.y = input_y * PLAYER_SPEED;
-	if (input_x || input_y)
-		player->move_count += input_x || input_y;
+	player->move_count += (input_x || input_y);
 }
 
 static void	on_stop_move(unsigned int key, t_player *player)
@@ -54,7 +53,7 @@ int	on_key_down(int keycode, t_frame *frame)
 {
 	unsigned char	key;
 
-	key = keycode;
+	key = (unsigned char)keycode;
 	on_esc_press(key, frame->mlx_addr);
 	on_move(key, &(frame->player));
 	return (0);
@@ -64,7 +63,7 @@ int	on_key_up(int keycode, t_frame *frame)
 {
 	unsigned char	key;
 
-	key = keycode;
+	key = (unsigned char)keycode;
 	on_stop_move(key, &(frame->player));
 	return (0);
 }
