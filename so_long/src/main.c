@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:02:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:03:51 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:45:55 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char **argv)
 	frame.mlx_window = mlx_new_window(frame.mlx_addr, RES_X, RES_Y, WINDOW_TITLE);
 	if (!frame.mlx_window)
 		return (EXIT_FAILURE);
-	mlx_do_key_autorepeatoff(frame.mlx_addr);
 	frame.camera_offset.x = 0;
 	frame.camera_offset.y = 0;
 	init_sprites(frame.sprites, frame.mlx_addr);
@@ -47,6 +46,7 @@ int	main(int argc, char **argv)
 	init_player(&frame);
 	init_exit(&frame);
 	init_hooks(&frame);
+	mlx_do_key_autorepeatoff(frame.mlx_addr);
 	mlx_loop(frame.mlx_addr);
 	mlx_do_key_autorepeaton(frame.mlx_addr);
 	mlx_destroy_window(frame.mlx_addr, frame.mlx_window);

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:02:50 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:27:45 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:56:42 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,13 +168,14 @@ void	init_hooks(t_frame *frame);
 t_map	parse_map(char *path, t_frame *frame);
 
 // map_extra.c
+int		check_filename(char *path);
 char	**save_map(char *path, t_map *map);
 
 // map_utils.c
 int		is_full_wall(char *str);
 int		is_enclosed_wall(char *str);
 int		valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit);
-int		is_map_valid(char **map_buff, char *current_line, t_map *map);
+int		is_map_valid(char **map_buff, int current_line_index, t_map *map);
 void	free_map_buffer(char **buffer);
 
 // render.c

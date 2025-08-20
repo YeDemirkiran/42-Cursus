@@ -6,11 +6,57 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:03:54 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:51:06 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static char	*get_real_filename(char *path)
+{
+	char	*name;
+	int		i;
+	int		last_dir_index;
+	
+	if (!path)
+		return (NULL);
+	i = 0;
+	last_dir_index = 0;
+	while (path[i])
+	{
+		if (path[i] == '/')
+			last_dir_index = i;
+		i++;
+	}
+	if (last_dir_index == 0)
+		name = ft_strdup(path);
+	else
+		name = ft_substr(path, last_dir_index + 1,
+				ft_strlen(path + last_dir_index + 1));
+	return (name);
+}
+
+int	check_filename(char *path)
+{
+	char		*real_filename;
+	const char	*ext = ".ber";
+	size_t		len;
+	int			result;
+
+	result = 1;
+	if (!path)
+		return (0);
+	real_filename = get_real_filename(path);
+	if (!real_filename)
+		return (0);
+	len = ft_strlen(real_filename);
+	if (len <= 4)
+		result = 0;
+	else if (ft_strcmp(real_filename + (len - 4), ext))
+		result = 0;
+	free(real_filename);
+	return (result);
+}
 
 static int	get_map_height(char *path)
 {

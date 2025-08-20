@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:04:09 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:56:48 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ t_map	parse_map(char *path, t_frame *frame)
 	int		i;
 
 	map = init_map();
+	if (!check_filename(path))
+		return (map);
 	map_buff = save_map(path, &map);
 	i = 0;
 	while (map_buff && map_buff[i])
@@ -100,7 +102,7 @@ t_map	parse_map(char *path, t_frame *frame)
 			break ;
 		i++;
 	}
-	map.map_valid = is_map_valid(map_buff, map_buff[i], &map);
+	map.map_valid = is_map_valid(map_buff, i, &map);
 	free_map_buffer(map_buff);
 	return (map);
 }
