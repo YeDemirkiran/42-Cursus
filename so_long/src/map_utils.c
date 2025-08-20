@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:04 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 14:52:04 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 15:07:26 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,44 @@ int	is_enclosed_wall(char *str)
 	return (str[0] == OBJ_WALL_CHAR && str[len - 1] == OBJ_WALL_CHAR);
 }
 
-int	valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit)
+static void	init_visited(t_vec_2 *arr, int size)
 {
-	(void)map;
-	(void)start;
-	(void)exit;
+	int	i;
+
+	i = 0;
+	while (i < size)
+		arr[i].x = -1;
+}
+
+static int	is_visited(t_vec_2 *visited_arr, t_vec_2 pos)
+{
+	int	i;
+
+	i = 0;
+	while (visited_arr[i].x >= 0)
+	{
+		if (visited_arr[i].x == pos.x && visited_arr[i].y == pos.y)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static int	valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit,
+		t_vec_2 size)
+{
+	int		x;
+	int		y;
+	t_vec_2	*visited;
+
+	visited = malloc(sizeof(t_vec_2) * size.x * size.y);
+	if (!visited)
+		return (0);
+	init_visited(visited, size.x * size.y);
+	y = start.y;
+	while ()
+	x = 0;
+	
 	return (1);
 }
 
