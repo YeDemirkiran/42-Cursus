@@ -1,8 +1,8 @@
 MANDATORY
 
-- Parse map and enforce rules
-- Add collectibles (sprites done)
-- Add game exit object (sprites done)
+- Parse map and enforce rules (.ber extension and path remains)
+- Add collectibles (done)
+- Add game exit object (done)
 - Add error handling and logging (somewhat)
 - Fix collision with cross movement
 - Fix memory leaks and proper clean up (somewhat)
@@ -12,3 +12,7 @@ BONUS
 - Add enemy objects
 - Add sprite animations
 - Display score as text on screen
+
+ERRORS
+
+- When the file doesn't exist, it gives segfault
