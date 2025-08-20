@@ -19,11 +19,11 @@ Bonus
 TODO MANDATORY
 
 - Parse map and enforce rules (.ber extension and path remains) (done)
-- Fix Y camera offset
+- Fix Y camera offset (done)
 - Add collectibles (done)
 - Add game exit object (done)
 - Add error handling and logging (somewhat)
-- Fix collision with cross movement
+- Fix collision with cross movement (somewhat)
 - Fix memory leaks and proper clean up (somewhat)
 - Handle incorrect filename (Done)
 
