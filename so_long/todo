@@ -1,15 +1,15 @@
 OBJECTIVES
 
 Mandatory
-- Sprites: Player, collectible, wall, exit, background
-- Take .ber map and parse it
-- W, A, S, D keys
-- Correct window management (cross and ESC to close, minimize, move etc)
-- The use of the images of the MiniLibX is mandatory
-- Map must contain at least 1 collectible
-- Map must not contain duplicate start-exit
-- Map must be rectangular
-- A valid path must exist
+- Sprites: Player, collectible, wall, exit, background (Done)
+- Take .ber map and parse it (Done)
+- W, A, S, D keys (Done)
+- Correct window management (cross and ESC to close, minimize, move etc) (Done)
+- The use of the images of the MiniLibX is mandatory (Done)
+- Map must contain at least 1 collectible (Done)
+- Map must not contain duplicate start-exit (Done)
+- Map must be rectangular (Done)
+- A valid path must exist (Done)
 
 Bonus
 - Lose when touching an enemy
