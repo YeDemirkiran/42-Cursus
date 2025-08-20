@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:04 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:56:24 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:52:04 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	is_map_valid(char **map_buff, int current_line_index, t_map *map)
 	if (!map_buff || map_buff[current_line_index])
 		return (0);
 	if (map->start_pos.x == -999 || map->exit_pos.x == -999)
+		return (0);
+	if (map->target_collect == 0)
 		return (0);
 	if (!valid_path_exists(map_buff, map->start_pos, map->exit_pos))
 		return (0);
