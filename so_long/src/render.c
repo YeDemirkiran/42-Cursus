@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:13 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:04:14 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:51:08 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void	render_sprite(t_frame *frame, t_sprite *sprite,
 		new_pos.x += (int)(offset->x);
 		new_pos.y += (int)(offset->y);
 	}
+	if ((new_pos.x > RES_X || new_pos.x + sprite->size.x < 0)
+		|| (new_pos.y > RES_Y || new_pos.y + sprite->size.y < 0))
+		return ;
 	mlx_put_image_to_window(frame->mlx_addr, frame->mlx_window,
 		sprite->image.img_addr, new_pos.x, new_pos.y);
 }
