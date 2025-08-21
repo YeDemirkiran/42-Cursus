@@ -48,7 +48,7 @@ static int	parse_start_exit(t_map *map, t_frame *frame, char c, t_vec_2 pos)
 	{
 		if (!(map->start_pos.x == -999 && map->start_pos.y == -999))
 			return (0);
-		map->start_pos.x = pos.y * frame->sprites[S_PLAYER].size.x;
+		map->start_pos.x = pos.x * frame->sprites[S_PLAYER].size.x;
 		map->start_pos.y = pos.y * frame->sprites[S_PLAYER].size.y;
 		map->start_index.x = pos.x;
 		map->start_index.y = pos.y;
