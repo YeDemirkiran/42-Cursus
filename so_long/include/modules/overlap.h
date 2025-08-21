@@ -5,7 +5,6 @@
 
 # include "t_frame.h"
 
-# include "overlap.h"
 # include "utils.h"
 # include "mlx.h"
 

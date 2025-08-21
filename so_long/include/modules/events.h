@@ -1,10 +1,11 @@
 #ifndef EVENTS_H
 # define EVENTS_H
 
-# include "mlx.h"
 # include "macro.h"
 # include "e_keys.h"
 # include "t_frame.h"
+
+# include "mlx.h"
 
 // events.c
 int	on_key_down(int keycode, t_frame *frame);
