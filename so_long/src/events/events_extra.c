@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "events.h"
 
 int	on_destroy_notify(void *mlx_addr)
 {

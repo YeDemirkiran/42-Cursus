@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include "ft_write.h"
+#include "update.h"
 
-void	update_player(t_player *player, t_frame *frame)
+static void	update_player(t_player *player, t_frame *frame)
 {
 	static int	count;
 
@@ -31,7 +30,7 @@ void	update_player(t_player *player, t_frame *frame)
 	}
 }
 
-void	update_camera_offset(t_frame *frame)
+static void	update_camera_offset(t_frame *frame)
 {
 	t_vec_2	p_pos;
 	t_vec_2	p_size;

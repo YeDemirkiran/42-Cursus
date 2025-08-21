@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "events.h"
 
 static void	on_esc_press(unsigned char key, void *mlx_addr)
 {

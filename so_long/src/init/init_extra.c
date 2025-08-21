@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "init.h"
 
 void	init_player(t_frame *frame)
 {
