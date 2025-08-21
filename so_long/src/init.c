@@ -45,7 +45,7 @@ void	init_background(t_frame *frame)
 {
 	frame->background.sprite = &(frame->sprites[S_BACKGROUND]);
 }
-
+#include "stdio.h"
 void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 {
 	init_sprites_empty(sprites_buffer);
@@ -55,6 +55,13 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 	add_sprite(TEXTURES_PATH "exit.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Water.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Collectible.xpm", sprites_buffer, mlx_addr);
+	// int	i = 0;
+	// while (((int *)(sprites_buffer[1].image.img_addr))[i] != -1)
+	// {
+	// 	printf("PIXEL %i: %#X\n", i, ((int *)(sprites_buffer[0].image.img_addr))[i]);
+	// 	fflush(stdout);
+	// 	i++;
+	// }
 }
 
 void	init_objects(t_frame *frame)
