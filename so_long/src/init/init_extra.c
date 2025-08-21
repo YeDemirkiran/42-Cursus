@@ -12,6 +12,21 @@
 
 #include "init.h"
 
+t_map	init_map(void)
+{
+	t_map	map;
+
+	map.map_valid = 0;
+	map.map_size.x = 0;
+	map.map_size.y = 0;
+	map.target_collect = 0;
+	map.start_pos.x = -999;
+	map.start_pos.y = -999;
+	map.exit_pos.x = -999;
+	map.exit_pos.y = -999;
+	return (map);
+}
+
 void	init_player(t_frame *frame)
 {
 	frame->player.current_collect = 0;

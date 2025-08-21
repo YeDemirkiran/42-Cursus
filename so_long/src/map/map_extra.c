@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   map_extra.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 11:04:04 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 15:07:26 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/20 11:03:53 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/20 11:51:06 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "map.h"
 
-int	is_full_wall(char *str)
+static int	is_full_wall(char *str)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	is_full_wall(char *str)
 	return (1);
 }
 
-int	is_enclosed_wall(char *str)
+static int	is_enclosed_wall(char *str)
 {
 	size_t	len;
 

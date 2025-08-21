@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "map.h"
 
 // STEP 1: Save map to a 2D buffer array
-/* STEP 2: Check if the map is valid (rectangular, 
+/* STEP 2: Check if the map is valid (rectangular,
 enclosed by walls, start, exit) */
 // STEP 3: Check if a path exists from start to finish
 

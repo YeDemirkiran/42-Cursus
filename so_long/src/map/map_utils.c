@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_extra.c                                        :+:      :+:    :+:   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 11:03:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:51:06 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/20 11:04:04 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/20 15:07:26 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "map.h"
 
 static char	*get_real_filename(char *path)
 {
@@ -36,7 +36,7 @@ static char	*get_real_filename(char *path)
 	return (name);
 }
 
-int	check_filename(char *path)
+static int	check_filename(char *path)
 {
 	char		*real_filename;
 	const char	*ext = ".ber";

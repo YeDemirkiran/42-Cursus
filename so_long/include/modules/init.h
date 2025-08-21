@@ -19,6 +19,7 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr);
 void	init_objects(t_frame *frame);
 
 // init_extra.c
+t_map	init_map(void);
 void	init_player(t_frame *frame);
 void	init_exit(t_frame *frame);
 void	init_hooks(t_frame *frame);
