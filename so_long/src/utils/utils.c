@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "utils.h"
 
 void	add_sprite(char *path, t_sprite *sprites_buffer, void *mlx_addr)
 {

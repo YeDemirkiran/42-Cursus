@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_write.h                                         :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 11:04:30 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:04:31 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/01 13:02:50 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/20 12:44:53 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_WRITE_H
-# define FT_WRITE_H
+#ifndef MAIN_H
+# define MAIN_H
 
-# include "unistd.h"
-# include "ft_string.h"
+# include <fcntl.h>
+# include <stdlib.h>
 
-void	ft_putchar_fd(char c, int fd);
-void	ft_putchar(char c);
-void	ft_putstr_fd(char *str, int fd);
-void	ft_putstr(char *str);
-void	ft_putnbr_fd(int n, int fd);
-void	ft_putnbr(int n);
+# include "t_frame.h"
+# include "macro.h"
+# include "map.h"
+# include "init.h"
 
 #endif

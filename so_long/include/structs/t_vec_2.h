@@ -1,5 +1,5 @@
 #ifndef T_VEC_2_H
-# define T_VEC_2H
+# define T_VEC_2_H
 
 typedef struct s_vec_2
 {

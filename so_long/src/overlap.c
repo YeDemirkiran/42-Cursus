@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "overlap.h"
 
-t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
+static t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 {
 	t_vec_2	overlap;
 

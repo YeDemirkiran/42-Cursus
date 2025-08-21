@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include "ft_write.h"
+#include "main.h"
 
 static int	initialize_mlx(t_frame *frame)
 {

@@ -10,6 +10,7 @@
 
 # include "events.h"
 # include "update.h"
+# include "utils.h"
 
 // init.c
 void	init_sprites_empty(t_sprite *sprites_buffer);

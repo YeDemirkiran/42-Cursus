@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "utils.h"
 
 void	destroy_object(t_object *buffer, int index)
 {

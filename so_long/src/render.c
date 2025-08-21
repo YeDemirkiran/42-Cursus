@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "render.h"
 
-void	render_sprite(t_frame *frame, t_sprite *sprite,
+static void	render_sprite(t_frame *frame, t_sprite *sprite,
 			t_vec_2 pos, t_vec_2 *offset)
 {
 	t_vec_2	new_pos;
@@ -31,7 +31,7 @@ void	render_sprite(t_frame *frame, t_sprite *sprite,
 		sprite->image.img_addr, new_pos.x, new_pos.y);
 }
 
-void	render_background(t_frame *frame)
+static void	render_background(t_frame *frame)
 {
 	t_vec_2	pos;
 	t_vec_2	pos_2;
@@ -47,12 +47,12 @@ void	render_background(t_frame *frame)
 	render_sprite(frame, frame->background.sprite, pos_2, &offset);
 }
 
-void	render_object(t_frame *frame, t_object object, t_vec_2 *offset)
+static void	render_object(t_frame *frame, t_object object, t_vec_2 *offset)
 {
 	render_sprite(frame, object.sprite, object.position, offset);
 }
 
-void	render_objects(t_object *objects, t_frame *frame)
+static void	render_objects(t_object *objects, t_frame *frame)
 {
 	int	i;
 

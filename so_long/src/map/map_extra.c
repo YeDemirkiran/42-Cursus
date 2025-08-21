@@ -12,7 +12,7 @@
 
 #include "map.h"
 
-static int	is_full_wall(char *str)
+int	is_full_wall(char *str)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ static int	is_full_wall(char *str)
 	return (1);
 }
 
-static int	is_enclosed_wall(char *str)
+int	is_enclosed_wall(char *str)
 {
 	size_t	len;
 

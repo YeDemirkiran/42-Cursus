@@ -36,7 +36,7 @@ static char	*get_real_filename(char *path)
 	return (name);
 }
 
-static int	check_filename(char *path)
+int	check_filename(char *path)
 {
 	char		*real_filename;
 	const char	*ext = ".ber";
