@@ -40,7 +40,10 @@ static void	init_visited(t_vec_2 *arr, int size)
 
 	i = 0;
 	while (i < size)
+	{
 		arr[i].x = -1;
+		i++;
+	}
 }
 
 static int	is_visited(t_vec_2 *visited_arr, t_vec_2 pos)
@@ -57,21 +60,87 @@ static int	is_visited(t_vec_2 *visited_arr, t_vec_2 pos)
 	return (0);
 }
 
-static int	valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit,
-		t_vec_2 size)
+static void	add_to_visited(t_vec_2 *visited_arr, t_vec_2 pos)
 {
-	int		x;
-	int		y;
-	t_vec_2	*visited;
+	int	i;
 
-	visited = malloc(sizeof(t_vec_2) * size.x * size.y);
+	if (is_visited(visited_arr, pos))
+		return ;
+	i = 0;
+	while (visited_arr[i].x >= 0)
+		i++;
+	visited_arr[i] = pos;
+}
+
+#include "stdio.h"
+
+
+static	t_vec_2	search_neighbors(char **map, t_vec_2 start, t_map *map_t, t_vec_2 *visited)
+{
+	t_vec_2	dest;
+	t_vec_2	exit;
+	t_vec_2	size;
+	t_vec_2	new_start;
+
+	// printf("START: x: %f y: %f\n", start.x, start.y);
+	// fflush(stdout);
+	exit = map_t->end_index;
+	if (start.x == exit.x && start.y == exit.y)
+		return (start);
+	dest.x = -1;
+	dest.y = -1;
+	if ((start.x < 0 || start.y < 0) || is_visited(visited, start))
+		return (dest);
+	add_to_visited(visited, start);
+	size = map_t->map_size;
+	(void)size;
+	if (map[(int)start.y][(int)start.x] == OBJ_WALL_CHAR)
+		return (dest);
+	new_start = start;
+	new_start.x = start.x - 1;
+	// printf("Searching: x: %f y: %f (by %f %f)\n", new_start.x, new_start.y, start.x, start.y);
+	// fflush(stdout);
+	dest = search_neighbors(map, new_start, map_t, visited);
+	if (dest.x >= 0 && dest.y >= 0)
+		return (dest);
+	new_start = start;
+	new_start.y = start.y - 1;
+	// printf("Searching: x: %f y: %f (by %f %f)\n", new_start.x, new_start.y, start.x, start.y);
+	// fflush(stdout);
+	dest = search_neighbors(map, new_start, map_t, visited);
+	if (dest.x >= 0 && dest.y >= 0)
+		return (dest);
+	new_start = start;
+	new_start.x = start.x + 1;
+	// printf("Searching: x: %f y: %f (by %f %f)\n", new_start.x, new_start.y, start.x, start.y);
+	// fflush(stdout);
+	dest = search_neighbors(map, new_start, map_t, visited);
+	if (dest.x >= 0 && dest.y >= 0)
+		return (dest);
+	new_start = start;
+	new_start.y = start.y + 1;
+	// printf("Searching: x: %f y: %f (by %f %f)\n", new_start.x, new_start.y, start.x, start.y);
+	// fflush(stdout);
+	dest = search_neighbors(map, new_start, map_t, visited);
+	if (dest.x >= 0 && dest.y >= 0)
+		return (dest);
+	return (dest);
+}
+
+static int	valid_path_exists(char **map, t_map *map_t)
+{
+	t_vec_2	*visited;
+	t_vec_2	dest;
+
+	visited = malloc(sizeof(t_vec_2) * (map_t->map_size.x * map_t->map_size.y));
 	if (!visited)
 		return (0);
-	init_visited(visited, size.x * size.y);
-	y = start.y;
-	while ()
-	x = 0;
-	
+	init_visited(visited, map_t->map_size.x * map_t->map_size.y);
+	//printf("Searching neighbors now\n");
+	fflush(stdout);
+	dest = search_neighbors(map, map_t->start_index, map_t, visited);
+	if (dest.x == -1 && dest.y == -1)
+		return (0);
 	return (1);
 }
 
@@ -83,7 +152,7 @@ int	is_map_valid(char **map_buff, int current_line_index, t_map *map)
 		return (0);
 	if (map->target_collect == 0)
 		return (0);
-	if (!valid_path_exists(map_buff, map->start_pos, map->exit_pos))
+	if (!valid_path_exists(map_buff, map))
 		return (0);
 	return (1);
 }

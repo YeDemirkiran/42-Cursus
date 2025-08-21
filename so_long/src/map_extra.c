@@ -116,10 +116,10 @@ char	**save_map(char *path, t_map *map)
 	int		fd;
 	char	**map_buff;
 
-	map->map_height = get_map_height(path);
-	if (map->map_height <= 1)
+	map->map_size.y = get_map_height(path);
+	if (map->map_size.y <= 1)
 		return (NULL);
-	map_buff = malloc(sizeof(char *) * (map->map_height + 1));
+	map_buff = malloc(sizeof(char *) * (map->map_size.y + 1));
 	if (!map_buff)
 		return (NULL);
 	fd = open(path, O_RDONLY);

@@ -48,7 +48,7 @@
 # endif
 
 # ifndef PLAYER_SPEED
-#  define PLAYER_SPEED 0.1
+#  define PLAYER_SPEED 1
 # endif
 
 # define OBJ_EMPTY_CHAR '0'
@@ -96,10 +96,11 @@ typedef struct s_player
 typedef struct s_map
 {
 	int			map_valid;
-	int			map_width;
-	int			map_height;
+	t_vec_2		map_size;
 	t_vec_2		start_pos;
 	t_vec_2		exit_pos;
+	t_vec_2		start_index;
+	t_vec_2		end_index;
 	int			target_collect;
 }			t_map;
 
@@ -174,7 +175,6 @@ char	**save_map(char *path, t_map *map);
 // map_utils.c
 int		is_full_wall(char *str);
 int		is_enclosed_wall(char *str);
-int		valid_path_exists(char **map, t_vec_2 start, t_vec_2 exit);
 int		is_map_valid(char **map_buff, int current_line_index, t_map *map);
 void	free_map_buffer(char **buffer);
 

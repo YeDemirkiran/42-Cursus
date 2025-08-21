@@ -41,6 +41,8 @@ static int	parse_start_exit(t_map *map, t_frame *frame, char c, t_vec_2 pos)
 			return (0);
 		map->exit_pos.x = pos.x * frame->sprites[S_EXIT].size.x;
 		map->exit_pos.y = pos.y * frame->sprites[S_EXIT].size.y;
+		map->end_index.x = pos.x;
+		map->end_index.y = pos.y;
 	}
 	else if (c == OBJ_START_CHAR)
 	{
@@ -48,6 +50,8 @@ static int	parse_start_exit(t_map *map, t_frame *frame, char c, t_vec_2 pos)
 			return (0);
 		map->start_pos.x = pos.y * frame->sprites[S_PLAYER].size.x;
 		map->start_pos.y = pos.y * frame->sprites[S_PLAYER].size.y;
+		map->start_index.x = pos.x;
+		map->start_index.y = pos.y;
 	}
 	return (1);
 }
@@ -94,8 +98,8 @@ t_map	parse_map(char *path, t_frame *frame)
 		if ((i == 0 || map_buff[i + 1] == NULL) && !is_full_wall(map_buff[i]))
 			break ;
 		if (i == 0)
-			map.map_width = ft_strlen(map_buff[i]);
-		else if (map.map_width != (int)ft_strlen(map_buff[i])
+			map.map_size.x = ft_strlen(map_buff[i]);
+		else if (map.map_size.x != (int)ft_strlen(map_buff[i])
 			|| !is_enclosed_wall(map_buff[i]))
 			break ;
 		if (!read_line(map_buff[i], i, &map, frame))

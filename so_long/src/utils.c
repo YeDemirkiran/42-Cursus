@@ -59,8 +59,8 @@ t_map	init_map(void)
 	t_map	map;
 
 	map.map_valid = 0;
-	map.map_width = 0;
-	map.map_height = 0;
+	map.map_size.x = 0;
+	map.map_size.y = 0;
 	map.target_collect = 0;
 	map.start_pos.x = -999;
 	map.start_pos.y = -999;
