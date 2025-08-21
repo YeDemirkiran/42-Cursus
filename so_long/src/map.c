@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "stdio.h"
 
 // STEP 1: Save map to a 2D buffer array
 /* STEP 2: Check if the map is valid (rectangular, 

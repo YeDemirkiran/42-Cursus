@@ -37,6 +37,6 @@ void	init_hooks(t_frame *frame)
 	mlx_hook(frame->mlx_window, KeyPress, KeyPressMask, on_key_down, frame);
 	mlx_hook(frame->mlx_window, KeyRelease, KeyReleaseMask, on_key_up, frame);
 	mlx_hook(frame->mlx_window, DestroyNotify,
-			0, on_destroy_notify, frame->mlx_addr);
+		0, on_destroy_notify, frame->mlx_addr);
 	mlx_loop_hook(frame->mlx_addr, update_frame, frame);
 }

@@ -72,18 +72,14 @@ static void	add_to_visited(t_vec_2 *visited_arr, t_vec_2 pos)
 	visited_arr[i] = pos;
 }
 
-#include "stdio.h"
-
-
-static	t_vec_2	search_neighbors(char **map, t_vec_2 start, t_map *map_t, t_vec_2 *visited)
+static	t_vec_2	search_neighbors(char **map, t_vec_2 start,
+		t_map *map_t, t_vec_2 *visited)
 {
 	t_vec_2	dest;
 	t_vec_2	exit;
 	t_vec_2	size;
 	t_vec_2	new_start;
 
-	// printf("START: x: %f y: %f\n", start.x, start.y);
-	// fflush(stdout);
 	exit = map_t->end_index;
 	if (start.x == exit.x && start.y == exit.y)
 		return (start);
@@ -98,29 +94,21 @@ static	t_vec_2	search_neighbors(char **map, t_vec_2 start, t_map *map_t, t_vec_2
 		return (dest);
 	new_start = start;
 	new_start.x = start.x - 1;
-	// printf("Searching: x: %f y: %f (by %f %f)\n", new_start.x, new_start.y, start.x, start.y);
-	// fflush(stdout);
 	dest = search_neighbors(map, new_start, map_t, visited);
 	if (dest.x >= 0 && dest.y >= 0)
 		return (dest);
 	new_start = start;
 	new_start.y = start.y - 1;
-	// printf("Searching: x: %f y: %f (by %f %f)\n", new_start.x, new_start.y, start.x, start.y);
-	// fflush(stdout);
 	dest = search_neighbors(map, new_start, map_t, visited);
 	if (dest.x >= 0 && dest.y >= 0)
 		return (dest);
 	new_start = start;
 	new_start.x = start.x + 1;
-	// printf("Searching: x: %f y: %f (by %f %f)\n", new_start.x, new_start.y, start.x, start.y);
-	// fflush(stdout);
 	dest = search_neighbors(map, new_start, map_t, visited);
 	if (dest.x >= 0 && dest.y >= 0)
 		return (dest);
 	new_start = start;
 	new_start.y = start.y + 1;
-	// printf("Searching: x: %f y: %f (by %f %f)\n", new_start.x, new_start.y, start.x, start.y);
-	// fflush(stdout);
 	dest = search_neighbors(map, new_start, map_t, visited);
 	if (dest.x >= 0 && dest.y >= 0)
 		return (dest);
@@ -136,8 +124,6 @@ static int	valid_path_exists(char **map, t_map *map_t)
 	if (!visited)
 		return (0);
 	init_visited(visited, map_t->map_size.x * map_t->map_size.y);
-	//printf("Searching neighbors now\n");
-	fflush(stdout);
 	dest = search_neighbors(map, map_t->start_index, map_t, visited);
 	if (dest.x == -1 && dest.y == -1)
 		return (0);

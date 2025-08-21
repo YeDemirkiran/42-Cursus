@@ -17,7 +17,7 @@ static char	*get_real_filename(char *path)
 	char	*name;
 	int		i;
 	int		last_dir_index;
-	
+
 	if (!path)
 		return (NULL);
 	i = 0;
