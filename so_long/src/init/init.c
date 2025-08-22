@@ -49,7 +49,7 @@ void	init_background(t_frame *frame)
 void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 {
 	init_sprites_empty(sprites_buffer);
-	add_sprite(TEXTURES_PATH "background_placeholder.xpm",
+	add_sprite(TEXTURES_PATH "Background.xpm",
 		sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Player.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "exit.xpm", sprites_buffer, mlx_addr);
