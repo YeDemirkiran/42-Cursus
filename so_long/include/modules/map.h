@@ -10,6 +10,7 @@
 # include "init.h"
 # include "utils.h"
 # include "get_next_line.h"
+# include "path.h"
 
 // map.c
 t_map	parse_map(char *path, t_frame *frame);

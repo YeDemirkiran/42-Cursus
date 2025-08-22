@@ -32,11 +32,14 @@ INIT_SRC = $(addprefix $(INIT_DIR), init.c init_extra.c)
 MAP_DIR = map/
 MAP_SRC = $(addprefix $(MAP_DIR), map.c map_extra.c map_utils.c)
 
+PATH_DIR = path/
+PATH_SRC = $(addprefix $(PATH_DIR), path.c path_extra.c)
+
 UTILS_DIR = utils/
 UTILS_SRC = $(addprefix $(UTILS_DIR), utils.c utils_extra.c)
 
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c overlap.c render.c update.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC) $(EVENTS_SRC) $(INIT_SRC) $(MAP_SRC) $(UTILS_SRC))
+SRC = $(addprefix $(SRC_DIR), main.c overlap.c render.c update.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC) $(EVENTS_SRC) $(INIT_SRC) $(MAP_SRC) $(PATH_SRC) $(UTILS_SRC))
 
 MLX_DIR = ./minilibx
 MLX_LIB = mlx_Linux
