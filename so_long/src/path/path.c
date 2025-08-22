@@ -53,5 +53,6 @@ int	valid_path_exists(char **map, t_map *map_t)
 	dest = search_neighbors(map, map_t->start_index, map_t, visited);
 	if (dest.x == -1 && dest.y == -1)
 		return (0);
+	free(visited);
 	return (1);
 }
