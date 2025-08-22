@@ -119,7 +119,6 @@ char	**save_map(char *path, t_map *map)
 	map->map_size.y = get_map_height(path);
 	if (map->map_size.y <= 1)
 		return (NULL);
-	print
 	map_buff = malloc(sizeof(char *) * (map->map_size.y + 1));
 	if (!map_buff)
 		return (NULL);

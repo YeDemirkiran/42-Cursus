@@ -72,15 +72,15 @@ static void	read_line(char *line, int line_y, t_map *map, t_frame *frame)
 		else if (line[i] == OBJ_START_CHAR || line[i] == OBJ_EXIT_CHAR)
 		{
 			if (!parse_start_exit(map, frame, line[i], pos))
-				set_map_error(map, "The map contains duplicate start or \
-					exit!\n");
+				set_map_error(map, "The map contains duplicate start or"
+					" exit!\n");
 		}
 		else if (line[i] != OBJ_EMPTY_CHAR)
 			set_map_error(map, "The map contains invalid characters!\n");
 		i++;
 	}
 }
-#include "stdio.h"
+
 t_map	parse_map(char *path, t_frame *frame)
 {
 	t_map	map;
@@ -98,13 +98,13 @@ t_map	parse_map(char *path, t_frame *frame)
 			set_map_error(&map, "The map's first or last row isn't a wall!\n");
 		if (i == 0)
 			map.map_size.x = ft_strlen(map_buff[i]);
-		else if (map.map_size.x != (int)ft_strlen(map_buff[i])
-			|| !is_enclosed_wall(map_buff[i]))
+		else if (map.map_size.x != (int)ft_strlen(map_buff[i]))
 			set_map_error(&map, "The map isn't rectangular!\n");
+		else if (!is_enclosed_wall(map_buff[i]))
+			set_map_error(&map, "The map isn't enclosed by walls!\n");
 		read_line(map_buff[i], i, &map, frame);
 		i++;
 	}
-	printf("I: %i\n", i);
 	is_map_valid(map_buff, &map);
 	free_map_buffer(map_buff);
 	return (map);

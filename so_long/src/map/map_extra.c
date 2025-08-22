@@ -44,13 +44,15 @@ void	is_map_valid(char **map_buff, t_map *map)
 {
 	if (map->map_error)
 		return ;
+	else if (!map_buff)
+		set_map_error(map, "The map doesn't have enough data! (maybe empty)\n");
 	else if (map->start_pos.x == -999)
 		set_map_error(map, "The map doesn't contain Start character!\n");
 	else if (map->exit_pos.x == -999)
 		set_map_error(map, "The map doesn't contain Exit character!\n");
 	else if (map->target_collect == 0)
 		set_map_error(map, "The map doesn't contain any Collectible!\n");
-	if (!valid_path_exists(map_buff, map))
+	else if (!valid_path_exists(map_buff, map))
 		set_map_error(map, "The map doesn't contain a valid path!\n");
 }
 
