@@ -53,7 +53,7 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 		sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Player.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "exit.xpm", sprites_buffer, mlx_addr);
-	add_sprite(TEXTURES_PATH "Water.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Wall.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Collectible.xpm", sprites_buffer, mlx_addr);
 }
 
