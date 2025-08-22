@@ -15,17 +15,28 @@
 static t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 {
 	t_vec_2	overlap;
+	float	obj_1_right;
+	float	obj_2_right;
+	float	obj_1_bottom;
+	float	obj_2_bottom;
 
+	obj_1_right = obj_1.position.x + obj_1.sprite->size.x;
+	obj_2_right = obj_2.position.x + obj_2.sprite->size.x;
 	overlap.x = 0;
-	if (obj_2.position.x >= obj_1.position.x && obj_2.position.x <= obj_1.position.x + obj_1.sprite->size.x)
-		overlap.x = obj_2.position.x - (obj_1.position.x + obj_1.sprite->size.x);
-	else if (obj_1.position.x >= obj_2.position.x && obj_1.position.x <= obj_2.position.x + obj_2.sprite->size.x)
-		overlap.x = (obj_2.position.x + obj_2.sprite->size.x) - obj_1.position.x;
+	if (obj_2.position.x >= obj_1.position.x && obj_2.position.x <= obj_1_right)
+		overlap.x = obj_2.position.x - obj_1_right;
+	else if
+	(obj_1.position.x >= obj_2.position.x && obj_1.position.x <= obj_2_right)
+		overlap.x = obj_2_right - obj_1.position.x;
+	obj_1_bottom = obj_1.position.y + obj_1.sprite->size.y;
+	obj_2_bottom = obj_2.position.y + obj_2.sprite->size.y;
 	overlap.y = 0;
-	if (obj_2.position.y >= obj_1.position.y && obj_2.position.y <= obj_1.position.y + obj_1.sprite->size.y)
-		overlap.y = obj_2.position.y - (obj_1.position.y + obj_1.sprite->size.y);
-	else if (obj_1.position.y >= obj_2.position.y && obj_1.position.y <= obj_2.position.y + obj_2.sprite->size.y)
-		overlap.y = (obj_2.position.y + obj_2.sprite->size.y) - obj_1.position.y;
+	if
+	(obj_2.position.y >= obj_1.position.y && obj_2.position.y <= obj_1_bottom)
+		overlap.y = obj_2.position.y - obj_1_bottom;
+	else if
+	(obj_1.position.y >= obj_2.position.y && obj_1.position.y <= obj_2_bottom)
+		overlap.y = obj_2_bottom - obj_1.position.y;
 	return (overlap);
 }
 
