@@ -16,9 +16,10 @@
 t_map	parse_map(char *path, t_frame *frame);
 
 // map_extra.c
+t_map	*set_map_error(t_map *map, char *msg);
 int		is_full_wall(char *str);
 int		is_enclosed_wall(char *str);
-int		is_map_valid(char **map_buff, int current_line_index, t_map *map);
+void	is_map_valid(char **map_buff, t_map *map);
 void	free_map_buffer(char **buffer);
 
 // map_utils.c

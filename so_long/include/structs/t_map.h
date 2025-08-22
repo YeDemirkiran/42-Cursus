@@ -5,7 +5,7 @@
 
 typedef struct s_map
 {
-	int			map_valid;
+	char		*map_error;
 	t_vec_2		map_size;
 	t_vec_2		start_pos;
 	t_vec_2		exit_pos;

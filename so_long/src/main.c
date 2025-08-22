@@ -76,8 +76,8 @@ int	main(int argc, char **argv)
 	if (!initialize_mlx(&frame))
 		exit(EXIT_FAILURE);
 	map = parse_map(argv[1], &frame);
-	if (!map.map_valid)
-		error_exit("The given map is not valid!\n", &frame, clean_up);
+	if (map.map_error)
+		error_exit(map.map_error, &frame, clean_up);
 	frame.map = &map;
 	init_player(&frame);
 	init_exit(&frame);

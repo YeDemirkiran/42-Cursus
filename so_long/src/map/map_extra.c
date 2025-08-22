@@ -12,6 +12,12 @@
 
 #include "map.h"
 
+t_map	*set_map_error(t_map *map, char *msg)
+{
+	map->map_error = msg;
+	return (map);
+}
+
 int	is_full_wall(char *str)
 {
 	int	i;
@@ -34,17 +40,18 @@ int	is_enclosed_wall(char *str)
 	return (str[0] == OBJ_WALL_CHAR && str[len - 1] == OBJ_WALL_CHAR);
 }
 
-int	is_map_valid(char **map_buff, int current_line_index, t_map *map)
+void	is_map_valid(char **map_buff, t_map *map)
 {
-	if (!map_buff || map_buff[current_line_index])
-		return (0);
-	if (map->start_pos.x == -999 || map->exit_pos.x == -999)
-		return (0);
-	if (map->target_collect == 0)
-		return (0);
+	if (map->map_error)
+		return ;
+	else if (map->start_pos.x == -999)
+		set_map_error(map, "The map doesn't contain Start character!\n");
+	else if (map->exit_pos.x == -999)
+		set_map_error(map, "The map doesn't contain Exit character!\n");
+	else if (map->target_collect == 0)
+		set_map_error(map, "The map doesn't contain any Collectible!\n");
 	if (!valid_path_exists(map_buff, map))
-		return (0);
-	return (1);
+		set_map_error(map, "The map doesn't contain a valid path!\n");
 }
 
 void	free_map_buffer(char **buffer)
