@@ -17,9 +17,9 @@
 
 typedef struct s_player
 {
-	t_object	object;
-	int			move_count;
-	int			current_collect;
+	t_object_anim	object;
+	int				move_count;
+	int				current_collect;
 }			t_player;
 
 #endif

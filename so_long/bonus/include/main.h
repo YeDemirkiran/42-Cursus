@@ -20,5 +20,6 @@
 # include "macro.h"
 # include "map.h"
 # include "init.h"
+# include "animation.h"
 
 #endif

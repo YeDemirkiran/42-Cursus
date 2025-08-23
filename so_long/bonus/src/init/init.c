@@ -51,7 +51,10 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 	init_sprites_empty(sprites_buffer);
 	add_sprite(TEXTURES_PATH "Background.xpm",
 		sprites_buffer, mlx_addr);
-	add_sprite(TEXTURES_PATH "Player.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Player_Front_0.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Player_Front_1.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Player_Front_2.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Player_Front_3.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "exit.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Wall.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Collectible.xpm", sprites_buffer, mlx_addr);

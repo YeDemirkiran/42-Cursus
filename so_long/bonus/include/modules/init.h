@@ -23,6 +23,7 @@
 # include "events.h"
 # include "update.h"
 # include "utils.h"
+# include "animation.h"
 
 // init.c
 void	init_sprites_empty(t_sprite *sprites_buffer);
@@ -34,6 +35,7 @@ void	init_objects(t_frame *frame);
 // init_extra.c
 t_map	init_map(void);
 void	init_player(t_frame *frame);
+void	init_animations(t_frame *frame);
 void	init_exit(t_frame *frame);
 void	init_hooks(t_frame *frame);
 

@@ -13,7 +13,7 @@
 #ifndef T_OBJECT_H
 # define T_OBJECT_H
 
-# include "t_sprite.h"
+# include "t_animation.h"
 
 typedef struct s_object
 {
@@ -21,5 +21,12 @@ typedef struct s_object
 	t_vec_2		position;
 	t_vec_2		velocity;
 }			t_object;
+
+typedef struct s_object_anim
+{
+	t_animation	*animation;
+	t_vec_2		position;
+	t_vec_2		velocity;
+}			t_object_anim;
 
 #endif

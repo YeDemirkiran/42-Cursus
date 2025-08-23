@@ -59,7 +59,7 @@ static void	update_camera_offset(t_frame *frame)
 	t_vec_2	offset;
 
 	p_pos = frame->player.object.position;
-	p_size = frame->player.object.sprite->size;
+	p_size = frame->player.object.animation->sprites[frame->player.object.animation->current_index]->size;
 	offset = frame->camera_offset;
 	if (p_pos.x + offset.x >= RES_X)
 		offset.x = p_pos.x * -1;
@@ -72,10 +72,23 @@ static void	update_camera_offset(t_frame *frame)
 	frame->camera_offset = offset;
 }
 
+static void	update_animations(t_frame *frame)
+{
+	int	i;
+
+	i = 0;
+	while (frame->animations[i].current_index >= 0)
+	{
+		animation_loop(frame->animations + i);
+		i++;
+	}
+}
+
 int	update_frame(t_frame *frame)
 {
 	update_player(&(frame->player), frame);
 	update_camera_offset(frame);
+	update_animations(frame);
 	render_frame(frame);
 	return (0);
 }

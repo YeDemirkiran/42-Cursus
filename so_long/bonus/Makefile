@@ -39,7 +39,7 @@ UTILS_DIR = utils/
 UTILS_SRC = $(addprefix $(UTILS_DIR), utils.c utils_extra.c)
 
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c overlap.c render.c update.c delta_time.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC) $(EVENTS_SRC) $(INIT_SRC) $(MAP_SRC) $(PATH_SRC) $(UTILS_SRC))
+SRC = $(addprefix $(SRC_DIR), main.c overlap.c render.c update.c delta_time.c animation.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC) $(EVENTS_SRC) $(INIT_SRC) $(MAP_SRC) $(PATH_SRC) $(UTILS_SRC))
 
 MLX_DIR = ../minilibx
 MLX_LIBFILE = $(MLX_DIR)/libmlx_Linux.a $(MLX_DIR)/libmlx.a

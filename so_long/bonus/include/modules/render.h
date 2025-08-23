@@ -16,6 +16,7 @@
 # include "t_frame.h"
 
 # include "mlx.h"
+# include "animation.h"
 
 void	render_frame(t_frame *frame);
 

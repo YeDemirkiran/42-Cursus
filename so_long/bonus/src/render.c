@@ -57,6 +57,14 @@ static void	render_object(t_frame *frame, t_object object, t_vec_2 *offset)
 	render_sprite(frame, object.sprite, object.position, offset);
 }
 
+static void	render_object_anim(t_frame *frame, t_object_anim object, t_vec_2 *offset)
+{
+	t_sprite	*sprite;
+
+	sprite = object.animation->sprites[object.animation->current_index];
+	render_sprite(frame, sprite, object.position, offset);
+}
+
 static void	render_objects(t_object *objects, t_frame *frame)
 {
 	int	i;
@@ -73,7 +81,7 @@ void	render_frame(t_frame *frame)
 {
 	render_background(frame);
 	render_object(frame, frame->exit, &(frame->camera_offset));
-	render_object(frame, frame->player.object, &(frame->camera_offset));
+	render_object_anim(frame, frame->player.object, &(frame->camera_offset));
 	render_objects(frame->walls, frame);
 	render_objects(frame->collectibles, frame);
 	render_objects(frame->enemies, frame);

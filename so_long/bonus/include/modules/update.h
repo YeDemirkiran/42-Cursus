@@ -20,6 +20,7 @@
 # include "overlap.h"
 # include "render.h"
 # include "delta_time.h"
+# include "animation.h"
 
 int		update_frame(t_frame *frame);
 

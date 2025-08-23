@@ -41,6 +41,10 @@
 #  define PLAYER_SPEED 200
 # endif
 
+# ifndef GLOBAL_FREQUENCY
+#  define GLOBAL_FREQUENCY 1
+# endif
+
 # define OBJ_EMPTY_CHAR '0'
 # define OBJ_WALL_CHAR '1'
 # define OBJ_COLL_CHAR 'C'

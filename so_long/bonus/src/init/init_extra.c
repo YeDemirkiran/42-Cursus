@@ -31,7 +31,7 @@ void	init_player(t_frame *frame)
 {
 	frame->player.current_collect = 0;
 	frame->player.move_count = 0;
-	frame->player.object.sprite = &(frame->sprites[S_PLAYER]);
+	frame->player.object.animation = frame->animations + 0;
 	frame->player.object.position.x = frame->map->start_pos.x;
 	frame->player.object.position.y = frame->map->start_pos.y;
 	frame->player.object.velocity.x = 0;
@@ -45,6 +45,19 @@ void	init_exit(t_frame *frame)
 	frame->exit.position.y = frame->map->exit_pos.y;
 	frame->exit.velocity.x = 0;
 	frame->exit.velocity.y = 0;
+}
+
+void	init_animations(t_frame *frame)
+{
+	int	i;
+
+	i = 0;
+	while (i < BUFFER_SIZE)
+	{
+		frame->animations[i].current_index = -1;
+		i++;
+	}
+	add_animation(frame, GLOBAL_FREQUENCY, (int[5]){S_PLAYER_FRONT_0, S_PLAYER_FRONT_1, S_PLAYER_FRONT_2, S_PLAYER_FRONT_3, -1});
 }
 
 void	init_hooks(t_frame *frame)

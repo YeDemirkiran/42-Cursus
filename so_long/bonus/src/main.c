@@ -28,6 +28,7 @@ static int	initialize_mlx(t_frame *frame)
 	frame->camera_offset.x = 0;
 	frame->camera_offset.y = 0;
 	init_sprites(frame->sprites, frame->mlx_addr);
+	init_animations(frame);
 	init_background(frame);
 	init_objects(frame);
 	return (1);

@@ -24,6 +24,7 @@ typedef struct s_frame
 	t_map		*map;
 	t_object	background;
 	t_sprite	sprites[BUFFER_SIZE];
+	t_animation	animations[BUFFER_SIZE];
 	t_object	walls[BUFFER_SIZE];
 	t_object	collectibles[BUFFER_SIZE];
 	t_object	enemies[BUFFER_SIZE];

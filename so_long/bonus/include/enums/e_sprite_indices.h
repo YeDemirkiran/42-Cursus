@@ -16,11 +16,14 @@
 enum	e_sprite_indexes
 {
 	S_BACKGROUND = 0,
-	S_PLAYER = 1,
-	S_EXIT = 2,
-	S_WALL = 3,
-	S_COLL = 4,
-	S_ENEMY = 5,
+	S_PLAYER_FRONT_0 = 1,
+	S_PLAYER_FRONT_1 = 2,
+	S_PLAYER_FRONT_2 = 3,
+	S_PLAYER_FRONT_3 = 4,
+	S_EXIT = 5,
+	S_WALL = 6,
+	S_COLL = 7,
+	S_ENEMY = 8,
 };
 
 #endif
