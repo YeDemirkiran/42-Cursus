@@ -40,9 +40,11 @@ static void	update_move_count(int *count, t_player *player, t_frame *frame)
 static void	update_player(t_player *player, t_frame *frame)
 {
 	static int	count;
+	float		dt;
 
-	player->object.position.x += player->object.velocity.x;
-	player->object.position.y += player->object.velocity.y;
+	dt = get_delta_time();
+	player->object.position.x += player->object.velocity.x * dt;
+	player->object.position.y += player->object.velocity.y * dt;
 	check_walls(frame, count);
 	check_collectibles(frame);
 	check_enemies(frame);

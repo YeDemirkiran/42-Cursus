@@ -38,7 +38,7 @@
 # endif
 
 # ifndef PLAYER_SPEED
-#  define PLAYER_SPEED 0.1
+#  define PLAYER_SPEED 200
 # endif
 
 # define OBJ_EMPTY_CHAR '0'
