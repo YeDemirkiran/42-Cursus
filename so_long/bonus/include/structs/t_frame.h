@@ -32,6 +32,7 @@ typedef struct s_frame
 	t_object	exit;
 	t_vec_2		camera_offset;
 	char		*move_str;
+	float		delta_time;
 }			t_frame;
 
 #endif

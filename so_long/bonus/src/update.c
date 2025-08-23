@@ -42,7 +42,7 @@ static void	update_player(t_player *player, t_frame *frame)
 	static int	count;
 	float		dt;
 
-	dt = get_delta_time();
+	dt = frame->delta_time;
 	player->object.position.x += player->object.velocity.x * dt;
 	player->object.position.y += player->object.velocity.y * dt;
 	check_walls(frame, count);
@@ -80,13 +80,14 @@ static void	update_animations(t_frame *frame)
 	while (frame->animations[i].current_index >= 0)
 	{
 		printf("ANIM LOOP: %i\n", i);
-		animation_loop(&(frame->animations[i]));
+		animation_loop(&(frame->animations[i]), frame->delta_time);
 		i++;
 	}
 }
 
 int	update_frame(t_frame *frame)
 {
+	frame->delta_time = get_delta_time();
 	update_player(&(frame->player), frame);
 	update_camera_offset(frame);
 	update_animations(frame);

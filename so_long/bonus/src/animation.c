@@ -54,11 +54,8 @@ void	add_animation(t_frame *frame, float frequency, int sprite_indices[])
 	}
 }
 #include "stdio.h"
-void	animation_loop(t_animation *animation)
+void	animation_loop(t_animation *animation, float dt)
 {
-	float	dt;
-
-	dt = get_delta_time();
 	printf("DT: %f\n", dt);
 	animation->timer += dt;
 	printf("FREQUENCY: %f, TIMER: %f\n", animation->frequency, animation->timer);
