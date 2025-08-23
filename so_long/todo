@@ -22,9 +22,9 @@ TODO MANDATORY
 - Fix Y camera offset (done)
 - Add collectibles (done)
 - Add game exit object (done)
-- Add error handling and logging (somewhat)
+- Add error handling and logging (Mandatory done)
 - Fix collision with cross movement (somewhat)
-- Fix memory leaks and proper clean up (somewhat)
+- Fix memory leaks and proper clean up (Mandatory done)
 - Handle incorrect filename (Done)
 
 TODO BONUS
