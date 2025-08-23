@@ -8,7 +8,7 @@
 
 typedef struct s_animation
 {
-	t_sprite	*sprites[BUFFER_SIZE];
+	t_sprite	*sprites[12];
 	int			current_index;
 	int			sprite_length;
 	float		timer;

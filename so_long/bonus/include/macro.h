@@ -42,7 +42,7 @@
 # endif
 
 # ifndef GLOBAL_FREQUENCY
-#  define GLOBAL_FREQUENCY 1
+#  define GLOBAL_FREQUENCY 100
 # endif
 
 # define OBJ_EMPTY_CHAR '0'

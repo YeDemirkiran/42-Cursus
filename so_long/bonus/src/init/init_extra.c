@@ -46,7 +46,7 @@ void	init_exit(t_frame *frame)
 	frame->exit.velocity.x = 0;
 	frame->exit.velocity.y = 0;
 }
-
+#include "stdio.h"
 void	init_animations(t_frame *frame)
 {
 	int	i;
@@ -57,7 +57,7 @@ void	init_animations(t_frame *frame)
 		frame->animations[i].current_index = -1;
 		i++;
 	}
-	add_animation(frame, GLOBAL_FREQUENCY, (int[5]){S_PLAYER_FRONT_0, S_PLAYER_FRONT_1, S_PLAYER_FRONT_2, S_PLAYER_FRONT_3, -1});
+	add_animation(frame, (float)GLOBAL_FREQUENCY, (int[5]){S_PLAYER_FRONT_0, S_PLAYER_FRONT_1, S_PLAYER_FRONT_2, S_PLAYER_FRONT_3, -1});
 }
 
 void	init_hooks(t_frame *frame)

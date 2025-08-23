@@ -71,7 +71,7 @@ static void	update_camera_offset(t_frame *frame)
 		offset.y = RES_Y - (p_pos.y + p_size.y);
 	frame->camera_offset = offset;
 }
-
+#include "stdio.h"
 static void	update_animations(t_frame *frame)
 {
 	int	i;
@@ -79,7 +79,8 @@ static void	update_animations(t_frame *frame)
 	i = 0;
 	while (frame->animations[i].current_index >= 0)
 	{
-		animation_loop(frame->animations + i);
+		printf("ANIM LOOP: %i\n", i);
+		animation_loop(&(frame->animations[i]));
 		i++;
 	}
 }

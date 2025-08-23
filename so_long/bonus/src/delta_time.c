@@ -9,7 +9,7 @@ float	get_delta_time(void)
 
 	delta_time = 0;
 	clock_gettime(CLOCK_MONOTONIC, &tp);
-	current_time = (float)(tp.tv_sec + (tp.tv_nsec / 1e9));
+	current_time = (float)tp.tv_sec + (float)tp.tv_nsec / 1e9f;
 	if (current_time > time)
 	{
 		delta_time = current_time - time;
