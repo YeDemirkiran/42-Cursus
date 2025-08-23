@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/23 14:08:47 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/23 14:15:33 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/23 15:12:52 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,15 +21,18 @@ $(NAME):
 	make -C $(MAND_DIR)
 	mv $(MAND_DIR)$(NAME) .
 
-bonus:
+bonus: $(B_NAME)
+
+$(B_NAME):
 	make -C $(BONUS_DIR)
 	mv $(BONUS_DIR)$(B_NAME) .
 
 clean:
-	rm -rf $(NAME)
+	rm -rf $(NAME) $(B_NAME)
 
 fclean: clean
 	make fclean -C $(MAND_DIR)
+	make fclean -C $(BONUS_DIR)
 
 re: fclean all
 
