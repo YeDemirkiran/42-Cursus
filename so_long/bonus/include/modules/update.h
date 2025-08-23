@@ -19,6 +19,7 @@
 # include "ft_write.h"
 # include "overlap.h"
 # include "render.h"
+# include "delta_time.h"
 
 int		update_frame(t_frame *frame);
 
