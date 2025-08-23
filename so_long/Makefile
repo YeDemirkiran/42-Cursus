@@ -6,11 +6,12 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/23 14:08:47 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/23 14:08:48 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/23 14:15:33 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
+B_NAME = so_long_bonus
 MAND_DIR = ./mandatory/
 BONUS_DIR = ./bonus/
 
@@ -18,11 +19,11 @@ all: $(NAME)
 
 $(NAME):
 	make -C $(MAND_DIR)
-	cp $(MAND_DIR)$(NAME) ./$(NAME)
+	mv $(MAND_DIR)$(NAME) .
 
 bonus:
 	make -C $(BONUS_DIR)
-	cp $(BONUS_DIR)$(NAME) ./$(NAME)
+	mv $(BONUS_DIR)$(B_NAME) .
 
 clean:
 	rm -rf $(NAME)

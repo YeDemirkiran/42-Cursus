@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/01 13:03:01 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/20 11:14:17 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/23 14:22:04 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ UTILS_SRC = $(addprefix $(UTILS_DIR), utils.c utils_extra.c)
 SRC_DIR = ./src/
 SRC = $(addprefix $(SRC_DIR), main.c overlap.c render.c update.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC) $(EVENTS_SRC) $(INIT_SRC) $(MAP_SRC) $(PATH_SRC) $(UTILS_SRC))
 
-MLX_DIR = ./minilibx
+MLX_DIR = ../minilibx
+MLX_LIBFILE = $(MLX_DIR)/libmlx_Linux.a $(MLX_DIR)/libmlx.a
 MLX_LIB = mlx_Linux
 
 LIB_DIRS = -L/usr/lib -L$(MLX_DIR)
@@ -52,13 +53,17 @@ INC =  $(addprefix -I, $(INC_DIRS))
 
 all: $(NAME)
 
-$(NAME): $(SRC)
+$(NAME): $(SRC) $(MLX_LIBFILE)
 	$(CC) $(SRC) $(FLAGS) $(LIB_DIRS) $(LIBS) $(INC) -o $(NAME)
+
+$(MLX_LIBFILE):
+	make -C $(MLX_DIR)
 
 clean:
 	rm -rf $(NAME)
 
 fclean: clean
+	rm -rf $(MLX_LIBFILE)
 
 re: fclean all
 
