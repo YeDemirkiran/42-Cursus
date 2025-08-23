@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:51:06 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 13:52:20 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	is_map_valid(char **map_buff, t_map *map)
 	else if (map->exit_pos.x == -999)
 		set_map_error(map, "The map doesn't contain Exit character!\n");
 	else if (map->target_collect == 0)
-		set_map_error(map, "The map doesn't contain any Collectible!\n");
+		set_map_error(map, "The map doesn't contain any Collectibles!\n");
 	else if (!valid_path_exists(map_buff, map))
 		set_map_error(map, "The map doesn't contain a valid path!\n");
 }
