@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:36 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 12:15:58 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 13:33:02 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 static void	on_esc_press(unsigned char key, void *mlx_addr)
 {
 	if (key == K_ESC)
+	{
+		ft_putstr("Closing the game by request... (ESC pressed)\n");
 		mlx_loop_end(mlx_addr);
+	}
 }
 
 static void	on_move(unsigned int key, t_player *player)

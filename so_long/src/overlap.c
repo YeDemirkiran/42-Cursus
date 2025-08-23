@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:27 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 12:04:42 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 13:30:25 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,8 @@ void	check_exit(t_frame *frame)
 		return ;
 	overlap = are_objects_overlapping(frame->player.object, frame->exit);
 	if (overlap.x && overlap.y)
+	{
+		ft_putstr("Congrats! You finished the map.\n");
 		mlx_loop_end(frame->mlx_addr);
+	}
 }

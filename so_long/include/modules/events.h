@@ -6,6 +6,7 @@
 # include "t_frame.h"
 
 # include "mlx.h"
+# include "ft_write.h"
 
 // events.c
 int	on_key_down(int keycode, t_frame *frame);

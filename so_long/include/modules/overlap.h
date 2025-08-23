@@ -5,8 +5,9 @@
 
 # include "t_frame.h"
 
-# include "utils.h"
 # include "mlx.h"
+# include "utils.h"
+# include "ft_write.h"
 
 void	check_walls(t_frame *frame, int move_count);
 void	check_collectibles(t_frame *frame);
