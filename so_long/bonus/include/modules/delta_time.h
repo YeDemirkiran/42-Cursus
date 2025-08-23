@@ -3,6 +3,6 @@
 
 # include "time.h"
 
-float	get_delta_time();
+float	get_delta_time(void);
 
 #endif

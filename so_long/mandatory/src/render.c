@@ -34,17 +34,22 @@ static void	render_sprite(t_frame *frame, t_sprite *sprite,
 static void	render_background(t_frame *frame)
 {
 	t_vec_2	pos;
-	t_vec_2	pos_2;
 	t_vec_2	offset;
+	int		i;
 
-	pos.x = (int)(frame->background.sprite->size.x) / -4;
-	pos.y = (int)(frame->background.sprite->size.y) / -4;
-	pos_2.x = pos.x + frame->background.sprite->size.x;
-	pos_2.y = pos.y;
+	i = 0;
 	offset.x = frame->camera_offset.x * 0.1f;
 	offset.y = frame->camera_offset.y * 0.1f;
-	render_sprite(frame, frame->background.sprite, pos, &offset);
-	render_sprite(frame, frame->background.sprite, pos_2, &offset);
+	while (i < 10)
+	{
+		pos.x = frame->background.sprite->size.x * i;
+		pos.y = 0;
+		render_sprite(frame, frame->background.sprite, pos, &offset);
+		pos.x = 0;
+		pos.y = frame->background.sprite->size.y * i;
+		render_sprite(frame, frame->background.sprite, pos, &offset);
+		i++;
+	}
 }
 
 static void	render_object(t_frame *frame, t_object object, t_vec_2 *offset)

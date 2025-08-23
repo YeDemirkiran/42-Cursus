@@ -1,6 +1,6 @@
 #include "delta_time.h"
 
-float	get_delta_time()
+float	get_delta_time(void)
 {
 	static float	time;
 	float			current_time;

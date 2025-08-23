@@ -17,12 +17,12 @@ static void	render_sprite(t_frame *frame, t_sprite *sprite,
 {
 	t_vec_2	new_pos;
 
-	new_pos.x = (int)(pos.x);
-	new_pos.y = (int)(pos.y);
+	new_pos.x = pos.x;
+	new_pos.y = pos.y;
 	if (offset)
 	{
-		new_pos.x += (int)(offset->x);
-		new_pos.y += (int)(offset->y);
+		new_pos.x += offset->x;
+		new_pos.y += offset->y;
 	}
 	if ((new_pos.x > RES_X || new_pos.x + sprite->size.x < 0)
 		|| (new_pos.y > RES_Y || new_pos.y + sprite->size.y < 0))
@@ -34,17 +34,22 @@ static void	render_sprite(t_frame *frame, t_sprite *sprite,
 static void	render_background(t_frame *frame)
 {
 	t_vec_2	pos;
-	t_vec_2	pos_2;
 	t_vec_2	offset;
+	int		i;
 
-	pos.x = (int)(frame->background.sprite->size.x) / -4;
-	pos.y = (int)(frame->background.sprite->size.y) / -4;
-	pos_2.x = pos.x + frame->background.sprite->size.x;
-	pos_2.y = pos.y;
+	i = 0;
 	offset.x = frame->camera_offset.x * 0.1f;
 	offset.y = frame->camera_offset.y * 0.1f;
-	render_sprite(frame, frame->background.sprite, pos, &offset);
-	render_sprite(frame, frame->background.sprite, pos_2, &offset);
+	while (i < 10)
+	{
+		pos.x = frame->background.sprite->size.x * i;
+		pos.y = 0;
+		render_sprite(frame, frame->background.sprite, pos, &offset);
+		pos.x = 0;
+		pos.y = frame->background.sprite->size.y * i;
+		render_sprite(frame, frame->background.sprite, pos, &offset);
+		i++;
+	}
 }
 
 static void	render_object(t_frame *frame, t_object object, t_vec_2 *offset)
