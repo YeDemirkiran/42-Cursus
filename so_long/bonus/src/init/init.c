@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:47 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 13:38:08 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:28:05 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 	add_sprite(TEXTURES_PATH "exit.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Wall.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Collectible.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Enemy.xpm", sprites_buffer, mlx_addr);
 }
 
 void	init_objects(t_frame *frame)
 {
 	init_objects_empty(frame->walls);
 	init_objects_empty(frame->collectibles);
+	init_objects_empty(frame->enemies);
 }

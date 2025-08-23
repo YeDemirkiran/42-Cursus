@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:16 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 14:03:39 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:30:28 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	update_player(t_player *player, t_frame *frame)
 	player->object.position.y += player->object.velocity.y;
 	check_walls(frame, count);
 	check_collectibles(frame);
+	check_enemies(frame);
 	check_exit(frame);
 	if (player->move_count != count)
 	{
@@ -55,5 +56,6 @@ int	update_frame(t_frame *frame)
 	update_player(&(frame->player), frame);
 	update_camera_offset(frame);
 	render_frame(frame);
+	//mlx_string_put(frame->mlx_addr, frame->mlx_window, 400, 400, 0xFFFFFFFF, "ANAN");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:08:09 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:08:10 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:34:15 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void	add_object(t_object *objects_buffer, t_sprite *sprite, t_vec_2 pos);
 void	add_wall(t_frame *frame, t_vec_2 pos);
 void	add_collectible(t_frame *frame, t_vec_2 pos);
 void	destroy_object(t_object *buffer, int index);
+void	add_enemy(t_frame *frame, t_vec_2 pos);
 
 #endif

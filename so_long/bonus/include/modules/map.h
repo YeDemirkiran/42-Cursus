@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:07:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:07:56 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:24:41 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@ void	free_map_buffer(char **buffer);
 // map_utils.c
 int		check_filename(char *path);
 char	**save_map(char *path, t_map *map);
+
+// map_bonus.c
+void	parse_enemy(t_frame *frame, t_vec_2 pos);
 
 #endif

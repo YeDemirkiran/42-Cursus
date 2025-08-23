@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:08:48 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:08:49 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:24:58 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@
 # define OBJ_COLL_CHAR 'C'
 # define OBJ_EXIT_CHAR 'E'
 # define OBJ_START_CHAR 'P'
+# define OBJ_ENEMY_CHAR 'D'
 
 #endif

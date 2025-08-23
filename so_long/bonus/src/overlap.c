@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:27 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 13:30:25 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:26:57 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,25 @@ void	check_collectibles(t_frame *frame)
 		{
 			frame->player.current_collect++;
 			destroy_object(frame->collectibles, i);
+		}
+		i++;
+	}
+}
+
+void	check_enemies(t_frame *frame)
+{
+	int		i;
+	t_vec_2	overlap;
+
+	i = 0;
+	while (frame->enemies[i].sprite)
+	{
+		overlap = are_objects_overlapping(frame->player.object,
+				frame->enemies[i]);
+		if (overlap.x && overlap.y)
+		{
+			ft_putstr("You died! You touched an enemy.\n");
+			mlx_loop_end(frame->mlx_addr);
 		}
 		i++;
 	}

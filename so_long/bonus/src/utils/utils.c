@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:23 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 11:04:24 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:33:43 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,9 @@ void	add_wall(t_frame *frame, t_vec_2 pos)
 void	add_collectible(t_frame *frame, t_vec_2 pos)
 {
 	add_object(frame->collectibles, &(frame->sprites[S_COLL]), pos);
+}
+
+void	add_enemy(t_frame *frame, t_vec_2 pos)
+{
+	add_object(frame->enemies, &(frame->sprites[S_ENEMY]), pos);
 }

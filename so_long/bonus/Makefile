@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/01 13:03:01 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/23 15:10:45 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/23 15:25:22 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ INIT_DIR = init/
 INIT_SRC = $(addprefix $(INIT_DIR), init.c init_extra.c)
 
 MAP_DIR = map/
-MAP_SRC = $(addprefix $(MAP_DIR), map.c map_extra.c map_utils.c)
+MAP_SRC = $(addprefix $(MAP_DIR), map.c map_extra.c map_utils.c map_bonus.c)
 
 PATH_DIR = path/
 PATH_SRC = $(addprefix $(PATH_DIR), path.c path_extra.c)

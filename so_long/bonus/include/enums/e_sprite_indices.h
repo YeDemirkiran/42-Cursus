@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:06:09 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:06:10 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:22:14 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ enum	e_sprite_indexes
 	S_EXIT = 2,
 	S_WALL = 3,
 	S_COLL = 4,
+	S_ENEMY = 5,
 };
 
 #endif
