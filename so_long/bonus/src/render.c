@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:13 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:34:54 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:05:08 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,7 @@ void	render_frame(t_frame *frame)
 	render_objects(frame->walls, frame);
 	render_objects(frame->collectibles, frame);
 	render_objects(frame->enemies, frame);
+	if (frame->move_str)
+		mlx_string_put(frame->mlx_addr, frame->mlx_window,
+			RES_X / 2, RES_Y / 2, 0xFFFFFFFF, frame->move_str);
 }

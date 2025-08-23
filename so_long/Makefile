@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/23 14:08:47 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/23 15:12:52 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/23 16:01:12 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,5 +35,7 @@ fclean: clean
 	make fclean -C $(BONUS_DIR)
 
 re: fclean all
+
+reb: fclean bonus
 
 .PHONY: all bonus clean fclean re

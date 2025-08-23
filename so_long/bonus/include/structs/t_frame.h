@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:08:13 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:20:27 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:03:43 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_frame
 	t_player	player;
 	t_object	exit;
 	t_vec_2		camera_offset;
+	char		*move_str;
 }			t_frame;
 
 #endif

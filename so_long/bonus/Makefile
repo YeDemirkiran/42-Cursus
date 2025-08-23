@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/01 13:03:01 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/23 15:25:22 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/23 15:58:18 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FLAGS = -Wall -Wextra -Werror
 NAME = so_long_bonus
 
 STRING_DIR = string/
-STRING_SRC = $(addprefix $(STRING_DIR), ft_split.c ft_strcmp.c ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_substr.c)
+STRING_SRC = $(addprefix $(STRING_DIR), ft_split.c ft_strcmp.c ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_substr.c ft_itoa.c)
 
 WRITE_DIR = write/
 WRITE_SRC = $(addprefix $(WRITE_DIR), ft_putchar.c ft_putstr.c ft_putnbr.c)

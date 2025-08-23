@@ -6,11 +6,36 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:16 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:30:28 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:09:01 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "update.h"
+
+static void	update_move_count(int *count, t_player *player, t_frame *frame)
+{
+	char		*num_str;
+
+	if (player->move_count != *count)
+	{
+		if (frame->move_str)
+			free(frame->move_str);
+		*count = player->move_count;
+		num_str = ft_itoa(player->move_count);
+		if (!num_str)
+		{
+			ft_putstr_fd("Error\nA memory error occured.\n", 2);
+			mlx_loop_end(frame->mlx_addr);
+		}
+		frame->move_str = ft_strjoin("PLAYER MOVE COUNT: ", num_str);
+		free(num_str);
+		if (!frame->move_str)
+		{
+			ft_putstr_fd("Error\nA memory error occured.\n", 2);
+			mlx_loop_end(frame->mlx_addr);
+		}
+	}
+}
 
 static void	update_player(t_player *player, t_frame *frame)
 {
@@ -22,13 +47,7 @@ static void	update_player(t_player *player, t_frame *frame)
 	check_collectibles(frame);
 	check_enemies(frame);
 	check_exit(frame);
-	if (player->move_count != count)
-	{
-		count = player->move_count;
-		ft_putstr("PLAYER MOVE COUNT: ");
-		ft_putnbr(player->move_count);
-		ft_putstr("\n");
-	}
+	update_move_count(&count, player, frame);
 }
 
 static void	update_camera_offset(t_frame *frame)
@@ -56,6 +75,5 @@ int	update_frame(t_frame *frame)
 	update_player(&(frame->player), frame);
 	update_camera_offset(frame);
 	render_frame(frame);
-	//mlx_string_put(frame->mlx_addr, frame->mlx_window, 400, 400, 0xFFFFFFFF, "ANAN");
 	return (0);
 }

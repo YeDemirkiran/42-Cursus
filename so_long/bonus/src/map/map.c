@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:32:48 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:11:45 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,7 @@ static void	read_line(char *line, int line_y, t_map *map, t_frame *frame)
 		else if (line[i] == OBJ_COLL_CHAR)
 			parse_collectible(frame, map, pos);
 		else if (line[i] == OBJ_ENEMY_CHAR)
-		{
-			ft_putstr("FOUND ENEMYYY\n");
 			parse_enemy(frame, pos);
-		}
 		else if (line[i] == OBJ_START_CHAR || line[i] == OBJ_EXIT_CHAR)
 		{
 			if (!parse_start_exit(map, frame, line[i], pos))

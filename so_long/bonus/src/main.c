@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:02:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/20 13:55:44 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:11:21 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	initialize_mlx(t_frame *frame)
 		mlx_destroy_display(frame->mlx_addr);
 		return (0);
 	}
+	frame->move_str = ft_strdup("PLAYER MOVE COUNT: 0");
 	frame->camera_offset.x = 0;
 	frame->camera_offset.y = 0;
 	init_sprites(frame->sprites, frame->mlx_addr);
@@ -61,6 +62,8 @@ static void	clean_up(t_frame *frame)
 	mlx_destroy_window(frame->mlx_addr, frame->mlx_window);
 	mlx_destroy_display(frame->mlx_addr);
 	free(frame->mlx_addr);
+	if (frame->move_str)
+		free(frame->move_str);
 	frame->mlx_addr = NULL;
 }
 
