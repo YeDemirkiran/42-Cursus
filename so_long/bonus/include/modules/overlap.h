@@ -16,6 +16,7 @@
 # include <math.h>
 
 # include "t_frame.h"
+# include "t_animation.h"
 
 # include "mlx.h"
 # include "utils.h"
