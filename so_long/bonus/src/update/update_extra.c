@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delta_time.c                                       :+:      :+:    :+:   */
+/*   update_extra.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 12:39:41 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 13:18:19 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/24 13:05:00 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/24 13:19:13 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "delta_time.h"
+#include "update.h"
 
-float	get_delta_time(void)
+static void	update_enemy(t_object *enemy, t_frame *frame)
 {
-	static double	time;
-	double			current_time;
-	float			delta_time;
-	struct timeval	tv;
+	enemy->velocity.x = 0;
+	enemy->velocity.y = ENEMY_SPEED;
+	enemy->position.x += frame->delta_time * enemy->velocity.x;
+	enemy->position.y += frame->delta_time * enemy->velocity.y;
+}
 
-	delta_time = 0;
-	gettimeofday(&tv, NULL);
-	current_time = (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
-	if (time == 0)
-		time = current_time;
-	else if (current_time > time)
+void	update_enemies(t_frame *frame)
+{
+	int	i;
+
+	i = 0;
+	while (frame->enemies[i].sprite)
 	{
-		delta_time = (float)(current_time - time);
-		time = current_time;
+		update_enemy(frame->enemies + i, frame);
+		i++;
 	}
-	return (delta_time);
 }

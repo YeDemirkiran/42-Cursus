@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/01 13:03:01 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/24 12:01:19 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/24 13:13:11 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,11 +38,14 @@ OVERLAP_SRC = $(addprefix $(OVERLAP_DIR), overlap.c overlap_utils.c)
 PATH_DIR = path/
 PATH_SRC = $(addprefix $(PATH_DIR), path.c path_extra.c)
 
+UPDATE_DIR = update/
+UPDATE_SRC = $(addprefix $(UPDATE_DIR), update.c update_extra.c)
+
 UTILS_DIR = utils/
 UTILS_SRC = $(addprefix $(UTILS_DIR), utils.c utils_extra.c)
 
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c render.c update.c delta_time.c animation.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC) $(EVENTS_SRC) $(INIT_SRC) $(MAP_SRC) $(OVERLAP_SRC) $(PATH_SRC) $(UTILS_SRC))
+SRC = $(addprefix $(SRC_DIR), main.c render.c delta_time.c animation.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC) $(EVENTS_SRC) $(INIT_SRC) $(MAP_SRC) $(OVERLAP_SRC) $(PATH_SRC) $(UPDATE_SRC) $(UTILS_SRC))
 
 MLX_DIR = ../minilibx
 MLX_LIBFILE = $(MLX_DIR)/libmlx_Linux.a $(MLX_DIR)/libmlx.a

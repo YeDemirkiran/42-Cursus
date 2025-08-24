@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:16 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 12:04:41 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:10:11 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	update_frame(t_frame *frame)
 {
 	frame->delta_time = get_delta_time();
 	update_player(&(frame->player), frame);
+	update_enemies(frame);
 	update_camera_offset(frame);
 	update_animations(frame);
 	render_frame(frame);

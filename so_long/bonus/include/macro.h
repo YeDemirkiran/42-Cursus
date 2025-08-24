@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:08:48 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 13:00:38 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:06:28 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@
 
 # ifndef PLAYER_SPEED
 #  define PLAYER_SPEED 200
+# endif
+
+# ifndef ENEMY_SPEED
+#  define ENEMY_SPEED 100
 # endif
 
 # ifndef GLOBAL_FREQUENCY

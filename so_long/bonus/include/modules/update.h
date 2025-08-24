@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:08:06 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:08:07 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:09:53 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "delta_time.h"
 # include "animation.h"
 
+void	update_enemies(t_frame *frame);
 int		update_frame(t_frame *frame);
 
 #endif
