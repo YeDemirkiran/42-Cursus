@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:08:48 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 14:18:40 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 14:43:37 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # endif
 
 # ifndef ENEMY_SPEED
-#  define ENEMY_SPEED 0
+#  define ENEMY_SPEED 100
 # endif
 
 # ifndef ENEMY_DECISION
