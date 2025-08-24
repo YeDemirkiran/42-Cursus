@@ -6,13 +6,13 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:27 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 12:00:27 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 14:23:58 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "overlap.h"
 
-void	check_walls(t_frame *frame, int move_count)
+void	check_walls(t_frame *frame)
 {
 	int		i;
 	t_vec_2	overlap;
@@ -28,7 +28,6 @@ void	check_walls(t_frame *frame, int move_count)
 				frame->player.object.position.x += overlap.x;
 			else
 				frame->player.object.position.y += overlap.y;
-			frame->player.move_count = move_count;
 		}
 		i++;
 	}

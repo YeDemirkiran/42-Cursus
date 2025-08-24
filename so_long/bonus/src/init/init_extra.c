@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:45 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 12:09:02 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 14:07:05 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	init_player(t_frame *frame)
 	frame->player.object.position.y = frame->map->start_pos.y;
 	frame->player.object.velocity.x = 0;
 	frame->player.object.velocity.y = 0;
+	frame->player.last_tile_pos = frame->player.object.position;
 }
 
 void	init_exit(t_frame *frame)

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:36 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 13:42:20 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 14:24:11 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ static void	on_move(unsigned int key, t_player *player)
 		- ((key == K_A) || (key == K_LEFT));
 	input_y = ((key == K_S) || (key == K_DOWN))
 		- ((key == K_W) || (key == K_UP));
-	if (!player->object.velocity.x)
-		player->move_count += input_x != 0;
-	if (!player->object.velocity.y)
-		player->move_count += input_y != 0;
 	if (input_x)
 		player->object.velocity.x = input_x * PLAYER_SPEED;
 	else if (input_y)

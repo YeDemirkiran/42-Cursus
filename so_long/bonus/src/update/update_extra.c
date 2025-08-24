@@ -6,11 +6,33 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:05:00 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 13:43:07 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 14:26:20 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "update.h"
+
+void	update_move_count(t_player *player)
+{
+	t_vec_2		size;
+	float		x_diff;
+	float		y_diff;
+
+	x_diff = fabs(player->object.position.x - player->last_tile_pos.x);
+	y_diff = fabs(player->object.position.y - player->last_tile_pos.y);
+	size = player->object.animation->sprites
+	[player->object.animation->current_index]->size;
+	if (x_diff >= size.x - 1)
+	{
+		player->move_count++;
+		player->last_tile_pos = player->object.position;
+	}
+	if (y_diff >= size.y - 1)
+	{
+		player->move_count++;
+		player->last_tile_pos = player->object.position;
+	}
+}
 
 static void	check_wall_enemy(int enemy_index, t_frame *frame)
 {

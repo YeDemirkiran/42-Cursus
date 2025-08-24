@@ -6,21 +6,23 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:16 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 13:10:11 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 14:26:00 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "update.h"
 
-static void	update_move_count(int *count, t_player *player, t_frame *frame)
+static void	update_move_msg(t_player *player, t_frame *frame)
 {
 	char		*num_str;
+	static int	count;
 
-	if (player->move_count != *count)
+	update_move_count(player);
+	if (player->move_count != count)
 	{
 		if (frame->move_str)
 			free(frame->move_str);
-		*count = player->move_count;
+		count = player->move_count;
 		num_str = ft_itoa(player->move_count);
 		if (!num_str)
 		{
@@ -39,17 +41,16 @@ static void	update_move_count(int *count, t_player *player, t_frame *frame)
 
 static void	update_player(t_player *player, t_frame *frame)
 {
-	static int	count;
 	float		dt;
 
 	dt = frame->delta_time;
 	player->object.position.x += player->object.velocity.x * dt;
 	player->object.position.y += player->object.velocity.y * dt;
-	check_walls(frame, count);
+	check_walls(frame);
 	check_collectibles(frame);
 	check_enemies(frame);
 	check_exit(frame);
-	update_move_count(&count, player, frame);
+	update_move_msg(player, frame);
 }
 
 static void	update_camera_offset(t_frame *frame)
