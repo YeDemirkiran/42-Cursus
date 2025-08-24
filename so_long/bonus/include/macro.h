@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:08:48 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 13:06:28 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:36:03 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,16 @@
 #  define ENEMY_SPEED 100
 # endif
 
+# ifndef ENEMY_RADIUS
+#  define ENEMY_RADIUS 100
+# endif
+
+# ifndef ENEMY_DECISION
+#  define ENEMY_DECISION 1
+# endif
+
 # ifndef GLOBAL_FREQUENCY
-#  define GLOBAL_FREQUENCY 1.5
+#  define GLOBAL_FREQUENCY 1.5f
 # endif
 
 # define OBJ_EMPTY_CHAR '0'
