@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:08:48 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:08:49 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 14:28:49 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # endif
 
 # ifndef PLAYER_SPEED
-#  define PLAYER_SPEED 5
+#  define PLAYER_SPEED 0.5f
 # endif
 
 # define OBJ_EMPTY_CHAR '0'

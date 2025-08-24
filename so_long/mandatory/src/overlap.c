@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:27 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 13:30:25 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 14:30:06 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_vec_2	are_objects_overlapping(t_object obj_1, t_object obj_2)
 	return (overlap);
 }
 
-void	check_walls(t_frame *frame, int move_count)
+void	check_walls(t_frame *frame)
 {
 	int		i;
 	t_vec_2	overlap;
@@ -56,7 +56,6 @@ void	check_walls(t_frame *frame, int move_count)
 				frame->player.object.position.x += overlap.x;
 			else
 				frame->player.object.position.y += overlap.y;
-			frame->player.move_count = move_count;
 		}
 		i++;
 	}
