@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:03:47 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/24 12:30:02 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:00:04 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void	init_sprites(t_sprite *sprites_buffer, void *mlx_addr)
 	init_sprites_empty(sprites_buffer);
 	add_sprite(TEXTURES_PATH "Background.xpm",
 		sprites_buffer, mlx_addr);
-	add_sprite(TEXTURES_PATH "Player_Front_0.xpm", sprites_buffer, mlx_addr);
-	add_sprite(TEXTURES_PATH "Player_Front_1.xpm", sprites_buffer, mlx_addr);
-	add_sprite(TEXTURES_PATH "Player_Front_2.xpm", sprites_buffer, mlx_addr);
-	add_sprite(TEXTURES_PATH "Player_Front_3.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Player_0.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Player_1.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Player_2.xpm", sprites_buffer, mlx_addr);
+	add_sprite(TEXTURES_PATH "Player_3.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Exit_0.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Wall.xpm", sprites_buffer, mlx_addr);
 	add_sprite(TEXTURES_PATH "Collectible.xpm", sprites_buffer, mlx_addr);

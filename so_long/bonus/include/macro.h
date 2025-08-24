@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:08:48 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 15:24:58 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:00:38 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # endif
 
 # ifndef GLOBAL_FREQUENCY
-#  define GLOBAL_FREQUENCY 1
+#  define GLOBAL_FREQUENCY 1.5
 # endif
 
 # define OBJ_EMPTY_CHAR '0'
