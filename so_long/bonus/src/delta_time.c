@@ -1,5 +1,4 @@
 #include "delta_time.h"
-#include "stdio.h"
 
 float	get_delta_time(void)
 {
@@ -11,7 +10,6 @@ float	get_delta_time(void)
 	delta_time = 0;
 	gettimeofday(&tv, NULL);
 	current_time = (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
-	printf("tv: %li %li\n", tv.tv_sec, tv.tv_usec);
 	if (current_time > time)
 	{
 		delta_time = (float)(current_time - time);

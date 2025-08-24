@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:13 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 16:05:08 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 12:03:54 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,6 @@ static void	render_object(t_frame *frame, t_object object, t_vec_2 *offset)
 	render_sprite(frame, object.sprite, object.position, offset);
 }
 
-static void	render_object_anim(t_frame *frame, t_object_anim object, t_vec_2 *offset)
-{
-	t_sprite	*sprite;
-
-	sprite = object.animation->sprites[object.animation->current_index];
-	render_sprite(frame, sprite, object.position, offset);
-}
-
 static void	render_objects(t_object *objects, t_frame *frame)
 {
 	int	i;
@@ -79,9 +71,14 @@ static void	render_objects(t_object *objects, t_frame *frame)
 
 void	render_frame(t_frame *frame)
 {
+	t_object	player_obj;
+
 	render_background(frame);
 	render_object(frame, frame->exit, &(frame->camera_offset));
-	render_object_anim(frame, frame->player.object, &(frame->camera_offset));
+	player_obj.position = frame->player.object.position;
+	player_obj.sprite = frame->player.object.animation->sprites
+	[frame->player.object.animation->current_index];
+	render_object(frame, player_obj, &(frame->camera_offset));
 	render_objects(frame->walls, frame);
 	render_objects(frame->collectibles, frame);
 	render_objects(frame->enemies, frame);

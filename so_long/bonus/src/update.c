@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:04:16 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/23 16:09:01 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/24 12:04:41 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static void	update_camera_offset(t_frame *frame)
 	t_vec_2	offset;
 
 	p_pos = frame->player.object.position;
-	p_size = frame->player.object.animation->sprites[frame->player.object.animation->current_index]->size;
+	p_size = frame->player.object.animation->sprites
+	[frame->player.object.animation->current_index]->size;
 	offset = frame->camera_offset;
 	if (p_pos.x + offset.x >= RES_X)
 		offset.x = p_pos.x * -1;
@@ -71,7 +72,7 @@ static void	update_camera_offset(t_frame *frame)
 		offset.y = RES_Y - (p_pos.y + p_size.y);
 	frame->camera_offset = offset;
 }
-#include "stdio.h"
+
 static void	update_animations(t_frame *frame)
 {
 	int	i;
@@ -79,7 +80,6 @@ static void	update_animations(t_frame *frame)
 	i = 0;
 	while (frame->animations[i].current_index >= 0)
 	{
-		printf("ANIM LOOP: %i\n", i);
 		animation_loop(&(frame->animations[i]), frame->delta_time);
 		i++;
 	}

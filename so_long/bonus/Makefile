@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/01 13:03:01 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/23 15:58:18 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/24 12:01:19 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,9 @@ INIT_SRC = $(addprefix $(INIT_DIR), init.c init_extra.c)
 MAP_DIR = map/
 MAP_SRC = $(addprefix $(MAP_DIR), map.c map_extra.c map_utils.c map_bonus.c)
 
+OVERLAP_DIR = overlap/
+OVERLAP_SRC = $(addprefix $(OVERLAP_DIR), overlap.c overlap_utils.c)
+
 PATH_DIR = path/
 PATH_SRC = $(addprefix $(PATH_DIR), path.c path_extra.c)
 
@@ -39,7 +42,7 @@ UTILS_DIR = utils/
 UTILS_SRC = $(addprefix $(UTILS_DIR), utils.c utils_extra.c)
 
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c overlap.c render.c update.c delta_time.c animation.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC) $(EVENTS_SRC) $(INIT_SRC) $(MAP_SRC) $(PATH_SRC) $(UTILS_SRC))
+SRC = $(addprefix $(SRC_DIR), main.c render.c update.c delta_time.c animation.c $(STRING_SRC) $(WRITE_SRC) $(GNL_SRC) $(EVENTS_SRC) $(INIT_SRC) $(MAP_SRC) $(OVERLAP_SRC) $(PATH_SRC) $(UTILS_SRC))
 
 MLX_DIR = ../minilibx
 MLX_LIBFILE = $(MLX_DIR)/libmlx_Linux.a $(MLX_DIR)/libmlx.a

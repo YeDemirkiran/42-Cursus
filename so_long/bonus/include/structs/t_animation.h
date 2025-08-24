@@ -6,9 +6,13 @@
 
 # include "delta_time.h"
 
+# ifndef ANIM_SPRITE_LIMIT
+#  define ANIM_SPRITE_LIMIT 12
+# endif
+
 typedef struct s_animation
 {
-	t_sprite	*sprites[12];
+	t_sprite	*sprites[ANIM_SPRITE_LIMIT];
 	int			current_index;
 	int			sprite_length;
 	float		timer;
