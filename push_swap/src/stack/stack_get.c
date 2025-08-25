@@ -52,6 +52,23 @@ t_stack	get_place_before(t_stack *stack, int size, int target_num)
 	return (stack[i - 1]);
 }
 
+static t_stack	get_between_last_half(t_stack *stack,
+	int size, int min, int max)
+{
+	int		i;
+	t_stack	target_stack;
+
+	i = size - 1;
+	target_stack.index = -1;
+	while (i >= size / 2)
+	{
+		if (stack[i].number >= min && stack[i].number < max)
+			return (stack[i]);
+		i--;
+	}
+	return (target_stack);
+}
+
 t_stack	get_between(t_stack *stack, int size, int min, int max)
 {
 	int		i;
@@ -66,20 +83,11 @@ t_stack	get_between(t_stack *stack, int size, int min, int max)
 		if (stack[i].number >= min && stack[i].number < max)
 		{
 			num = stack[i];
-			break;
+			break ;
 		}
 		i++;
 	}
-	i = size - 1;
-	while (i >= size / 2)
-	{
-		if (stack[i].number >= min && stack[i].number < max)
-		{
-			num_2 = stack[i];
-			break;
-		}
-		i--;
-	}
+	num_2 = get_between_last_half(stack, size, min, max);
 	if (num.index == -1 || (num.index > size - num_2.index))
 		return (num_2);
 	return (num);

@@ -65,7 +65,8 @@ static void	sort_stack(t_stack_pair *pair, t_byte *instructions,
 		stack_a_move_to_first(*pair, tmp, instructions, inst_index);
 		instructions[(*inst_index)++] = stack_push_b_to_a(pair);
 		if (pair->stack_a[0].number > pair->stack_a[1].number
-			&& pair->stack_a[0].number > pair->stack_a[pair->a_length - 1].number)
+			&& pair->stack_a[0].number
+			> pair->stack_a[pair->a_length - 1].number)
 			instructions[(*inst_index)++] = stack_swap_a(*pair);
 	}
 }

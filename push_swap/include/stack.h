@@ -66,13 +66,11 @@ int				stack_rotate_a(t_stack_pair pair);
 int				stack_rotate_b(t_stack_pair pair);
 int				stack_rotate_ab(t_stack_pair pair);
 
-
 // stack_rotate_rev.c
 void			stack_rotate_rev(t_stack *stack, int size);
 int				stack_rotate_rev_a(t_stack_pair pair);
 int				stack_rotate_rev_b(t_stack_pair pair);
 int				stack_rotate_rev_ab(t_stack_pair pair);
-
 
 // stack_push.c
 int				stack_push_a_to_b(t_stack_pair *pair);
