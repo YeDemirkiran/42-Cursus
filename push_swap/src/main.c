@@ -22,6 +22,7 @@ static t_instructions	*get_instructions(t_stack_pair *pair)
 	instructions->arr = malloc(sizeof(t_byte) * 8192);
 	if (!instructions->arr)
 		return (NULL);
+	instructions->index = 0;
 	chunk_sort(pair, instructions);
 	return (instructions);
 }

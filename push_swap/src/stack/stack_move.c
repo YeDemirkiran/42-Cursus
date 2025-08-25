@@ -36,3 +36,28 @@ void	stack_a_move_to_first(t_stack_pair pair, t_stack target,
 		i++;
 	}
 }
+
+void	stack_b_move_to_first(t_stack_pair pair, t_stack target,
+	t_instructions *instructions)
+{
+	int	i;
+
+	i = 0;
+	while (i < pair.b_length)
+	{
+		if (pair.stack_b[i].number == target.number)
+			break ;
+		i++;
+	}
+	if (i == pair.b_length)
+		return ;
+	i = 0;
+	while (pair.stack_b[0].number != target.number)
+	{
+		if (pair.b_length - target.index > target.index)
+			instructions->arr[instructions->index++] = stack_rotate_b(pair);
+		else
+			instructions->arr[instructions->index++] = stack_rotate_rev_b(pair);
+		i++;
+	}
+

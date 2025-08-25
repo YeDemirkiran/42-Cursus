@@ -75,6 +75,8 @@ int				stack_push_b_to_a(t_stack_pair *pair);
 t_stack			find_smallest_index(t_stack *stack, int size);
 void			stack_a_move_to_first(t_stack_pair pair, t_stack target,
 					t_instructions *instructions);
+void			stack_b_move_to_first(t_stack_pair pair, t_stack target,
+t_instructions *instructions);
 int				is_stack_sorted(t_stack *stack, int size);
 
 // init_stack.c
