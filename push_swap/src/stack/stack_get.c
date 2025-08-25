@@ -38,18 +38,39 @@ t_stack	get_smallest(t_stack *stack, int size)
 
 t_stack	get_place_before(t_stack *stack, int size, int target_num)
 {
-	int	i;
+	int		i;
+	t_stack	stack_1;
+	t_stack	stack_2;
 
+	stack_1.index = -1;
+	stack_2.index = -1;
 	if (stack[0].number > target_num && stack[size - 1].number < target_num)
 		return (stack[0]);
 	i = 1;
 	while (i < size)
 	{
 		if (stack[i].number > target_num && stack[i - 1].number < target_num)
-			return (stack[i]);
+		{
+			return stack[i];
+			break ;
+		}
 		i++;
 	}
-	return (stack[i - 1]);
+	i = size - 2;
+	while (i >= size / 2)
+	{
+		if (stack[i].number > target_num && stack[i - 1].number < target_num)
+		{
+			stack_2 = stack[i];
+			break ;
+		}
+		i--;
+	}
+	if (stack_2.index != -1 && (stack_1.index > size - stack_2.index))
+		return (stack_2);
+	else if (stack_1.index != -1 && (stack_2.index > size - stack_1.index))
+		return (stack_1);
+	return (stack[size - 1]);
 }
 
 static t_stack	get_between_last_half(t_stack *stack,
