@@ -74,6 +74,7 @@ int	main(int argc, char **argv)
 		return (err_print(clear_pair, &pair));
 	print_instructions(instructions->arr);
 	free(instructions->arr);
+	free(instructions);
 	clear_pair(&pair);
 	return (EXIT_SUCCESS);
 }
