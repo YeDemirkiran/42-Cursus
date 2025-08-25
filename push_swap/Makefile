@@ -38,12 +38,12 @@ STACK_SRC = $(addprefix $(STACK_DIR), init_stack.c stack_rotate.c stack_rotate_r
 ARRAY_DIR = array/
 ARRAY_SRC = $(addprefix $(ARRAY_DIR), dup_array.c)
 
-INC = ./include
+INC_FLAGS = -I./include -I./include/structs
 
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(CC) $(FLAGS) $(SRC) -I$(INC) -o $(NAME)
+	$(CC) $(FLAGS) $(SRC) $(INC_FLAGS) -o $(NAME)
 
 test:
 	make -C ./test

@@ -21,6 +21,4 @@
 # include "unistd.h"
 # include "limits.h"
 
-typedef char	t_byte;
-
 #endif

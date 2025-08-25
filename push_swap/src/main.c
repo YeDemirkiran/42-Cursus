@@ -12,12 +12,15 @@
 
 #include "push_swap.h"
 
-static t_byte	*get_instructions(t_stack_pair *pair)
+static t_instructions	*get_instructions(t_stack_pair *pair)
 {
-	t_byte	*instructions;
+	t_instructions	*instructions;
 
-	instructions = malloc(sizeof(*instructions) * 20000);
+	instructions = malloc(sizeof(t_instructions));
 	if (!instructions)
+		return (NULL);
+	instructions->arr = malloc(sizeof(t_byte) * 8192);
+	if (!instructions->arr)
 		return (NULL);
 	chunk_sort(pair, instructions);
 	return (instructions);
@@ -59,7 +62,7 @@ static int	err_print(void (*clear)(t_stack_pair *), t_stack_pair *pair)
 int	main(int argc, char **argv)
 {
 	t_stack_pair	pair;
-	t_byte			*instructions;
+	t_instructions	*instructions;
 
 	if (argc <= 2)
 		return (EXIT_FAILURE);
@@ -67,10 +70,10 @@ int	main(int argc, char **argv)
 	if (!pair.stack_a || !pair.stack_b)
 		return (err_print(clear_pair, &pair));
 	instructions = get_instructions(&pair);
-	if (!instructions)
+	if (!instructions || !instructions->arr)
 		return (err_print(clear_pair, &pair));
-	print_instructions(instructions);
-	free(instructions);
+	print_instructions(instructions->arr);
+	free(instructions->arr);
 	clear_pair(&pair);
 	return (EXIT_SUCCESS);
 }

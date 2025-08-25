@@ -13,7 +13,7 @@
 #include "stack.h"
 
 void	stack_a_move_to_first(t_stack_pair pair, t_stack target,
-	t_byte *instructions, int *inst_index)
+	t_instructions *instructions)
 {
 	int	i;
 
@@ -30,9 +30,9 @@ void	stack_a_move_to_first(t_stack_pair pair, t_stack target,
 	while (pair.stack_a[0].number != target.number)
 	{
 		if (pair.a_length - target.index > target.index)
-			instructions[(*inst_index)++] = stack_rotate_a(pair);
+			instructions->arr[instructions->index++] = stack_rotate_a(pair);
 		else
-			instructions[(*inst_index)++] = stack_rotate_rev_a(pair);
+			instructions->arr[instructions->index++] = stack_rotate_rev_a(pair);
 		i++;
 	}
 }

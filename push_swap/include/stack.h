@@ -14,12 +14,7 @@
 # define STACK_H
 
 # include "dependencies.h"
-
-typedef struct s_lis
-{
-	int	*arr;
-	int	length;
-}			t_lis;
+# include "t_instructions.h"
 
 typedef struct s_stack
 {
@@ -79,7 +74,7 @@ int				stack_push_b_to_a(t_stack_pair *pair);
 // stack_operations.c
 t_stack			find_smallest_index(t_stack *stack, int size);
 void			stack_a_move_to_first(t_stack_pair pair, t_stack target,
-					t_byte *instructions, int *inst_index);
+					t_instructions *instructions);
 int				is_stack_sorted(t_stack *stack, int size);
 
 // init_stack.c

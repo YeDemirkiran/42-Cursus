@@ -12,8 +12,7 @@
 
 #include "sorting.h"
 
-static void	push_chunks(t_stack_pair *pair, t_byte *instructions,
-	int *inst_index)
+static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 {
 	int		chunk_border;
 	int		current_border;
@@ -30,8 +29,8 @@ static void	push_chunks(t_stack_pair *pair, t_byte *instructions,
 			tmp = get_between(pair->stack_a, pair->a_length,
 					chunk_border * current_border,
 					chunk_border * (current_border + 1));
-			stack_a_move_to_first(*pair, tmp, instructions, inst_index);
-			instructions[(*inst_index)++] = stack_push_a_to_b(pair);
+			stack_a_move_to_first(*pair, tmp, instructions);
+			instructions->arr[instructions->index++] = stack_push_a_to_b(pair);
 			i++;
 		}
 		current_border++;
@@ -51,8 +50,7 @@ static t_stack	smallest_or_biggest(t_stack_pair *pair)
 	return (tmp);
 }
 
-static void	sort_stack(t_stack_pair *pair, t_byte *instructions,
-	int *inst_index)
+static void	sort_stack(t_stack_pair *pair, t_instructions *instructions)
 {
 	t_stack	tmp;
 
@@ -62,25 +60,23 @@ static void	sort_stack(t_stack_pair *pair, t_byte *instructions,
 		if (tmp.index == -1)
 			tmp = get_place_before(pair->stack_a, pair->a_length,
 					pair->stack_b[0].number);
-		stack_a_move_to_first(*pair, tmp, instructions, inst_index);
-		instructions[(*inst_index)++] = stack_push_b_to_a(pair);
+		stack_a_move_to_first(*pair, tmp, instructions);
+		instructions->arr[instructions->index++] = stack_push_b_to_a(pair);
 		if (pair->stack_a[0].number > pair->stack_a[1].number
 			&& pair->stack_a[0].number
 			> pair->stack_a[pair->a_length - 1].number)
-			instructions[(*inst_index)++] = stack_swap_a(*pair);
+			instructions->arr[instructions->index++] = stack_swap_a(*pair);
 	}
 }
 
-void	chunk_sort(t_stack_pair *pair, t_byte *instructions)
+void	chunk_sort(t_stack_pair *pair, t_instructions *instructions)
 {
-	int		inst_index;
 	t_stack	tmp;
 
 	if (is_stack_sorted(pair->stack_a, pair->a_length))
 		return ;
-	inst_index = 0;
-	push_chunks(pair, instructions, &inst_index);
-	sort_stack(pair, instructions, &inst_index);
+	push_chunks(pair, instructions);
+	sort_stack(pair, instructions);
 	tmp = get_smallest(pair->stack_a, pair->a_length);
-	stack_a_move_to_first(*pair, tmp, instructions, &inst_index);
+	stack_a_move_to_first(*pair, tmp, instructions);
 }
