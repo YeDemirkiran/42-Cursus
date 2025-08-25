@@ -125,7 +125,7 @@ static	t_stack	get_between(t_stack *stack, int size, int target_num)
 	return (stack[i - 1]);
 }
 
-void	insertion_sort(t_stack_pair *pair, t_byte *instructions, int size)
+void	chunk_sort(t_stack_pair *pair, t_byte *instructions, int size)
 {
 	int		inst_index;
 	int		chunk_border;

@@ -19,7 +19,7 @@ t_byte	*get_instructions(t_stack_pair *pair, int size)
 	instructions = malloc(sizeof(*instructions) * 20000);
 	if (!instructions)
 		return (NULL);
-	insertion_sort(pair, instructions, size);
+	chunk_sort(pair, instructions, size);
 	return (instructions);
 }
 
