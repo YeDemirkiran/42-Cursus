@@ -60,4 +60,4 @@ void	stack_b_move_to_first(t_stack_pair pair, t_stack target,
 			instructions->arr[instructions->index++] = stack_rotate_rev_b(pair);
 		i++;
 	}
-
+}
