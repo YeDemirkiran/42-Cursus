@@ -76,6 +76,7 @@ static t_stack	*get_cheapest_b(t_stack_pair *pair)
 		}
 		i++;
 	}
+	//printf("Cheapest a (n / i): %i %i, b (n / i): %i %i\n", target[0].number, target[0].index, target[1].number, target[1].index);
 	return (target);
 }
 
@@ -90,8 +91,7 @@ static void	sort_stack(t_stack_pair *pair, t_instructions *instructions)
 		if (tmp.index == -1)
 		{
 			cheapest = get_cheapest_b(pair);
-			stack_a_move_to_first(*pair, cheapest[0], instructions);
-			stack_b_move_to_first(*pair, cheapest[1], instructions);
+			stack_ab_move_to_first(*pair, cheapest, instructions);
 			free(cheapest);
 		}
 		else
