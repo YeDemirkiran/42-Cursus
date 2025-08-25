@@ -12,7 +12,7 @@
 
 #include "stack.h"
 
-int		is_stack_sorted(t_stack *stack, int size)
+int	is_stack_sorted(t_stack *stack, int size)
 {
 	int	i;
 

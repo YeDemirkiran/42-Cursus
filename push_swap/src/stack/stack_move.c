@@ -12,7 +12,8 @@
 
 #include "stack.h"
 
-void	stack_a_move_to_first(t_stack_pair pair, t_stack target, t_byte *instructions, int *inst_index)
+void	stack_a_move_to_first(t_stack_pair pair, t_stack target,
+	t_byte *instructions, int *inst_index)
 {
 	int	i;
 
