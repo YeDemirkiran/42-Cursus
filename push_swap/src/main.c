@@ -12,18 +12,18 @@
 
 #include "push_swap.h"
 
-t_byte	*get_instructions(t_stack_pair *pair, int size)
+static t_byte	*get_instructions(t_stack_pair *pair)
 {
 	t_byte	*instructions;
 
 	instructions = malloc(sizeof(*instructions) * 20000);
 	if (!instructions)
 		return (NULL);
-	chunk_sort(pair, instructions, size);
+	chunk_sort(pair, instructions);
 	return (instructions);
 }
 
-void	print_instructions(t_byte *instructions)
+static void	print_instructions(t_byte *instructions)
 {
 	int			i;
 	const char	*inst[] = {NULL, "sa", "sb", "ss", "pa", "pb",
@@ -66,7 +66,7 @@ int	main(int argc, char **argv)
 	pair = init_stack_pair(argv + 1, argc - 1);
 	if (!pair.stack_a || !pair.stack_b)
 		return (err_print(clear_pair, &pair));
-	instructions = get_instructions(&pair, argc - 1);
+	instructions = get_instructions(&pair);
 	if (!instructions)
 		return (err_print(clear_pair, &pair));
 	print_instructions(instructions);

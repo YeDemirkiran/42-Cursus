@@ -21,6 +21,6 @@ int		*bubble_sort(const int *arr, size_t len);
 void	bubble_sort_ps(t_stack *stack, int size, t_byte *instructions);
 
 void	selection_sort(t_stack_pair *pair, t_byte *instructions, int size);
-void	chunk_sort(t_stack_pair *pair, t_byte *instructions, int size);
+void	chunk_sort(t_stack_pair *pair, t_byte *instructions);
 
 #endif
