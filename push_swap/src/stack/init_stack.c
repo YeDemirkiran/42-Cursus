@@ -58,29 +58,39 @@ static void	init_stack_empty(t_stack *stack, int size)
 	}
 }
 
-t_stack_pair	init_stack_pair(char **arr, int argc)
+static int	parse_numbers(char **arr, int argc, t_stack *stack_a)
 {
-	int				i;
-	t_stack_pair	pair;
-	long long		num;
+	int			i;
+	long long	num;
+	char		*num_str;
 
 	i = 0;
+	while (i < argc)
+	{
+		num_str = arr[i];
+		if (!ft_isnumber(num_str))
+			return (0);
+		num = ft_atol(num_str);
+		if (num > INT_MAX || num < INT_MIN)
+			return (0);
+		stack_a[i].index = i;
+		stack_a[i].number = (int)num;
+		if (!is_duplicate(stack_a, i))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+t_stack_pair	init_stack_pair(char **arr, int argc)
+{
+	t_stack_pair	pair;
+
 	pair.stack_a = malloc(sizeof(t_stack) * argc);
 	if (!pair.stack_a)
 		return (pair);
-	while (i < argc)
-	{
-		if (!ft_isnumber(arr[i]))
-			return (free_stack(pair.stack_a));
-		num = ft_atol(arr[i]);
-		if (num > INT_MAX || num < INT_MIN)
-			return (free_stack(pair.stack_a));
-		pair.stack_a[i].index = i;
-		pair.stack_a[i].number = (int)num;
-		if (!is_duplicate(pair.stack_a, i))
-			return (free_stack(pair.stack_a));
-		i++;
-	}
+	if (!parse_numbers(arr, argc, pair.stack_a))
+		return (free_stack(pair.stack_a));
 	pair.stack_b = malloc(sizeof(t_stack) * argc);
 	if (!pair.stack_b)
 		return (free_stack(pair.stack_a));

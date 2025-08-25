@@ -15,7 +15,7 @@ FLAGS = -Wall -Wextra -Werror
 NAME = push_swap
 
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c init_stack.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(ARRAY_SRC)) 
+SRC = $(addprefix $(SRC_DIR), main.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(ARRAY_SRC))
 
 SORTING_DIR = sorting/
 SORTING_SRC = $(addprefix $(SORTING_DIR), bubble_sort.c insertion_sort.c selection_sort.c)
@@ -33,7 +33,7 @@ WRITE_DIR = write/
 WRITE_SRC = $(addprefix $(WRITE_DIR), ft_putchar.c ft_putstr.c)
 
 STACK_DIR = stack/
-STACK_SRC = $(addprefix $(STACK_DIR), stack_rotate.c stack_rotate_rev.c stack_swap.c stack_push.c stack_operations.c stack_move.c)
+STACK_SRC = $(addprefix $(STACK_DIR), init_stack.c stack_rotate.c stack_rotate_rev.c stack_swap.c stack_push.c stack_operations.c stack_move.c)
 
 ARRAY_DIR = array/
 ARRAY_SRC = $(addprefix $(ARRAY_DIR), dup_array.c)
@@ -45,13 +45,13 @@ all: $(NAME)
 $(NAME): $(SRC)
 	$(CC) $(FLAGS) $(SRC) -I$(INC) -o $(NAME)
 
-test: 
+test:
 	make -C ./test
 
-test_re: 
+test_re:
 	make re -C ./test
 
-clean: 
+clean:
 	rm -rf $(NAME)
 
 fclean: clean

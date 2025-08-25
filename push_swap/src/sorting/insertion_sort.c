@@ -91,7 +91,7 @@ static	t_stack	get_between_closest(t_stack *stack, int size, int min, int max)
 		{
 			num = stack[i];
 			break;
-		}	
+		}
 		i++;
 	}
 	i = size - 1;
@@ -101,7 +101,7 @@ static	t_stack	get_between_closest(t_stack *stack, int size, int min, int max)
 		{
 			num_2 = stack[i];
 			break;
-		}	
+		}
 		i--;
 	}
 	if (num.index == -1 || (num.index > size - num_2.index))
