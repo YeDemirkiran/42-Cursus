@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   insertion_sort.c                                   :+:      :+:    :+:   */
+/*   chunk_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 13:10:39 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/13 13:10:40 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/26 13:12:20 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,13 @@ static t_stack	*get_cheapest_b(t_stack_pair *pair)
 	while (i < pair->b_length)
 	{
 		tmp_cost = get_place_before(pair->stack_a,
-				pair->a_length, pair->stack_b[i].number).index + i;
-		if (tmp_cost < current_cost)
+				pair->a_length, pair->stack_b[i].number).index;
+		if (tmp_cost == -1)
+			return (target);
+		if (tmp_cost + i < current_cost)
 		{
-			current_cost = tmp_cost;
-			target[0] = pair->stack_a[tmp_cost - i];
+			current_cost = tmp_cost + i;
+			target[0] = pair->stack_a[tmp_cost];
 			target[1] = pair->stack_b[i];
 		}
 		i++;
@@ -91,7 +93,8 @@ static void	sort_stack(t_stack_pair *pair, t_instructions *instructions)
 		if (tmp.index == -1)
 		{
 			cheapest = get_cheapest_b(pair);
-			stack_ab_move_to_first(*pair, cheapest, instructions);
+			if (cheapest->index > -1)
+				stack_ab_move_to_first(*pair, cheapest, instructions);
 			free(cheapest);
 		}
 		else
