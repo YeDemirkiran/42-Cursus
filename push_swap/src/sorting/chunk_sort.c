@@ -19,9 +19,9 @@ static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 	int		i;
 	t_stack	tmp;
 
-	chunk_border = pair->full_length / 5;
+	chunk_border = pair->full_length / 2;
 	current_border = 0;
-	while (current_border < 5)
+	while (current_border < 2)
 	{
 		i = 0;
 		while (i < chunk_border && pair->a_length > 3)
@@ -45,19 +45,6 @@ static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 			instructions->arr[instructions->index++] = stack_rotate_rev_a(*pair);
 	}
 }
-
-// static t_stack	smallest_or_biggest(t_stack_pair *pair)
-// {
-// 	t_stack	tmp;
-
-// 	tmp.index = -1;
-// 	if (is_biggest(pair->stack_a, pair->a_length, pair->stack_b[0].number))
-// 		tmp = get_biggest(pair->stack_a, pair->a_length);
-// 	else if (is_smallest(pair->stack_a, pair->a_length,
-// 			pair->stack_b[0].number))
-// 		tmp = get_smallest(pair->stack_a, pair->a_length);
-// 	return (tmp);
-// }
 
 static t_stack	*get_cheapest_b(t_stack_pair *pair)
 {
@@ -101,7 +88,6 @@ static t_stack	*get_cheapest_b(t_stack_pair *pair)
 
 static void	sort_stack(t_stack_pair *pair, t_instructions *instructions)
 {
-	//t_stack	tmp;
 	t_stack	*cheapest;
 
 	while (pair->b_length)
@@ -110,16 +96,6 @@ static void	sort_stack(t_stack_pair *pair, t_instructions *instructions)
 		if (cheapest->index > -1)
 			stack_ab_move_to_first(*pair, cheapest, instructions);
 		free(cheapest);
-		// tmp = smallest_or_biggest(pair);
-		// if (tmp.index == -1)
-		// {
-		// 	cheapest = get_cheapest_b(pair);
-		// 	if (cheapest->index > -1)
-		// 		stack_ab_move_to_first(*pair, cheapest, instructions);
-		// 	free(cheapest);
-		// }
-		// else
-		// 	stack_a_move_to_first(*pair, tmp, instructions);
 		instructions->arr[instructions->index++] = stack_push_b_to_a(pair);
 		if (pair->stack_a[0].number < pair->stack_a[1].number
 			&& pair->stack_a[0].number
