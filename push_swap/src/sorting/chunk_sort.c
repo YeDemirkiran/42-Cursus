@@ -19,9 +19,9 @@ static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 	int		i;
 	t_stack	tmp;
 
-	chunk_border = pair->full_length / 10;
+	chunk_border = pair->full_length / 5;
 	current_border = 0;
-	while (current_border < 10)
+	while (current_border < 5)
 	{
 		i = 0;
 		while (i < chunk_border)
@@ -57,6 +57,7 @@ static t_stack	*get_cheapest_b(t_stack_pair *pair)
 	int		tmp_index;
 	t_stack	*target;
 	int		i;
+	int		j;
 
 	current_cost = INT_MAX;
 	target = malloc(sizeof(t_stack) * 2);
@@ -71,12 +72,15 @@ static t_stack	*get_cheapest_b(t_stack_pair *pair)
 				pair->a_length, pair->stack_b[i].number).index;
 		if (tmp_index == -1)
 			break ;
-		tmp_cost = tmp_index + i;
+		j = i;
+		if (i > pair->b_length / 2)
+			j = pair->b_length - i;
+		tmp_cost = tmp_index + j;
 		if (tmp_index > pair->a_length / 2)
-			tmp_cost = pair->a_length - tmp_index + i;
+			tmp_cost = pair->a_length - tmp_index + j;
 		if (tmp_cost < current_cost)
 		{
-			current_cost = tmp_cost + i;
+			current_cost = tmp_cost;
 			target[0] = pair->stack_a[tmp_index];
 			target[1] = pair->stack_b[i];
 		}
