@@ -54,6 +54,7 @@ static t_stack	*get_cheapest_b(t_stack_pair *pair)
 {
 	int		current_cost;
 	int		tmp_cost;
+	int		tmp_index;
 	t_stack	*target;
 	int		i;
 
@@ -66,14 +67,17 @@ static t_stack	*get_cheapest_b(t_stack_pair *pair)
 	i = 0;
 	while (i < pair->b_length)
 	{
-		tmp_cost = get_place_before(pair->stack_a,
+		tmp_index = get_place_before(pair->stack_a,
 				pair->a_length, pair->stack_b[i].number).index;
-		if (tmp_cost == -1)
-			return (target);
-		if (tmp_cost + i < current_cost)
+		if (tmp_index == -1)
+			break ;
+		tmp_cost = tmp_index + i;
+		if (tmp_index > pair->a_length / 2)
+			tmp_cost = pair->a_length - tmp_index + i;
+		if (tmp_cost < current_cost)
 		{
 			current_cost = tmp_cost + i;
-			target[0] = pair->stack_a[tmp_cost];
+			target[0] = pair->stack_a[tmp_index];
 			target[1] = pair->stack_b[i];
 		}
 		i++;
