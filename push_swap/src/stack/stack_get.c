@@ -43,6 +43,10 @@ t_stack	get_place_before(t_stack *stack, int size, int target_num)
 
 	stack_1.index = -1;
 	stack_1.number = -1;
+	if (is_biggest(stack, size, target_num))
+		return (get_smallest(stack, size));
+	else if (is_smallest(stack, size, target_num))
+		return (get_biggest(stack, size));
 	i = 1;
 	while (i < size)
 	{
