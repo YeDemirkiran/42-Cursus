@@ -29,9 +29,7 @@ void	stack_a_move_to_first(t_stack_pair pair, t_stack target,
 	i = 0;
 	while (pair.stack_a[0].number != target.number)
 	{
-		if (pair.stack_a[1].number == target.number)
-			instructions->arr[instructions->index++] = stack_swap_a(pair);
-		else if (pair.a_length - target.index > target.index)
+		if (pair.a_length - target.index > target.index)
 			instructions->arr[instructions->index++] = stack_rotate_a(pair);
 		else
 			instructions->arr[instructions->index++] = stack_rotate_rev_a(pair);
@@ -56,9 +54,7 @@ void	stack_b_move_to_first(t_stack_pair pair, t_stack target,
 	i = 0;
 	while (pair.stack_b[0].number != target.number)
 	{
-		if (pair.stack_b[1].number == target.number)
-			instructions->arr[instructions->index++] = stack_swap_b(pair);
-		else if (pair.b_length - target.index > target.index)
+		if (pair.b_length - target.index > target.index)
 			instructions->arr[instructions->index++] = stack_rotate_b(pair);
 		else
 			instructions->arr[instructions->index++] = stack_rotate_rev_b(pair);

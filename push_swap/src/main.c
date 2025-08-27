@@ -74,12 +74,12 @@ int	main(int argc, char **argv)
 	if (!instructions || !instructions->arr)
 		return (err_print(clear_pair, &pair));
 	print_instructions(instructions->arr);
-	int i = 0;
-	while (i < pair.full_length)
-	{
-		printf("%i ", pair.stack_a[i].number);
-		i++;
-	}
+	// int i = 0;
+	// while (i < pair.full_length)
+	// {
+	// 	printf("%i ", pair.stack_a[i].number);
+	// 	i++;
+	// }
 	printf("\n");
 	free(instructions->arr);
 	free(instructions);

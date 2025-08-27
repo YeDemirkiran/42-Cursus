@@ -19,9 +19,9 @@ static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 	int		i;
 	t_stack	tmp;
 
-	chunk_border = pair->full_length / 2;
+	chunk_border = pair->full_length / 6;
 	current_border = 0;
-	while (current_border < 2)
+	while (current_border < 6)
 	{
 		i = 0;
 		while (i < chunk_border && pair->a_length > 3)
@@ -37,9 +37,9 @@ static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 	}
 	while (!is_stack_sorted(pair->stack_a, pair->a_length))
 	{
-		if (pair->stack_a[0].number > pair->stack_a[1].number)
+		if (pair->stack_a[0].number > pair->stack_a[1].number && pair->stack_a[0].number > pair->stack_a[2].number)
 			instructions->arr[instructions->index++] = stack_swap_a(*pair);
-		else if (pair->stack_a[0].number > pair->stack_a[1].number && pair->stack_a[0].number > pair->stack_a[2].number)
+		else if (pair->stack_a[0].number > pair->stack_a[1].number)
 			instructions->arr[instructions->index++] = stack_rotate_a(*pair);
 		else
 			instructions->arr[instructions->index++] = stack_rotate_rev_a(*pair);
