@@ -14,34 +14,31 @@
 
 static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 {
-	int		chunk_border;
-	int		current_border;
-	int		i;
-	t_stack	tmp;
+	int			chunk_border;
+	static int	current_border;
+	int			i;
+	t_stack		tmp;
 
 	chunk_border = pair->full_length / CHUNK_SIZE;
-	current_border = 0;
-	//printf("CHUNK BORDER: %i\n", chunk_border);
-	while (current_border <= CHUNK_SIZE)
+	if (current_border > CHUNK_SIZE)
+		return ;
+	i = 0;
+	while (i <= chunk_border)
 	{
-		i = 0;
-		while (i <= chunk_border)
-		{
-			if (current_border == CHUNK_SIZE && i >= pair->full_length % CHUNK_SIZE)
-				break ;
-			tmp = get_between(pair->stack_a, pair->a_length,
-					chunk_border * current_border,
-					chunk_border * (current_border + 1));
-			if (tmp.index == -1)
-				break ;
-			stack_a_move_to_first(*pair, tmp, instructions);
-			instructions->arr[instructions->index++] = stack_push_a_to_b(pair);
-			// if (tmp.number < chunk_border * (current_border + 1))
-			// 	instructions->arr[instructions->index++] = stack_rotate_b(*pair);
-			i++;
-		}
-		current_border += 1;
+		if (current_border == CHUNK_SIZE && i >= pair->full_length % CHUNK_SIZE)
+			break ;
+		tmp = get_between(pair->stack_a, pair->a_length,
+				chunk_border * current_border,
+				chunk_border * (current_border + 1));
+		if (tmp.index == -1)
+			break ;
+		stack_a_move_to_first(*pair, tmp, instructions);
+		instructions->arr[instructions->index++] = stack_push_a_to_b(pair);
+		// if (tmp.number < chunk_border * (current_border + 1))
+		// 	instructions->arr[instructions->index++] = stack_rotate_b(*pair);
+		i++;
 	}
+	current_border += 1;
 	//printf("Sort\n");
 	// while (!is_stack_sorted(pair->stack_a, pair->a_length))
 	// {
