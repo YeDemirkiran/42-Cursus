@@ -15,17 +15,19 @@
 static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 {
 	int			chunk_border;
-	static int	current_border;
+	int	current_border;
 	int			i;
 	t_stack		tmp;
 
 	chunk_border = pair->full_length / CHUNK_SIZE;
 	current_border = 0;
-	while (current_border < CHUNK_SIZE)
+	while (current_border <= CHUNK_SIZE)
 	{
 		i = 0;
-		while (i < chunk_border && pair->a_length > 3)
+		while (i < chunk_border)
 		{
+			if (current_border == CHUNK_SIZE && i >= pair->a_length % CHUNK_SIZE)
+				break ;
 			tmp = get_between(pair->stack_a, pair->a_length,
 					chunk_border * current_border,
 					chunk_border * (current_border + 1));
@@ -35,15 +37,15 @@ static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 		}
 		current_border++;
 	}
-	while (!is_stack_sorted(pair->stack_a, pair->a_length))
-	{
-		if (pair->stack_a[0].number > pair->stack_a[1].number && pair->stack_a[0].number > pair->stack_a[2].number)
-			instructions->arr[instructions->index++] = stack_swap_a(*pair);
-		else if (pair->stack_a[0].number > pair->stack_a[1].number)
-			instructions->arr[instructions->index++] = stack_rotate_a(*pair);
-		else
-			instructions->arr[instructions->index++] = stack_rotate_rev_a(*pair);
-	}
+	// while (!is_stack_sorted(pair->stack_a, pair->a_length))
+	// {
+	// 	if (pair->stack_a[0].number > pair->stack_a[1].number && pair->stack_a[0].number > pair->stack_a[2].number)
+	// 		instructions->arr[instructions->index++] = stack_swap_a(*pair);
+	// 	else if (pair->stack_a[0].number > pair->stack_a[1].number)
+	// 		instructions->arr[instructions->index++] = stack_rotate_a(*pair);
+	// 	else
+	// 		instructions->arr[instructions->index++] = stack_rotate_rev_a(*pair);
+	// }
 }
 
 static t_stack	*get_cheapest_b(t_stack_pair *pair)
