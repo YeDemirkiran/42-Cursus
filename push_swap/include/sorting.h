@@ -13,6 +13,10 @@
 #ifndef SORTING_H
 # define SORTING_H
 
+# ifndef CHUNK_SIZE
+#  define CHUNK_SIZE 6
+# endif
+
 # include "dependencies.h"
 # include "t_instructions.h"
 
