@@ -19,7 +19,7 @@ static t_instructions	*get_instructions(t_stack_pair *pair)
 	instructions = malloc(sizeof(t_instructions));
 	if (!instructions)
 		return (NULL);
-	instructions->arr = malloc(sizeof(t_byte) * 16384);
+	instructions->arr = malloc(sizeof(t_byte) * 8192);
 	if (!instructions->arr)
 		return (NULL);
 	instructions->index = 0;
@@ -80,7 +80,6 @@ int	main(int argc, char **argv)
 	// 	printf("%i ", pair.stack_a[i].number);
 	// 	i++;
 	// }
-	//printf("\n");
 	free(instructions->arr);
 	free(instructions);
 	clear_pair(&pair);

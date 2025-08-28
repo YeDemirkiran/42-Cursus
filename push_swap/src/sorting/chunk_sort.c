@@ -20,36 +20,30 @@ static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 	t_stack		tmp;
 
 	chunk_border = pair->full_length / CHUNK_SIZE;
-	if (current_border > CHUNK_SIZE)
-		return ;
-	i = 0;
-	while (i <= chunk_border)
+	current_border = 0;
+	while (current_border < CHUNK_SIZE)
 	{
-		if (current_border == CHUNK_SIZE && i >= pair->full_length % CHUNK_SIZE)
-			break ;
-		tmp = get_between(pair->stack_a, pair->a_length,
-				chunk_border * current_border,
-				chunk_border * (current_border + 1));
-		if (tmp.index == -1)
-			break ;
-		stack_a_move_to_first(*pair, tmp, instructions);
-		instructions->arr[instructions->index++] = stack_push_a_to_b(pair);
-		// if (tmp.number < chunk_border * (current_border + 1))
-		// 	instructions->arr[instructions->index++] = stack_rotate_b(*pair);
-		i++;
+		i = 0;
+		while (i < chunk_border && pair->a_length > 3)
+		{
+			tmp = get_between(pair->stack_a, pair->a_length,
+					chunk_border * current_border,
+					chunk_border * (current_border + 1));
+			stack_a_move_to_first(*pair, tmp, instructions);
+			instructions->arr[instructions->index++] = stack_push_a_to_b(pair);
+			i++;
+		}
+		current_border++;
 	}
-	current_border += 1;
-	//printf("Sort\n");
-	// while (!is_stack_sorted(pair->stack_a, pair->a_length))
-	// {
-
-	// 	if (pair->stack_a[0].number > pair->stack_a[1].number && pair->stack_a[0].number > pair->stack_a[2].number)
-	// 		instructions->arr[instructions->index++] = stack_rotate_a(*pair);
-	// 	else if (pair->stack_a[0].number > pair->stack_a[1].number)
-	// 		instructions->arr[instructions->index++] = stack_swap_a(*pair);
-	// 	else
-	// 		instructions->arr[instructions->index++] = stack_rotate_rev_a(*pair);
-	// }
+	while (!is_stack_sorted(pair->stack_a, pair->a_length))
+	{
+		if (pair->stack_a[0].number > pair->stack_a[1].number && pair->stack_a[0].number > pair->stack_a[2].number)
+			instructions->arr[instructions->index++] = stack_swap_a(*pair);
+		else if (pair->stack_a[0].number > pair->stack_a[1].number)
+			instructions->arr[instructions->index++] = stack_rotate_a(*pair);
+		else
+			instructions->arr[instructions->index++] = stack_rotate_rev_a(*pair);
+	}
 }
 
 static t_stack	*get_cheapest_b(t_stack_pair *pair)
@@ -88,6 +82,7 @@ static t_stack	*get_cheapest_b(t_stack_pair *pair)
 		}
 		i++;
 	}
+	//printf("Cheapest a (n / i): %i %i, b (n / i): %i %i\n", target[0].number, target[0].index, target[1].number, target[1].index);
 	return (target);
 }
 
@@ -115,12 +110,8 @@ void	chunk_sort(t_stack_pair *pair, t_instructions *instructions)
 
 	if (is_stack_sorted(pair->stack_a, pair->a_length))
 		return ;
-	while (!is_stack_sorted(pair->stack_a, pair->a_length))
-	{
-		push_chunks(pair, instructions);
-		sort_stack(pair, instructions);
-		tmp = get_smallest(pair->stack_a, pair->a_length);
-		stack_a_move_to_first(*pair, tmp, instructions);
-	}
-	instructions->arr[instructions->index++] = INST_END;
+	push_chunks(pair, instructions);
+	sort_stack(pair, instructions);
+	tmp = get_smallest(pair->stack_a, pair->a_length);
+	stack_a_move_to_first(*pair, tmp, instructions);
 }
