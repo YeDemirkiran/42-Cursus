@@ -50,7 +50,8 @@ t_stack	get_place_before(t_stack *stack, int size, int target_num)
 	i = 1;
 	while (i < size)
 	{
-		if (stack[i].number > target_num && stack[i - 1].number < target_num && (stack_1.index == -1 || size - stack[i].index <= stack_1.index))
+		if (stack[i].number > target_num && stack[i - 1].number < target_num
+			&& (stack_1.index == -1 || size - stack[i].index <= stack_1.index))
 		{
 			stack_1 = stack[i];
 		}

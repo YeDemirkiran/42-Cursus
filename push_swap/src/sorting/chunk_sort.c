@@ -69,13 +69,30 @@ static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 // 	return (cost);
 //}
 
+static int	calculate_cost(t_stack_pair *pair, int i, int *tmp_index)
+{
+	int	cost;
+	int	j;
+
+	*tmp_index = get_place_before(pair->stack_a,
+			pair->a_length, pair->stack_b[i].number).index;
+	if (*tmp_index < 0)
+		return (-1);
+	j = i;
+	if (i > pair->b_length / 2)
+		j = pair->b_length - i;
+	cost = *tmp_index + j;
+	if (*tmp_index > pair->a_length / 2)
+		cost = pair->a_length - *tmp_index + j;
+	return (cost);
+}
+
 static void	get_cheapest_b(t_stack_pair *pair, t_stack arr[2])
 {
 	int		current_cost;
 	int		tmp_cost;
 	int		tmp_index;
 	int		i;
-	int		j;
 
 	current_cost = INT_MAX;
 	arr[0].index = -1;
@@ -83,16 +100,9 @@ static void	get_cheapest_b(t_stack_pair *pair, t_stack arr[2])
 	i = 0;
 	while (i < pair->b_length)
 	{
-		tmp_index = get_place_before(pair->stack_a,
-				pair->a_length, pair->stack_b[i].number).index;
-		if (tmp_index < 0)
-			return ;
-		j = i;
-		if (i > pair->b_length / 2)
-			j = pair->b_length - i;
-		tmp_cost = tmp_index + j;
-		if (tmp_index > pair->a_length / 2)
-			tmp_cost = pair->a_length - tmp_index + j;
+		tmp_cost = calculate_cost(pair, i, &tmp_index);
+		if (tmp_cost < 0)
+			break ;
 		if (tmp_cost < current_cost)
 		{
 			current_cost = tmp_cost;
