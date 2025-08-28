@@ -67,6 +67,7 @@ static t_stack	get_between_last_half(t_stack *stack,
 
 	i = size - 1;
 	target_stack.index = -1;
+	target_stack.number = -1;
 	while (i >= size / 2)
 	{
 		if (stack[i].number >= min && stack[i].number < max)
