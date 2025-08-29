@@ -16,6 +16,7 @@ static t_instructions	get_instructions(t_stack_pair *pair)
 {
 	t_instructions	instructions;
 
+	instructions.arr = NULL;
 	chunk_sort(pair, &instructions);
 	return (instructions);
 }
@@ -55,6 +56,11 @@ int	main(int argc, char **argv)
 	pair = init_stack_pair(argv + 1, argc - 1);
 	if (!pair.stack_a || !pair.stack_b)
 		return (err_print(clear_pair, &pair));
+	if (is_stack_sorted(pair.stack_a, pair.a_length))
+	{
+		clear_pair(&pair);
+		return (0);
+	}
 	instructions = get_instructions(&pair);
 	if (!instructions.arr)
 		return (err_print(clear_pair, &pair));
