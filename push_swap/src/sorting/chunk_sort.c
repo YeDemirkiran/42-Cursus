@@ -51,24 +51,6 @@ static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 // 		instructions->arr[instructions->index++] = stack_rotate_rev_a(*pair);
 // }
 
-// static int	calculate_cost(t_stack_pair *pair, int i, int *cheapest_index)
-// {
-// 	int	cost;
-// 	int	j;
-
-// 	*cheapest_index = get_place_before(pair->stack_a,
-// 			pair->a_length, pair->stack_b[i].number).index;
-// 	if (*cheapest_index < 0)
-// 		return (*cheapest_index);
-// 	j = i;
-// 	if (i > pair->b_length / 2)
-// 		j = pair->b_length - i;
-// 	cost = *cheapest_index + j;
-// 	if (cost - j > pair->a_length / 2)
-// 		cost = pair->a_length - cost;
-// 	return (cost);
-//}
-
 static int	calculate_cost(t_stack_pair *pair, int i, int *tmp_index)
 {
 	int	cost;

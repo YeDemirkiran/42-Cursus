@@ -19,6 +19,7 @@
 typedef struct s_stack
 {
 	int	number;
+	int	real_number;
 	int	index;
 }			t_stack;
 
