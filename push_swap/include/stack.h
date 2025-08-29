@@ -73,9 +73,11 @@ int				stack_push_a_to_b(t_stack_pair *pair);
 int				stack_push_b_to_a(t_stack_pair *pair);
 
 // stack_utils.c
+void			clear_pair(t_stack_pair *pair);
 int				is_stack_sorted(t_stack *stack, int size);
 t_stack			find_smallest_index(t_stack *stack, int size);
 t_stack			*duplicate_stack(t_stack *stack, int length);
+t_stack_pair	duplicate_pair(t_stack_pair *pair);
 int				index_stack(t_stack *stack_a, int length);
 
 // stack_move.c

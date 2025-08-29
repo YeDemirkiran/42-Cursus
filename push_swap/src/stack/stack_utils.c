@@ -13,6 +13,14 @@
 #include "stack.h"
 #include "sorting.h"
 
+void	clear_pair(t_stack_pair *pair)
+{
+	if ((*pair).stack_a)
+		free((*pair).stack_a);
+	if ((*pair).stack_b)
+		free((*pair).stack_b);
+}
+
 int	is_stack_sorted(t_stack *stack, int size)
 {
 	int	i;
@@ -45,22 +53,34 @@ t_stack	find_smallest_index(t_stack *stack, int size)
 	return (smallest);
 }
 
-t_stack	*duplicate_stack(t_stack *stack, int length)
+t_stack	*duplicate_stack(t_stack *stack, int full_length)
 {
 	t_stack	*dup;
 	int		i;
 
-	dup = malloc(sizeof(t_stack) * length);
+	dup = malloc(sizeof(t_stack) * full_length);
 	if (!dup)
 		return (NULL);
 	i = 0;
-	while (i < length)
+	while (i < full_length)
 	{
 		dup[i].index = stack[i].index;
 		dup[i].number = stack[i].number;
 		dup[i].real_number = stack[i].real_number;
 		i++;
 	}
+	return (dup);
+}
+
+t_stack_pair	duplicate_pair(t_stack_pair *pair)
+{
+	t_stack_pair	dup;
+
+	dup.stack_a = duplicate_stack(pair->stack_a, pair->full_length);
+	dup.stack_b = duplicate_stack(pair->stack_b, pair->full_length);
+	dup.a_length = pair->a_length;
+	dup.b_length = pair->b_length;
+	dup.full_length = pair->full_length;
 	return (dup);
 }
 

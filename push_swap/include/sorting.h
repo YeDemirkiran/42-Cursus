@@ -13,6 +13,14 @@
 #ifndef SORTING_H
 # define SORTING_H
 
+# ifndef MAX_CHUNK_SIZE
+#  define MAX_CHUNK_SIZE 10
+# endif
+
+# ifndef INSTRUCTONS_SIZE
+#  define INSTRUCTIONS_SIZE 32768
+# endif
+
 # ifndef CHUNK_SIZE_100
 #  define CHUNK_SIZE_100 2
 # endif
