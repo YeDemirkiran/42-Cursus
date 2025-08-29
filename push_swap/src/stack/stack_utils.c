@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "stack.h"
+#include "sorting.h"
 
 int	is_stack_sorted(t_stack *stack, int size)
 {
@@ -42,4 +43,52 @@ t_stack	find_smallest_index(t_stack *stack, int size)
 		i++;
 	}
 	return (smallest);
+}
+
+t_stack	*duplicate_stack(t_stack *stack, int length)
+{
+	t_stack	*dup;
+	int		i;
+
+	dup = malloc(sizeof(t_stack) * length);
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (i < length)
+	{
+		dup[i].index = stack[i].index;
+		dup[i].number = stack[i].number;
+		dup[i].real_number = stack[i].real_number;
+		i++;
+	}
+	return (dup);
+}
+
+int	index_stack(t_stack *stack_a, int length)
+{
+	t_stack	*sorted;
+	int		i;
+	int		j;
+
+	sorted = duplicate_stack(stack_a, length);
+	if (!sorted)
+		return (0);
+	insertion_sort(sorted, length);
+	i = 0;
+	while (i < length)
+	{
+		j = 0;
+		while (j < length)
+		{
+			if (sorted[j].real_number == stack_a[i].real_number)
+			{
+				stack_a[i].number = j;
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
+	free(sorted);
+	return (1);
 }

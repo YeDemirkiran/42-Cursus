@@ -72,15 +72,19 @@ int				stack_rotate_rev_ab(t_stack_pair pair);
 int				stack_push_a_to_b(t_stack_pair *pair);
 int				stack_push_b_to_a(t_stack_pair *pair);
 
-// stack_operations.c
+// stack_utils.c
+int				is_stack_sorted(t_stack *stack, int size);
 t_stack			find_smallest_index(t_stack *stack, int size);
+t_stack			*duplicate_stack(t_stack *stack, int length);
+int				index_stack(t_stack *stack_a, int length);
+
+// stack_move.c
 void			stack_a_move_to_first(t_stack_pair pair, t_stack target,
 					t_instructions *instructions);
 void			stack_b_move_to_first(t_stack_pair pair, t_stack target,
 					t_instructions *instructions);
 void			stack_ab_move_to_first(t_stack_pair pair, t_stack *targets,
 					t_instructions *instructions);
-int				is_stack_sorted(t_stack *stack, int size);
 
 // init_stack.c
 t_stack_pair	init_stack_pair(char **arr, int argc);

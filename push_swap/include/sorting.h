@@ -23,6 +23,10 @@
 # include "stack.h"
 # include "array.h"
 
+// For indexing the stack
+void	insertion_sort(t_stack *stack, int length);
+
+// The actual push_swap sort
 void	chunk_sort(t_stack_pair *pair, t_instructions *instructions);
 
 #endif

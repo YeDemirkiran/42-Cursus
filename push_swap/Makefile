@@ -18,7 +18,7 @@ SRC_DIR = ./src/
 SRC = $(addprefix $(SRC_DIR), main.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(ARRAY_SRC))
 
 SORTING_DIR = sorting/
-SORTING_SRC = $(addprefix $(SORTING_DIR), chunk_sort.c)
+SORTING_SRC = $(addprefix $(SORTING_DIR), insertion_sort.c chunk_sort.c)
 
 CONV_DIR = converter/
 CONV_SRC = $(addprefix $(CONV_DIR), ft_atol.c)
@@ -33,7 +33,7 @@ WRITE_DIR = write/
 WRITE_SRC = $(addprefix $(WRITE_DIR), ft_putchar.c ft_putstr.c)
 
 STACK_DIR = stack/
-STACK_SRC = $(addprefix $(STACK_DIR), init_stack.c stack_rotate.c stack_rotate_rev.c stack_swap.c stack_push.c stack_operations.c stack_move.c stack_predicate.c stack_get.c)
+STACK_SRC = $(addprefix $(STACK_DIR), stack_init.c stack_rotate.c stack_rotate_rev.c stack_swap.c stack_push.c stack_utils.c stack_move.c stack_predicate.c stack_get.c)
 
 ARRAY_DIR = array/
 ARRAY_SRC = $(addprefix $(ARRAY_DIR), dup_array.c)
