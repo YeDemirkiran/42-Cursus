@@ -14,20 +14,25 @@
 
 static void	push_chunks(t_stack_pair *pair, t_instructions *instructions)
 {
+	int		chunk_size;
 	int		chunk_border;
 	int		current_border;
 	int		i;
 	t_stack	tmp;
 
-	chunk_border = pair->full_length / CHUNK_SIZE;
+	if (pair->full_length > 250)
+		chunk_size = CHUNK_SIZE_500;
+	else
+		chunk_size = CHUNK_SIZE_100;
+	chunk_border = pair->full_length / chunk_size;
 	current_border = 0;
-	while (current_border <= CHUNK_SIZE)
+	while (current_border <= chunk_size)
 	{
 		i = 0;
 		while (i < chunk_border)
 		{
-			if (current_border == CHUNK_SIZE
-				&& i >= pair->a_length % CHUNK_SIZE)
+			if (current_border == chunk_size
+				&& i >= pair->a_length % chunk_size)
 				break ;
 			tmp = get_between(pair->stack_a, pair->a_length,
 					chunk_border * current_border,
