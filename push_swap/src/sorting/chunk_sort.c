@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 13:10:39 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 11:36:26 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:59:29 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	push_chunks(t_stack_pair *pair,
 	while (current_border <= chunk_size)
 	{
 		i = 0;
-		while (i < chunk_border && pair->a_length > 3)
+		while (i < chunk_border)
 		{
 			if (current_border == chunk_size
 				&& i >= pair->a_length % chunk_size)

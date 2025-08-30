@@ -6,11 +6,12 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:56:49 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 11:07:45 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:56:16 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "generic_macros.h"
+#include "predicate.h"
 
 int	ft_isnumber(char *str)
 {

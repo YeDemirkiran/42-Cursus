@@ -4,8 +4,9 @@ all: clean
 
 clean:
 	rm -rf ./push_swap
+	make clean -C ..
 
 fclean: clean
-	rm -rf ../push_swap
+	make fclean -C ..
 
 re: fclean all

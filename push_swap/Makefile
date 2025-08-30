@@ -6,16 +6,22 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/13 13:09:08 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/13 13:09:09 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/30 12:08:19 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror
+INC_FLAGS = -I./include -I./include/structs -I./include/enums -I./include/modules -I./include/modules/stack  -I./include/modules/sorting
 NAME = push_swap
 
+C_FILES = main.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC)
+
 SRC_DIR = ./src/
-SRC = $(addprefix $(SRC_DIR), main.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(ARRAY_SRC))
+SRC = $(addprefix $(SRC_DIR), $(C_FILES))
+
+OBJ_DIR = ./obj/
+OBJS = $(addprefix $(OBJ_DIR), $(C_FILES:.c=.o))
 
 SORTING_DIR = sorting/
 SORTING_SRC = $(addprefix $(SORTING_DIR), insertion_sort.c chunk_sort.c)
@@ -35,15 +41,14 @@ WRITE_SRC = $(addprefix $(WRITE_DIR), ft_putchar.c ft_putstr.c)
 STACK_DIR = stack/
 STACK_SRC = $(addprefix $(STACK_DIR), stack_init.c stack_rotate.c stack_rotate_rev.c stack_swap.c stack_push.c stack_utils.c stack_move.c stack_predicate.c stack_get.c)
 
-ARRAY_DIR = array/
-ARRAY_SRC = $(addprefix $(ARRAY_DIR), dup_array.c)
-
-INC_FLAGS = -I./include -I./include/structs
-
 all: $(NAME)
 
-$(NAME): $(SRC)
-	$(CC) $(FLAGS) $(SRC) $(INC_FLAGS) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(FLAGS) $(INC_FLAGS) -o $(NAME) $(OBJS)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	mkdir -p $(dir $@)
+	$(CC) $(FLAGS) $(INC_FLAGS) -c -o $@ $<
 
 test:
 	make -C ./test
@@ -52,9 +57,10 @@ test_re:
 	make re -C ./test
 
 clean:
-	rm -rf $(NAME)
+	rm -rf $(OBJS)
 
 fclean: clean
+	rm -rf $(NAME)
 
 re: fclean all
 
