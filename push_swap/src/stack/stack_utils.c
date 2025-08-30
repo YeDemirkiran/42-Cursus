@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_operations.c                                 :+:      :+:    :+:   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 13:10:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/13 13:10:54 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:22:57 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
-#include "sorting.h"
+#include "stack_utils.h"
 
 void	clear_pair(t_stack_pair *pair)
 {

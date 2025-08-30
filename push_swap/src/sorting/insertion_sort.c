@@ -1,4 +1,4 @@
-#include "sorting.h"
+#include "insertion_sort.h"
 
 static void	insert_number(t_stack *stack, int start_index, int target_index)
 {

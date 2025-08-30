@@ -3,8 +3,10 @@
 
 # include <stdlib.h>
 
-# include "t_stack_pair.h"
-# include "t_instructions.h"
 # include "e_instructions.h"
+
+# include "stack.h"
+# include "chunk_sort.h"
+# include "ft_write.h"
 
 #endif

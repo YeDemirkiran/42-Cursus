@@ -1,4 +1,4 @@
-#include "stack.h"
+#include "stack_get.h"
 
 t_stack	get_biggest(t_stack *stack, int size)
 {

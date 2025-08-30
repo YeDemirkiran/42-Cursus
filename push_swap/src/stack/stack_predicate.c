@@ -1,4 +1,4 @@
-#include "stack.h"
+#include "stack_predicate.h"
 
 int	is_biggest(t_stack *stack, int size, int number)
 {

@@ -6,11 +6,11 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 13:10:39 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/26 13:12:20 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:36:26 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sorting.h"
+#include "chunk_sort.h"
 
 static void	push_chunks(t_stack_pair *pair,
 	t_instructions *instructions, int chunk_size)

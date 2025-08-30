@@ -1,0 +1,42 @@
+
+
+
+
+
+
+
+
+
+
+
+
+#                                                                              #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#                                                     +:+ +:+         +:+      #
+#                                                 +#+#+#+#+#+   +#+            #
+# **************************************************************************** #
+# **************************************************************************** #
+	$(CC) $(SRC) $(FLAGS) -o $(NAME)
+$(NAME): $(SRC)
+all: $(NAME)
+bonus: all
+#    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
+CC = cc
+clean:
+#    Created: 2025/08/05 11:50:42 by yademirk          #+#    #+#              #
+fclean: clean
+FLAGS = $(W_FLAGS) $(INC_FLAGS)
+INC_DIR = ./include/
+INC_FLAGS = -I$(INC_DIR)
+#    Makefile                                           :+:      :+:    :+:    #
+NAME = pipex
+.PHONY = all clean fclean re
+re: fclean all
+	rm -rf $(NAME)
+SRC = $(addprefix $(SRC_DIR), main.c init.c parser.c process.c utils.c error_handling.c $(STRING_SRC))
+SRC_DIR = ./src/
+STRING_DIR = string/
+STRING_SRC = $(addprefix $(STRING_DIR), ft_split.c ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_substr.c ft_strncmp.c ft_strcmp.c)
+#    Updated: 2025/08/13 12:43:43 by yademirk         ###   ########.fr        #
+W_FLAGS = -Wall -Wextra -Werror

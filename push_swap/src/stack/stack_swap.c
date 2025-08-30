@@ -6,11 +6,11 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:57:39 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 12:50:52 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:20:34 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include "stack_swap.h"
 
 void	stack_swap(t_stack *stack)
 {

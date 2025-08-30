@@ -6,15 +6,15 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:56:26 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/13 13:09:35 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:09:11 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_H
 # define STACK_H
 
-# include "dependencies.h"
 # include "t_instructions.h"
+# include "t_stack_pair.h"
 
 // stack_swap.c
 void			stack_swap(t_stack *stack);

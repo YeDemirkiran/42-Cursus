@@ -6,11 +6,11 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:57:37 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 12:51:08 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:20:11 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include "stack_rotate.h"
 
 void	stack_rotate(t_stack *stack, int size)
 {

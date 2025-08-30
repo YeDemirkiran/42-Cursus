@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_string.h                                        :+:      :+:    :+:   */
+/*   predicate.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 11:56:12 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 11:56:13 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/02 11:56:15 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/30 11:07:50 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_STRING_H
-# define FT_STRING_H
+#ifndef PREDICATE_H
+# define PREDICATE_H
 
-# include "dependencies.h"
-
-size_t	ft_strlen(char *str);
+int	ft_isdigit(int c);
+int	ft_isnumber(char *str);
 
 #endif

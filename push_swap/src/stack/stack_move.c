@@ -6,11 +6,11 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 13:10:49 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/13 13:10:50 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:17:07 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include "stack_move.h"
 
 void	stack_a_move_to_first(t_stack_pair pair, t_stack target,
 	t_instructions *instructions)

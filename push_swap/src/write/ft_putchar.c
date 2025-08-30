@@ -6,11 +6,11 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:57:49 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/13 13:11:07 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:24:40 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "write.h"
+#include "ft_write.h"
 
 void	ft_putchar_fd(char c, int fd)
 {

@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   converter.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 11:56:20 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 11:56:21 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/02 11:56:06 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/30 11:08:13 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-
-# include "dependencies.h"
+#ifndef CONVERTER_H
+# define CONVERTER_H
 
 # include "predicate.h"
-# include "converter.h"
-# include "sorting.h"
-# include "write.h"
-# include "ft_string.h"
 
-# include "stack.h"
+long long	ft_atol(char *str);
 
 #endif

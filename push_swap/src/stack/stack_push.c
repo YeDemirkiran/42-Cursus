@@ -6,11 +6,11 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:57:29 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 15:10:53 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:34:33 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include "stack_push.h"
 
 int	stack_push_a_to_b(t_stack_pair *pair)
 {

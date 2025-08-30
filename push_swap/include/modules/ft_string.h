@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   converter.h                                        :+:      :+:    :+:   */
+/*   ft_string.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 11:56:06 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/02 11:56:07 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/02 11:56:12 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/30 11:26:19 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONVERTER_H
-# define CONVERTER_H
+#ifndef FT_STRING_H
+# define FT_STRING_H
 
-# include "dependencies.h"
-# include "predicate.h"
+# include <stddef.h>
 
-long long	ft_atol(char *str);
+size_t	ft_strlen(char *str);
 
 #endif

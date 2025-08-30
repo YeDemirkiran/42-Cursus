@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:58:06 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/26 13:04:08 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 11:29:59 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,6 @@ int	main(int argc, char **argv)
 	if (!instructions.arr)
 		return (err_print(clear_pair, &pair));
 	print_instructions(instructions.arr);
-	// int i = 0;
-	// while (i < pair.full_length)
-	// {
-	// 	printf("%i ", pair.stack_a[i].number);
-	// 	i++;
-	// }
 	free(instructions.arr);
 	clear_pair(&pair);
 	return (EXIT_SUCCESS);
