@@ -6,11 +6,24 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 13:28:39 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 13:28:40 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:47:05 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "instructions.h"
+
+static void	init_instruction_empty(t_instructions *inst, int size)
+{
+	int	i;
+
+	inst->index = 0;
+	i = 0;
+	while (i < size)
+	{
+		inst->arr[i] = (t_byte)INST_END;
+		i++;
+	}
+}
 
 int	init_instructions(t_instructions *inst_arr, int length)
 {
@@ -28,7 +41,7 @@ int	init_instructions(t_instructions *inst_arr, int length)
 			i--;
 			break ;
 		}
-		inst_arr[i].index = 0;
+		init_instruction_empty(inst_arr + i, INSTRUCTIONS_SIZE);
 		i++;
 	}
 	if (clear)

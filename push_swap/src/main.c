@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:58:06 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 12:14:37 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:42:28 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv)
 	t_stack_pair	pair;
 	t_instructions	instructions;
 
-	if (argc <= 2)
+	if (argc <= 1)
 		return (EXIT_FAILURE);
 	pair = init_stack_pair(argv + 1, argc - 1);
 	if (!pair.stack_a || !pair.stack_b)

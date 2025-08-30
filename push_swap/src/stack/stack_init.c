@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:58:01 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 11:11:44 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:43:30 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ t_stack_pair	init_stack_pair(char **arr, int argc)
 	t_stack_pair	pair;
 
 	pair.stack_a = malloc(sizeof(t_stack) * argc);
+	pair.stack_b = NULL;
 	if (!pair.stack_a)
 		return (pair);
 	if (!parse_numbers(arr, argc, pair.stack_a))

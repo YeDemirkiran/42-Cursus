@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 13:27:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 13:27:56 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:47:08 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 
 # include "t_instructions.h"
+# include "e_instructions.h"
 
 int		init_instructions(t_instructions *inst_arr, int length);
 void	clear_instructions(t_instructions *inst_arr,
