@@ -5,10 +5,6 @@
 #  define MAX_CHUNK_SIZE 10
 # endif
 
-# ifndef INSTRUCTONS_SIZE
-#  define INSTRUCTIONS_SIZE 32768
-# endif
-
 # include <limits.h>
 # include <stdlib.h>
 
@@ -16,6 +12,7 @@
 # include "e_instructions.h"
 
 # include "pair_utils.h"
+# include "instructions.h"
 
 void	chunk_sort(t_stack_pair *pair, t_instructions *instructions);
 

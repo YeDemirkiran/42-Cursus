@@ -18,5 +18,4 @@ enum e_instructions
 	INST_RROT_AB = 11,
 };
 
-
 #endif

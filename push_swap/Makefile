@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/13 13:09:08 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/30 12:16:08 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/30 12:34:51 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FLAGS = -Wall -Wextra -Werror
 INC_FLAGS = -I./include -I./include/structs -I./include/enums -I./include/modules -I./include/modules/stack -I./include/modules/sorting -I./include/modules/pair
 NAME = push_swap
 
-C_FILES = main.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(PAIR_SRC)
+C_FILES = main.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(PAIR_SRC) $(INST_SRC)
 
 SRC_DIR = ./src/
 SRC = $(addprefix $(SRC_DIR), $(C_FILES))
@@ -43,6 +43,9 @@ STACK_SRC = $(addprefix $(STACK_DIR), stack_init.c stack_rotate.c stack_rotate_r
 
 PAIR_DIR = pair/
 PAIR_SRC = $(addprefix $(PAIR_DIR), pair_utils.c)
+
+INST_DIR = instructions/
+INST_SRC = $(addprefix $(INST_DIR), instructions.c)
 
 all: $(NAME)
 
