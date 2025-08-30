@@ -1,5 +1,6 @@
-all: clean
+all:
 	make -C ..
+	rm -rf ./push_swap
 	cp ../push_swap .
 
 clean:
