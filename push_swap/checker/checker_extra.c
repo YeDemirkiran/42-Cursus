@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 17:25:33 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 17:29:49 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:39:27 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ static void	apply_functions(t_stack_pair *pair,
 		stack_rotate_rev_a(*pair);
 	else if (instructions->arr[i] == INST_RROT_B)
 		stack_rotate_rev_b(*pair);
-	if (instructions->arr[i] == INST_SWAP_A)
+	else if (instructions->arr[i] == INST_RROT_AB)
+		stack_rotate_rev_ab(*pair);
+	else if (instructions->arr[i] == INST_SWAP_A)
 		stack_swap_a(*pair);
 	else if (instructions->arr[i] == INST_SWAP_B)
 		stack_swap_b(*pair);
