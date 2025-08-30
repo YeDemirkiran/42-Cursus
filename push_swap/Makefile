@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/13 13:09:08 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/30 12:34:51 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/30 13:25:56 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ_DIR = ./obj/
 OBJS = $(addprefix $(OBJ_DIR), $(C_FILES:.c=.o))
 
 SORTING_DIR = sorting/
-SORTING_SRC = $(addprefix $(SORTING_DIR), insertion_sort.c chunk_sort.c)
+SORTING_SRC = $(addprefix $(SORTING_DIR), insertion_sort.c chunk_sort.c chunk_sort_utils.c)
 
 CONV_DIR = converter/
 CONV_SRC = $(addprefix $(CONV_DIR), ft_atol.c)

@@ -14,6 +14,7 @@
 # include "pair_utils.h"
 # include "instructions.h"
 
+void	get_cheapest_b(t_stack_pair *pair, t_stack arr[2]);
 void	chunk_sort(t_stack_pair *pair, t_instructions *instructions);
 
 #endif
