@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:41:37 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 16:59:18 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:11:10 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ t_instructions	parse_instructions(void)
 		free(line);
 		line = get_next_line(0);
 	}
-	// while (line)
-	// {
-	// 	free(line);
-	// 	line = get_next_line(0);
-	// }
+	while (line)
+	{
+		free(line);
+		line = get_next_line(0);
+	}
 	return (instructions);
 }
 
@@ -70,9 +70,9 @@ void	apply_instructions(t_stack_pair *pair, t_instructions *instructions)
 	while (instructions->arr[i] != INST_END)
 	{
 		if (instructions->arr[i] == INST_PUSH_A)
-			stack_push_a_to_b(pair);
-		else if (instructions->arr[i] == INST_PUSH_B)
 			stack_push_b_to_a(pair);
+		else if (instructions->arr[i] == INST_PUSH_B)
+			stack_push_a_to_b(pair);
 		else if (instructions->arr[i] == INST_ROT_A)
 			stack_rotate_a(*pair);
 		else if (instructions->arr[i] == INST_ROT_B)
