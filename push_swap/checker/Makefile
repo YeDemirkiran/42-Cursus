@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 16:19:41 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/30 16:42:01 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/30 16:51:03 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,10 @@ $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(INC_FLAGS) -o $(NAME) $(OBJS)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	mkdir -p $(dir $@)
+	$(CC) $(FLAGS) $(INC_FLAGS) -c -o $@ $<
+
+$(OBJ_DIR)%.o: ./%.c
 	mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INC_FLAGS) -c -o $@ $<
 

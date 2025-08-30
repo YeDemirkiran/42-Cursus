@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:41:37 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 16:31:15 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:59:18 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_valid_move(char *str)
 	i = 0;
 	while (i < 11)
 	{
-		if (ft_strncmp(str, inst[i], ft_strlen(str)) == 0)
+		if (ft_strncmp(str, inst[i], ft_strlen(str) - 1) == 0)
 			return (i);
 		i++;
 	}
@@ -46,14 +46,19 @@ t_instructions	parse_instructions(void)
 		index = is_valid_move(line);
 		if (index == -1)
 		{
-			free(line);
 			free(instructions.arr);
+			instructions.arr = NULL;
 			break ;
 		}
 		instructions.arr[instructions.index++] = (index + 1);
 		free(line);
 		line = get_next_line(0);
 	}
+	// while (line)
+	// {
+	// 	free(line);
+	// 	line = get_next_line(0);
+	// }
 	return (instructions);
 }
 

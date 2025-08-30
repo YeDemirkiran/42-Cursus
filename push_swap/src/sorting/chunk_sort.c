@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 13:10:39 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 15:27:28 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:07:37 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ static void	push_chunks(t_stack_pair *pair,
 	t_stack	tmp;
 
 	chunk_border = pair->full_length
-		/ (chunk_size * (chunk_size <= pair->full_length));
-	current_border = 0;
-	while (current_border <= chunk_size && pair->a_length > 3)
+		/ ((chunk_size * (chunk_size <= pair->full_length))
+			+ (chunk_size > pair->full_length));
+	current_border = -1;
+	while (++current_border <= chunk_size && pair->a_length > 3)
 	{
 		i = -1;
 		while (++i < chunk_border && pair->a_length > 3)
@@ -53,7 +54,6 @@ static void	push_chunks(t_stack_pair *pair,
 			stack_a_move_to_first(*pair, tmp, instructions);
 			instructions->arr[instructions->index++] = stack_push_a_to_b(pair);
 		}
-		current_border++;
 	}
 	sort_three(pair, instructions);
 }

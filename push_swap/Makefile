@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/13 13:09:08 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/30 16:42:49 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/30 16:51:41 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,9 +65,12 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 clean:
 	rm -rf $(OBJS)
+	make clean -C $(BONUS_DIR)
 
 fclean: clean
 	rm -rf $(NAME)
+	make fclean -C $(BONUS_DIR)
+	rm -rf ./checker_bonus
 
 re: fclean all
 
