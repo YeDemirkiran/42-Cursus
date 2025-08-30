@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_string.h                                        :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 11:56:12 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 15:47:05 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/30 16:05:04 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/30 16:06:50 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_STRING_H
-# define FT_STRING_H
+#include "error.h"
 
-# include <stddef.h>
-
-size_t	ft_strlen(char *str);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-
-#endif
+int	err_print(char *str,
+	void (*clear)(t_stack_pair *), t_stack_pair *pair)
+{
+	if (clear && pair)
+		clear(pair);
+	if (str)
+		ft_putstr_fd(str, 2);
+	return (EXIT_FAILURE);
+}

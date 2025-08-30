@@ -6,13 +6,13 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 13:28:39 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 13:47:05 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:59:12 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "instructions.h"
 
-static void	init_instruction_empty(t_instructions *inst, int size)
+void	init_instruction_empty(t_instructions *inst, int size)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:58:06 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 14:28:31 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:45:13 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv)
 	if (is_stack_sorted(pair.stack_a, pair.a_length))
 	{
 		clear_pair(&pair);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	instructions = get_instructions(&pair);
 	if (!instructions.arr)

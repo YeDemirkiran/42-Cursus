@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_string.h                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 11:56:12 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 15:47:05 by yademirk         ###   ########.fr       */
+/*   Created: 2025/06/02 13:09:14 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/30 15:46:58 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_STRING_H
-# define FT_STRING_H
+#include "ft_string.h"
 
-# include <stddef.h>
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-size_t	ft_strlen(char *str);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-
-#endif
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while (n-- > 0)
+	{
+		if ((!*str1 || !*str2) || (*str1 != *str2))
+			return (*str1 - *str2);
+		str1++;
+		str2++;
+	}
+	return (0);
+}

@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   instructions.h                                     :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 13:27:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 15:59:18 by yademirk         ###   ########.fr       */
+/*   Created: 2025/08/30 16:06:39 by yademirk          #+#    #+#             */
+/*   Updated: 2025/08/30 16:07:35 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INSTRUCTIONS_H
-# define INSTRUCTIONS_H
+#ifndef ERROR_H
+# define ERROR_H
 
-# ifndef INSTRUCTONS_SIZE
-#  define INSTRUCTIONS_SIZE 32768
-# endif
-
+# include "t_stack_pair.h"
 # include <stdlib.h>
 
-# include "t_instructions.h"
-# include "e_instructions.h"
-
-void	init_instruction_empty(t_instructions *inst, int size);
-int		init_instructions(t_instructions *inst_arr, int length);
-void	clear_instructions(t_instructions *inst_arr,
-			int length, int preserve_index);
+int	err_print(char *str,
+		void (*clear)(t_stack_pair *), t_stack_pair *pair);
 
 #endif

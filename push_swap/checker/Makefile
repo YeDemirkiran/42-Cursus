@@ -5,26 +5,24 @@
 #                                                     +:+ +:+         +:+      #
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/08/13 13:09:08 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/30 15:46:52 by yademirk         ###   ########.fr        #
+#    Created: 2025/08/30 16:19:41 by yademirk          #+#    #+#              #
+#    Updated: 2025/08/30 16:23:39 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror
-INC_FLAGS = -I./include -I./include/structs -I./include/enums -I./include/modules -I./include/modules/stack -I./include/modules/sorting -I./include/modules/pair
-NAME = push_swap
+INC_DIR = ../include
+INC_FLAGS = -I. -I$(INC_DIR) -I$(INC_DIR)/structs -I$(INC_DIR)/enums -I$(INC_DIR)/modules -I$(INC_DIR)/modules/stack -I$(INC_DIR)/modules/sorting -I$(INC_DIR)/modules/pair
+NAME = checker
 
-C_FILES = main.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(PAIR_SRC) $(INST_SRC)
+C_FILES = checker.c error.c $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(PAIR_SRC) $(INST_SRC)
 
-SRC_DIR = ./src/
+SRC_DIR = ./
 SRC = $(addprefix $(SRC_DIR), $(C_FILES))
 
 OBJ_DIR = ./obj/
 OBJS = $(addprefix $(OBJ_DIR), $(C_FILES:.c=.o))
-
-SORTING_DIR = sorting/
-SORTING_SRC = $(addprefix $(SORTING_DIR), insertion_sort.c chunk_sort.c chunk_sort_utils.c)
 
 CONV_DIR = converter/
 CONV_SRC = $(addprefix $(CONV_DIR), ft_atol.c)
@@ -47,14 +45,7 @@ PAIR_SRC = $(addprefix $(PAIR_DIR), pair_utils.c)
 INST_DIR = instructions/
 INST_SRC = $(addprefix $(INST_DIR), instructions.c)
 
-BONUS_DIR = ./checker
-BONUS_NAME = checker
-
 all: $(NAME)
-
-bonus:
-	make -C $(BONUS_DIR)
-	cp $(BONUS_DIR)/checker .
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(INC_FLAGS) -o $(NAME) $(OBJS)
