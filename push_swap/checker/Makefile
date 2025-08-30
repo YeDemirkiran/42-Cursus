@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 16:19:41 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/30 16:23:39 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/30 16:42:01 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,16 @@ INC_DIR = ../include
 INC_FLAGS = -I. -I$(INC_DIR) -I$(INC_DIR)/structs -I$(INC_DIR)/enums -I$(INC_DIR)/modules -I$(INC_DIR)/modules/stack -I$(INC_DIR)/modules/sorting -I$(INC_DIR)/modules/pair
 NAME = checker
 
-C_FILES = checker.c error.c $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(PAIR_SRC) $(INST_SRC)
+C_FILES = $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(PAIR_SRC) $(INST_SRC) $(SORTING_SRC) $(GNL_SRC)
 
-SRC_DIR = ./
-SRC = $(addprefix $(SRC_DIR), $(C_FILES))
+SRC_DIR = ../src/
+SRC = checker.c error.c $(addprefix $(SRC_DIR), $(C_FILES))
 
 OBJ_DIR = ./obj/
-OBJS = $(addprefix $(OBJ_DIR), $(C_FILES:.c=.o))
+OBJS = $(addprefix $(OBJ_DIR), checker.o error.o $(C_FILES:.c=.o))
+
+SORTING_DIR = sorting/
+SORTING_SRC = $(addprefix $(SORTING_DIR), insertion_sort.c chunk_sort.c chunk_sort_utils.c)
 
 CONV_DIR = converter/
 CONV_SRC = $(addprefix $(CONV_DIR), ft_atol.c)
@@ -35,6 +38,9 @@ STRING_SRC = $(addprefix $(STRING_DIR), ft_strlen.c ft_strncmp.c)
 
 WRITE_DIR = write/
 WRITE_SRC = $(addprefix $(WRITE_DIR), ft_putchar.c ft_putstr.c)
+
+GNL_DIR = gnl/
+GNL_SRC = $(addprefix $(GNL_DIR), get_next_line.c get_next_line_utils.c)
 
 STACK_DIR = stack/
 STACK_SRC = $(addprefix $(STACK_DIR), stack_init.c stack_rotate.c stack_rotate_rev.c stack_swap.c stack_push.c stack_utils.c stack_move.c stack_predicate.c stack_get.c)
@@ -54,12 +60,6 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INC_FLAGS) -c -o $@ $<
 
-test:
-	make -C ./test
-
-test_re:
-	make re -C ./test
-
 clean:
 	rm -rf $(OBJS)
 
@@ -68,4 +68,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all test test_re clean fclean re
+.PHONY: all clean fclean re

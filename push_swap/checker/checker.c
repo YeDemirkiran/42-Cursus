@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:41:37 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 16:21:43 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:31:15 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_instructions	parse_instructions(void)
 		}
 		instructions.arr[instructions.index++] = (index + 1);
 		free(line);
-		line = get_next_line;
+		line = get_next_line(0);
 	}
 	return (instructions);
 }

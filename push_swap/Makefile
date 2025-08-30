@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/13 13:09:08 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/30 15:46:52 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/30 16:42:49 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ all: $(NAME)
 
 bonus:
 	make -C $(BONUS_DIR)
-	cp $(BONUS_DIR)/checker .
+	cp $(BONUS_DIR)/$(BONUS_NAME) checker_bonus
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(INC_FLAGS) -o $(NAME) $(OBJS)
@@ -62,12 +62,6 @@ $(NAME): $(OBJS)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INC_FLAGS) -c -o $@ $<
-
-test:
-	make -C ./test
-
-test_re:
-	make re -C ./test
 
 clean:
 	rm -rf $(OBJS)
@@ -77,4 +71,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all test test_re clean fclean re
+.PHONY: all clean fclean re
