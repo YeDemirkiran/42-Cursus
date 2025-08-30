@@ -6,16 +6,16 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/13 13:09:08 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/30 12:08:19 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/30 12:16:08 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror
-INC_FLAGS = -I./include -I./include/structs -I./include/enums -I./include/modules -I./include/modules/stack  -I./include/modules/sorting
+INC_FLAGS = -I./include -I./include/structs -I./include/enums -I./include/modules -I./include/modules/stack -I./include/modules/sorting -I./include/modules/pair
 NAME = push_swap
 
-C_FILES = main.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC)
+C_FILES = main.c $(SORTING_SRC) $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(PAIR_SRC)
 
 SRC_DIR = ./src/
 SRC = $(addprefix $(SRC_DIR), $(C_FILES))
@@ -40,6 +40,9 @@ WRITE_SRC = $(addprefix $(WRITE_DIR), ft_putchar.c ft_putstr.c)
 
 STACK_DIR = stack/
 STACK_SRC = $(addprefix $(STACK_DIR), stack_init.c stack_rotate.c stack_rotate_rev.c stack_swap.c stack_push.c stack_utils.c stack_move.c stack_predicate.c stack_get.c)
+
+PAIR_DIR = pair/
+PAIR_SRC = $(addprefix $(PAIR_DIR), pair_utils.c)
 
 all: $(NAME)
 

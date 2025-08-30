@@ -6,19 +6,11 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 13:10:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 11:22:57 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 12:11:54 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack_utils.h"
-
-void	clear_pair(t_stack_pair *pair)
-{
-	if ((*pair).stack_a)
-		free((*pair).stack_a);
-	if ((*pair).stack_b)
-		free((*pair).stack_b);
-}
 
 int	is_stack_sorted(t_stack *stack, int size)
 {
@@ -68,18 +60,6 @@ t_stack	*duplicate_stack(t_stack *stack, int full_length)
 		dup[i].real_number = stack[i].real_number;
 		i++;
 	}
-	return (dup);
-}
-
-t_stack_pair	duplicate_pair(t_stack_pair *pair)
-{
-	t_stack_pair	dup;
-
-	dup.stack_a = duplicate_stack(pair->stack_a, pair->full_length);
-	dup.stack_b = duplicate_stack(pair->stack_b, pair->full_length);
-	dup.a_length = pair->a_length;
-	dup.b_length = pair->b_length;
-	dup.full_length = pair->full_length;
 	return (dup);
 }
 

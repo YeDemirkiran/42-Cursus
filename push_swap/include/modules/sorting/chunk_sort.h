@@ -15,6 +15,8 @@
 # include "stack.h"
 # include "e_instructions.h"
 
+# include "pair_utils.h"
+
 void	chunk_sort(t_stack_pair *pair, t_instructions *instructions);
 
 #endif

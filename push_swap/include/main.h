@@ -8,5 +8,6 @@
 # include "stack.h"
 # include "chunk_sort.h"
 # include "ft_write.h"
+# include "pair_utils.h"
 
 #endif
