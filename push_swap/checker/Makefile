@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 16:19:41 by yademirk          #+#    #+#              #
-#    Updated: 2025/08/30 16:51:03 by yademirk         ###   ########.fr        #
+#    Updated: 2025/08/30 17:30:21 by yademirk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ NAME = checker
 C_FILES = $(CONV_SRC) $(PREDICATE_SRC) $(STRING_SRC) $(WRITE_SRC) $(STACK_SRC) $(PAIR_SRC) $(INST_SRC) $(SORTING_SRC) $(GNL_SRC)
 
 SRC_DIR = ../src/
-SRC = checker.c error.c $(addprefix $(SRC_DIR), $(C_FILES))
+SRC = checker.c checker_extra.o error.c $(addprefix $(SRC_DIR), $(C_FILES))
 
 OBJ_DIR = ./obj/
-OBJS = $(addprefix $(OBJ_DIR), checker.o error.o $(C_FILES:.c=.o))
+OBJS = $(addprefix $(OBJ_DIR), checker.o checker_extra.o error.o $(C_FILES:.c=.o))
 
 SORTING_DIR = sorting/
 SORTING_SRC = $(addprefix $(SORTING_DIR), insertion_sort.c chunk_sort.c chunk_sort_utils.c)

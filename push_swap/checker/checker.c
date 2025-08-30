@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:41:37 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 17:11:10 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:30:08 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,45 +54,8 @@ t_instructions	parse_instructions(void)
 		free(line);
 		line = get_next_line(0);
 	}
-	while (line)
-	{
-		free(line);
-		line = get_next_line(0);
-	}
+	read_empty(line);
 	return (instructions);
-}
-
-void	apply_instructions(t_stack_pair *pair, t_instructions *instructions)
-{
-	int	i;
-
-	i = 0;
-	while (instructions->arr[i] != INST_END)
-	{
-		if (instructions->arr[i] == INST_PUSH_A)
-			stack_push_b_to_a(pair);
-		else if (instructions->arr[i] == INST_PUSH_B)
-			stack_push_a_to_b(pair);
-		else if (instructions->arr[i] == INST_ROT_A)
-			stack_rotate_a(*pair);
-		else if (instructions->arr[i] == INST_ROT_B)
-			stack_rotate_b(*pair);
-		else if (instructions->arr[i] == INST_ROT_AB)
-			stack_rotate_ab(*pair);
-		else if (instructions->arr[i] == INST_RROT_A)
-			stack_rotate_rev_a(*pair);
-		else if (instructions->arr[i] == INST_RROT_B)
-			stack_rotate_rev_b(*pair);
-		else if (instructions->arr[i] == INST_RROT_AB)
-			stack_rotate_rev_ab(*pair);
-		else if (instructions->arr[i] == INST_SWAP_A)
-			stack_swap_a(*pair);
-		else if (instructions->arr[i] == INST_SWAP_B)
-			stack_swap_b(*pair);
-		else if (instructions->arr[i] == INST_SWAP_AB)
-			stack_swap_ab(*pair);
-		i++;
-	}
 }
 
 int	verify_instructions(t_stack_pair *pair, t_instructions *instructions)

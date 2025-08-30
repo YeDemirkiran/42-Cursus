@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 16:21:02 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 16:21:41 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:30:00 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,9 @@
 # include "instructions.h"
 # include "error.h"
 # include "ft_write.h"
+
+void	read_empty(char *line);
+void	apply_instructions(t_stack_pair *pair,
+			t_instructions *instructions);
 
 #endif
