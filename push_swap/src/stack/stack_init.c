@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 11:58:01 by yademirk          #+#    #+#             */
-/*   Updated: 2025/08/30 13:43:30 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/08/30 14:10:54 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static int	is_duplicate(t_stack *stack, int index)
 		while (j < i)
 		{
 			if (stack[j].real_number == stack[i].real_number)
-				return (FALSE);
+				return (TRUE);
 			j++;
 		}
 		i++;
 	}
-	return (TRUE);
+	return (FALSE);
 }
 
 static t_stack_pair	free_stack(t_stack_pair *pair)
@@ -76,10 +76,10 @@ static int	parse_numbers(char **arr, int argc, t_stack *stack_a)
 			return (0);
 		stack_a[i].index = i;
 		stack_a[i].real_number = (int)num;
-		if (!is_duplicate(stack_a, i))
-			return (0);
 		i++;
 	}
+	if (is_duplicate(stack_a, i))
+		return (0);
 	return (1);
 }
 

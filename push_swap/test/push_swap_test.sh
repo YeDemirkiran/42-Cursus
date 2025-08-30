@@ -124,7 +124,7 @@ fi
 
 rm -rf test_check.txt
 
-ARG="0 0"
+ARG="0 0" # 5
 ./push_swap $ARG > /dev/null 2> test_check.txt
 if [ -s "$FICHERO" ];then
 while IFS= read -r line
@@ -142,7 +142,7 @@ fi
 
 rm -rf test_check.txt
 
-ARG="-01 -001"
+ARG="-01 -001" # 6
 ./push_swap $ARG > /dev/null 2> test_check.txt
 if [ -s "$FICHERO" ];then
 while IFS= read -r line
@@ -160,7 +160,7 @@ fi
 
 rm -rf test_check.txt
 
-ARG="111-1 2 -3"
+ARG="111-1 2 -3" # 7
 ./push_swap $ARG > /dev/null 2> test_check.txt
 if [ -s "$FICHERO" ];then
 while IFS= read -r line
@@ -178,7 +178,7 @@ fi
 
 rm -rf test_check.txt
 
-ARG="-3 -2 -2"
+ARG="-3 -2 -2" # 8
 ./push_swap $ARG > /dev/null 2> test_check.txt
 if [ -s "$FICHERO" ];then
 while IFS= read -r line
