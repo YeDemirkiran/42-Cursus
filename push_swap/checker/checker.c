@@ -78,11 +78,6 @@ int	main(int argc, char **argv)
 	pair = init_stack_pair(argv + 1, argc - 1);
 	if (!pair.stack_a || !pair.stack_b)
 		return (err_print("Error\n", clear_pair, &pair));
-	if (is_stack_sorted(pair.stack_a, pair.a_length))
-	{
-		clear_pair(&pair);
-		return (EXIT_SUCCESS);
-	}
 	instructions = parse_instructions();
 	if (!instructions.arr)
 		return (err_print("Error\n", clear_pair, &pair));
