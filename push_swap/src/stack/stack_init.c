@@ -69,7 +69,7 @@ static int	parse_numbers(char **arr, int argc, t_stack *stack_a)
 	while (i < argc)
 	{
 		num_str = arr[i];
-		if (!ft_isnumber(num_str))
+		if (ft_num_too_long(num_str) || !ft_isnumber(num_str))
 			return (0);
 		num = ft_atol(num_str);
 		if (num > INT_MAX || num < INT_MIN)

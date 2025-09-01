@@ -15,5 +15,6 @@
 
 int	ft_isdigit(int c);
 int	ft_isnumber(char *str);
+int	ft_num_too_long(char *str);
 
 #endif
