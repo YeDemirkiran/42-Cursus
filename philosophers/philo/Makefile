@@ -1,22 +1,22 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+         #
+#    By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/01 21:37:32 by yademirk          #+#    #+#              #
-#    Updated: 2025/09/01 21:53:04 by yademirk         ###   ########.fr        #
+#    Updated: 2025/09/02 11:00:06 by yademirk         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME = philo
 
 CC = cc
 
 W_FLAGS = -Wall -Wextra -Werror
-
-FLAGS = $(W_FLAGS)
+LIB_FLAGS = -pthread
+FLAGS = $(W_FLAGS) $(LIB_FLAGS)
 
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
@@ -31,6 +31,7 @@ $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)%o: $(SRC_DIR)%c
+	mkdir -p $(dir $@)
 	$(CC) $(FLAGS) -c $^ -o $@
 
 clean:
