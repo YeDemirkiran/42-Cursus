@@ -6,12 +6,21 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:20:11 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 16:22:32 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:40:27 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
+#include <stdlib.h>
 #include <pthread.h>
+
 #include <macros/status.h>
+
+void	destroy_mutexes(pthread_mutex_t *mutexes, int count)
+{
+	while (count-- >= 0)
+		pthread_mutex_destroy(mutexes + count);
+	free(mutexes);
+}
 
 int	init_mutexes(pthread_mutex_t *mutexes, int count)
 {
@@ -33,11 +42,4 @@ int	init_mutexes(pthread_mutex_t *mutexes, int count)
 		i++;
 	}
 	return (SUCCESS);
-}
-
-void	destroy_mutexes(pthread_mutex_t *mutexes, int count)
-{
-	while (count-- >= 0)
-		pthread_mutex_destroy(mutexes + count);
-	free(mutexes);
 }

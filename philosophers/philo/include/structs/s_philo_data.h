@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 18:12:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 18:13:36 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:41:36 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -19,7 +19,7 @@ typedef struct s_philo_data
 {
 	t_philosopher	*philosopher;
 	pthread_mutex_t	*signal_mutex;
-	int				*signal;
+	t_byte			*signal;
 }	t_philo_data;
 
 #endif

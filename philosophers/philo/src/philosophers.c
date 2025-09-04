@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 18:33:54 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:41:09 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -30,7 +30,7 @@ int	start_philosophers(t_table *table, int *count,
 	if (!philos)
 		return (FAILURE);
 	i = 0;
-	while (i < count)
+	while (i < *count)
 	{
 		res = pthread_create(&(philos[*count].thread_id), NULL, philo_routine,
 				&(t_philo_data)
