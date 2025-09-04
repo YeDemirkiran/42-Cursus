@@ -1,26 +1,24 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_table.h                                          :+:      :+:    :+:   */
+/*   status.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 14:53:44 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:08:02 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 15:18:34 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 15:19:00 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef S_TABLE_H
-# define S_TABLE_H
+#ifndef STATUS_H
+# define STATUS_H
 
-# include <structs/s_philosopher.h>
-# include <structs/s_config.h>
+# ifndef SUCCESS
+#  define SUCCESS 0
+# endif
 
-typedef struct s_table
-{
-	t_config		config;
-	t_philosopher	*philosophers;
-	pthread_mutex_t	*forks;
-}	t_table;
+# ifndef FAILURE
+#  define FAILURE 1
+# endif
 
 #endif
