@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:39:10 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:39:47 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:40:24 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,6 +15,6 @@
 
 # include <structs/s_table.h>
 
-void	start_simulation(t_table table);
+void	start_simulation(t_table *table);
 
 #endif

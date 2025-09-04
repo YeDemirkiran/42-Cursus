@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:16:51 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 16:17:34 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:45:48 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,7 +15,8 @@
 
 # include <structs/s_philosopher.h>
 
-int	init_philosophers(t_philosopher *philos, int count);
-int	destroy_philosophers(t_philosopher *philos, int count);
+int		start_philosophers(t_philosopher *philos, int *count,
+			void *(*philo_routine)(void *));
+void	join_philosophers(t_philosopher *philos, int count);
 
 #endif

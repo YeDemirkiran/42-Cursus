@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 21:35:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:40:46 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:40:31 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv)
 	pthread_t	threads[2];
 
 	init_table(&table, argc, argv);
+	start_simulation(&table);
 	clear_table(&table);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 16:27:07 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:44:26 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -54,12 +54,13 @@ int	init_table(t_table *table, int argc, char **argv)
 		destroy_mutexes(table->forks, table->config.philo_count);
 		return (FAILURE);
 	}
+	table->dinner_over = 0;
 	return (SUCCESS);
 }
 
 void	clear_table(t_table *table)
 {
-	destroy_philosophers();
+	free(table->philosophers);
 	destroy_mutexes(table->forks, table->config.philo_count);
 	free(table->forks);
 }

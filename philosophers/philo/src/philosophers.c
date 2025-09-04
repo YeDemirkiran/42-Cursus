@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 16:27:25 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:46:56 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -17,7 +17,8 @@
 #include <structs/s_philosopher.h>
 #include <macros/status.h>
 
-int	start_philosophers(t_philosopher *philos, int count)
+int	start_philosophers(t_philosopher *philos, int *count,
+	void *(*philo_routine)(void *))
 {
 	int	i;
 	int	res;
@@ -27,18 +28,19 @@ int	start_philosophers(t_philosopher *philos, int count)
 	i = 0;
 	while (i < count)
 	{
-		res = pthread_create(&(philos[count].thread_id), NULL,
-				NULL, philos + count);
+		res = pthread_create(&(philos[*count].thread_id), NULL,
+				philo_routine, philos + *count);
 		if (res != SUCCESS)
 		{
-			destroy_philosophers(philos, i);
+			*count = i;
 			return (FAILURE);
 		}
 		i++;
 	}
+	return (SUCCESS);
 }
 
-int	join_philosophers(t_philosopher *philos, int count)
+void	join_philosophers(t_philosopher *philos, int count)
 {
 	int	i;
 
@@ -48,5 +50,12 @@ int	join_philosophers(t_philosopher *philos, int count)
 		pthread_join(philos[i].thread_id, NULL);
 		i++;
 	}
-	free(philos);
+}
+
+void	philosopher_routine(t_philosopher *philo, int *end_signal)
+{
+	while (!philo->is_dead && *end_signal != 1)
+	{
+
+	}
 }

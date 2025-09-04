@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 14:53:44 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:08:02 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:42:04 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -21,6 +21,7 @@ typedef struct s_table
 	t_config		config;
 	t_philosopher	*philosophers;
 	pthread_mutex_t	*forks;
+	t_byte			dinner_over;
 }	t_table;
 
 #endif
