@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 18:22:53 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 23:34:29 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -18,27 +18,36 @@
 #include <modules/utils/convert.h>
 #include <modules/philosophers.h>
 
-static int	validate_config(t_config *config)
+static int	validate_config(long long config_numbers[5])
 {
-	if (config->philo_count < 0 || config->starve_time < 0
-		|| config->eat_time < 0 || config->sleep_time < 0)
+	if (config_numbers[0] < 0 || config_numbers[1] < 0
+		|| config_numbers[2] < 0 || config_numbers[3] < 0)
 		return (FAILURE);
 	return (SUCCESS);
 }
 
 static int	init_config(t_config *config, int argc, char **argv)
 {
+	long long	config_numbers[5];
+
 	if (!argv[1] || !argv[2] || !argv[3] || !argv[4])
 		return (FAILURE);
-	config->philo_count = ft_atol(argv[1]);
-	config->starve_time = ft_atol(argv[2]);
-	config->eat_time = ft_atol(argv[3]);
-	config->sleep_time = ft_atol(argv[4]);
+	config_numbers[0] = ft_atol(argv[1]);
+	config_numbers[1] = ft_atol(argv[2]);
+	config_numbers[2] = ft_atol(argv[3]);
+	config_numbers[3] = ft_atol(argv[4]);
+	if (validate_config(config_numbers) == FAILURE)
+		return (FAILURE);
+	config->philo_count = config_numbers[0];
+	config->starve_time = config_numbers[1];
+	config->eat_time = config_numbers[2];
+	config->sleep_time = config_numbers[3];
 	if (argc > 5 && argv[5])
-		config->eat_count = ft_atol(argv[5]);
+		config_numbers[5] = ft_atol(argv[5]);
 	else
-		config->eat_count = -1;
-	return (validate_config(config));
+		config_numbers[5] = -1;
+	config->eat_count = config_numbers[5] * (config_numbers[5] >= 0);
+	return (SUCCESS);
 }
 
 int	init_table(t_table *table, int argc, char **argv)
@@ -46,9 +55,9 @@ int	init_table(t_table *table, int argc, char **argv)
 	table->dinner_over = 0;
 	if (pthread_mutex_init(&(table->over_mutex), NULL) != SUCCESS)
 		return (FAILURE);
-	if (init_config(&(table->config), argc, argv) == FAILURE)
+	if (init_config(&(table->config), argc, argv) != SUCCESS)
 		return (FAILURE);
-	if (init_mutexes(table->forks, table->config.philo_count) == FAILURE)
+	if (init_mutexes(table->forks, table->config.philo_count) != SUCCESS)
 		return (FAILURE);
 	table->philosophers = malloc(sizeof(t_philosopher)
 			* table->config.philo_count);
