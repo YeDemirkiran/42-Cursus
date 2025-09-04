@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 13:56:29 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:01:50 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 15:34:43 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -22,7 +22,7 @@ typedef struct s_philosopher
 	pthread_t	thread_id;
 	void		*left_fork;
 	void		*right_fork;
-	char		is_dead;
+	t_byte		is_dead;
 }	t_philosopher;
 
 #endif

@@ -1,28 +1,22 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   table.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/01 21:35:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:40:46 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 15:37:54 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 15:39:27 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#define _DEFAULT_SOURCE
-#include <stdlib.h>
+#ifndef TABLE_H
+# define TABLE_H
 
-#include <structs/s_table.h>
-#include <modules/table.h>
-#include <modules/simulation.h>
+# include <structs/s_table.h>
 
-int	main(int argc, char **argv)
-{
-	t_table		table;
-	pthread_t	threads[2];
+int		init_table(t_table *table, int argc, char **argv);
+void	clear_table(t_table *table);
 
-	init_table(&table, argc, argv);
-	clear_table(&table);
-	return (EXIT_SUCCESS);
-}
+
+#endif

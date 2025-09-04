@@ -1,28 +1,18 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/01 21:35:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:40:46 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 15:37:02 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 15:37:45 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#define _DEFAULT_SOURCE
-#include <stdlib.h>
-
 #include <structs/s_table.h>
-#include <modules/table.h>
-#include <modules/simulation.h>
 
-int	main(int argc, char **argv)
+void	start_simulation(t_table table)
 {
-	t_table		table;
-	pthread_t	threads[2];
-
-	init_table(&table, argc, argv);
-	clear_table(&table);
-	return (EXIT_SUCCESS);
+	return ;
 }

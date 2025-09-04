@@ -6,13 +6,13 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 13:58:42 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:04:41 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 15:34:51 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #ifndef T_BYTE_H
 # define T_BYTE_H
 
-typedef char	t_byte;
+typedef unsigned char	t_byte;
 
 #endif

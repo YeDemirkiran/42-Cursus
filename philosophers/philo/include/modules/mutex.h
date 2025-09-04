@@ -1,28 +1,21 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mutex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/01 21:35:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:40:46 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 15:21:29 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 15:22:09 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#define _DEFAULT_SOURCE
-#include <stdlib.h>
+#ifndef MUTEX_H
+# define MUTEX_H
 
-#include <structs/s_table.h>
-#include <modules/table.h>
-#include <modules/simulation.h>
+# include <pthread.h>
 
-int	main(int argc, char **argv)
-{
-	t_table		table;
-	pthread_t	threads[2];
+pthread_mutex_t	*init_mutexes(int count);
+void			destroy_mutexes(pthread_mutex_t *mutexes, int count);
 
-	init_table(&table, argc, argv);
-	clear_table(&table);
-	return (EXIT_SUCCESS);
-}
+#endif

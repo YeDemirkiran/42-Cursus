@@ -1,28 +1,32 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   table.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/01 21:35:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:40:46 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 15:23:56 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#define _DEFAULT_SOURCE
 #include <stdlib.h>
 
 #include <structs/s_table.h>
-#include <modules/table.h>
-#include <modules/simulation.h>
+#include <macros/status.h>
+#include <modules/mutex.h>
 
-int	main(int argc, char **argv)
+int	init_table(t_table *table, int argc, char **argv)
 {
-	t_table		table;
-	pthread_t	threads[2];
+	table->forks = init_mutexes(table->config.philo_count);
+	if (!table->forks)
+		return (FAILURE);
+	return (SUCCESS);
+}
 
-	init_table(&table, argc, argv);
-	clear_table(&table);
-	return (EXIT_SUCCESS);
+void	clear_table(t_table *table)
+{
+	free(table->philosophers);
+	destroy_mutexes(table->forks, table->config.philo_count);
+	free(table->forks);
 }
