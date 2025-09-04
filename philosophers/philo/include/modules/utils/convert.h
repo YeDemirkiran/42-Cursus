@@ -1,21 +1,18 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutex.h                                            :+:      :+:    :+:   */
+/*   convert.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 15:21:29 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 16:22:47 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 15:48:29 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 15:49:01 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef MUTEX_H
-# define MUTEX_H
+#ifndef CONVERT_H
+# define CONVERT_H
 
-# include <pthread.h>
-
-int				init_mutexes(pthread_mutex_t *mutexes, int count);
-void			destroy_mutexes(pthread_mutex_t *mutexes, int count);
+long long	ft_atol(char *str);
 
 #endif

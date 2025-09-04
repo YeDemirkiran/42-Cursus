@@ -1,21 +1,21 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutex.h                                            :+:      :+:    :+:   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 15:21:29 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 16:22:47 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 16:16:51 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 16:17:34 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef MUTEX_H
-# define MUTEX_H
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
-# include <pthread.h>
+# include <structs/s_philosopher.h>
 
-int				init_mutexes(pthread_mutex_t *mutexes, int count);
-void			destroy_mutexes(pthread_mutex_t *mutexes, int count);
+int	init_philosophers(t_philosopher *philos, int count);
+int	destroy_philosophers(t_philosopher *philos, int count);
 
 #endif

@@ -1,43 +1,52 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutex.c                                            :+:      :+:    :+:   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 15:20:11 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 16:22:32 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 16:27:25 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
+#define _DEFAULT_SOURCE
 #include <pthread.h>
+#include <stdlib.h>
+
+#include <structs/s_philosopher.h>
 #include <macros/status.h>
 
-int	init_mutexes(pthread_mutex_t *mutexes, int count)
+int	start_philosophers(t_philosopher *philos, int count)
 {
-	int				res;
-	int				i;
+	int	i;
+	int	res;
 
-	mutexes = malloc(sizeof(*mutexes) * count);
-	if (!mutexes)
+	if (!philos)
 		return (FAILURE);
 	i = 0;
 	while (i < count)
 	{
-		res = pthread_mutex_init(mutexes + count, NULL);
+		res = pthread_create(&(philos[count].thread_id), NULL,
+				NULL, philos + count);
 		if (res != SUCCESS)
 		{
-			destroy_mutexes(mutexes, i);
+			destroy_philosophers(philos, i);
 			return (FAILURE);
 		}
 		i++;
 	}
-	return (SUCCESS);
 }
 
-void	destroy_mutexes(pthread_mutex_t *mutexes, int count)
+int	join_philosophers(t_philosopher *philos, int count)
 {
-	while (count-- >= 0)
-		pthread_mutex_destroy(mutexes + count);
-	free(mutexes);
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		pthread_join(philos[i].thread_id, NULL);
+		i++;
+	}
+	free(philos);
 }

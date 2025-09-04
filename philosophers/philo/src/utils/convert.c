@@ -1,21 +1,29 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutex.h                                            :+:      :+:    :+:   */
+/*   convert.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 15:21:29 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 16:22:47 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 15:47:02 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 15:51:31 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef MUTEX_H
-# define MUTEX_H
+long long	ft_atol(char *str)
+{
+	long long	total;
+	char		sign;
 
-# include <pthread.h>
-
-int				init_mutexes(pthread_mutex_t *mutexes, int count);
-void			destroy_mutexes(pthread_mutex_t *mutexes, int count);
-
-#endif
+	total = 0;
+	sign = 1;
+	if (*str == '-' || *str == '+')
+		if (*(str++) == '-')
+			sign = -1;
+	while (*str && (*str >= '0' && *str <= '9'))
+	{
+		total = (total * 10) + (*str - '0');
+		str++;
+	}
+	return (total * sign);
+}
