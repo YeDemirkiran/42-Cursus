@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:20:11 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 18:40:27 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 23:51:37 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -18,25 +18,27 @@
 void	destroy_mutexes(pthread_mutex_t *mutexes, int count)
 {
 	while (count-- >= 0)
-		pthread_mutex_destroy(mutexes + count);
+		pthread_mutex_destroy(&mutexes[count]);
 	free(mutexes);
 }
-
-int	init_mutexes(pthread_mutex_t *mutexes, int count)
+#include "stdio.h"
+int	init_mutexes(pthread_mutex_t **mutexes, int count)
 {
 	int				res;
 	int				i;
 
-	mutexes = malloc(sizeof(*mutexes) * count);
-	if (!mutexes)
+	*mutexes = malloc(sizeof(pthread_mutex_t) * count);
+	if (!*mutexes)
 		return (FAILURE);
 	i = 0;
 	while (i < count)
 	{
-		res = pthread_mutex_init(mutexes + count, NULL);
+		printf("anan %i\n", i);
+		fflush(stdout);
+		res = pthread_mutex_init(&(*mutexes)[count], NULL);
 		if (res != SUCCESS)
 		{
-			destroy_mutexes(mutexes, i);
+			destroy_mutexes(&(*mutexes)[count], i);
 			return (FAILURE);
 		}
 		i++;

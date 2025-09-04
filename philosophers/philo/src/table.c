@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 23:34:29 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 23:47:52 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -43,10 +43,10 @@ static int	init_config(t_config *config, int argc, char **argv)
 	config->eat_time = config_numbers[2];
 	config->sleep_time = config_numbers[3];
 	if (argc > 5 && argv[5])
-		config_numbers[5] = ft_atol(argv[5]);
+		config_numbers[4] = ft_atol(argv[5]);
 	else
-		config_numbers[5] = -1;
-	config->eat_count = config_numbers[5] * (config_numbers[5] >= 0);
+		config_numbers[4] = -1;
+	config->eat_count = config_numbers[4] * (config_numbers[4] >= 0);
 	return (SUCCESS);
 }
 
@@ -57,7 +57,7 @@ int	init_table(t_table *table, int argc, char **argv)
 		return (FAILURE);
 	if (init_config(&(table->config), argc, argv) != SUCCESS)
 		return (FAILURE);
-	if (init_mutexes(table->forks, table->config.philo_count) != SUCCESS)
+	if (init_mutexes(&(table->forks), table->config.philo_count) != SUCCESS)
 		return (FAILURE);
 	table->philosophers = malloc(sizeof(t_philosopher)
 			* table->config.philo_count);
