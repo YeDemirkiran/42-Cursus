@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 21:35:53 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 14:19:53 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 15:00:22 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
+#include <structs/s_table.h>
 
 int				mails = 0;
 pthread_mutex_t	mutex;
@@ -45,7 +45,7 @@ int	main(int argc, char **argv)
 	pthread_create(threads + 1, NULL, test_threads, NULL);
 	pthread_join(threads[0], NULL);
 	pthread_join(threads[1], NULL);
-	printf("Mails: %i\n", mails);
+	printf("\x1B[32mMails: %i\n", mails);
 	pthread_mutex_destroy(&mutex);
 	return (EXIT_SUCCESS);
 }

@@ -1,18 +1,26 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_byte.h                                           :+:      :+:    :+:   */
+/*   s_table.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 13:58:42 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:04:41 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 14:53:44 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 15:03:21 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef T_BYTE_H
-# define T_BYTE_H
+#ifndef S_TABLE_H
+# define S_TABLE_H
 
-typedef char	t_byte;
+# include <structs/s_philosopher.h>
+# include <structs/s_config.h>
+
+typedef struct s_table
+{
+	t_config		config;
+	t_philosopher	*philosophers;
+	pthread_mutex_t	*forks;
+}	t_table;
 
 #endif
