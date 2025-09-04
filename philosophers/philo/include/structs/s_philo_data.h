@@ -1,26 +1,25 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.c                                       :+:      :+:    :+:   */
+/*   s_philo_data.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 15:37:02 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 18:24:17 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/04 18:12:08 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/04 18:13:36 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#include <structs/s_table.h>
-#include <modules/philosophers.h>
-#include <macros/status.h>
+#ifndef S_PHILO_DATA_H
+# define S_PHILO_DATA_H
 
-void	start_simulation(t_table *table)
+# include <structs/s_philosopher.h>
+
+typedef struct s_philo_data
 {
-	int	res;
+	t_philosopher	*philosopher;
+	pthread_mutex_t	*signal_mutex;
+	int				*signal;
+}	t_philo_data;
 
-	res = start_philosophers(table->philosophers, &(table->config.philo_count),
-			philosopher_routine);
-	if (res != SUCCESS)
-		table->dinner_over = 1;
-	join_philosophers(table->philosophers, table->config.philo_count);
-}
+#endif

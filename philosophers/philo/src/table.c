@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 17:44:26 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:22:53 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -43,6 +43,9 @@ static int	init_config(t_config *config, int argc, char **argv)
 
 int	init_table(t_table *table, int argc, char **argv)
 {
+	table->dinner_over = 0;
+	if (pthread_mutex_init(&(table->over_mutex), NULL) != SUCCESS)
+		return (FAILURE);
 	if (init_config(&(table->config), argc, argv) == FAILURE)
 		return (FAILURE);
 	if (init_mutexes(table->forks, table->config.philo_count) == FAILURE)
@@ -54,7 +57,6 @@ int	init_table(t_table *table, int argc, char **argv)
 		destroy_mutexes(table->forks, table->config.philo_count);
 		return (FAILURE);
 	}
-	table->dinner_over = 0;
 	return (SUCCESS);
 }
 
@@ -62,5 +64,6 @@ void	clear_table(t_table *table)
 {
 	free(table->philosophers);
 	destroy_mutexes(table->forks, table->config.philo_count);
+	pthread_mutex_destroy(&(table->over_mutex));
 	free(table->forks);
 }
