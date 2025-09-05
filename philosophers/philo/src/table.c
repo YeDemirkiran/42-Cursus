@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   table.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 23:47:52 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/05 12:44:17 by yademirk         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include <stdlib.h>
 
@@ -58,7 +58,10 @@ int	init_table(t_table *table, int argc, char **argv)
 	if (init_config(&(table->config), argc, argv) != SUCCESS)
 		return (FAILURE);
 	if (init_mutexes(&(table->forks), table->config.philo_count) != SUCCESS)
+	{
+		pthread_mutex_destroy(&(table->over_mutex));
 		return (FAILURE);
+	}
 	table->philosophers = malloc(sizeof(t_philosopher)
 			* table->config.philo_count);
 	if (!table->philosophers)

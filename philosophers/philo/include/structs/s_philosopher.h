@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   s_philosopher.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 13:56:29 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 22:11:02 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/05 12:41:20 by yademirk         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef S_PHILOSOPHER_H
 # define S_PHILOSOPHER_H
@@ -22,7 +22,6 @@ typedef struct s_philosopher
 	pthread_t		thread_id;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	t_byte			current_routine;
 	t_byte			is_dead;
 }	t_philosopher;
 
