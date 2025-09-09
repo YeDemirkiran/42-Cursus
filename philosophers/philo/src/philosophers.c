@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 11:35:13 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:32:02 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,14 @@ int	start_philosophers(t_table *table, int count,
 		data->philosopher = philos + i;
 		data->signal = &(table->dinner_over);
 		data->signal_mutex = &(table->over_mutex);
+		data->print_mutex = &(table->print_mutex);
 		data->config = &(table->config);
 		res = pthread_create(&(philos[i].thread_id), NULL, philo_routine, data);
 		if (res != SUCCESS)
+		{
+			free(data);
 			return (0);
+		}
 		i++;
 	}
 	return (i);
@@ -88,17 +92,23 @@ void	join_philosophers(t_philosopher *philos, int count)
  */
 long	time_philosopher(long ms)
 {
-	static long		start_time;
-	long			current_time;
-	struct timeval	tv;
+	static long				start_time;
+	//static pthread_mutex_t	mutex;
+	long					current_time;
+	long					timestamp;
+	struct timeval			tv;
 
+	//pthread_mutex_init(&mutex, NULL);
 	if (ms > 0)
 		usleep(ms * 1000);
 	gettimeofday(&tv, NULL);
 	current_time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	//pthread_mutex_lock(&mutex);
 	if (start_time == 0)
 		start_time = current_time;
-	return (current_time - start_time);
+	timestamp = current_time - start_time;
+	//pthread_mutex_unlock(&mutex);
+	return (timestamp);
 }
 
 static void	take_forks(t_philo_data *data)
@@ -108,11 +118,15 @@ static void	take_forks(t_philo_data *data)
 	//printf("(%i waiting for left fork %p)\n", *data->philosopher->id, data->philosopher->left_fork);
 	pthread_mutex_lock(data->philosopher->left_fork);
 	time = time_philosopher(0);
+	pthread_mutex_lock(data->print_mutex);
 	printf("%li %i has taken a fork\n", time, *data->philosopher->id);
+	pthread_mutex_unlock(data->print_mutex);
 	//printf("(%i waiting for right fork %p)\n", *data->philosopher->id, data->philosopher->right_fork);
 	pthread_mutex_lock(data->philosopher->right_fork);
 	time = time_philosopher(0);
+	pthread_mutex_lock(data->print_mutex);
 	printf("%li %i has taken a fork\n", time, *data->philosopher->id);
+	pthread_mutex_unlock(data->print_mutex);
 }
 
 void	philosopher_die(t_philo_data *data)
@@ -123,7 +137,9 @@ void	philosopher_die(t_philo_data *data)
 	//pthread_mutex_lock(data->signal_mutex);
 	*(data->signal) = 1;
 	time = time_philosopher(0);
+	pthread_mutex_lock(data->print_mutex);
 	printf("%li %i died\n", time, *(data->philosopher->id));
+	pthread_mutex_unlock(data->print_mutex);
 	//pthread_mutex_unlock(data->signal_mutex);
 }
 
@@ -132,10 +148,14 @@ void	philosopher_eat(t_philo_data *data)
 	long	time;
 
 	time = time_philosopher(0);
+	pthread_mutex_lock(data->print_mutex);
 	printf("%li %i is thinking\n", time, *data->philosopher->id);
+	pthread_mutex_unlock(data->print_mutex);
 	take_forks(data);
 	time = time_philosopher(0);
+	pthread_mutex_lock(data->print_mutex);
 	printf("%li %i is eating\n", time, *data->philosopher->id);
+	pthread_mutex_unlock(data->print_mutex);
 	time_philosopher(data->config->eat_time);
 	pthread_mutex_unlock(data->philosopher->left_fork);
 	pthread_mutex_unlock(data->philosopher->right_fork);
@@ -148,7 +168,9 @@ void	philosopher_sleep(t_philo_data *data)
 	long	diff;
 
 	time = time_philosopher(0);
+	pthread_mutex_lock(data->print_mutex);
 	printf("%li %i is sleeping\n", time, *data->philosopher->id);
+	pthread_mutex_unlock(data->print_mutex);
 	diff = data->config->starve_time - data->config->sleep_time;
 	if (diff <= 0)
 	{
@@ -163,12 +185,16 @@ void	*philosopher_routine(void *data)
 {
 	t_philo_data	*philo_data;
 	t_philosopher	*philo;
+	t_byte			*is_dead;
+	t_byte			*dinner_over;
 
 	philo_data = (t_philo_data *)data;
 	philo = philo_data->philosopher;
-	while (!*(philo->is_dead) && *(philo_data->signal) != 1)
+	is_dead = philo->is_dead;
+	dinner_over = philo_data->signal;
+	while (!*is_dead && !*philo_data->signal)
 	{
-		printf("(id: %i, signal: %i)\n", *philo_data->philosopher->id, *(philo_data->signal));
+		//printf("(id: %i, signal: %i)\n", *philo_data->philosopher->id, *(philo_data->signal));
 		philosopher_eat(data);
 		philosopher_sleep(data);
 	}

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 14:53:44 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 10:52:28 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:26:31 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	over_mutex;
 	t_byte			dinner_over;
+	pthread_mutex_t	print_mutex;
 }	t_table;
 
 #endif

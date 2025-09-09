@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/05 12:44:17 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:27:38 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	init_table(t_table *table, int argc, char **argv)
 {
 	table->dinner_over = 0;
 	if (pthread_mutex_init(&(table->over_mutex), NULL) != SUCCESS)
+		return (FAILURE);
+	if (pthread_mutex_init(&(table->print_mutex), NULL) != SUCCESS)
 		return (FAILURE);
 	if (init_config(&(table->config), argc, argv) != SUCCESS)
 		return (FAILURE);

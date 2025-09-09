@@ -3,3 +3,8 @@
 - Learn deadlock
 - Learn mutexes
 - Learn semaphores
+
+ERRORS
+
+- Fix data race in time_philosopher
+- Fix data race in printf

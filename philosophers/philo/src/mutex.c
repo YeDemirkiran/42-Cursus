@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:20:11 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/05 12:13:13 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:17:14 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	destroy_mutexes(pthread_mutex_t *mutexes, int count)
 {
 	while (count-- >= 0)
-		pthread_mutex_destroy(&mutexes[count]);
+		pthread_mutex_destroy(mutexes + count);
 	free(mutexes);
 }
 
