@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 11:22:24 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:35:13 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,18 @@ static void	take_forks(t_philo_data *data)
 	printf("%li %i has taken a fork\n", time, *data->philosopher->id);
 }
 
+void	philosopher_die(t_philo_data *data)
+{
+	long	time;
+
+	*(data->philosopher->is_dead) = 1;
+	//pthread_mutex_lock(data->signal_mutex);
+	*(data->signal) = 1;
+	time = time_philosopher(0);
+	printf("%li %i died\n", time, *(data->philosopher->id));
+	//pthread_mutex_unlock(data->signal_mutex);
+}
+
 void	philosopher_eat(t_philo_data *data)
 {
 	long	time;
@@ -133,15 +145,18 @@ void	philosopher_eat(t_philo_data *data)
 void	philosopher_sleep(t_philo_data *data)
 {
 	long	time;
+	long	diff;
 
 	time = time_philosopher(0);
 	printf("%li %i is sleeping\n", time, *data->philosopher->id);
-	usleep(data->config->sleep_time * 1000);
-}
-
-void	philosopher_die(t_philosopher *philo)
-{
-	*(philo->is_dead) = 1;
+	diff = data->config->starve_time - data->config->sleep_time;
+	if (diff <= 0)
+	{
+		time_philosopher(data->config->starve_time);
+		philosopher_die(data);
+	}
+	else
+		time_philosopher(data->config->sleep_time);
 }
 
 void	*philosopher_routine(void *data)
@@ -153,15 +168,9 @@ void	*philosopher_routine(void *data)
 	philo = philo_data->philosopher;
 	while (!*(philo->is_dead) && *(philo_data->signal) != 1)
 	{
+		printf("(id: %i, signal: %i)\n", *philo_data->philosopher->id, *(philo_data->signal));
 		philosopher_eat(data);
 		philosopher_sleep(data);
-	}
-	if (philo->is_dead)
-	{
-		pthread_mutex_lock(philo_data->signal_mutex);
-		*(philo_data->signal) = 1;
-		printf("%i died\n", *philo->id);
-		pthread_mutex_unlock(philo_data->signal_mutex);
 	}
 	free(data);
 	return (NULL);
