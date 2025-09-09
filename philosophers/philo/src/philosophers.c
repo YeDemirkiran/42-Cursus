@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 12:32:02 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:45:12 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,20 @@ void	join_philosophers(t_philosopher *philos, int count)
 		pthread_join(philos[i].thread_id, NULL);
 		i++;
 	}
+}
+
+void	free_philosophers(t_philosopher *philos, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		free(philos[i].id);
+		free(philos[i].is_dead);
+		i++;
+	}
+	free(philos);
 }
 
 /**
