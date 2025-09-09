@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:20:11 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 12:17:14 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:36:46 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 
 void	destroy_mutexes(pthread_mutex_t *mutexes, int count)
 {
-	while (count-- >= 0)
-		pthread_mutex_destroy(mutexes + count);
+	int	i;
+
+	i = 0;
+	while (i < count)
+		pthread_mutex_destroy(mutexes + i);
 	free(mutexes);
 }
 

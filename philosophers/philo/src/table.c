@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 12:27:38 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:36:25 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ void	clear_table(t_table *table)
 	free(table->philosophers);
 	destroy_mutexes(table->forks, table->config.philo_count);
 	pthread_mutex_destroy(&(table->over_mutex));
-	free(table->forks);
+	pthread_mutex_destroy(&(table->print_mutex));
 }
