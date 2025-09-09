@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/05 13:08:13 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:52:16 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ void	join_philosophers(t_philosopher *philos, int count)
 
 static void	take_forks(t_philo_data *data)
 {
+	printf("%i waiting for left fork %p\n", *data->philosopher->id, data->philosopher->left_fork);
 	pthread_mutex_lock(data->philosopher->left_fork);
 	printf("%i has taken a fork\n", *data->philosopher->id);
+	printf("%i waiting for right fork %p\n", *data->philosopher->id, data->philosopher->right_fork);
 	pthread_mutex_lock(data->philosopher->right_fork);
 	printf("%i has taken a fork\n", *data->philosopher->id);
 }
@@ -94,6 +96,9 @@ void	philosopher_eat(t_philo_data *data)
 	take_forks(data);
 	printf("%i is eating\n", *data->philosopher->id);
 	usleep(data->config->eat_time * 1000);
+	pthread_mutex_unlock(data->philosopher->left_fork);
+	pthread_mutex_unlock(data->philosopher->right_fork);
+	printf("%i has released forks\n", *data->philosopher->id);
 }
 
 void	philosopher_sleep(t_philo_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   s_philosopher.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yademirk <yademirk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 13:56:29 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/05 12:53:24 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:52:21 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
