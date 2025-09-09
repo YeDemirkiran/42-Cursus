@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 10:52:16 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:15:58 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/time.h>
 
 #include <structs/s_table.h>
 #include <structs/s_philo_data.h>
@@ -80,30 +81,62 @@ void	join_philosophers(t_philosopher *philos, int count)
 	}
 }
 
+/**
+ * @brief Sleep for ms, then return the time difference since the beginning.
+ * 
+ * The first call returns always 0. To get the current timestamp without
+ * sleeping, make ms 0.
+ */
+long	time_philosopher(long ms)
+{
+	static long		start_time;
+	long			current_time;
+	struct timeval	tv;
+
+	if (ms > 0)
+		usleep(ms * 1000);
+	gettimeofday(&tv, NULL);
+	current_time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	if (start_time == 0)
+		start_time = current_time;
+	return (current_time - start_time);
+}
+
 static void	take_forks(t_philo_data *data)
 {
-	printf("%i waiting for left fork %p\n", *data->philosopher->id, data->philosopher->left_fork);
+	long	time;
+
+	//printf("(%i waiting for left fork %p)\n", *data->philosopher->id, data->philosopher->left_fork);
 	pthread_mutex_lock(data->philosopher->left_fork);
-	printf("%i has taken a fork\n", *data->philosopher->id);
-	printf("%i waiting for right fork %p\n", *data->philosopher->id, data->philosopher->right_fork);
+	time = time_philosopher(0);
+	printf("%li %i has taken a fork\n", time, *data->philosopher->id);
+	//printf("(%i waiting for right fork %p)\n", *data->philosopher->id, data->philosopher->right_fork);
 	pthread_mutex_lock(data->philosopher->right_fork);
-	printf("%i has taken a fork\n", *data->philosopher->id);
+	time = time_philosopher(0);
+	printf("%li %i has taken a fork\n", time, *data->philosopher->id);
 }
 
 void	philosopher_eat(t_philo_data *data)
 {
-	printf("%i is thinking\n", *data->philosopher->id);
+	long	time;
+
+	time = time_philosopher(0);
+	printf("%li %i is thinking\n", time, *data->philosopher->id);
 	take_forks(data);
-	printf("%i is eating\n", *data->philosopher->id);
-	usleep(data->config->eat_time * 1000);
+	time = time_philosopher(0);
+	printf("%li %i is eating\n", time, *data->philosopher->id);
+	time_philosopher(data->config->eat_time);
 	pthread_mutex_unlock(data->philosopher->left_fork);
 	pthread_mutex_unlock(data->philosopher->right_fork);
-	printf("%i has released forks\n", *data->philosopher->id);
+	//printf("(%i has released forks)\n", *data->philosopher->id);
 }
 
 void	philosopher_sleep(t_philo_data *data)
 {
-	printf("%i is sleeping\n", *data->philosopher->id);
+	long	time;
+
+	time = time_philosopher(0);
+	printf("%li %i is sleeping\n", time, *data->philosopher->id);
 	usleep(data->config->sleep_time * 1000);
 }
 
