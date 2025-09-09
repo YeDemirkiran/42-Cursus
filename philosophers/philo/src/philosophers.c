@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 11:15:58 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:22:24 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include <structs/s_table.h>
 #include <structs/s_philo_data.h>
 #include <macros/status.h>
-#include <enums/e_routine.h>
 
 void	init_philosophers(t_philosopher *philos, pthread_mutex_t *forks,
 	int philo_count)
@@ -140,22 +139,22 @@ void	philosopher_sleep(t_philo_data *data)
 	usleep(data->config->sleep_time * 1000);
 }
 
+void	philosopher_die(t_philosopher *philo)
+{
+	*(philo->is_dead) = 1;
+}
+
 void	*philosopher_routine(void *data)
 {
 	t_philo_data	*philo_data;
 	t_philosopher	*philo;
-	t_byte			routine;
 
 	philo_data = (t_philo_data *)data;
 	philo = philo_data->philosopher;
-	routine = (t_byte)PHILO_EAT;
 	while (!*(philo->is_dead) && *(philo_data->signal) != 1)
 	{
-		if (routine == (t_byte)PHILO_EAT)
-			philosopher_eat(data);
-		else if (routine == (t_byte)PHILO_SLEEP)
-			philosopher_sleep(data);
-		routine = (routine + 1) % 2;
+		philosopher_eat(data);
+		philosopher_sleep(data);
 	}
 	if (philo->is_dead)
 	{
