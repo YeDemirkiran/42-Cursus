@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/21 11:58:14 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/21 12:30:02 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -30,8 +30,6 @@ void	init_philosophers(t_philosopher *philos, pthread_mutex_t *forks,
 	{
 		philos[i].id = malloc(sizeof(int));
 		*(philos[i].id) = i;
-		philos[i].is_dead = malloc(sizeof(t_byte));
-		*(philos[i].is_dead) = 0;
 		philos[i].left_fork = forks + i;
 		philos[i].right_fork = forks + ((i + 1) % philo_count);
 		i++;
@@ -92,7 +90,6 @@ void	free_philosophers(t_philosopher *philos, int count)
 	while (i < count)
 	{
 		free(philos[i].id);
-		free(philos[i].is_dead);
 		i++;
 	}
 	free(philos);
@@ -125,6 +122,16 @@ long	time_philosopher(long ms)
 	return (timestamp);
 }
 
+static t_byte read_signal_mutex(t_byte *signal, pthread_mutex_t *mutex)
+{
+	t_byte	res;
+
+	pthread_mutex_lock(mutex);
+	res = *signal;
+	pthread_mutex_unlock(mutex);
+	return (res);
+}
+
 static void	take_forks(t_philo_data *data)
 {
 	long	time;
@@ -147,14 +154,11 @@ void	philosopher_die(t_philo_data *data)
 {
 	long	time;
 
-	*(data->philosopher->is_dead) = 1;
-	//pthread_mutex_lock(data->signal_mutex);
+	pthread_mutex_lock(data->signal_mutex);
 	*(data->signal) = 1;
+	pthread_mutex_unlock(data->signal_mutex);
 	time = time_philosopher(0);
-	//pthread_mutex_lock(data->print_mutex);
 	printf("%li %i died\n", time, *(data->philosopher->id));
-	//pthread_mutex_unlock(data->print_mutex);
-	//pthread_mutex_unlock(data->signal_mutex);
 }
 
 void	philosopher_eat(t_philo_data *data)
@@ -162,18 +166,13 @@ void	philosopher_eat(t_philo_data *data)
 	long	time;
 
 	time = time_philosopher(0);
-	//pthread_mutex_lock(data->print_mutex);
 	printf("%li %i is thinking\n", time, *data->philosopher->id);
-	//pthread_mutex_unlock(data->print_mutex);
 	take_forks(data);
 	time = time_philosopher(0);
-	//pthread_mutex_lock(data->print_mutex);
 	printf("%li %i is eating\n", time, *data->philosopher->id);
-	//pthread_mutex_unlock(data->print_mutex);
 	time_philosopher(data->config->eat_time);
 	pthread_mutex_unlock(data->philosopher->left_fork);
 	pthread_mutex_unlock(data->philosopher->right_fork);
-	//printf("(%i has released forks)\n", *data->philosopher->id);
 }
 
 void	philosopher_sleep(t_philo_data *data)
@@ -198,18 +197,20 @@ void	philosopher_sleep(t_philo_data *data)
 void	*philosopher_routine(void *data)
 {
 	t_philo_data	*philo_data;
-	t_philosopher	*philo;
-	t_byte			*is_dead;
 	t_byte			*dinner_over;
 
 	philo_data = (t_philo_data *)data;
-	philo = philo_data->philosopher;
-	is_dead = philo->is_dead;
 	dinner_over = philo_data->signal;
-	while (!*is_dead && !*dinner_over)
+	while (1)
 	{
+		if (read_signal_mutex(dinner_over, philo_data->signal_mutex))
+			break ;
 		philosopher_eat(data);
+		if (read_signal_mutex(dinner_over, philo_data->signal_mutex))
+			break ;
 		philosopher_sleep(data);
+		if (read_signal_mutex(dinner_over, philo_data->signal_mutex))
+			break ;
 	}
 	free(data);
 	return (NULL);
