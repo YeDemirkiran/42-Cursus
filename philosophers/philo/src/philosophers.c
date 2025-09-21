@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/21 12:30:02 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/21 12:37:21 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -150,11 +150,22 @@ static void	take_forks(t_philo_data *data)
 	//pthread_mutex_unlock(data->print_mutex);
 }
 
+static void	leave_forks(t_philo_data *data)
+{
+	pthread_mutex_unlock(data->philosopher->left_fork);
+	pthread_mutex_unlock(data->philosopher->right_fork);
+}
+
 void	philosopher_die(t_philo_data *data)
 {
 	long	time;
 
 	pthread_mutex_lock(data->signal_mutex);
+	if (*data->signal == 1)
+	{
+		pthread_mutex_unlock(data->signal_mutex);
+		return ;
+	}
 	*(data->signal) = 1;
 	pthread_mutex_unlock(data->signal_mutex);
 	time = time_philosopher(0);
@@ -166,13 +177,19 @@ void	philosopher_eat(t_philo_data *data)
 	long	time;
 
 	time = time_philosopher(0);
+	if (read_signal_mutex(data->signal, data->signal_mutex))
+		return ;
 	printf("%li %i is thinking\n", time, *data->philosopher->id);
 	take_forks(data);
 	time = time_philosopher(0);
+	if (read_signal_mutex(data->signal, data->signal_mutex))
+	{
+		leave_forks(data);
+		return ;
+	}
 	printf("%li %i is eating\n", time, *data->philosopher->id);
 	time_philosopher(data->config->eat_time);
-	pthread_mutex_unlock(data->philosopher->left_fork);
-	pthread_mutex_unlock(data->philosopher->right_fork);
+	leave_forks(data);
 }
 
 void	philosopher_sleep(t_philo_data *data)
@@ -181,9 +198,9 @@ void	philosopher_sleep(t_philo_data *data)
 	long	diff;
 
 	time = time_philosopher(0);
-	//pthread_mutex_lock(data->print_mutex);
+	if (read_signal_mutex(data->signal, data->signal_mutex))
+		return ;
 	printf("%li %i is sleeping\n", time, *data->philosopher->id);
-	//pthread_mutex_unlock(data->print_mutex);
 	diff = data->config->starve_time - data->config->sleep_time;
 	if (diff <= 0)
 	{
