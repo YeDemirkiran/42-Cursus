@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/21 12:37:21 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/22 23:28:52 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -132,28 +132,36 @@ static t_byte read_signal_mutex(t_byte *signal, pthread_mutex_t *mutex)
 	return (res);
 }
 
+static void	leave_forks(t_philo_data *data)
+{
+	pthread_mutex_unlock(data->philosopher->left_fork);
+	pthread_mutex_unlock(data->philosopher->right_fork);
+}
+
 static void	take_forks(t_philo_data *data)
 {
 	long	time;
 
 	//printf("(%i waiting for left fork %p)\n", *data->philosopher->id, data->philosopher->left_fork);
+	if (read_signal_mutex(data->signal, data->signal_mutex))
+		return ;
 	pthread_mutex_lock(data->philosopher->left_fork);
 	time = time_philosopher(0);
-	//pthread_mutex_lock(data->print_mutex);
+	if (read_signal_mutex(data->signal, data->signal_mutex))
+	{
+		pthread_mutex_unlock(data->philosopher->left_fork);
+		return ;
+	}
 	printf("%li %i has taken a fork\n", time, *data->philosopher->id);
-	//pthread_mutex_unlock(data->print_mutex);
 	//printf("(%i waiting for right fork %p)\n", *data->philosopher->id, data->philosopher->right_fork);
 	pthread_mutex_lock(data->philosopher->right_fork);
 	time = time_philosopher(0);
-	//pthread_mutex_lock(data->print_mutex);
+	if (read_signal_mutex(data->signal, data->signal_mutex))
+	{
+		leave_forks(data);
+		return ;
+	}
 	printf("%li %i has taken a fork\n", time, *data->philosopher->id);
-	//pthread_mutex_unlock(data->print_mutex);
-}
-
-static void	leave_forks(t_philo_data *data)
-{
-	pthread_mutex_unlock(data->philosopher->left_fork);
-	pthread_mutex_unlock(data->philosopher->right_fork);
 }
 
 void	philosopher_die(t_philo_data *data)
