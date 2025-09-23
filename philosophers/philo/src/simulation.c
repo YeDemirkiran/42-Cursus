@@ -1,18 +1,19 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
+/*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:37:02 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 12:46:05 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/23 20:53:40 by yademirk         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
-#include <structs/s_table.h>
-#include <modules/philosophers.h>
 #include <macros/status.h>
+#include <structs/s_table.h>
+#include <modules/philosophers/philosophers.h>
+#include <modules/philosophers/philosophers_utils.h>
 
 void	start_simulation(t_table *table)
 {

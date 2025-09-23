@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   table.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yademirk <yademirk@student.42istanbul.com. +#+  +:+       +#+        */
+/*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/09 12:45:57 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/23 20:54:10 by yademirk         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include <stdlib.h>
 
@@ -16,7 +16,8 @@
 #include <macros/status.h>
 #include <modules/mutex.h>
 #include <modules/utils/convert.h>
-#include <modules/philosophers.h>
+#include <modules/philosophers/philosophers.h>
+#include <modules/philosophers/philosophers_utils.h>
 
 static int	validate_config(long long config_numbers[5])
 {

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:02:25 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/04 15:56:50 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/23 20:59:27 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -22,6 +22,6 @@ typedef struct s_config
 	unsigned long	eat_time;
 	unsigned long	sleep_time;
 	size_t			eat_count;
-}	t_config;
+}			t_config;
 
 #endif

@@ -1,28 +1,22 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_philo_data.h                                     :+:      :+:    :+:   */
+/*   philosophers_routine.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 18:12:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/23 21:01:43 by yademirk         ###   ########.fr       */
+/*   Created: 2025/09/23 20:45:04 by yademirk          #+#    #+#             */
+/*   Updated: 2025/09/23 20:45:54 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef S_PHILO_DATA_H
-# define S_PHILO_DATA_H
+#ifndef PHILOSOPHERS_ROUTINE_H
+# define PHILOSOPHERS_ROUTINE_H
 
-# include <structs/s_philosopher.h>
-# include <structs/s_config.h>
+# include <structs/s_philo_data.h>
 
-typedef struct s_philo_data
-{
-	t_philosopher	*philosopher;
-	t_config		*config;
-	pthread_mutex_t	*signal_mutex;
-	pthread_mutex_t	*print_mutex;
-	t_byte			*signal;
-}	t_philo_data;
+void	philosopher_die(t_philo_data *data);
+void	philosopher_eat(t_philo_data *data);
+void	philosopher_sleep(t_philo_data *data);
 
 #endif

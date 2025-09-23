@@ -6,7 +6,7 @@
 #    By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/01 21:37:32 by yademirk          #+#    #+#              #
-#    Updated: 2025/09/04 18:39:15 by yademirk         ###   ########.fr        #
+#    Updated: 2025/09/23 20:58:14 by yademirk         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -22,12 +22,16 @@ FLAGS = $(W_FLAGS) $(INC_FLAGS) $(LIB_FLAGS)
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
 
-UTILS_DIR = ./utils/
+UTILS_DIR = utils/
 UTILS_SRC = $(addprefix $(UTILS_DIR), convert.c)
 
-C_FILES = main.c mutex.c philosophers.c simulation.c table.c $(UTILS_SRC)
+PHILOSOPHERS_DIR = philosophers/
+PHILOSOPHERS_SRC = $(addprefix $(PHILOSOPHERS_DIR), philosophers.c philosophers_routine.c philosophers_utils.c)
+
+C_FILES = main.c mutex.c simulation.c table.c $(UTILS_SRC) $(PHILOSOPHERS_SRC)
 SRCS = $(addprefix $(SRC_DIR), $(C_FILES))
 OBJS = $(addprefix $(OBJ_DIR), $(C_FILES:.c=.o))
+
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:35:34 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/22 23:36:54 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/09/23 21:03:58 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,6 +14,8 @@
 #include <pthread.h>
 
 #include <structs/s_philo_data.h>
+
+#include <modules/philosophers/philosophers.h>
 
 static void	leave_forks(t_philo_data *data)
 {
@@ -25,7 +27,6 @@ static void	take_forks(t_philo_data *data)
 {
 	long	time;
 
-	//printf("(%i waiting for left fork %p)\n", *data->philosopher->id, data->philosopher->left_fork);
 	if (read_signal_mutex(data->signal, data->signal_mutex))
 		return ;
 	pthread_mutex_lock(data->philosopher->left_fork);
@@ -36,7 +37,6 @@ static void	take_forks(t_philo_data *data)
 		return ;
 	}
 	printf("%li %i has taken a fork\n", time, *data->philosopher->id);
-	//printf("(%i waiting for right fork %p)\n", *data->philosopher->id, data->philosopher->right_fork);
 	pthread_mutex_lock(data->philosopher->right_fork);
 	time = time_philosopher(0);
 	if (read_signal_mutex(data->signal, data->signal_mutex))
