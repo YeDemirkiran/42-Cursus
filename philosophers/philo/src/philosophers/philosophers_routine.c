@@ -6,24 +6,24 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:35:34 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/23 21:03:58 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/03 20:57:42 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include <stdio.h>
 #include <pthread.h>
 
-#include <structs/s_philo_data.h>
+#include <structs/s_thread_data.h>
 
 #include <modules/philosophers/philosophers.h>
 
-static void	leave_forks(t_philo_data *data)
+static void	leave_forks(t_thread_data *data)
 {
 	pthread_mutex_unlock(data->philosopher->left_fork);
 	pthread_mutex_unlock(data->philosopher->right_fork);
 }
 
-static void	take_forks(t_philo_data *data)
+static void	take_forks(t_thread_data *data)
 {
 	long	time;
 
@@ -47,7 +47,7 @@ static void	take_forks(t_philo_data *data)
 	printf("%li %i has taken a fork\n", time, *data->philosopher->id);
 }
 
-void	philosopher_die(t_philo_data *data)
+void	philosopher_die(t_thread_data *data)
 {
 	long	time;
 
@@ -63,7 +63,7 @@ void	philosopher_die(t_philo_data *data)
 	printf("%li %i died\n", time, *(data->philosopher->id));
 }
 
-void	philosopher_eat(t_philo_data *data)
+void	philosopher_eat(t_thread_data *data)
 {
 	long	time;
 
@@ -83,7 +83,7 @@ void	philosopher_eat(t_philo_data *data)
 	leave_forks(data);
 }
 
-void	philosopher_sleep(t_philo_data *data)
+void	philosopher_sleep(t_thread_data *data)
 {
 	long	time;
 	long	diff;

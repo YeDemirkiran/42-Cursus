@@ -1,28 +1,28 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_philo_data.h                                     :+:      :+:    :+:   */
+/*   s_thread_data.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 18:12:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/23 21:01:43 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/03 20:53:44 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef S_PHILO_DATA_H
-# define S_PHILO_DATA_H
+#ifndef S_THREAD_DATA_H
+# define S_THREAD_DATA_H
 
 # include <structs/s_philosopher.h>
 # include <structs/s_config.h>
 
-typedef struct s_philo_data
+typedef struct s_thread_data
 {
 	t_philosopher	*philosopher;
 	t_config		*config;
 	pthread_mutex_t	*signal_mutex;
 	pthread_mutex_t	*print_mutex;
 	t_byte			*signal;
-}	t_philo_data;
+}	t_thread_data;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/23 20:54:50 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/03 20:58:38 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -18,7 +18,7 @@
 
 #include <macros/status.h>
 #include <structs/s_table.h>
-#include <structs/s_philo_data.h>
+#include <structs/s_thread_data.h>
 
 #include <modules/philosophers/philosophers_routine.h>
 #include <modules/philosophers/philosophers_utils.h>
@@ -58,20 +58,20 @@ t_byte	read_signal_mutex(t_byte *signal, pthread_mutex_t *mutex)
 
 void	*philosopher_routine(void *data)
 {
-	t_philo_data	*philo_data;
+	t_thread_data	*thread_data;
 	t_byte			*dinner_over;
 
-	philo_data = (t_philo_data *)data;
-	dinner_over = philo_data->signal;
+	thread_data = (t_thread_data *)data;
+	dinner_over = thread_data->signal;
 	while (1)
 	{
-		if (read_signal_mutex(dinner_over, philo_data->signal_mutex))
+		if (read_signal_mutex(dinner_over, thread_data->signal_mutex))
 			break ;
 		philosopher_eat(data);
-		if (read_signal_mutex(dinner_over, philo_data->signal_mutex))
+		if (read_signal_mutex(dinner_over, thread_data->signal_mutex))
 			break ;
 		philosopher_sleep(data);
-		if (read_signal_mutex(dinner_over, philo_data->signal_mutex))
+		if (read_signal_mutex(dinner_over, thread_data->signal_mutex))
 			break ;
 	}
 	free(data);
@@ -84,7 +84,7 @@ int	start_philosophers(t_table *table, int count,
 	int				i;
 	int				res;
 	t_philosopher	*philos;
-	t_philo_data	*data;
+	t_thread_data	*data;
 
 	philos = table->philosophers;
 	if (!philos)
@@ -93,7 +93,7 @@ int	start_philosophers(t_table *table, int count,
 	i = 0;
 	while (i < count)
 	{
-		data = malloc(sizeof(t_philo_data));
+		data = malloc(sizeof(t_thread_data));
 		if (!data)
 			return (0);
 		data->philosopher = philos + i;
