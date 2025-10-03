@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/03 20:58:38 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/03 21:05:55 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -46,6 +46,10 @@ long	time_philosopher(long ms)
 	return (timestamp);
 }
 
+/**
+ * @brief Hold the execution untih the mutex signal is avaliable,
+ * then return its value.
+ */
 t_byte	read_signal_mutex(t_byte *signal, pthread_mutex_t *mutex)
 {
 	t_byte	res;
@@ -56,6 +60,9 @@ t_byte	read_signal_mutex(t_byte *signal, pthread_mutex_t *mutex)
 	return (res);
 }
 
+/**
+ * @brief The philosopher routine. It's ran in a thread.
+ */
 void	*philosopher_routine(void *data)
 {
 	t_thread_data	*thread_data;
@@ -78,6 +85,13 @@ void	*philosopher_routine(void *data)
 	return (NULL);
 }
 
+/**
+ * @brief Initializes the philosophers of a table,
+ * then starts each of them in their own thread.
+ *
+ * Returns 0 when error, otherwise returns the number of
+ * successfully started threads.
+ */
 int	start_philosophers(t_table *table, int count,
 	void *(*philo_routine)(void *))
 {
