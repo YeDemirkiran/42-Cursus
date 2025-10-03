@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/03 21:05:55 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/03 22:17:15 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,9 +29,8 @@
  * The first call returns always 0. To get the current timestamp without
  * sleeping, make ms 0.
  */
-long	time_philosopher(long ms)
+long	time_philosopher(t_thread_data *data, long ms)
 {
-	static long		start_time;
 	long			current_time;
 	long			timestamp;
 	struct timeval	tv;
@@ -40,9 +39,9 @@ long	time_philosopher(long ms)
 		usleep(ms * 1000);
 	gettimeofday(&tv, NULL);
 	current_time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	if (start_time == 0)
-		start_time = current_time;
-	timestamp = current_time - start_time;
+	if (data->time_in_ms == 0)
+		data->time_in_ms = current_time;
+	timestamp = current_time - data->time_in_ms;
 	return (timestamp);
 }
 
@@ -111,10 +110,11 @@ int	start_philosophers(t_table *table, int count,
 		if (!data)
 			return (0);
 		data->philosopher = philos + i;
+		data->config = &(table->config);
+		data->time_in_ms = 0;
 		data->signal = &(table->dinner_over);
 		data->signal_mutex = &(table->over_mutex);
 		data->print_mutex = &(table->print_mutex);
-		data->config = &(table->config);
 		res = pthread_create(&(philos[i].thread_id), NULL, philo_routine, data);
 		if (res != SUCCESS)
 		{
