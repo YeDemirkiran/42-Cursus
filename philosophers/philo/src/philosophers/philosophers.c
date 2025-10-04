@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/04 11:26:48 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/04 16:23:53 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -80,6 +80,7 @@ void	*philosopher_routine(void *data)
 		if (read_signal_mutex(dinner_over, thread_data->signal_mutex))
 			break ;
 	}
+	free(data);
 	return (NULL);
 }
 
@@ -96,30 +97,31 @@ int	start_philosophers(t_table *table, int count,
 	int				i;
 	int				res;
 	t_philosopher	*philos;
-	t_thread_data	*data;
+	t_thread_data	**data;
 
 	philos = table->philosophers;
 	if (!philos)
 		return (0);
 	init_philosophers(philos, table->forks, table->config.philo_count);
-	data = malloc(sizeof(t_thread_data) * count);
+	data = malloc(sizeof(t_thread_data *) * count);
 	if (!data)
 		return (0);
 	i = 0;
 	while (i < count)
 	{
-		data[i].philosopher = philos + i;
-		data[i].config = &(table->config);
-		data[i].time_in_ms = 0;
-		data[i].signal = &(table->dinner_over);
-		data[i].signal_mutex = &(table->over_mutex);
-		data[i].print_mutex = &(table->print_mutex);
+		data[i] = malloc(sizeof(t_thread_data));
+		data[i]->philosopher = philos + i;
+		data[i]->config = &(table->config);
+		data[i]->time_in_ms = 0;
+		data[i]->signal = &(table->dinner_over);
+		data[i]->signal_mutex = &(table->over_mutex);
+		data[i]->print_mutex = &(table->print_mutex);
 		i++;
 	}
 	i = 0;
 	while (i < count)
 	{
-		res = pthread_create(&(philos[i].thread_id), NULL, philo_routine, data + i);
+		res = pthread_create(&(philos[i].thread_id), NULL, philo_routine, data[i]);
 		if (res != SUCCESS)
 		{
 			free(data);
@@ -127,5 +129,6 @@ int	start_philosophers(t_table *table, int count,
 		}
 		i++;
 	}
+	free(data);
 	return (i);
 }
