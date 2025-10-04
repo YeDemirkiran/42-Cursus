@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:22:55 by yademirk          #+#    #+#             */
-/*   Updated: 2025/09/23 20:54:10 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/04 16:28:53 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -53,7 +53,7 @@ static int	init_config(t_config *config, int argc, char **argv)
 
 int	init_table(t_table *table, int argc, char **argv)
 {
-	table->dinner_over = 0;
+	table->dinner_over = 1;
 	if (pthread_mutex_init(&(table->over_mutex), NULL) != SUCCESS)
 		return (FAILURE);
 	if (pthread_mutex_init(&(table->print_mutex), NULL) != SUCCESS)

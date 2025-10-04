@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/04 16:23:53 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/04 16:29:57 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -71,6 +71,11 @@ void	*philosopher_routine(void *data)
 	dinner_over = thread_data->signal;
 	while (1)
 	{
+		if (!read_signal_mutex(dinner_over, thread_data->signal_mutex))
+			break ;
+	}
+	while (1)
+	{
 		if (read_signal_mutex(dinner_over, thread_data->signal_mutex))
 			break ;
 		philosopher_eat(data);
@@ -127,8 +132,10 @@ int	start_philosophers(t_table *table, int count,
 			free(data);
 			return (0);
 		}
+		printf("(started %i)\n", i);
 		i++;
 	}
 	free(data);
+	table->dinner_over = 0;
 	return (i);
 }
