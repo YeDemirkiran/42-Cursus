@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/03 22:17:15 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/04 11:26:48 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -80,7 +80,6 @@ void	*philosopher_routine(void *data)
 		if (read_signal_mutex(dinner_over, thread_data->signal_mutex))
 			break ;
 	}
-	free(data);
 	return (NULL);
 }
 
@@ -103,19 +102,24 @@ int	start_philosophers(t_table *table, int count,
 	if (!philos)
 		return (0);
 	init_philosophers(philos, table->forks, table->config.philo_count);
+	data = malloc(sizeof(t_thread_data) * count);
+	if (!data)
+		return (0);
 	i = 0;
 	while (i < count)
 	{
-		data = malloc(sizeof(t_thread_data));
-		if (!data)
-			return (0);
-		data->philosopher = philos + i;
-		data->config = &(table->config);
-		data->time_in_ms = 0;
-		data->signal = &(table->dinner_over);
-		data->signal_mutex = &(table->over_mutex);
-		data->print_mutex = &(table->print_mutex);
-		res = pthread_create(&(philos[i].thread_id), NULL, philo_routine, data);
+		data[i].philosopher = philos + i;
+		data[i].config = &(table->config);
+		data[i].time_in_ms = 0;
+		data[i].signal = &(table->dinner_over);
+		data[i].signal_mutex = &(table->over_mutex);
+		data[i].print_mutex = &(table->print_mutex);
+		i++;
+	}
+	i = 0;
+	while (i < count)
+	{
+		res = pthread_create(&(philos[i].thread_id), NULL, philo_routine, data + i);
 		if (res != SUCCESS)
 		{
 			free(data);
