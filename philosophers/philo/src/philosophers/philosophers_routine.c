@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:35:34 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/05 20:56:23 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/06 20:46:30 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -94,6 +94,14 @@ void	philosopher_eat(t_thread_data *data)
 		EAT_COLOR, COLOR_RESET);
 	time_philosopher(data, data->config->eat_time);
 	leave_forks(data);
+	data->philosopher->eat_count += 1;
+	if (data->config->eat_count > 0 &&
+		data->philosopher->eat_count >= data->config->eat_count)
+	{
+		pthread_mutex_lock(data->signal_mutex);
+		*(data->signal) = 1;
+		pthread_mutex_unlock(data->signal_mutex);
+	}
 }
 
 void	philosopher_sleep(t_thread_data *data)

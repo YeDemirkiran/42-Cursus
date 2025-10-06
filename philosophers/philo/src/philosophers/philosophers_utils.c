@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:31:44 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/03 21:09:23 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/06 20:43:43 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -25,6 +25,7 @@ void	init_philosophers(t_philosopher *philos, pthread_mutex_t *forks,
 	{
 		philos[i].id = malloc(sizeof(int));
 		*(philos[i].id) = i;
+		philos[i].eat_count = 0;
 		philos[i].left_fork = forks + i;
 		philos[i].right_fork = forks + ((i + 1) % philo_count);
 		i++;
