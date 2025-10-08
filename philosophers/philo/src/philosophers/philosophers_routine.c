@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:35:34 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/06 20:46:30 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/08 15:46:23 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -25,38 +25,6 @@
 #define DEATH_COLOR "\e[1;91m"
 #define COLOR_RESET "\e[0m"
 
-static void	leave_forks(t_thread_data *data)
-{
-	pthread_mutex_unlock(data->philosopher->left_fork);
-	pthread_mutex_unlock(data->philosopher->right_fork);
-}
-
-static void	take_forks(t_thread_data *data)
-{
-	long	time;
-
-	if (read_signal_mutex(data->signal, data->signal_mutex))
-		return ;
-	pthread_mutex_lock(data->philosopher->left_fork);
-	time = time_philosopher(data, 0);
-	if (read_signal_mutex(data->signal, data->signal_mutex))
-	{
-		pthread_mutex_unlock(data->philosopher->left_fork);
-		return ;
-	}
-	printf("%li %i %shas taken a fork%s\n", time, *data->philosopher->id,
-		TAKE_FORK_COLOR, COLOR_RESET);
-	pthread_mutex_lock(data->philosopher->right_fork);
-	time = time_philosopher(data, 0);
-	if (read_signal_mutex(data->signal, data->signal_mutex))
-	{
-		leave_forks(data);
-		return ;
-	}
-	printf("%li %i %shas taken a fork%s\n", time, *data->philosopher->id,
-		TAKE_FORK_COLOR, COLOR_RESET);
-}
-
 void	philosopher_die(t_thread_data *data)
 {
 	long	time;
@@ -74,6 +42,47 @@ void	philosopher_die(t_thread_data *data)
 		DEATH_COLOR, COLOR_RESET);
 }
 
+static void	leave_forks(t_thread_data *data)
+{
+	pthread_mutex_unlock(data->philosopher->left_fork);
+	if (data->philosopher->left_fork == data->philosopher->right_fork)
+		return ;
+	pthread_mutex_unlock(data->philosopher->right_fork);
+}
+
+static int	take_forks(t_thread_data *data)
+{
+	long	time;
+
+	if (read_signal_mutex(data->signal, data->signal_mutex))
+		return (1);
+	pthread_mutex_lock(data->philosopher->left_fork);
+	time = time_philosopher(data, 0);
+	if (read_signal_mutex(data->signal, data->signal_mutex))
+	{
+		pthread_mutex_unlock(data->philosopher->left_fork);
+		return (1);
+	}
+	printf("%li %i %shas taken a fork%s\n", time, *data->philosopher->id,
+		TAKE_FORK_COLOR, COLOR_RESET);
+	if (data->philosopher->left_fork == data->philosopher->right_fork)
+	{
+		time_philosopher(data, data->config->starve_time);
+		philosopher_die(data);
+		return (0);
+	}
+	pthread_mutex_lock(data->philosopher->right_fork);
+	time = time_philosopher(data, 0);
+	if (read_signal_mutex(data->signal, data->signal_mutex))
+	{
+		leave_forks(data);
+		return (1);
+	}
+	printf("%li %i %shas taken a fork%s\n", time, *data->philosopher->id,
+		TAKE_FORK_COLOR, COLOR_RESET);
+	return (1);
+}
+
 void	philosopher_eat(t_thread_data *data)
 {
 	long	time;
@@ -83,13 +92,12 @@ void	philosopher_eat(t_thread_data *data)
 		return ;
 	printf("%li %i %sis thinking%s\n", time, *data->philosopher->id,
 		THINK_COLOR, COLOR_RESET);
-	take_forks(data);
-	time = time_philosopher(data, 0);
-	if (read_signal_mutex(data->signal, data->signal_mutex))
+	if (!take_forks(data) || read_signal_mutex(data->signal, data->signal_mutex))
 	{
 		leave_forks(data);
 		return ;
 	}
+	time = time_philosopher(data, 0);
 	printf("%li %i %sis eating%s\n", time, *data->philosopher->id,
 		EAT_COLOR, COLOR_RESET);
 	time_philosopher(data, data->config->eat_time);
