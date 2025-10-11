@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/05 20:55:36 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/11 10:23:14 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -123,6 +123,8 @@ int	start_philosophers(t_table *table, int count,
 		data[i]->print_mutex = &(table->print_mutex);
 		i++;
 	}
+	// printf("Init\n");
+	// fflush(stdout);
 	i = 0;
 	while (i < count)
 	{
@@ -132,10 +134,13 @@ int	start_philosophers(t_table *table, int count,
 			free(data);
 			return (0);
 		}
-		//printf("(started %i)\n", i);
+		// printf("(started %i)\n", i);
+		// fflush(stdout);
 		i++;
 	}
 	free(data);
+	pthread_mutex_lock(&table->over_mutex);
 	table->dinner_over = 0;
+	pthread_mutex_unlock(&table->over_mutex);
 	return (i);
 }
