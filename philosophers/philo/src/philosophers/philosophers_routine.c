@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:35:34 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/08 15:46:23 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/11 23:16:18 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -16,6 +16,7 @@
 #include <structs/s_thread_data.h>
 
 #include <modules/philosophers/philosophers.h>
+#include <modules/philosophers/philosophers_utils.h>
 
 // colors
 #define THINK_COLOR "\e[1;93m"
@@ -38,8 +39,8 @@ void	philosopher_die(t_thread_data *data)
 	*(data->signal) = 1;
 	pthread_mutex_unlock(data->signal_mutex);
 	time = time_philosopher(data, 0);
-	printf("%li %i %sdied\n%s", time, *data->philosopher->id,
-		DEATH_COLOR, COLOR_RESET);
+	printf_philosopher(data->print_mutex, time, *data->philosopher->id,
+		DEATH_COLOR "died" COLOR_RESET "\n");
 }
 
 static void	leave_forks(t_thread_data *data)
