@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:31:44 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/12 13:31:27 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/12 20:53:49 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,6 +15,15 @@
 
 #include <macros/status.h>
 #include <structs/s_philosopher.h>
+#include <structs/s_thread_data.h>
+
+t_byte	should_philosopher_die(t_thread_data *data, long current_time)
+{
+	// printf("(%i current time: %li, last meal: %li, starve_time: %lu)\n", *data->philosopher->id, current_time, data->last_meal_time, data->config->starve_time);
+	fflush(stdout);
+	return (current_time
+		>= data->last_meal_time + (long)(data->config->starve_time));
+}
 
 void	init_philosophers(t_philosopher *philos, pthread_mutex_t *forks,
 	int philo_count)

@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/12 14:32:28 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/12 20:32:55 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -118,6 +118,7 @@ int	start_philosophers(t_table *table, int count,
 		data[i]->philosopher = philos + i;
 		data[i]->config = &(table->config);
 		data[i]->time_in_ms = 0;
+		data[i]->last_meal_time = 0;
 		data[i]->signal = &(table->dinner_over);
 		data[i]->signal_mutex = &(table->over_mutex);
 		data[i]->print_mutex = &(table->print_mutex);
