@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:31:44 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/12 01:24:22 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/12 13:31:27 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,7 +29,6 @@ void	init_philosophers(t_philosopher *philos, pthread_mutex_t *forks,
 		philos[i].eat_count = 0;
 		philos[i].left_fork = forks + i;
 		philos[i].right_fork = forks + ((i + 1) % philo_count);
-		printf("Philo %i's left fork address: %p, right: %p\n", i, forks + i, forks + ((i + 1) % philo_count));
 		i++;
 	}
 }
