@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:35:34 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/12 14:32:08 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/12 15:22:41 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -60,10 +60,13 @@ static int	take_forks(t_thread_data *data)
 	time = time_philosopher(data, 0);
 	printf_philosopher(data->print_mutex, time, *data->philosopher->id,
 		THINK_COLOR "is thinking" COLOR_RESET "\n");
-	pthread_mutex_lock(data->philosopher->left_fork);
+	if (*data->philosopher->id % 2 == 0)
+		pthread_mutex_lock(data->philosopher->left_fork);
+	else
+		pthread_mutex_lock(data->philosopher->right_fork);
 	if (read_signal_mutex(data->signal, data->signal_mutex))
 	{
-		pthread_mutex_unlock(data->philosopher->left_fork);
+		//pthread_mutex_unlock(data->philosopher->left_fork);
 		return (1);
 	}
 	time = time_philosopher(data, 0);
@@ -78,10 +81,13 @@ static int	take_forks(t_thread_data *data)
 	time = time_philosopher(data, 0);
 	printf_philosopher(data->print_mutex, time, *data->philosopher->id,
 		THINK_COLOR "is thinking" COLOR_RESET "\n");
-	pthread_mutex_lock(data->philosopher->right_fork);
+	if (*data->philosopher->id % 2 == 0)
+		pthread_mutex_lock(data->philosopher->right_fork);
+	else
+		pthread_mutex_lock(data->philosopher->left_fork);
 	if (read_signal_mutex(data->signal, data->signal_mutex))
 	{
-		leave_forks(data);
+		//leave_forks(data);
 		return (1);
 	}
 	time = time_philosopher(data, 0);
