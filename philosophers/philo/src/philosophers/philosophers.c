@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 16:00:08 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/11 10:23:14 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/12 14:32:28 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -123,19 +123,16 @@ int	start_philosophers(t_table *table, int count,
 		data[i]->print_mutex = &(table->print_mutex);
 		i++;
 	}
-	// printf("Init\n");
-	// fflush(stdout);
 	i = 0;
 	while (i < count)
 	{
-		res = pthread_create(&(philos[i].thread_id), NULL, philo_routine, data[i]);
+		res = pthread_create(&(philos[i].thread_id), NULL,
+				philo_routine, data[i]);
 		if (res != SUCCESS)
 		{
 			free(data);
 			return (0);
 		}
-		// printf("(started %i)\n", i);
-		// fflush(stdout);
 		i++;
 	}
 	free(data);

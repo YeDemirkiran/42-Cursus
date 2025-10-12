@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:35:34 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/12 14:30:49 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/12 14:32:08 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -109,8 +109,8 @@ void	philosopher_eat(t_thread_data *data)
 	time_philosopher(data, data->config->eat_time);
 	leave_forks(data);
 	data->philosopher->eat_count += 1;
-	if (data->config->eat_count > 0 &&
-		data->philosopher->eat_count >= data->config->eat_count)
+	if (data->config->eat_count > 0
+		&& data->philosopher->eat_count >= data->config->eat_count)
 	{
 		pthread_mutex_lock(data->signal_mutex);
 		*(data->signal) = 1;
