@@ -6,7 +6,7 @@
 /*   By: yademirk <yademirk@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:35:34 by yademirk          #+#    #+#             */
-/*   Updated: 2025/10/12 20:58:08 by yademirk         ###   ########.fr       */
+/*   Updated: 2025/10/15 01:21:36 by yademirk         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -26,10 +26,8 @@
 #define DEATH_COLOR "\e[1;91m"
 #define COLOR_RESET "\e[0m"
 
-void	philosopher_die(t_thread_data *data)
+void	philosopher_die(t_thread_data *data, long time)
 {
-	long	time;
-
 	pthread_mutex_lock(data->signal_mutex);
 	if (*data->signal == 1)
 	{
@@ -38,7 +36,6 @@ void	philosopher_die(t_thread_data *data)
 	}
 	*(data->signal) = 1;
 	pthread_mutex_unlock(data->signal_mutex);
-	time = time_philosopher(data, 0);
 	printf_philosopher(data->print_mutex, time, *data->philosopher->id,
 		DEATH_COLOR "died" COLOR_RESET "\n");
 }
@@ -60,7 +57,7 @@ static int	take_forks(t_thread_data *data)
 	time = time_philosopher(data, 0);
 	if (should_philosopher_die(data, time))
 	{
-		philosopher_die(data);
+		philosopher_die(data, data->last_meal_time + data->config->starve_time);
 		return (0);
 	}
 	printf_philosopher(data->print_mutex, time, *data->philosopher->id,
@@ -77,7 +74,7 @@ static int	take_forks(t_thread_data *data)
 	time = time_philosopher(data, 0);
 	if (should_philosopher_die(data, time))
 	{
-		philosopher_die(data);
+		philosopher_die(data, data->last_meal_time + data->config->starve_time);
 		return (0);
 	}
 	printf_philosopher(data->print_mutex, time, *data->philosopher->id,
@@ -85,7 +82,7 @@ static int	take_forks(t_thread_data *data)
 	if (data->philosopher->left_fork == data->philosopher->right_fork)
 	{
 		time_philosopher(data, data->config->starve_time);
-		philosopher_die(data);
+		philosopher_die(data, data->last_meal_time + data->config->starve_time);
 		return (0);
 	}
 	if (*data->philosopher->id % 2 == 0)
@@ -100,7 +97,7 @@ static int	take_forks(t_thread_data *data)
 	time = time_philosopher(data, 0);
 	if (should_philosopher_die(data, time))
 	{
-		philosopher_die(data);
+		philosopher_die(data, data->last_meal_time + data->config->starve_time);
 		return (0);
 	}
 	printf_philosopher(data->print_mutex, time, *data->philosopher->id,
@@ -117,7 +114,7 @@ void	philosopher_eat(t_thread_data *data)
 	{
 		// printf("%i DEAAAD\n", *data->philosopher->id);
 		// fflush(stdout);
-		philosopher_die(data);
+		philosopher_die(data, data->last_meal_time + data->config->starve_time);
 	}
 	// else
 	// {
@@ -161,8 +158,9 @@ void	philosopher_sleep(t_thread_data *data)
 	diff = data->config->starve_time - data->config->sleep_time;
 	if (diff <= 0)
 	{
-		time_philosopher(data, data->config->starve_time);
-		philosopher_die(data);
+		time = time_philosopher(data, data->config->starve_time);
+		// time = data->last_meal_time + data->config->starve_time;
+		philosopher_die(data, time);
 	}
 	else
 		time_philosopher(data, data->config->sleep_time);
